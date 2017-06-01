@@ -1,0 +1,67 @@
+/**
+@page dfu_connect OTA-DFU with nRF Connect
+
+You can run a Device Firmware Update on the Thingy using Nordic Semiconductor's nRF Connect mobile and desktop applications.
+
+@section dfu_performing_desktop Upgrading with nRF Connect for desktop
+
+The following procedure involves using a desktop device and a connectivity board to run a DFU. 
+
+Install the following software on your desktop computer before running this procedure:
+- <a href="https://www.nordicsemi.com/chi/node_176/2.4GHz-RF/nRFgo-Studio" target="blank">nRFgo Studio</a>
+- <a href="https://www.nordicsemi.com/eng/Products/Bluetooth-low-energy/nRF-Connect-for-desktop" target="blank">nRF Connect for desktop</a>
+- <a href="https://github.com/NordicSemiconductor/pc-nrfutil" target="blank">nrfutil</a>
+
+You will also need either an nRF51 or an nRF52 Development Kit that will function as a connectivity board during DFU. It is recommended to erase this board prior to using it for DFU. To do this, open nRFgo Studio, select the board from the list and click <b>Erase all</b>.
+@image html erase_all.png "Erasing the connectivity board"
+
+-# Connect a development kit to your computer through the USB port. This DK will serve as an intermediate connectivity board.
+-# Run nRF Connect. From the list of ports, choose the serial port where the connectivity board is connected.
+	@image html nrf_connect_d_1.png "Select the board in nRF Connect"
+-# If the board was erased before, a message will appear that no connectivity firmware was detected. Agree to automatically update the connectivity firmware.
+	@image html firmware_update.png "Firmware update prompt"
+-# Click <b>Start Scan</b>. From the available discovered devices, connect to <tt>Thingy</tt>. Make sure it is not bonded to another host.
+@note The list of discovered devices is not automatically refreshed when they stop advertising. Whenever you have problems connecting to a device from the list, try clearing it and rerunning the scan. If the Thingy stops advertising, tap or move it.
+-# Connect to the Thingy. When connecting, you do not need to select any of the optional settings.
+-# Expand the FE59 service section and enable notifications by clicking <b>Toggle notifications</b>. Then, type <tt>01</tt> into the FE59 field. Press Enter or click <b>Write</b>. 
+	@image html fe59.png "FE59 service section"
+	The Thingy now enters DFU mode. You are disconnected from the device and, if you run a new scan, a <tt>ThingyDfu</tt> device appears in the list of discovered devices. The LED on the Thingy fades in and out rapidly in yellow color.
+	@note The <tt>ThingyDfu</tt> device is the Thingy in DFU mode. Notice that its address is always the address of the Thingy plus 1.
+-# Close nRF Connect. Make sure that nRF Connect and nrfutil applications do not run at the same time.
+-# With nrfutil installed, open the command prompt and run the following command:
+	@code
+	nrfutil dfu ble -ic <ic_series> -pkg <package_name.zip>
+	@endcode
+	, where \<ic_name\> is the Series of the connectivity board (<tt>NRF51</tt> or <tt>NRF52</tt>) and <package_name.zip> is the path to the ZIP file that is to be transferred to the Thingy. For example:
+	@code
+	nrfutil dfu ble -ic NRF51 -pkg "thingy_firmware.zip"
+	@endcode
+-# You might be prompted to select the connectivity serial port. Select the port that the connectivity board is connected to and press Enter. A progress bar will appear showing the progress of the package transfer.
+
+@section dfu_performing_mobile Upgrading with nRF Connect for mobile
+
+The following procedure involves using a mobile device with nRF Connect installed to run a DFU. 
+
+Before running this procedure, install <a href="https://www.nordicsemi.com/eng/Products/Nordic-mobile-Apps/nRF-Connect-for-mobile-previously-called-nRF-Master-Control-Panel" target="blank">nRF Connect for Mobile</a>.
+
+-# Transfer the ZIP packages that will be used for DFU to your mobile device.
+-# Power on the Thingy.
+-# Open nRF Connect on your mobile device. 
+-# Tap <b>Scan</b>. From the available discovered devices, connect to the Thingy.
+	@note The list of discovered devices is not automatically refreshed when they stop advertising. Whenever you have problems connecting to a device from the list, try refreshing the list. If the Thingy stops advertising, tap or move the device.
+-# Expand the Secure DFU Service section. There are two icons to the right of the DFU Control Point area.
+	-# The icon to the right toggles notifications. Make sure they are enabled (the icon must be crossed).
+	-# Tap the icon to the left to put the Thingy into bootloader (DFU) mode. Tap <b>Send</b> when prompted to reset the device to bootloader.
+	@image html dfu_mode.png "Putting the Thingy into DFU mode (1)"
+	@image html bootloader_reset.png "Putting the Thingy into DFU mode (2)"
+@note The Thingy now enters DFU mode. You are disconnected from the device. The LED on the Thingy fades in and out rapidly in yellow color.
+-# Go to the Scanner tab and run a new scan. A <tt>ThingyDfu</tt> device appears in the list of discovered devices.
+	@note The <tt>ThingyDfu</tt> device is the Thingy in DFU mode. Notice that its address is always the address of the Thingy device plus 1.
+-# Connect to the <tt>ThingyDfu</tt> device. Tap the DFU icon.
+	@image html dfutarg_connect.png "Running DFU on the ThingyDfu device"
+-# Select <b>Distribution packet (ZIP)</b> and navigate to the ZIP package that you previously uploaded to your mobile device.
+	@image html distribution_packet.png "Uploading the ZIP file"
+-# The package is now uploaded to the Thingy in the DFU process.
+@image html dfu_running.png "DFU in progress"
+
+*/

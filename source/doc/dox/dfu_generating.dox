@@ -1,0 +1,63 @@
+/**
+@page dfu_generating OTA-DFU - Generating your own packages
+
+The following procedures assume that you are working with your own custom firmware. You will need to do the following to generate your own packages:
+
+-# Generate your own key.
+-# Generate a custom bootloader.
+-# Generate custom bootloader settings - required only to flash complete firmware over a cable connection.
+
+To run these tasks, you will require <a href="https://github.com/NordicSemiconductor/pc-nrfutil" target="blank">nrfutil</a>.
+
+@section dfu_custom_key Replacing the public key
+
+Before you can generate DFU packages, you must first generate a new private key. Cryptographic keys are required to sign and validate a Device Firmware Update package. The Thingy comes with a public key. Before running DFU, you must generate your own private key and replace the public one in the above-mentioned file.
+
+To generate a new private key, run the following command with nrfutil installed:
+@code
+nrfutil keys generate private-key.pem
+@endcode
+
+This generates the new key file in the folder where you have run the command. Now, replace the existing public key with the new one.
+
+@section dfu_custom_bootloader Generating the bootloader
+
+To generate a new bootloader, compile the <tt>Bootloader</tt> project. Flash the compiled bootloader onto the board.
+
+@section dfu_generate_package Generating a DFU package
+
+Run <tt>nrfutil pkg generate</tt> to generate a ZIP file that you can later use with a mobile or desktop application to update the firmware of your Thingy, as described in <a href="http://infocenter.nordicsemi.com/topic/com.nordic.infocenter.tools/dita/tools/nrfutil/nrfutil_pkg.html" target="blank">nrfutil documentation</a>.
+For example:
+@code
+nrfutil pkg generate --application <path_to_hex_file> --application-version 0 --hw-version 52 --sd-req 0x8C --key-file private-key.pem dfu-app.zip
+@endcode
+
+@subsection dfu_version Version requirements
+This command contains essential information about the versions of the application and of the hardware. These versions determine whether it will be possible to perform a valid DFU process. DFU is only possible if:
+- The application version is greater than or equal to the previous application version.
+- The hw-version property is the same as in the previous version.
+- The bootloader version is greater than the previous bootloader version (bootloader version is provided when you update the bootloader).
+
+The provided precompiled firmware has the following version information:
+- Hardware version: 52
+- Application: 0
+- Bootloader: 0
+- Bootloader Settings: 1
+
+@section dfu_assembly Manual firmware assembly
+
+A firmware package which supports OTA-DFU and which can be uploaded to your device through a cable connection, for example during manufacturing, must consist of the following four elements:
+- Application
+- SoftDevice
+- Bootloader
+- Bootloader settings
+
+@subsection dfu_bootloader_settings Bootloader settings
+
+Bootloader settings is a special area in the bootloader that contains information about the DFU process, as well as information about the versions of the application and of the bootloader. You must generate your own bootloader settings file for your custom application. See <a href="http://infocenter.nordicsemi.com/topic/com.nordic.infocenter.tools/dita/tools/nrfutil/nrfutil_settings_generate_display.html" target="blank">nrfutil documentation</a> for information on how to generate the bootloader settings file.
+Refer to @ref dfu_version and make sure that you set correct versions when generating the bootloader settings file.
+
+@section dfu_perform_after_gen Running a DFU with a custom package
+
+When your custom package is ready, follow the procedure in @ref dfu_connect to run an OTA-DFU.
+*/

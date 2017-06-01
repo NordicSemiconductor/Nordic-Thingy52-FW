@@ -1,0 +1,13 @@
+/**
+
+@page dfu Over-the-air device firmware update (OTA-DFU)
+
+The Thingy provides you with several options for upgrading its firmware.
+
+The Thingy mobile app is the default way of updating the Nordic-released versions of the firmware. For details, see the <a href="http://infocenter.nordicsemi.com/topic/com.nordic.infocenter.rds/dita/rds/designs/thingy/intro/frontpage.html" target="blank">Nordic Thingy:52 User Guide</a>.
+
+To perform a DFU with custom firmware, you must first generate a DFU package. See @subpage dfu_generating. Then, use one of the following ways to update the firmware:
+- @subpage dfu_connect
+- @subpage dfu_cable
+	
+*/

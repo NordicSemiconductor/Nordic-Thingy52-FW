@@ -1,0 +1,165 @@
+<!DOCTYPE CrossStudio_Project_File>
+<solution Name="ble_app_thingee_s132_pca20020" target="8" version="2">
+  <project Name="nrf52832_xxaa_s132">
+    <configuration
+      JLinkExecuteCommand="SetMonModeDebug = 1"
+      Name="Common"
+      Placement="Flash"
+      Target="nRF52832_xxAA"
+      arm_architecture="v7EM"
+      arm_core_type="Cortex-M4"
+      arm_endian="Little"
+      arm_fp_abi="Hard"
+      arm_fpu_type="FPv4-SP-D16"
+      arm_interwork="No"
+      arm_linker_heap_size="256"
+      arm_linker_process_stack_size="0"
+      arm_linker_stack_size="1024"
+      arm_simulator_memory_simulation_parameter="ROM;0x00000000;0x00080000;RAM;0x20000000;0x00010000"
+      arm_target_debug_interface_type="ADIv5"
+      arm_target_device_name="nRF52832_xxAA"
+      arm_target_interface_type="SWD"
+      c_preprocessor_definitions="BLE_STACK_SUPPORT_REQD;NRF52_PAN_12;NRF52_PAN_15;NRF52_PAN_20;NRF52_PAN_30;NRF52_PAN_31;NRF52_PAN_36;NRF52_PAN_51;NRF52_PAN_53;NRF52_PAN_54;NRF52_PAN_55;NRF52_PAN_58;NRF52_PAN_62;NRF52_PAN_63;NRF52_PAN_64;S132;NRF_LOG_USES_RTT=1;NRF52;SOFTDEVICE_PRESENT;SWI_DISABLE0;DEBUG;BSP_DEFINES_ONLY;ARM_MATH_CM4;MPU9250;EMPL;USE_DMP;EMPL_TARGET_NRF52;NO_VTOR_CONFIG"
+      c_user_include_directories="$(PackagesDir)/CMSIS_4/CMSIS/Include;../config;../../../sdk_components/ble/ble_advertising;../../../sdk_components/ble/common;../../../external/sdk/Nordic/nrf51/external/segger_rtt;../../../sdk_components/drivers_nrf/common;../../../sdk_components/drivers_nrf/config;../../../sdk_components/drivers_nrf/delay;../../../sdk_components/drivers_nrf/gpiote;../../../sdk_components/drivers_nrf/hal;../../../sdk_components/drivers_nrf/pstorage;../../../sdk_components/drivers_nrf/uart;../../../sdk_components/libraries/button;../../../sdk_components/libraries/fifo;../../../sdk_components/libraries/timer;../../../sdk_components/libraries/trace;../../../sdk_components/libraries/uart;../../../sdk_components/libraries/util;../../../sdk_components/softdevice/common/softdevice_handler;../../../sdk_components/softdevice/s132/headers;../../../sdk_components/softdevice/s132/headers/nrf52;../../../sdk_components/toolchain;../../../include/ble_services;../../../include/drivers;../../../include/board;../../../include/modules;../../../sdk_components/drivers_nrf/twi_master;../../../sdk_components/libraries/led_softblink;../../../sdk_components/libraries/low_power_pwm;../../../include/macros;../../../include/util;../../../sdk_components/libraries/scheduler;../../../sdk_components/libraries/fstorage;../../../sdk_components/libraries/experimental_section_vars;../../../sdk_components/drivers_nrf/pwm;../../../tools/sound;../../../libs/eMD6/core/driver/include;../../../libs/eMD6/core/driver/eMPL;../../../libs/eMD6/core/mpl;../../../libs/eMD6/core/mllite;../../../libs/eMD6/core/eMPL-hal;../../../libs/eMD6/core/driver/nRF52;../../../libs/jlink_monitor"
+      debug_additional_load_file="D:/Repos/Git/Applications/Firmware/thingee/sdk_components/softdevice/s132/hex/s132_nrf52_2.0.0_softdevice.hex"
+      debug_register_definition_file="$(PackagesDir)/nRF/XML/nrf52_Registers.xml"
+      debug_target_connection="J-Link"
+      gcc_entry_point="Reset_Handler"
+      linker_memory_map_file="$(PackagesDir)/nRF/XML/nRF52832_xxAA_MemoryMap.xml"
+      linker_section_placement_file="$(StudioDir)/targets/Cortex_M/flash_placement.xml"
+      linker_section_placement_macros="FLASH_START=0x1C000;SRAM_START=0x20002298"
+      macros="DeviceHeaderFile=$(PackagesDir)/nRF/CMSIS/Device/Include/nrf.h;DeviceLibraryIdentifier=M4lf;DeviceSystemFile=$(PackagesDir)/nRF/CMSIS/Device/Source/system_nrf52.c;DeviceVectorsFile=$(PackagesDir)/nRF/Source/nrf52_Vectors.s;DeviceFamily=nRF"
+      package_dependencies="nRF"
+      project_directory=""
+      project_type="Executable"
+      property_groups_file_path="$(PackagesDir)/nRF/XML/property_groups.xml"
+      target_reset_script="Reset();"
+      target_trace_initialize_script="EnableTrace(&quot;$(TraceInterfaceType)&quot;)" />
+    <folder Name="Source Files">
+      <folder Name="Thingee">
+        <file file_name="../main.c" />
+        <file file_name="../../../source/modules/thingee_ble_handler.c" />
+        <file file_name="../../../source/modules/thingee_config_flash.c" />
+        <file file_name="../../../source/util/advertiser_beacon_timeslot.c" />
+        <file file_name="../../../source/modules/thingee_ui.c" />
+        <file file_name="../../../source/modules/m_sound.c" />
+        <file file_name="../../../source/modules/m_motion.c" />
+        <file file_name="../../../source/modules/m_motion_flash.c" />
+        <file file_name="../../../source/modules/m_environment.c" />
+        <file file_name="../../../source/modules/m_environment_flash.c" />
+      </folder>
+      <folder Name="Thingee drivers">
+        <file file_name="../../../source/drivers/drv_temp_tsys01.c" />
+        <file file_name="../../../source/drivers/drv_pressure_mpl3115A2.c" />
+        <file file_name="../../../source/drivers/drv_led.c" />
+        <file file_name="../../../source/drivers/drv_ccs811.c" />
+        <file file_name="../../../source/drivers/drv_gas_sensor.c" />
+        <file file_name="../../../source/drivers/drv_io_ext.c" />
+        <file file_name="../../../source/drivers/drv_pca6408a.c" />
+        <file file_name="../../../source/drivers/drv_sx1509b.c" />
+        <file file_name="../../../source/drivers/drv_bh1745.c" />
+        <file file_name="../../../source/drivers/drv_color.c" />
+        <file file_name="../../../source/drivers/drv_speaker.c" />
+        <file file_name="../../../source/drivers/drv_mpu9250.c" />
+        <file file_name="../../../source/drivers/drv_motion.c" />
+        <file file_name="../../../source/drivers/drv_htu21d.c" />
+        <file file_name="../../../source/drivers/drv_humid_temp.c" />
+      </folder>
+      <folder Name="Thingee_libraries">
+        <file file_name="../../../libs/eMD6/core/driver/eMPL/inv_mpu.c" />
+        <file file_name="../../../libs/eMD6/core/driver/eMPL/inv_mpu_dmp_motion_driver.c" />
+        <file file_name="../../../libs/eMD6/core/mllite/data_builder.c" />
+        <file file_name="../../../libs/eMD6/core/mllite/hal_outputs.c" />
+        <file file_name="../../../libs/eMD6/core/mllite/message_layer.c" />
+        <file file_name="../../../libs/eMD6/core/mllite/ml_math_func.c" />
+        <file file_name="../../../libs/eMD6/core/mllite/mlmath.c" />
+        <file file_name="../../../libs/eMD6/core/mllite/mpl.c" />
+        <file file_name="../../../libs/eMD6/core/mllite/results_holder.c" />
+        <file file_name="../../../libs/eMD6/core/mllite/start_manager.c" />
+        <file file_name="../../../libs/eMD6/core/mllite/storage_manager.c" />
+        <file file_name="../../../libs/eMD6/core/eMPL-hal/eMPL_outputs.c" />
+        <file file_name="../../../libs/eMD6/core/driver/nRF52/log_nrf52.c" />
+        <file file_name="../../../libs/liblibmplmpu_m4_hardfp/liblibmplmpu.a" />
+        <file file_name="../../../libs/jlink_monitor/JLINK_MONITOR.c" />
+        <file file_name="../../../libs/jlink_monitor/JLINK_MONITOR_ISR_SES.s" />
+      </folder>
+      <folder Name="nRF_BLE">
+        <file file_name="../../../sdk_components/ble/common/ble_advdata.c" />
+        <file file_name="../../../sdk_components/ble/ble_advertising/ble_advertising.c" />
+        <file file_name="../../../sdk_components/ble/common/ble_conn_params.c" />
+        <file file_name="../../../sdk_components/ble/common/ble_srv_common.c" />
+        <file file_name="../../../source/ble_services/ble_tcs.c" />
+        <file file_name="../../../source/ble_services/ble_uis.c" />
+        <file file_name="../../../source/ble_services/ble_tms.c" />
+        <file file_name="../../../source/ble_services/ble_tes.c" />
+      </folder>
+      <folder Name="nRF_Drivers">
+        <file file_name="../../../sdk_components/drivers_nrf/delay/nrf_delay.c" />
+        <file file_name="../../../sdk_components/drivers_nrf/common/nrf_drv_common.c" />
+        <file file_name="../../../sdk_components/drivers_nrf/gpiote/nrf_drv_gpiote.c" />
+        <file file_name="../../../sdk_components/drivers_nrf/pstorage/pstorage.c" />
+        <file file_name="../../../sdk_components/drivers_nrf/twi_master/nrf_drv_twi.c" />
+        <file file_name="../../../sdk_components/drivers_nrf/pwm/nrf_drv_pwm.c" />
+      </folder>
+      <folder Name="nRF_Libraries">
+        <file file_name="../../../sdk_components/libraries/button/app_button.c" />
+        <file file_name="../../../sdk_components/libraries/util/app_error.c" />
+        <file file_name="../../../sdk_components/libraries/scheduler/app_scheduler.c" />
+        <file file_name="../../../sdk_components/libraries/timer/app_timer.c" />
+        <file file_name="../../../sdk_components/libraries/trace/app_trace.c" />
+        <file file_name="../../../sdk_components/libraries/util/nrf_assert.c" />
+        <file file_name="../../../sdk_components/libraries/util/nrf_log.c" />
+        <file file_name="../../../sdk_components/libraries/uart/retarget.c" />
+        <file file_name="../../../sdk_components/libraries/led_softblink/led_softblink.c" />
+        <file file_name="../../../sdk_components/libraries/low_power_pwm/low_power_pwm.c" />
+        <file file_name="../../../sdk_components/libraries/fstorage/fstorage.c" />
+        <file file_name="../../../sdk_components/libraries/util/app_util_platform.c" />
+        <file file_name="../../../external/sdk/Nordic/nrf51/external/segger_rtt/SEGGER_RTT_printf.c" />
+      </folder>
+      <folder Name="nRF_SoftDevice">
+        <file file_name="../../../sdk_components/softdevice/s132/doc/s132_nrf52_2.0.0_licence_agreement.txt" />
+        <file file_name="../../../sdk_components/softdevice/common/softdevice_handler/softdevice_handler.c" />
+      </folder>
+      <folder Name="::CMSIS" />
+      <folder Name="::Device" />
+      <configuration Name="Common" filter="c;cpp;cxx;cc;h;s;asm;inc" />
+    </folder>
+    <folder Name="CMSIS Files">
+      <file file_name="$(DeviceHeaderFile)" />
+      <file file_name="$(DeviceSystemFile)">
+        <configuration
+          Name="Common"
+          default_code_section=".init"
+          default_const_section=".init_rodata" />
+      </file>
+    </folder>
+    <folder Name="RTT Files">
+      <file file_name="$(StudioDir)/samples/SEGGER_RTT.c" />
+      <file file_name="$(StudioDir)/samples/SEGGER_RTT.h" />
+      <file file_name="$(StudioDir)/samples/SEGGER_RTT_Conf.h" />
+      <file file_name="$(StudioDir)/samples/SEGGER_RTT_SES.c" />
+    </folder>
+    <folder Name="Script Files">
+      <file file_name="$(PackagesDir)/nRF/Scripts/nRF_Target.js">
+        <configuration Name="Common" file_type="Reset Script" />
+      </file>
+    </folder>
+    <folder Name="System Files">
+      <file file_name="$(StudioDir)/source/thumb_crt0.s" />
+      <file file_name="$(PackagesDir)/nRF/Source/nRF_Startup.s" />
+      <file file_name="$(DeviceVectorsFile)">
+        <configuration Name="Common" file_type="Assembly" />
+      </file>
+    </folder>
+  </project>
+  <configuration
+    Name="Debug"
+    c_preprocessor_definitions="DEBUG"
+    gcc_debugging_level="Level 3"
+    gcc_optimization_level="None" />
+  <configuration
+    Name="Release"
+    c_preprocessor_definitions="NDEBUG"
+    gcc_debugging_level="Level 1"
+    gcc_optimization_level="Level 1" />
+</solution>

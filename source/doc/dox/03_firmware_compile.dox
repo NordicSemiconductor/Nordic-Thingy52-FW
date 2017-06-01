@@ -1,0 +1,41 @@
+/**
+@page firmware_compile Compiling new firmware
+
+You must compile the Thingy firmware using either GCC or Keil μVision.
+
+@section compile_keil Compiling with Keil
+
+Before starting this procedure, make sure you have <a href="https://www.keil.com/demo/eval/arm.htm/" target="_blank">Keil</a> installed on your computer. 
+
+Follow these steps to compile the Thingy firmware using Keil:
+-# Navigate to the folder @c \\project\\pca20020_s132\\arm5_no_packs\ and double-click the project file @c ble_app_thingy_s132_pca20020.uvprojx.
+The μVision integrated development environment (IDE) opens.
+@image html keil1.png "Keil μVision IDE"
+-# If you are compiling for the newest version of the Thingy hardware, select <b>release</b> from the target drop-down menu, as shown in the figure.
+@image html keil2.png "Select <b>release</b> from the menu"
+-# Select the appropriate Thingy version from the list. To check the version of your Thingy, you must remove the top rubber cover. The version number can be found on a white label on the PCB. To compile a debug version, select <b>debug</b>.
+-# To build the project, press F7 or click <b>Build</b>. The output will be visible in the Build Output window at the bottom and should finish with "0 Errors, 0 Warnings".  If you are compiling for an older Thingy version, you will receive a warning stating the version that you are compiling for.
+@image html keil3.png "Building the project"
+
+@section compile_gcc Compiling with GCC
+
+Before starting this procedure, make sure you have the following components installed on your computer:
+- GNU toolchain for ARM Cortex-M
+- GNU make or CMake
+
+Follow these steps to compile the Thingy firmware using GCC:
+-# Set up the path in <tt>makefile.windows</tt> or <tt>makefile.posix</tt>, depending on the platform that you are using. The .posix file is used when working on either Linux or OS X.
+	-# Open the makefile in a text editor.
+	-# Make sure that the @c GNU_INSTALL_ROOT variable points to your <tt>GNU Tools for ARM Embedded Processors</tt> directory. For example:
+@code
+GNU_INSTALL_ROOT := $(PROGFILES)/GNU Tools ARM Embedded/4.9 2015q3   // Toolchain path
+GNU_VERSION := 4.9.3
+GNU_PREFIX := arm-none-eabi
+@endcode
+-# Navigate to the folder @c project\\pca20020_s132\\armgcc.
+-# Run the following command to compile the Thingy application code:
+@code
+make -j
+@endcode
+
+*/

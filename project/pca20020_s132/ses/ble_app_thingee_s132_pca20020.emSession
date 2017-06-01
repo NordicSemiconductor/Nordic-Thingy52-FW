@@ -1,0 +1,79 @@
+<!DOCTYPE CrossStudio_Session_File>
+<session>
+ <Bookmarks/>
+ <Breakpoints>
+  <BreakpointListItem line="119" action="" hardwareBreakpoint="" trigger="" useHWbreakpoint="false" group="Breakpoints" type="Breakpoint" state="2" counter="0" isFunctionBreakpoint="false" filename="../../../sdk_components/libraries/util/app_error.c" expression="" />
+ </Breakpoints>
+ <ExecutionProfileWindow/>
+ <FrameBufferWindow>
+  <FrameBufferWindow addressText="" bufferWidth="-1" bufferHeight="-1" addressSpace="" />
+ </FrameBufferWindow>
+ <Memory1>
+  <MemoryWindow autoEvaluate="0" addressText="0x2000fe44" addressOrder="0" refreshPeriod="0" columnsText="" sizeText="4" viewMode="0" dataSize="1" radix="16" name="nrf52832_xxaa_s132" addressSpace="" />
+ </Memory1>
+ <Memory2>
+  <MemoryWindow autoEvaluate="0" addressText="" addressOrder="0" refreshPeriod="0" columnsText="" sizeText="" viewMode="0" dataSize="1" radix="16" name="nrf52832_xxaa_s132" addressSpace="" />
+ </Memory2>
+ <Memory3>
+  <MemoryWindow autoEvaluate="0" addressText="" addressOrder="0" refreshPeriod="0" columnsText="" sizeText="" viewMode="0" dataSize="1" radix="16" name="nrf52832_xxaa_s132" addressSpace="" />
+ </Memory3>
+ <Memory4>
+  <MemoryWindow autoEvaluate="0" addressText="" addressOrder="0" refreshPeriod="0" columnsText="" sizeText="" viewMode="0" dataSize="1" radix="16" name="nrf52832_xxaa_s132" addressSpace="" />
+ </Memory4>
+ <Project>
+  <ProjectSessionItem path="ble_app_thingee_s132_pca20020" name="unnamed" />
+  <ProjectSessionItem path="ble_app_thingee_s132_pca20020;nrf52832_xxaa_s132" name="unnamed" />
+  <ProjectSessionItem path="ble_app_thingee_s132_pca20020;nrf52832_xxaa_s132;Source Files" name="unnamed" />
+  <ProjectSessionItem path="ble_app_thingee_s132_pca20020;nrf52832_xxaa_s132;Source Files;nRF_BLE" name="unnamed" />
+  <ProjectSessionItem path="ble_app_thingee_s132_pca20020;nrf52832_xxaa_s132;Source Files;nRF_Libraries" name="unnamed" />
+  <ProjectSessionItem path="ble_app_thingee_s132_pca20020;nrf52832_xxaa_s132;Source Files;nRF_SoftDevice" name="unnamed" />
+  <ProjectSessionItem path="ble_app_thingee_s132_pca20020;nrf52832_xxaa_s132;Source Files;Thingee" name="unnamed" />
+  <ProjectSessionItem path="ble_app_thingee_s132_pca20020;nrf52832_xxaa_s132;Source Files;Thingee drivers" name="unnamed" />
+  <ProjectSessionItem path="ble_app_thingee_s132_pca20020;nrf52832_xxaa_s132;Source Files;Thingee_libraries" name="unnamed" />
+  <ProjectSessionItem path="ble_app_thingee_s132_pca20020;nrf52832_xxaa_s132;System Files" name="unnamed" />
+ </Project>
+ <Register1>
+  <RegisterWindow openNodes="CPU - Current Context" binaryNodes="" unsignedNodes="" decimalNodes="" octalNodes="" asciiNodes="" visibleNodes="CPU - Current Context/r0;CPU - Current Context/r1;CPU - Current Context/r2;CPU - Current Context/r3;CPU - Current Context/r4;CPU - Current Context/r5;CPU - Current Context/r6;CPU - Current Context/r7;CPU - Current Context/r8;CPU - Current Context/r9;CPU - Current Context/r10;CPU - Current Context/r11;CPU - Current Context/r12;CPU - Current Context/sp(r13);CPU - Current Context/lr(r14);CPU - Current Context/pc(r15);CPU - Current Context/apsr;CPU/r0;CPU/r1;CPU/r2;CPU/r3;CPU/r4;CPU/r5;CPU/r6;CPU/r7;CPU/r8;CPU/r9;CPU/r10;CPU/r11;CPU/r12;CPU/sp(r13);CPU/lr(r14);CPU/pc(r15);CPU/xpsr;CPU/msp;CPU/psp;CPU/cfbp" name="nrf52832_xxaa_s132" />
+ </Register1>
+ <Register2>
+  <RegisterWindow openNodes="CPU - Current Context" binaryNodes="" unsignedNodes="" decimalNodes="" octalNodes="" asciiNodes="" visibleNodes="CPU - Current Context/r0;CPU - Current Context/r1;CPU - Current Context/r2;CPU - Current Context/r3;CPU - Current Context/r4;CPU - Current Context/r5;CPU - Current Context/r6;CPU - Current Context/r7;CPU - Current Context/r8;CPU - Current Context/r9;CPU - Current Context/r10;CPU - Current Context/r11;CPU - Current Context/r12;CPU - Current Context/sp(r13);CPU - Current Context/lr(r14);CPU - Current Context/pc(r15);CPU - Current Context/apsr;CPU/r0;CPU/r1;CPU/r2;CPU/r3;CPU/r4;CPU/r5;CPU/r6;CPU/r7;CPU/r8;CPU/r9;CPU/r10;CPU/r11;CPU/r12;CPU/sp(r13);CPU/lr(r14);CPU/pc(r15);CPU/xpsr;CPU/msp;CPU/psp;CPU/cfbp" name="nrf52832_xxaa_s132" />
+ </Register2>
+ <Register3>
+  <RegisterWindow openNodes="CPU - Current Context" binaryNodes="" unsignedNodes="" decimalNodes="" octalNodes="" asciiNodes="" visibleNodes="CPU - Current Context/r0;CPU - Current Context/r1;CPU - Current Context/r2;CPU - Current Context/r3;CPU - Current Context/r4;CPU - Current Context/r5;CPU - Current Context/r6;CPU - Current Context/r7;CPU - Current Context/r8;CPU - Current Context/r9;CPU - Current Context/r10;CPU - Current Context/r11;CPU - Current Context/r12;CPU - Current Context/sp(r13);CPU - Current Context/lr(r14);CPU - Current Context/pc(r15);CPU - Current Context/apsr;CPU/r0;CPU/r1;CPU/r2;CPU/r3;CPU/r4;CPU/r5;CPU/r6;CPU/r7;CPU/r8;CPU/r9;CPU/r10;CPU/r11;CPU/r12;CPU/sp(r13);CPU/lr(r14);CPU/pc(r15);CPU/xpsr;CPU/msp;CPU/psp;CPU/cfbp" name="nrf52832_xxaa_s132" />
+ </Register3>
+ <Register4>
+  <RegisterWindow openNodes="CPU - Current Context" binaryNodes="" unsignedNodes="" decimalNodes="" octalNodes="" asciiNodes="" visibleNodes="CPU - Current Context/r0;CPU - Current Context/r1;CPU - Current Context/r2;CPU - Current Context/r3;CPU - Current Context/r4;CPU - Current Context/r5;CPU - Current Context/r6;CPU - Current Context/r7;CPU - Current Context/r8;CPU - Current Context/r9;CPU - Current Context/r10;CPU - Current Context/r11;CPU - Current Context/r12;CPU - Current Context/sp(r13);CPU - Current Context/lr(r14);CPU - Current Context/pc(r15);CPU - Current Context/apsr;CPU/r0;CPU/r1;CPU/r2;CPU/r3;CPU/r4;CPU/r5;CPU/r6;CPU/r7;CPU/r8;CPU/r9;CPU/r10;CPU/r11;CPU/r12;CPU/sp(r13);CPU/lr(r14);CPU/pc(r15);CPU/xpsr;CPU/msp;CPU/psp;CPU/cfbp" name="nrf52832_xxaa_s132" />
+ </Register4>
+ <TargetWindow programAction="" uploadFileType="" programLoadAddress="" programSize="" uploadFileName="" uploadMemoryInterface="" programFileName="" uploadStartAddress="" programFileType="" uploadSize="" programMemoryInterface="" />
+ <TraceWindow>
+  <Trace enabled="Yes" />
+ </TraceWindow>
+ <Watch1>
+  <Watches active="1" update="Never" />
+ </Watch1>
+ <Watch2>
+  <Watches active="0" update="Never" />
+ </Watch2>
+ <Watch3>
+  <Watches active="0" update="Never" />
+ </Watch3>
+ <Watch4>
+  <Watches active="0" update="Never" />
+ </Watch4>
+ <Files>
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Default" x="0" debugPath="C:/Users/jot1.NVLSI/AppData/Local/SEGGER/SEGGER Embedded Studio/v2/packages/nRF/Scripts/nRF_Target.js" y="19" path="C:/Users/jot1.NVLSI/AppData/Local/SEGGER/SEGGER Embedded Studio/v2/packages/nRF/Scripts/nRF_Target.js" left="0" selected="0" name="unnamed" top="0" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Default" x="0" debugPath="../../../sdk_components/libraries/uart/retarget.c" y="32" path="../../../sdk_components/libraries/uart/retarget.c" left="0" selected="0" name="unnamed" top="7" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Default" x="30" debugPath="../../../include/ble_services/ble_tcs.h" y="50" path="../../../include/ble_services/ble_tcs.h" left="0" selected="0" name="unnamed" top="37" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Default" x="1" debugPath="../../../include/ble_services/ble_tms.h" y="59" path="../../../include/ble_services/ble_tms.h" left="0" selected="1" name="unnamed" top="35" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Default" x="0" debugPath="../main.c" y="183" path="../main.c" left="0" selected="0" name="unnamed" top="158" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Default" x="0" debugPath="../../../sdk_components/libraries/util/app_error.c" y="123" path="../../../sdk_components/libraries/util/app_error.c" left="0" selected="0" name="unnamed" top="95" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Default" x="0" debugPath="../../../source/modules/m_motion.c" y="60" path="../../../source/modules/m_motion.c" left="0" selected="0" name="unnamed" top="35" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Default" x="0" debugPath="../../../source/drivers/drv_motion.c" y="9" path="../../../source/drivers/drv_motion.c" left="0" selected="0" name="unnamed" top="0" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Default" x="0" debugPath="C:/Users/jot1.NVLSI/AppData/Local/SEGGER/SEGGER Embedded Studio/v2/packages/nRF/Source/nRF_Startup.s" y="33" path="C:/Users/jot1.NVLSI/AppData/Local/SEGGER/SEGGER Embedded Studio/v2/packages/nRF/Source/nRF_Startup.s" left="0" selected="0" name="unnamed" top="11" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Default" x="0" debugPath="C:/Users/jot1.NVLSI/AppData/Local/SEGGER/SEGGER Embedded Studio/v2/packages/nRF/Source/nrf52_Vectors.s" y="369" path="C:/Users/jot1.NVLSI/AppData/Local/SEGGER/SEGGER Embedded Studio/v2/packages/nRF/Source/nrf52_Vectors.s" left="0" selected="0" name="unnamed" top="343" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Default" x="0" debugPath="../../../source/modules/thingee_ble_handler.c" y="292" path="../../../source/modules/thingee_ble_handler.c" left="0" selected="0" name="unnamed" top="255" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Default" x="0" debugPath="../../../source/drivers/drv_speaker.c" y="20" path="../../../source/drivers/drv_speaker.c" left="0" selected="0" name="unnamed" top="0" />
+  <SessionOpenFile useTextEdit="1" useBinaryEdit="0" codecName="Default" x="0" debugPath="../../../include/ble_services/ble_tes.h" y="42" path="../../../include/ble_services/ble_tes.h" left="0" selected="0" name="unnamed" top="19" />
+ </Files>
+ <ARMCrossStudioWindow activeProject="nrf52832_xxaa_s132" autoConnectTarget="J-Link" debugSearchFileMap="" fileDialogInitialDirectory="D:/Repos/Git/Applications/Firmware/thingee/source/drivers" fileDialogDefaultFilter="" autoConnectCapabilities="1132" debugSearchPath="" buildConfiguration="Debug" />
+</session>

@@ -1,0 +1,4 @@
+var searchData=
+[
+  ['packed',['PACKED',['../group__ble__sdk__srv__uis.html#ga2761e036eab1d38d0187c208439cd0b0',1,'PACKED(union{PACKED(struct{uint8_t r;uint8_t g;uint8_t b;}) mode_const;PACKED(struct{uint8_tcolor_mix;uint8_tintensity;uint16_t delay;}) mode_breathe;PACKED(struct{uint8_t color_mix;uint8_t intensity;}) mode_breathe_one_shot;}) ble_uis_led_data_t:&#160;ble_uis.h'],['../group__ble__sdk__srv__uis.html#ga5ee8a96afc68c7c4a81c00ab32246b92',1,'PACKED(struct{ble_uis_led_mode_t mode;ble_uis_led_data_t data;}) ble_uis_led_t:&#160;ble_uis.h'],['../group__ble__sdk__srv__uis.html#ga832290dd70d03541b0211e7ff9cb3745',1,'PACKED(struct{uint8_t mos_1;uint8_t mos_2;uint8_t mos_3;uint8_t mos_4;}) ble_uis_pin_t:&#160;ble_uis.h'],['../group__m__env__flash__config.html#gac2c67e839ba6f1ea9321fef28c4b3dcb',1,'PACKED(struct{uint16_t mode_250ms;uint16_t mode_1s;uint16_t mode_10s;uint16_t mode_60s;}) m_gas_baseline_t:&#160;m_environment_flash.h']]]
+];

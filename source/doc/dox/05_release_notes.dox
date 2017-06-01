@@ -1,0 +1,36 @@
+/**
+@page release_notes Release Notes
+
+<h2>Nordic Thingy:52 firmware version 1.1.0</h2>
+
+<b>Built on nRF5 SDK v12.1.0</b>
+
+<b>Uses SoftDevice S132 v3.0.0</b>
+
+Tested with the following versions of GCC and Keil:
+- gcc_arm_none_eabi 4.9 2015q3
+- Keil version 5.20
+
+<h3>Known issues</h3>
+- Compass heading values are reversed, when rotating the Thingy clockwise the heading data decreases.
+- RGB LED configurations might get out of sync for one breathe cycle.
+- The Thingy gas sensor reqires 48 hours of operation time (burn in) to self-calibrate.
+- Error logs in the RTT console when a function returns an error code, even when the error is correctly handled by the firmware.
+- The scenario of running OTA-DFU on an application that would extend into the FDS data area is not tested.
+- Speaker status notifications may arrive out of order under load.
+- Writing the device name characteristic may sometimes fail to update the device name field in advertising packets.
+- Performing extensive enabling/disabling of sensors might reboot the Thingy.
+- Configuring very optimistic service intervals may cause the Thingy to reboot. Examples:
+	- Sound streaming and motion sensor simultaneously.
+	- Motion sensor and several environment sensors configured for lowest notification interval.
+- Sound service streaming will not work on older devices due to low bandwidth.
+- The first 10 seconds of motion sensor data may be inaccurate due to calibration.
+- When motion data frequency is set below 5 Hz, the data becomes invalid.
+- Preproduction versions of the Thingy hardware will not be able to perform OTA-DFU of the bootloader.
+- Quaternion will always start at identity when turning the service on (Enabling quaternion notifications will always start at Identity (0,0,0,1), equivalent of Eulers (0,0,0)).
+- When activated, the compass module uses its present heading as North. The heading is given relatively to this initial setting, and the value increases counterclockwise.
+
+@note The micro-ecc library is used in the Thingy bootloader. See <a href="./license.txt" target="_blank">license.txt</a> for the license of this library.
+
+
+*/

@@ -1,0 +1,497 @@
+--- a/components/ble/ble_services/ble_dfu/ble_dfu.c
++++ b/components/ble/ble_services/ble_dfu/ble_dfu.c
+@@ -88,6 +88,7 @@
+     memset(&char_md, 0, sizeof(char_md));
+ 
+     char_md.char_props.notify = 1;
++    char_md.char_props.write  = 1;    
+     char_md.p_char_user_desc  = NULL;
+     char_md.p_char_pf         = NULL;
+     char_md.p_user_desc_md    = NULL;
+@@ -99,7 +100,7 @@
+ 
+     memset(&attr_md, 0, sizeof(attr_md));
+ 
+-    BLE_GAP_CONN_SEC_MODE_SET_OPEN(&attr_md.read_perm);
++    //BLE_GAP_CONN_SEC_MODE_SET_OPEN(&attr_md.read_perm);
+     BLE_GAP_CONN_SEC_MODE_SET_OPEN(&attr_md.write_perm);
+ 
+     attr_md.vloc    = BLE_GATTS_VLOC_STACK;
+@@ -128,7 +129,7 @@
+ {
+     uint32_t      err_code;
+     ble_uuid_t    ble_uuid;
+-    ble_uuid128_t nus_base_uuid = BLE_DFU_BASE_UUID;
++    ble_uuid128_t dfu_base_uuid = BLE_DFU_BASE_UUID;
+ 
+     VERIFY_PARAM_NOT_NULL(p_dfu);
+     VERIFY_PARAM_NOT_NULL(p_dfu_init);
+@@ -141,19 +142,18 @@
+     p_dfu->is_waiting_for_disconnection = false;
+     p_dfu->is_ctrlpt_notification_enabled = false;
+ 
+-    /**@snippet [Adding proprietary Service to S110 SoftDevice] */
+-    // Add a custom base UUID.
+-    err_code = sd_ble_uuid_vs_add(&nus_base_uuid, &p_dfu->uuid_type);
+-    VERIFY_SUCCESS(err_code);
+-
+-    ble_uuid.type = p_dfu->uuid_type;
+-    ble_uuid.uuid = BLE_UUID_DFU_SERVICE;
++    BLE_UUID_BLE_ASSIGN(ble_uuid, BLE_UUID_DFU_SERVICE);
+ 
+     // Add the service.
+     err_code = sd_ble_gatts_service_add(BLE_GATTS_SRVC_TYPE_PRIMARY,
+                                         &ble_uuid,
+                                         &p_dfu->service_handle);
+     /**@snippet [Adding proprietary Service to S110 SoftDevice] */
++    VERIFY_SUCCESS(err_code);
++
++    /**@snippet [Adding proprietary Service to S110 SoftDevice] */
++    // Add a custom base UUID.
++    err_code = sd_ble_uuid_vs_add(&dfu_base_uuid, &p_dfu->uuid_type);
+     VERIFY_SUCCESS(err_code);
+ 
+     // Add the RX Characteristic.
+--- a/components/ble/ble_services/ble_dfu/ble_dfu.h
++++ b/components/ble/ble_services/ble_dfu/ble_dfu.h
+@@ -34,8 +34,8 @@
+ extern "C" {
+ #endif
+ 
+-#define BLE_UUID_DFU_SERVICE 0x0001
+-#define BLE_DFU_BASE_UUID   {{0x50, 0xEA, 0xDA, 0x30, 0x88, 0x83, 0xB8, 0x9F, 0x60, 0x4F, 0x15, 0xF3, 0x00, 0x00, 0x40, 0x8E}} /**< Used vendor specific UUID. */
++#define BLE_UUID_DFU_SERVICE 0xFE59
++#define BLE_DFU_BASE_UUID   {{0x50, 0xEA, 0xDA, 0x30, 0x88, 0x83, 0xB8, 0x9F, 0x60, 0x4F, 0x15, 0xF3, 0x00, 0x00, 0xC9, 0x8E}} /**< Used vendor specific UUID. */
+ 
+ #define BLE_DFU_ENTER_BOOTLOADER 0x01
+ 
+--- a/components/libraries/bootloader/ble_dfu/nrf_ble_dfu.c
++++ b/components/libraries/bootloader/ble_dfu/nrf_ble_dfu.c
+@@ -20,7 +20,8 @@
+ #include "nrf_bootloader_info.h"
+ #include "ble_advdata.h"
+ #include "ble_conn_params.h"
+-#include "boards.h"
++//#include "boards.h"
++#include "pca20020.h"
+ #include "nrf_log.h"
+ #include "ble_hci.h"
+ #include "app_timer.h"
+@@ -28,10 +29,10 @@
+ #include "nrf_log.h"
+ #include "nrf_delay.h"
+ 
+-#define ADVERTISING_LED_PIN_NO               BSP_LED_0                                              /**< Is on when device is advertising. */
+-#define CONNECTED_LED_PIN_NO                 BSP_LED_1                                              /**< Is on when device has connected. */
+-
+-#define DEVICE_NAME                          "DfuTarg"                                              /**< Name of device. Will be included in the advertising data. */
++//#define ADVERTISING_LED_PIN_NO               BSP_LED_0                                              /**< Is on when device is advertising. */
++//#define CONNECTED_LED_PIN_NO                 BSP_LED_1                                              /**< Is on when device has connected. */
++
++#define DEVICE_NAME                          "ThingyDfu"                                            /**< Name of device. Will be included in the advertising data. */
+ #define MANUFACTURER_NAME                    "NordicSemiconductor"                                  /**< Manufacturer. Will be passed to Device Information Service. */
+ 
+ #define MIN_CONN_INTERVAL                    (uint16_t)(MSEC_TO_UNITS(15, UNIT_1_25_MS))            /**< Minimum acceptable connection interval. */
+@@ -165,8 +166,8 @@
+     err_code = sd_ble_gap_adv_start(&adv_params);
+     VERIFY_SUCCESS(err_code);
+ 
+-    nrf_gpio_pin_clear(ADVERTISING_LED_PIN_NO);
+-    nrf_gpio_pin_set(CONNECTED_LED_PIN_NO);
++    //nrf_gpio_pin_clear(ADVERTISING_LED_PIN_NO);
++    //nrf_gpio_pin_set(CONNECTED_LED_PIN_NO);
+ 
+     m_flags |= DFU_BLE_FLAG_IS_ADVERTISING;
+     return NRF_SUCCESS;
+@@ -187,7 +188,7 @@
+     err_code = sd_ble_gap_adv_stop();
+     VERIFY_SUCCESS(err_code);
+ 
+-    nrf_gpio_pin_set(ADVERTISING_LED_PIN_NO);
++//    nrf_gpio_pin_set(ADVERTISING_LED_PIN_NO);
+ 
+     m_flags |= DFU_BLE_FLAG_IS_ADVERTISING;
+     return NRF_SUCCESS;
+@@ -561,8 +562,8 @@
+     switch (p_ble_evt->header.evt_id)
+     {
+         case BLE_GAP_EVT_CONNECTED:
+-            nrf_gpio_pin_clear(CONNECTED_LED_PIN_NO);
+-            nrf_gpio_pin_set(ADVERTISING_LED_PIN_NO);
++//            nrf_gpio_pin_clear(CONNECTED_LED_PIN_NO);
++//            nrf_gpio_pin_set(ADVERTISING_LED_PIN_NO);
+ 
+             m_conn_handle    = p_ble_evt->evt.gap_evt.conn_handle;
+             m_flags &= ~DFU_BLE_FLAG_IS_ADVERTISING;
+@@ -671,10 +672,10 @@
+  */
+ static void leds_init(void)
+ {
+-    nrf_gpio_cfg_output(ADVERTISING_LED_PIN_NO);
+-    nrf_gpio_cfg_output(CONNECTED_LED_PIN_NO);
+-    nrf_gpio_pin_set(ADVERTISING_LED_PIN_NO);
+-    nrf_gpio_pin_set(CONNECTED_LED_PIN_NO);
++//    nrf_gpio_cfg_output(ADVERTISING_LED_PIN_NO);
++//    nrf_gpio_cfg_output(CONNECTED_LED_PIN_NO);
++//    nrf_gpio_pin_set(ADVERTISING_LED_PIN_NO);
++//    nrf_gpio_pin_set(CONNECTED_LED_PIN_NO);
+ }
+ 
+ 
+--- a/components/libraries/bootloader/dfu/nrf_dfu.c
++++ b/components/libraries/bootloader/dfu/nrf_dfu.c
+@@ -19,10 +19,15 @@
+ #include "app_scheduler.h"
+ #include "app_timer_appsh.h"
+ #include "nrf_log.h"
+-#include "boards.h"
++//#include "boards.h"
++#include "pca20020.h"
+ #include "nrf_bootloader_info.h"
+ #include "nrf_dfu_req_handler.h"
+ 
++#include "nrf_delay.h"
++#include "app_util_platform.h"
++#include "drv_ext_gpio.h"
++
+ #define SCHED_MAX_EVENT_DATA_SIZE       MAX(APP_TIMER_SCHED_EVT_SIZE, 0)                        /**< Maximum size of scheduler events. */
+ 
+ #define SCHED_QUEUE_SIZE                20                                                      /**< Maximum number of events in the scheduler queue. */
+@@ -30,6 +35,24 @@
+ #define APP_TIMER_PRESCALER             0                                                       /**< Value of the RTC1 PRESCALER register. */
+ #define APP_TIMER_OP_QUEUE_SIZE         4                                                       /**< Size of timer operation queues. */
+ 
++static const nrf_drv_twi_t  m_twi_sensors = NRF_DRV_TWI_INSTANCE(TWI_SENSOR_INSTANCE);
++static const drv_ext_light_conf_t led_config[DRV_EXT_LIGHT_NUM] = DRV_EXT_LIGHT_CFG;
++    
++static const nrf_drv_twi_config_t twi_config =
++{
++    .scl                = TWI_SCL,
++    .sda                = TWI_SDA,
++    .frequency          = NRF_TWI_FREQ_100K,
++    .interrupt_priority = APP_IRQ_PRIORITY_LOW
++};
++
++static const drv_sx1509_cfg_t sx1509_cfg =
++{
++    .twi_addr       = SX1509_ADDR,
++    .p_twi_instance = &m_twi_sensors,
++    .p_twi_cfg      = &twi_config
++};    
++
+ // Weak function implementation
+ 
+ /** @brief Weak implemenation of nrf_dfu_check_enter.
+@@ -39,9 +62,12 @@
+  */
+ __WEAK bool nrf_dfu_enter_check(void)
+ {
+-    if (nrf_gpio_pin_read(BOOTLOADER_BUTTON) == 0)
+-    {
+-        return true;
++    if (NRF_POWER->RESETREAS == 0)
++    {
++        if (nrf_gpio_pin_read(BUTTON) == 0)
++        {
++            return true;
++        }
+     }
+ 
+     if (s_dfu_settings.enter_buttonless_dfu == 1)
+@@ -55,6 +81,52 @@
+ 
+ 
+ // Internal Functions
++
++/**@brief Function for initialization of LEDs.
++ */
++static void leds_init(void)
++{
++    uint32_t                        err_code;
++    static const drv_ext_light_init_t led_init = 
++    {
++        .p_light_conf        = led_config,
++        .num_lights          = DRV_EXT_LIGHT_NUM,
++        .clkx_div            = DRV_EXT_LIGHT_CLKX_DIV_8,
++        .p_twi_conf          = &sx1509_cfg,
++        .app_timer_prescaler = 0,
++    };
++
++    nrf_delay_ms(100);
++    
++    NRF_LOG_INFO("Before drv_ext_light_init\r\n");
++    err_code = drv_ext_light_init(&led_init, true);
++    NRF_LOG_INFO("After drv_ext_light_init\r\n");
++    APP_ERROR_CHECK(err_code);
++}
++
++static void leds_on(void)
++{
++    static drv_ext_light_rgb_sequence_t sequence = 
++    {
++        .color         = DRV_EXT_LIGHT_COLOR_YELLOW,
++        .sequence_vals = 
++        {
++            .on_time_ms       =  40,
++            .on_intensity     =  60,
++            .off_time_ms      =  85,
++            .off_intensity    =  10,
++            .fade_in_time_ms  = 250,
++            .fade_out_time_ms = 450      
++        }
++    };
++    
++    (void)drv_ext_light_rgb_sequence(DRV_EXT_RGB_LED_LIGHTWELL, &sequence);
++}
++
++//static void leds_off(void)
++//{
++//    (void)drv_ext_light_off(DRV_EXT_RGB_LED_LIGHTWELL);  
++//}
+ 
+ /**@brief Function for initializing the timer handler module (app_timer).
+  */
+@@ -120,7 +192,9 @@
+     {
+         timers_init();
+         scheduler_init();
+-
++        leds_init();
++        leds_on();
++        
+         // Initializing transports
+         ret_val = nrf_dfu_transports_init();
+         if (ret_val != NRF_SUCCESS)
+--- a/components/libraries/bootloader/dfu/nrf_dfu_types.h
++++ b/components/libraries/bootloader/dfu/nrf_dfu_types.h
+@@ -101,7 +101,7 @@
+ /** @brief  Size of the flash space reserved for application data.
+  */
+ #ifndef DFU_APP_DATA_RESERVED
+-#define DFU_APP_DATA_RESERVED               CODE_PAGE_SIZE * 3
++#define DFU_APP_DATA_RESERVED               CODE_PAGE_SIZE * 6
+ #endif
+ 
+ 
+--- a/components/softdevice/common/softdevice_handler/ble_stack_handler_types.h
++++ b/components/softdevice/common/softdevice_handler/ble_stack_handler_types.h
+@@ -34,7 +34,7 @@
+ extern "C" {
+ #endif
+ 
+-#define BLE_STACK_EVT_MSG_BUF_SIZE       (sizeof(ble_evt_t) + (GATT_MTU_SIZE_DEFAULT))     /**< Size of BLE event message buffer. This will be provided to the SoftDevice while fetching an event. */
++#define BLE_STACK_EVT_MSG_BUF_SIZE       (sizeof(ble_evt_t) + (GATT_MTU_SIZE_DEFAULT*12))     /**< Size of BLE event message buffer. This will be provided to the SoftDevice while fetching an event. */
+ #define BLE_STACK_HANDLER_SCHED_EVT_SIZE 0                                                 /**< The size of the scheduler event used by SoftDevice handler when passing BLE events using the @ref app_scheduler. */
+ 
+ /**@brief Application stack event handler type. */
+--- a/components/softdevice/common/softdevice_handler/softdevice_handler.c
++++ b/components/softdevice/common/softdevice_handler/softdevice_handler.c
+@@ -21,6 +21,14 @@
+ #include "nrf_nvic.h"
+ #include "nrf.h"
+ #include "sdk_common.h"
++
++#ifdef SDH_DEBUG
++    #include "SEGGER_RTT.h"
++    #define DEBUG_PRINTF (void)SEGGER_RTT_printf
++#else
++    #define DEBUG_PRINTF(...)
++#endif
++
+ #if CLOCK_ENABLED
+ #include "nrf_drv_clock.h"
+ #endif
+@@ -456,7 +464,7 @@
+     return NRF_SUCCESS;
+ }
+ 
+-
++#ifdef SDH_DEBUG
+ static inline uint32_t ram_total_size_get(void)
+ {
+ #ifdef NRF51
+@@ -480,6 +488,7 @@
+     ram_end_address+= ram_total_size_get();
+     return ram_end_address;
+ }
++#endif
+ /*lint -restore*/
+ 
+ /*lint --e{10} --e{19} --e{27} --e{40} --e{529} -save suppress Error 27: Illegal character */
+@@ -498,10 +507,10 @@
+ #endif//__CC_ARM
+     if (ram_start != sd_req_ram_start)
+     {
+-        NRF_LOG_WARNING("RAM START ADDR 0x%x should be adjusted to 0x%x\r\n",
++        DEBUG_PRINTF(0, "RAM START ADDR 0x%x should be adjusted to 0x%x\r\n",
+                   ram_start,
+                   sd_req_ram_start);
+-        NRF_LOG_WARNING("RAM SIZE should be adjusted to 0x%x \r\n",
++        DEBUG_PRINTF(0, "RAM SIZE should be adjusted to 0x%x \r\n",
+                 ram_end_address_get() - sd_req_ram_start);
+         return NRF_SUCCESS;
+     }
+@@ -527,20 +536,20 @@
+ #endif
+ 
+     app_ram_base = ram_start;
+-    NRF_LOG_INFO("sd_ble_enable: RAM START at 0x%x\r\n",
++    DEBUG_PRINTF(0, "sd_ble_enable: RAM START at 0x%x\r\n",
+                     app_ram_base);
+     err_code = sd_ble_enable(p_ble_enable_params, &app_ram_base);
+ 
+     if (app_ram_base != ram_start)
+     {
+-        NRF_LOG_WARNING("sd_ble_enable: app_ram_base should be adjusted to 0x%x\r\n",
++        DEBUG_PRINTF(0, "sd_ble_enable: app_ram_base should be adjusted to 0x%x\r\n",
+                 app_ram_base);
+-        NRF_LOG_WARNING("ram size should be adjusted to 0x%x \r\n",
++        DEBUG_PRINTF(0, "ram size should be adjusted to 0x%x \r\n",
+                 ram_end_address_get() - app_ram_base);
+     }
+     else if (err_code != NRF_SUCCESS)
+     {
+-        NRF_LOG_ERROR("sd_ble_enable: error 0x%x\r\n", err_code);
++        DEBUG_PRINTF(0, "sd_ble_enable: error 0x%x\r\n", err_code);
+     }
+     return err_code;
+ #else
+--- a/components/softdevice/common/softdevice_handler/softdevice_handler_appsh.c
++++ b/components/softdevice/common/softdevice_handler/softdevice_handler_appsh.c
+@@ -14,13 +14,48 @@
+ #include "app_scheduler.h"
+ #include <string.h>
+ 
++//#define SDH_DEBUG
++#ifdef SDH_DEBUG
++    #include "SEGGER_RTT.h"
++    #define DEBUG_PRINTF (void)SEGGER_RTT_printf
++#else
++    #define DEBUG_PRINTF(...)
++#endif
++
++
++static uint32_t evt_scheduled = 0;
++
+ void softdevice_evt_get(void * p_event_data, uint16_t event_size)
+ {
+     APP_ERROR_CHECK_BOOL(event_size == 0);
+-    intern_softdevice_events_execute();
++    
++    while (evt_scheduled > 0)
++    {
++        uint32_t events = evt_scheduled;
++        intern_softdevice_events_execute();
++        evt_scheduled -= events;
++    }
+ }
+ 
+ uint32_t softdevice_evt_schedule(void)
+-{
+-    return app_sched_event_put(NULL, 0, softdevice_evt_get);
++{   
++    uint32_t err_code;
++    
++    if (evt_scheduled > 0)
++    {
++        //DEBUG_PRINTF(0, "softdevice_evt_schedule: evt_scheduled %d\r\n", evt_scheduled);
++        err_code = NRF_SUCCESS;
++    }
++    else
++    {
++        err_code = app_sched_event_put(NULL, 0, softdevice_evt_get);
++    }
++
++    if (evt_scheduled < (UINT32_MAX-1))
++    {
++        evt_scheduled++;
++    } 
++    
++    return err_code;
++    //return app_sched_event_put(NULL, 0, softdevice_evt_get);
+ }
+--- a/external/segger_rtt/SEGGER_RTT.h
++++ b/external/segger_rtt/SEGGER_RTT.h
+@@ -159,44 +159,44 @@
+ // Control sequences, based on ANSI.
+ // Can be used to control color, and clear the screen
+ //
+-#define RTT_CTRL_RESET                "\e[0m"         // Reset to default colors
+-#define RTT_CTRL_CLEAR                "\e[2J"         // Clear screen, reposition cursor to top left
+-
+-#define RTT_CTRL_TEXT_BLACK           "\e[2;30m"
+-#define RTT_CTRL_TEXT_RED             "\e[2;31m"
+-#define RTT_CTRL_TEXT_GREEN           "\e[2;32m"
+-#define RTT_CTRL_TEXT_YELLOW          "\e[2;33m"
+-#define RTT_CTRL_TEXT_BLUE            "\e[2;34m"
+-#define RTT_CTRL_TEXT_MAGENTA         "\e[2;35m"
+-#define RTT_CTRL_TEXT_CYAN            "\e[2;36m"
+-#define RTT_CTRL_TEXT_WHITE           "\e[2;37m"
+-
+-#define RTT_CTRL_TEXT_BRIGHT_BLACK    "\e[1;30m"
+-#define RTT_CTRL_TEXT_BRIGHT_RED      "\e[1;31m"
+-#define RTT_CTRL_TEXT_BRIGHT_GREEN    "\e[1;32m"
+-#define RTT_CTRL_TEXT_BRIGHT_YELLOW   "\e[1;33m"
+-#define RTT_CTRL_TEXT_BRIGHT_BLUE     "\e[1;34m"
+-#define RTT_CTRL_TEXT_BRIGHT_MAGENTA  "\e[1;35m"
+-#define RTT_CTRL_TEXT_BRIGHT_CYAN     "\e[1;36m"
+-#define RTT_CTRL_TEXT_BRIGHT_WHITE    "\e[1;37m"
+-
+-#define RTT_CTRL_BG_BLACK             "\e[24;40m"
+-#define RTT_CTRL_BG_RED               "\e[24;41m"
+-#define RTT_CTRL_BG_GREEN             "\e[24;42m"
+-#define RTT_CTRL_BG_YELLOW            "\e[24;43m"
+-#define RTT_CTRL_BG_BLUE              "\e[24;44m"
+-#define RTT_CTRL_BG_MAGENTA           "\e[24;45m"
+-#define RTT_CTRL_BG_CYAN              "\e[24;46m"
+-#define RTT_CTRL_BG_WHITE             "\e[24;47m"
+-
+-#define RTT_CTRL_BG_BRIGHT_BLACK      "\e[4;40m"
+-#define RTT_CTRL_BG_BRIGHT_RED        "\e[4;41m"
+-#define RTT_CTRL_BG_BRIGHT_GREEN      "\e[4;42m"
+-#define RTT_CTRL_BG_BRIGHT_YELLOW     "\e[4;43m"
+-#define RTT_CTRL_BG_BRIGHT_BLUE       "\e[4;44m"
+-#define RTT_CTRL_BG_BRIGHT_MAGENTA    "\e[4;45m"
+-#define RTT_CTRL_BG_BRIGHT_CYAN       "\e[4;46m"
+-#define RTT_CTRL_BG_BRIGHT_WHITE      "\e[4;47m"
++#define RTT_CTRL_RESET                "\x1B[0m"         // Reset to default colors
++#define RTT_CTRL_CLEAR                "\x1B[2J"         // Clear screen, reposition cursor to top left
++
++#define RTT_CTRL_TEXT_BLACK           "\x1B[2;30m"
++#define RTT_CTRL_TEXT_RED             "\x1B[2;31m"
++#define RTT_CTRL_TEXT_GREEN           "\x1B[2;32m"
++#define RTT_CTRL_TEXT_YELLOW          "\x1B[2;33m"
++#define RTT_CTRL_TEXT_BLUE            "\x1B[2;34m"
++#define RTT_CTRL_TEXT_MAGENTA         "\x1B[2;35m"
++#define RTT_CTRL_TEXT_CYAN            "\x1B[2;36m"
++#define RTT_CTRL_TEXT_WHITE           "\x1B[2;37m"
++
++#define RTT_CTRL_TEXT_BRIGHT_BLACK    "\x1B[1;30m"
++#define RTT_CTRL_TEXT_BRIGHT_RED      "\x1B[1;31m"
++#define RTT_CTRL_TEXT_BRIGHT_GREEN    "\x1B[1;32m"
++#define RTT_CTRL_TEXT_BRIGHT_YELLOW   "\x1B[1;33m"
++#define RTT_CTRL_TEXT_BRIGHT_BLUE     "\x1B[1;34m"
++#define RTT_CTRL_TEXT_BRIGHT_MAGENTA  "\x1B[1;35m"
++#define RTT_CTRL_TEXT_BRIGHT_CYAN     "\x1B[1;36m"
++#define RTT_CTRL_TEXT_BRIGHT_WHITE    "\x1B[1;37m"
++
++#define RTT_CTRL_BG_BLACK             "\x1B[24;40m"
++#define RTT_CTRL_BG_RED               "\x1B[24;41m"
++#define RTT_CTRL_BG_GREEN             "\x1B[24;42m"
++#define RTT_CTRL_BG_YELLOW            "\x1B[24;43m"
++#define RTT_CTRL_BG_BLUE              "\x1B[24;44m"
++#define RTT_CTRL_BG_MAGENTA           "\x1B[24;45m"
++#define RTT_CTRL_BG_CYAN              "\x1B[24;46m"
++#define RTT_CTRL_BG_WHITE             "\x1B[24;47m"
++
++#define RTT_CTRL_BG_BRIGHT_BLACK      "\x1B[4;40m"
++#define RTT_CTRL_BG_BRIGHT_RED        "\x1B[4;41m"
++#define RTT_CTRL_BG_BRIGHT_GREEN      "\x1B[4;42m"
++#define RTT_CTRL_BG_BRIGHT_YELLOW     "\x1B[4;43m"
++#define RTT_CTRL_BG_BRIGHT_BLUE       "\x1B[4;44m"
++#define RTT_CTRL_BG_BRIGHT_MAGENTA    "\x1B[4;45m"
++#define RTT_CTRL_BG_BRIGHT_CYAN       "\x1B[4;46m"
++#define RTT_CTRL_BG_BRIGHT_WHITE      "\x1B[4;47m"
+ 
+ 
+ #endif

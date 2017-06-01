@@ -1,0 +1,188 @@
+r|InputDisable|Input buffer disable register
+	f|inpbuf[0..15]|n|1|Disables/Enables the input buffer of the I/O pin
+		v|Enabled|0|Input buffer is enabled (input actually being used)
+		v|Disabled|1|Input buffer is disabled (input actually not being used, LED connection)
+r|LongSlew|Output buffer long slew register
+	f|LongSlew[0..15]|n|1|Enables/Disables increased slew rate of the output buffer of each [output-configured] IO
+		v|Disabled|0|Increased slew rate is disabled
+		v|Enabled|1|Increased slew rate is enabled
+r|LowDrive|Output buffer low drive register  
+	f|LowDrive[0..15]|n|1|Enables/Disables reduced drive of the output buffer of each [output-configured] IO
+		v|Disabled|0|Reduced drive is disabled 
+		v|Enabled|1|Reduced drive is enabled 
+r|PullUp|Pull-up register  
+	f|PullUp[0..15]|n|1|Enables/Disables the pull-up for each IO
+		v|Disabled|0|Pull-up is disabled  
+		v|Enabled|1|Pull-up is enabled
+r|PullDown|Pull-down register   
+	f|PullDown[0..15]|n|1|Enables/Disables pull-down for each IO
+		v|Disabled|0|Pull-down is disabled 
+		v|Enabled|1|Pull-down is enabled
+r|OpenDrain|Enables/Disables open drain operation for each [output-configured] IO
+	f|OpenDrain[0..15]|n|1|Enables/Disables open drain operation for each [output-configured] IO
+		v|PushPull|0|Regular push-pull operation 
+		v|OpenDrain|1|Open drain operation
+r|Polarity|Enables/Disables polarity inversion for each IO
+	f|Polarity[0..15]|n|1|Enables/Disables polarity inversion for each IO
+		v|Normal|0|Normal polarity : RegData[x] = IO[x] 
+		v|Inverted|1|Inverted polarity : RegData[x] = !IO[x] (for both input and output configured IOs) 
+r|Dir|Configures direction for each IO
+	f|Dir[0..15]|n|1|Configures direction for each IO
+		v|Output|0|IO is configured as an output  
+		v|Input|1|IO is configured as an input
+r|Data|Data register - I/O
+	f|Data[0..15]|n|1|Write: Data to be output to the output-configured IOs, Read: Data seen at the IOs, independent of the direction configured. 
+r|InterruptMask|Configures which [input-configured] IO will triggeran interrupt on NINT pin   
+	f|Mask[0..15]|n|1|Configures which [input-configured] IO will triggeran interrupt on NINT pin
+		v|Enabled|0|An event on this IO will trigger an interrupt 
+		v|Disabled|1|An event on this IO will NOT trigger an interrupt
+r|Sense|Configures edge sensitivity   
+	f|HighB[15..12]|n|2|Configures the edge sensitivity of the corresponting RegData[n]
+		v|None|0|No edge sensitivity configured
+		v|Rising|1|Sensitive to rising edge
+		v|Falling|2|Sensitive to falling edge
+		v|Both|3|Sensitive to both edges
+	f|LowB[11..8]|n|2|Configures the edge sensitivity of the corresponting RegData[n]
+		v|None|0|No edge sensitivity configured
+		v|Rising|1|Sensitive to rising edge
+		v|Falling|2|Sensitive to falling edge
+		v|Both|3|Sensitive to both edges
+	f|HighA[7..4]|n|2|Configures the edge sensitivity of the corresponting RegData[n]
+		v|None|0|No edge sensitivity configured
+		v|Rising|1|Sensitive to rising edge
+		v|Falling|2|Sensitive to falling edge
+		v|Both|3|Sensitive to both edges
+	f|LowA[3..0]|n|2|Configures the edge sensitivity of the corresponting RegData[n]
+		v|None|0|No edge sensitivity configured
+		v|Rising|1|Sensitive to rising edge
+		v|Falling|2|Sensitive to falling edge
+		v|Both|3|Sensitive to both edges
+r|InterruptSource|Interrupt source register - I/O
+	f|Pin[0..15]|n|1|Interrupt source (from IOs set in RegInterruptMask)
+		v|None|0|No interrupt has been triggered by this IO
+		v|Triggered|1|An interrupt has been triggered by this IO (an event as configured in relevant RegSense register occured). 
+r|EventStatus|Event status register - I/O
+	f|Pin[0..15]|n|1|Interrupt source (from IOs set in RegInterruptMask)
+		v|None|0|No event has occured on this IO
+		v|Triggered|1|An event has occured on this IO (an edge as configured in relevant RegSense register occured)
+r|LevelShifter|Level shifter register 
+	f|Mode[15..8]|n|2|LED Driver mode for Bank B ‘s fading capable IOs (IO15-12)  
+		v|Off|0|Level shifter mode for IO
+		v|AB|1|Sensitive to rising edge
+		v|BA|2|Sensitive to falling edge
+r|Clock|Clock management register 
+	f|fOSCSRC|5|2|Oscillator frequency (fOSC) source   
+		v|Off|0|LED driver, keypad engine and debounce features are disabled. 
+		v|OscIn|1|External clock input (OSCIN)
+		v|Int2MHz|1|Internal 2MHz oscillator
+	f|OSCIODIR|4|1|OSCIO pin function (Cf. §4.8)    
+		v|Input|0|OSCIO is an input (OSCIN)
+		v|Output|1|OSCIO is an output (OSCOUT)
+	f|Freq|0|4|Frequency of the signal output on OSCOUT pin, fOSCOUT = fOSC/(2^(RegClock[3:0]-1))
+		v|Lo0Hz|0|0Hz, permanent "0" logical level (GPO)
+		v|Hi0Hz|1|0Hz, permanent "1" logical level (GPO)
+r|Misc|Miscellaneous device settings register
+	f|Mode|7|1|LED Driver mode for Bank B's fading capable IOs (IO15-12)  
+		v|Linear|0|Level shifter mode for IO
+		v|Logarithmic|1|Sensitive to rising edge
+	f|ClkX|4|3|Frequency of the LED Driver clock ClkX of all IOs  
+		v|Off|0|LED driver functionality is disabled for all IOs, else fOSC/(2^(RegMisc[6:4]-1))
+	f|DrvMode|3|1|LED Driver mode for Bank A ‘s fading capable IOs (IO7-4)    
+		v|Linear|0|Level shifter mode for IO
+		v|Logarithmic|1|Sensitive to rising edge
+	f|Func|2|1|NRESET pin function when externally forced low (Cf. §4.4.1 and §4.9.5)   
+		v|EqPOR|0|Equivalent to POR 
+		v|Lmited|1|Reset PWM/Blink/Fade counters (not user programmed values) This bit is can only be reset manually or by POR, not by NRESET
+	f|AutoInc|1|1|Auto-increment register address (Cf. §4.5)   
+		v|On|0| When several consecutive data are read/written, register address is incremented
+		v|Off|1|When several consecutive data are read/written, register address is kept fixed
+	f|AutoClr|0|1|Autoclear NINT on RegData read (Cf. §4.7)    
+		v|On|0|RegInterruptSourceA/B is also automatically cleared when RegDataA/B is read
+		v|Off|1|RegInterruptSourceA/B must be manually cleared, either directly or via RegEventStatus
+r|LEDDriverEnable|LED driver enable register - I/O[n]
+	f|Pin[0..15]|n|1|Enables LED Driver for each [output-configured] IO
+		v|Disabled|0|LED Driver is disabled
+		v|Enabled|1|LED Driver is enabled
+r|DebounceConfig|Debounce configuration register
+	f|Time|0|3|Debounce time (Cf. §4.6.1) 
+		v|0ms5|0|0.5ms x 2MHz/fOSC
+		v|1ms|1|1ms x 2MHz/fOSC
+		v|2ms|2|1ms x 2MHz/fOSC
+		v|4ms|3|1ms x 2MHz/fOSC
+		v|8ms|4|1ms x 2MHz/fOSC
+		v|16ms|5|1ms x 2MHz/fOSC
+		v|32ms|6|1ms x 2MHz/fOSC
+		v|64ms|7|1ms x 2MHz/fOSC
+r|DebounceEnable|Debounce enable register - I/O[n]
+	f|Debounce[0..15]|n|1|Enables debouncing for each [input-configured] IO
+		v|Disabled|0|Debouncing is disabled
+		v|Enabled|1|Debouncing is enabled
+r|KeyConfig1|Key scan configuration register
+	f|AutoSleepTime|4|3|Auto Sleep time (no key press within this time will set keypad engine to sleep) 
+		v|Off|0|Auto sleep time is off
+		v|128ms|1|128ms x 2MHz/fOSC
+		v|256ms|2|256ms x 2MHz/fOSC
+		v|512ms|3|512ms x 2MHz/fOSC
+		v|1s|4|1s x 2MHz/fOSC
+		v|2s|5|2s x 2MHz/fOSC
+		v|4s|6|4s x 2MHz/fOSC
+		v|8s|7|8s x 2MHz/fOSC
+	f|ScanTime|0|3|Scan time per row (must be set above debounce time)
+		v|1ms|0|1ms x 2MHz/fOSC
+		v|2ms|1|2ms x 2MHz/fOSC
+		v|4ms|2|4ms x 2MHz/fOSC
+		v|8ms|3|8ms x 2MHz/fOSC
+		v|16ms|4|16ms x 2MHz/fOSC
+		v|32ms|5|32ms x 2MHz/fOSC
+		v|64ms|6|64ms x 2MHz/fOSC
+		v|128ms|7|128ms x 2MHz/fOSC
+r|KeyConfig2|Key scan configuration register
+	f|Rows|3|3|Number of rows (outputs) + key scan enable
+		v|Off|0|Key scan is off
+		v|2Rows|1|2 rows – IO[0:1]
+		v|3Rows|2|2 rows – IO[0:2]
+		v|4Rows|3|2 rows – IO[0:3]
+		v|5Rows|4|2 rows – IO[0:4]
+		v|6Rows|5|2 rows – IO[0:5]
+		v|7Rows|6|2 rows – IO[0:6]
+		v|8Rows|7|2 rows – IO[0:7]
+	f|Cols|0|3|Number of columns (inputs)
+		v|1Col|0|1 column – IO[8]
+		v|2Cols|1|2 columns – IO[8:9]
+		v|3Cols|2|3 columns – IO[8:10]
+		v|4Cols|3|4 columns – IO[8:11]
+		v|5Cols|4|5 columns – IO[8:12]
+		v|6Cols|5|6 columns – IO[8:13]
+		v|7Cols|6|7 columns – IO[8:14]
+		v|8Cols|7|8 columns – IO[8:15]
+r|KeyData1|Key value (column)
+	f|CollIntr[0..7]|n|1|Column which generated NINT (active low)
+		v|Triggered|0|Column generated NINT. 
+		v|None|1|Collumn did not generate NINT
+r|KeyData2|Key value (row)
+	f|RowIntr[0..7]|n|1|Row which generated NINT (active low)
+		v|Triggered|0|Column generated NINT. 
+		v|None|1|Collumn did not generate NINT
+r|OnOffCfg[0..15]|ON/OFF time/intensity register for I/O[n] 
+	f|OnTime|16|5|ON Time of IO[n] (1 - 15 : TOnX = 64 * RegTOnX * (255/ClkX), 16 - 31 : TOnX = 512 * RegTOnX * (255/ClkX))
+		v|Infinite|0|Infinite (Static mode, TOn directly controlled by RegData, Cf §4.9.2) 
+	f|OnIntensity|8|8|ON Intensity of IO[n]
+		v|Linear|0|Linear mode : IOnX = RegIOnN
+		v|Logarithmic|1|Logarithmic mode (fading capable IOs only) : IOnN = f(RegIOnN) , Cf §4.9.5 
+	f|OffTime|3|5|OFF Time of IO[n], (1 - 15 : TOffN = 64 * RegOffN[7:3] * (255/ClkN), 16 - 31 : TOffN = 512 * RegOffN[7:3] * (255/ClkN))
+		v|Infinite|0|Infinite (Single shot mode, TOff directly controlled by RegData, Cf §4.9.3) 
+	f|OffIntensity|0|3|OFF Intensity of IO[n] 
+		v|Linear|0|Linear mode : IOffN = 4 x RegOff[2:0]
+		v|Logarithmic|1|Logarithmic mode (fading capable IOs only) : IOffN = f(4 x RegOffN[2:0]) , Cf §4.9.5 
+r|RiseFallCfg[4..15]|Fade configuration register for I/O[n]
+	f|FadeIn|8|5|Fade In setting of IO[n], (1 - 15 : TRiseN = (RegIOnN-(4xRegOffN[2:0])) * RegTRiseN * (255/ClkN) 16 - 31 : TRiseN = 16 * (RegIOnN-(4xRegOffN[2:0])) * RegTRiseN * (255/ClkN))
+		v|Off|0|No fade in configured
+	f|FadeOut|0|5|Fade Out setting of IO[n], (1 - 15 : TFallN = (RegIOnN-(4xRegOffN[2:0])) * RegTFallN * (255/ClkN) 16 - 31 : TFallN = 16 * (RegIOnN-(4xRegOffN[2:0])) * RegTFallN * (255/ClkN))
+		v|Off|0|No fade out configured
+r|HighInp|High input enable register  
+	f|Mode[0..15]|n|1|Enables high input mode for each (input-configured) IO
+		v|Enable|0|VIH max = 3.6V and VCCx min = 1.2V
+		v|Disable|1|VIH max = 5.5V and VCCx min = 1.65V
+r|Reset|Software reset register   
+	f|Code|0|16|Reset code
+		v|Reset|4660|Code (0x1234) for reset of the device (same as POR)

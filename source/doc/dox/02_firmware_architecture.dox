@@ -1,0 +1,662 @@
+/**
+
+@page firmware_architecture Firmware architecture
+
+The Thingy firmware is built on top of nRF5 Software Development Kit (SDK) v12.1.0 and utilizes many of its components, such as SDK peripheral drivers, SDK HAL, and the SoftDevice.
+
+@image html thingy_firmware_arch.png "Thingy firmware architecture framework"
+
+Thingy adds the following modules on top of the nRF5 SDK:
+
+- Sensor drivers - Thingy uses the SDK peripheral drivers and Hardware Access Layers (HALs) and implements its own sensor drivers on top of them. These drivers are used to perform any operations on the sensors, such as enabling or disabling them, changing their configuration, or fetching sensor data.
+- BLE handler - Handles all Bluetooth communication and dispatches events to the processes.
+- Flash storage - Flash storage of configuration parameters. 
+- BLE services -  Layer containing all the custom BLE services used by the Thingy modules. These services are discussed in detail in the @ref fw_arch_ble_services section.
+
+- Thingy modules - Layer containing high level functionality and features. Controlling both the sensor drivers and the corresponding BLE services. Also, responsible for handling persistent storage of configuration and the default configuration.
+
+- Thingy application
+
+@section fw_arch_ble_services BLE services
+
+This section focuses on the custom services used in the Thingy firmware together with their configuration parameters.
+
+@subsection arch_config Thingy configuration service
+
+The Thingy configuration service is responsible for handling all general configuration parameters that are not related to a particular module.
+
+<table>
+<tr><th>Name                     <th>UUID        <th>Type		<th>Data		<th>Description	
+<tr><td>Base UUID <td>EF68xxxx-9B35-4933-9B10-52FFA9740042 <td> <td> <td>
+<tr><td>Thingy configuration service <td>0100 <td> <td> <td>
+<tr><td>Device name characteristic <td>0101 <td>Write/Read <td>max 10 bytes <td>Device name as ASCII string.
+<tr><td>Advertising param characteristic <td>0102 <td>Write/Read <td>3 bytes 
+	<td>Advertising parameters (in units):
+	<ul>
+		<li>uint16_t - Adv interval in ms (unit 0.625 ms).
+			<ul>
+				<li>min 32 -> 20 ms</li>
+				<li>max 8000 -> 5 s</li>
+			</ul>
+		</li>
+		<li>uint8_t - Adv timeout in s (unit 1 s).
+			<ul>
+				<li>min 0 -> 0 s</li>
+				<li>max 180 s -> 3 min</li>
+			</ul>
+		</li>
+	</ul>
+<tr><td>Connection param characteristic <td>0104 <td>Write/Read <td>8 bytes
+	<td>Connection parameters:
+	<ul>
+		<li>uint16_t - Min connection interval (unit 1.25 ms).
+			<ul>
+				<li>min 6 -> 7.5 ms</li>
+				<li>max 3200 -> 4 s</li>
+			</ul>
+		</li>
+		<li>uint16_t - Max connection interval (unit 1.25 ms).
+			<ul>
+				<li>Same as above.</li>
+			</ul>
+			</li>
+		<li>uint16_t - Slave latency.
+			<ul>
+				<li>Range 0-499</li>
+			</ul>
+		</li>
+		<li>uint16_t - Supervision timeout.
+			<ul>
+				<li>Min 10 -> 100 ms</li>
+				<li>Max 3200 -> 32 s</li>
+			</ul>
+		</li>
+		<p>The following constraint applies:
+			conn_sup_timeout * 4 > (1 + slave_latency) * max_conn_interval
+			that corresponds to the following Bluetooth Spec requirement:
+			The Supervision_Timeout in milliseconds must be larger than
+			(1 + Conn_Latency) * Conn_Interval_Max * 2, where Conn_Interval_Max is given in milliseconds.</p>
+	</ul>
+<tr><td>Eddystone URL   <td>0105 <td>Write/Read <td>max 17 bytes 
+	<td>Eddystone URL. Data format:
+	<ul>
+	<li>Byte 0: <a href="https://github.com/google/eddystone/tree/master/eddystone-url#url-scheme-prefix" target="blank">URL Scheme Prefix</a></li>
+	<li>Bytes 1+: The rest of the URL using <a href="https://github.com/google/eddystone/tree/master/eddystone-url#eddystone-url-http-url-encoding" target="blank">Eddystone URL encoding</a></li>
+	<br>
+	Write 0 bytes to disable Eddystone advertising.
+	<br>
+	See <a href="https://github.com/google/eddystone/tree/master/eddystone-url" target="blank">Eddystone-URL</a> for more information.
+	</ul>
+<tr><td>Cloud token <td>0106 <td>Write/Read <td>max 250 bytes <td>Cloud token to be used for identification against cloud services.
+<tr><td>FW version <td>0107 <td>Read <td>3 bytes 
+	<td>
+	<ul>
+		<li>uint8_t - major</li>
+		<li>uint8_t - minor</li>
+		<li>uint8_t - patch</li>
+	</ul>
+<tr><td>MTU request <td>0108 <td>Write/Read&nbsp;req <td>3 bytes 
+	<td>MTU request. Not retained.
+	<ul>
+		<li>uint8_t - Peripheral exchange request
+			<ul>
+				<li>0x00 - Peripheral does not send an MTU exchange request. (Default behavior)</li>
+				<li>0x01 - Peripheral sends an MTU exchange request, when written to 0x01.</li>
+			</ul>
+		</li>
+		<li>uint16_t - MTU size requested (23 - 276 bytes).</li>
+	</ul>
+</table>
+
+@subsection arch_env Environment service
+
+The environment module is responsible for reading the temperature, pressure, humidity, air quality/gas, and light intensity/color sensors, as well as for sending data and configuration. It is running on top of the environment BLE service (ble_tes), the environment sensor drivers, and the environment flash storage with base UUID EF68xxxx-9B35-4933-9B10-52FFA9740042. The configuration is stored in flash. To turn on sensor reading, enable notifications from the desired characteristic by writing 0x0001 to the Client Characteristic Configuration Descriptor (CCCD) for that characteristic.
+
+<table>
+<tr><th>Name</th><th>UUID</th><th>Type</th><th>Data</th><th>Description</th></tr>
+                <tr>
+                    <td>Base UUID</td>
+                    <td>EF68xxxx-9B35-4933-9B10-52FFA9740042</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+				<tr>
+                    <td>Weather station service</td>
+                    <td>0200</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Temperature characteristic</td>
+                    <td>0201</td>
+                    <td>Notify</td>
+                    <td>2 bytes</td>
+                    <td>Temperature in Celsius<ul>
+                            <li>int8_t - integer</li>
+                            <li>uint8_t - decimal</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Pressure characteristic</td>
+                    <td>0202</td>
+                    <td>Notify</td>
+                    <td>5 bytes</td>
+                    <td>Pressure in hPa<ul>
+                            <li>int32_t - integer</li>
+                            <li>uint8_t - decimal</li>
+                        </ul></td>
+                </tr>
+                <tr>
+                    <td>Humidity characteristic</td>
+                    <td>0203</td>
+                    <td>Notify</td>
+                    <td>1 bytes</td>
+                    <td>Relative humidity in %<ul>
+                            <li>uint8_t - %RH</li>
+                        </ul></td>
+                </tr>
+                <tr>
+                    <td>Gas (Air quality) characteristic</td>
+                    <td>0204</td>
+                    <td>Notify</td>
+                    <td>4 bytes</td>
+                    <td>
+                        <ul>
+                            <li>uint16_t - eCO2 ppm</li>
+                            <li>uint16_t - TVOC ppb</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Color characteristic</td>
+                    <td>0205</td>
+                    <td>Notify</td>
+                    <td>8 bytes</td>
+                    <td>
+                        <ul>
+                            <li>uint16_t - Red</li>
+                            <li>uint16_t - Green</li>
+                            <li>uint16_t - Blue</li>
+                            <li>uint16_t - Clear</li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Configuration characteristic</td>
+                    <td>0206</td>
+                    <td>Write/Read</td>
+                    <td>12 bytes</td>
+                    <td>
+                        <ul>
+                            <li>uint16_t - Temperature interval in ms (100 ms - 5000 ms).</li>
+                            <li>uint16_t - Pressure interval in ms (50 ms - 5000 ms).</li>
+                            <li>uint16_t - Humidity interval in ms (100 ms - 5000 ms).</li>
+                            <li>uint16_t - Color interval in ms (200 ms - 5000 ms).</li>
+                            <li>uint8_t - Gas mode <ul>
+                                    <li>1 = 1 s interval</li>
+                                    <li>2 = 10 s interval</li>
+                                    <li>3 = 60 s interval</li>
+                                </ul></li>
+							<li>Color sensor LED calibration:
+								<ul>
+									<li>uint8_t - Red intensity [0 - 255]</li>
+									<li>uint8_t - Green intensity [0 - 255]</li>
+									<li>uint8_t - Blue intensity [0 - 255]</li>
+								</ul></li>
+                        </ul>
+                    </td>
+                </tr>
+</table>
+
+
+@subsection arch_user_interface User interface service
+		
+The UI module handles the onboard LEDs, buttons, and other potential UI components like a quadrature decoder, touchscreen etc. The UI module runs on top of the UI BLE Service (ble_uis), the LED and button drivers, and the UI flash storage with base UUID EF68xxxx-9B35-4933-9B10-52FFA9740042. This module enables RGB LED value setting and button event notifications via BLE. Button notification is enabled by writing 0x1000 to the CCCD of the button characteristic.
+
+<table>
+                <tr>
+                    <th>Name</th>
+                    <th>UUID</th>
+                    <th>Type</th>
+                    <th>Data</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>Base UUID</td>
+                    <td>EF68xxxx-9B35-4933-9B10-52FFA9740042</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>UI service</td>
+                    <td>0300</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>LED  characteristic</td>
+                    <td>0301</td>
+                    <td>Write&nbsp;req/Read</td>
+                    <td>Max 5 bytes</td>
+                    <td> RGB Value:<ul>
+                            <li> uint8_t - Mode - (retained for BLE connected and disconnected):<ul>
+                                    <li>0 = Off</li>
+                                    <li>1 = Constant</li>
+                                    <li>2 = Breathe</li>
+                                    <li>3 = One Shot</li>
+                                </ul></li>
+                        </ul>Constant mode (retained for BLE connected):<ul>
+                            <li> uint8_t - R intensity (0 - 255) </li>
+                            <li> uint8_t - G intensity (0 - 255) </li>
+                            <li> uint8_t - B intensity (0 - 255) </li>
+                        </ul>Breathe mode (retained for BLE connected):<ul>
+                            <li> uint8_t - color:<ul>
+                                    <li>0x01 - RED</li>
+                                    <li>0x02 - GREEN</li>
+                                    <li>0x03 - YELLOW</li>
+                                    <li>0x04 - BLUE</li>
+                                    <li>0x05 - PURPLE</li>
+                                    <li>0x06 - CYAN</li>
+                                    <li>0x07 - WHITE</li>
+                                </ul></li>
+                            <li>uint8_t - intensity (1-100) [%] </li>
+                            <li>uint16_t - delay [ms] (1 ms - 10 s) </li>
+                        </ul>One shot mode (retained for BLE connected):<ul>
+                            <li>uint8_t - color:<ul>
+                                    <li>0x01 - RED</li>
+                                    <li>0x02 - GREEN</li>
+                                    <li>0x03 - YELLOW</li>
+                                    <li>0x04 - BLUE</li>
+                                    <li>0x05 - PURPLE</li>
+                                    <li>0x06 - CYAN</li>
+                                    <li>0x07 - WHITE</li>
+                                </ul></li>
+                            <li> uint8_t - intensity (1-100) [%] </li>
+                        </ul> Default connected behavior:<ul>
+                            <li>Mode: Breathe</li>
+                            <li>Color: CYAN</li>
+                            <li>Intensity: 20%</li>
+                            <li>Delay: 3500 ms</li>
+                        </ul></td>
+                </tr>
+                <tr>
+                    <td>Button  characteristic</td>
+                    <td>0302</td>
+                    <td>Notify</td>
+                    <td>1 byte</td>
+                    <td> Boolean button state:<ul>
+                            <li>0: Button released</li>
+                            <li>1: Button pressed</li>
+                        </ul></td>
+                </tr>
+                <tr>
+                    <td> EXT pin characteristic</td>
+                    <td>0303</td>
+                    <td>Write&nbsp;req/Read</td>
+                    <td>4 bytes</td>
+                    <td>
+                        <p>External pin control. Range 0 - 255. 0 is off, 255 is on.</p>
+                        <p> PWM is not implemented. So either 0 or 255.</p>
+                        <ul>
+                            <li>uint8_t - MOS_1</li>
+                            <li>uint8_t - MOS_2</li>
+                            <li>uint8_t - MOS_3</li>
+                            <li>uint8_t - MOS_4</li>
+                        </ul>
+                    </td>
+                </tr>
+        </table>
+		
+		
+		
+@subsection arch_motion Motion service
+
+The motion module is responsible for reading the 9-axis motion sensor and the low power accelerometer, as well as for sending the data and flash storage of the configuration parameters for this module. It is running on top of the motion BLE service (ble_tms) with base UUID EF68xxxx-9B35-4933-9B10-52FFA9740042. The configuration is stored in flash memory. To turn on sensor reading, enable notifications from the desired characteristic by writing 0x0001 to the Client Characteristic Configuration Descriptor (CCCD) for that characteristic.
+		
+		
+<table>
+                <tr>
+                    <th>Name</th>
+                    <th>UUID</th>
+                    <th>Type</th>
+                    <th>Data</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>Base UUID</td>
+                    <td>EF68xxxx-9B35-4933-9B10-52FFA9740042</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Thingy motion service</td>
+                    <td>0400</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Config characteristic</td>
+                    <td>0401</td>
+                    <td>Write/Read</td>
+                    <td>9 bytes</td>
+                    <td>Motion configuration:<ul>
+                            <li> uint16_t - Step counter interval in ms (100 ms - 5 s).</li>
+                            <li> uint16_t - Temperature compensation interval in ms (100 ms - 5 s).</li>
+                            <li> uint16_t - Magnetometer compensation interval in ms (100 ms - 5 s).</li>
+                            <li> uint16_t - Motion processing unit frequency in Hz (1 - 200 Hz).</li>
+                            <li> uint8_t - Wake-on-motion <ul>
+                                    <li> 0x00 = Off </li>
+                                    <li> 0x01 = On </li>
+                                </ul></li>
+                        </ul></td>
+                </tr>
+                <tr>
+                    <td>Tap characteristic</td>
+                    <td>0402</td>
+                    <td>Notify</td>
+                    <td>2 bytes</td>
+                    <td>Direction and count of taps:<ul>
+                            <li> uint8_t - Direction:<ul>
+                                    <li>0x01 = TAP_X_UP</li>
+                                    <li>0x02 = TAP_X_DOWN</li>
+                                    <li>0x03 = TAP_Y_UP</li>
+                                    <li>0x04 = TAP_Y_DOWN</li>
+                                    <li>0x05 = TAP_Z_UP</li>
+                                    <li>0x06 = TAP_Z_DOWN</li>
+                                </ul>
+                            </li>
+                            <li> uint8_t - Count
+							<ul>
+                                    <li>Number of taps in the given direction</li>
+                            </ul>
+				    </td>
+                </tr>
+                <tr>
+                    <td>Orientation characteristic</td>
+                    <td>0403</td>
+                    <td>Notify</td>
+                    <td>1 byte</td>
+                    <td>
+                        <ul>
+                            <li> uint8_t - Orientation <ul>
+                                    <li>0x00 = Portrait</li>
+                                    <li>0x01 = Landscape</li>
+                                    <li>0x02 = Reverse portrait</li>
+                                    <li>0x03 = Reverse landscape</li>
+                                </ul></li>
+                        </ul>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Quaternion characteristic</td>
+                    <td>0404</td>
+                    <td>Notify</td>
+                    <td>16 bytes</td>
+                    <td> Attitude represented with quaternions (2Q30 fixed point):<ul>
+                            <li>int32_t - w</li>
+                            <li>int32_t - x</li>
+                            <li>int32_t - y</li>
+                            <li>int32_t - z</li>
+                        </ul></td>
+                </tr>
+                <tr>
+                    <td>Step counter characteristic </td>
+                    <td>0405</td>
+                    <td>Notify</td>
+                    <td>4 bytes</td>
+                    <td>Step counter:<ul>
+                            <li> uint32_t - Steps </li>
+                            <li> uint32_t - Time [ms]</li>
+                        </ul></td>
+                </tr>
+                <tr>
+                    <td>Raw data characteristic</td>
+                    <td>0406</td>
+                    <td>Notify</td>
+                    <td>18 bytes</td>
+                    <td>Motion sensor raw data:<ul>
+                            <li>Accelerometer<ul>
+                                    <li>int16_t - x [G] (6Q10 fixed point)</li>
+                                    <li>int16_t - y [G] (6Q10 fixed point)</li>
+                                    <li>int16_t - z [G] (6Q10 fixed point)</li>
+                                </ul></li>
+                            <li>Gyroscope<ul>
+                                    <li>int16_t - x [deg/s] (11Q5 fixed point)</li>
+                                    <li>int16_t - y [deg/s] (11Q5 fixed point)</li>
+                                    <li>int16_t - z [deg/s] (11Q5 fixed point) </li>
+                                </ul></li>
+                            <li>Compass<ul>
+                                    <li>int16_t - x [µT] (12Q4 fixed point)</li>
+                                    <li>int16_t - y [µT] (12Q4 fixed point)</li>
+                                    <li>int16_t - z [µT] (12Q4 fixed point)</li>
+                                </ul></li>
+                        </ul></td>
+                </tr>
+                <tr>
+                    <td>Euler characteristic</td>
+                    <td>0407</td>
+                    <td>Notify</td>
+                    <td>12 bytes</td>
+                    <td>Attitude represented in Euler angles (16Q16 fixed point)<ul>
+                            <li>int32_t - roll [degrees]</li>
+                            <li>int32_t - pitch [degrees]</li>
+                            <li>int32_t - yaw [degrees]</li>
+                        </ul></td>
+                </tr>
+                <tr>
+                    <td>Rotation matrix char</td>
+                    <td>0408</td>
+                    <td>Notify</td>
+                    <td>18 bytes</td>
+                    <td>Attitude in rotation matrix (2Q14 fixed point)<ul>
+                            <li>int16_t [9] - 3 x 3 matrix</li>
+                        </ul></td>
+                </tr>
+                <tr>
+                    <td>Heading characteristic</td>
+                    <td>0409</td>
+                    <td>Notify</td>
+                    <td>4 bytes</td>
+                    <td>Heading (16Q16 fixed point)<ul>
+                            <li>int32_t - Heading [degrees]</li>
+                        </ul></td>
+                </tr>
+                <tr>
+                    <td>Gravity vector</td>
+                    <td>040A</td>
+                    <td>Notify</td>
+                    <td>12 bytes</td>
+                    <td>Attitude represented by a gravity vector:<ul>
+                            <li>float - x</li>
+                            <li>float - y</li>
+                            <li>float - z</li>
+                        </ul></td>
+                </tr>
+        </table>
+		
+		
+		
+@subsection arch_sound Sound service
+		
+The sound module is responsible for handling both the speaker and the microphone. The sound module is built on top of the sound BLE service (ble_tss) with base UUID EF68xxxx-9B35-4933-9B10-52FFA9740042. The configuration is stored in flash. 
+		
+<table>
+                <tr>
+                    <th>Name</th>
+                    <th>UUID</th>
+                    <th>Type</th>
+                    <th>Data</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>Base UUID</td>
+                    <td>EF68xxxx-9B35-4933-9B10-52FFA9740042</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Thingy sound service</td>
+                    <td>0500</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Config characteristic</td>
+                    <td>0501</td>
+                    <td>Write/Read</td>
+                    <td>2 bytes</td>
+                    <td>Sound configuration<ul>
+                            <li>uint8_t - Speaker mode:<ul>
+                                    <li>0x01 - Frequency and duration.</li>
+                                    <li>0x02 - 8-bit PCM</li>
+                                    <li>0x03 - Sample</li>
+                                </ul></li>
+                            <li>uint8_t - Microphone mode<ul>
+                                    <li>0x01 - ADPCM</li>
+                                    <li>0x02 - SPL</li>
+                                </ul></li>
+                        </ul></td>
+                </tr>
+                <tr>
+                    <td>Speaker data characteristic</td>
+                    <td>0502</td>
+                    <td>Write without resp</td>
+                    <td>Max 273 bytes</td>
+                    <td>In frequency mode:<ul>
+                            <li>uint16_t - Frequency in Hz.</li>
+                            <li>uint16_t - Duration in ms. 0 != forever.</li>
+                            <li>uint8_t - Volume in % (0-100).</li>
+                        </ul>In PCM mode:<ul>
+                            <li>uint8_t [20 - 273] 8-bit PCM samples</li>
+                        </ul>In sample mode:<ul>
+                            <li>uint8_t - sample ID (0x00 - 0x08)<ul>
+                                    <li>0 Collect_Point_00.wav</li>
+                                    <li>1 Collect_Point_01.wav</li>
+                                    <li>2 Explosion_02.wav</li>
+                                    <li>3 Explosion_04.wav</li>
+                                    <li>4 Hit_00.wav</li>
+                                    <li>5 Pickup_01.wav</li>
+                                    <li>6 Pickup_03.wav</li>
+                                    <li>7 Shoot_00.wav</li>
+                                    <li>8 Shoot_01.wav</li>
+                                </ul></li>
+                        </ul></td>
+                </tr>
+                <tr>
+                    <td>Speaker status characteristic</td>
+                    <td>0503</td>
+                    <td>Notify</td>
+                    <td>1 byte</td>
+                    <td>Speaker status<ul>
+                            <li>uint8_t - 0x00 - Finished</li>
+                            <li>uint8_t - 0x01 - Buffer warning</li>
+                            <li>uint8_t - 0x02 - Buffer ready</li>
+                            <li>uint8_t - 0x10 - Packet disregarded</li>
+                            <li>uint8_t - 0x11 - Invalid command</li>
+                        </ul></td>
+                </tr>
+                <tr>
+                    <td>Microphone characteristic</td>
+                    <td>0504</td>
+                    <td>Notify</td>
+                    <td>Max 273 bytes</td>
+                    <td>ADCPM mode<ul>
+                            <li>ADPCM frame</li>
+                        </ul></td>
+                </tr>
+        </table>
+		
+		
+@subsection arch_dfu DFU service
+
+This module is responsible for running Device Firmware Updates on the Thingy.
+
+<table>
+                <tr>
+                    <th>Name</th>
+                    <th>UUID</th>
+                    <th>Type</th>
+                    <th>Data</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>Secure DFU Service</td>
+                    <td>FE59</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>Base UUID</td>
+                    <td>0000xxxx-0000-1000-8000-00805f9b34fb</td>
+                    <td></td>
+                    <td></td>
+                    <td></td>
+                </tr>
+                <tr>
+                    <td>DFU Control Point characteristic</td>
+                    <td>8EC90001-F315-4F60-9FB8-838830DAEA50</td>
+                    <td>Notify/Write</td>
+                    <td>1 byte</td>
+                    <td>Steps to put the Thingy into Buttonless DFU mode:<ul>
+                            <li>Enable notifications for the DFU Control point characteristic</li>
+                            <li>Write 0x01 to the characteristic</li>
+                        </ul>
+                    </td>
+                </tr>
+
+        </table>
+
+
+@section firmware_components Firmware components
+
+This firmware consists of the following components. Follow the links for their API documentation.
+
+@subsection comp_ble_services BLE services
+
+- @ref ble_sdk_srv_tes  "Thingy Environment Service" GATT-based service with multiple characteristics for reading environment sensor data and configuring the sensors.
+- @ref ble_sdk_srv_uis  "User interface service" Service that handles the Thingy RGB LED and button.
+- @ref ble_sdk_srv_wss  "Thingy Motion Service" GATT-based service with multiple characteristics for reading motion sensor data and configuring the sensors.
+- @ref ble_srv_tss      "Sound service" GATT-based service that handles the Thingy microphone and speaker.
+- @ref ble_sdk_srv_tcs  "Thingy Configuration Service" Service that handles various configuration characteristics.
+
+@subsection comp_drivers Drivers
+
+- @ref driver_acc      "Accelerometer driver" Accelerometer driver API, including the LIS3DH accelerometer.
+- @ref color_driver    "Color sensor" Digital color sensor API, including the BH1745 color sensor.
+- @ref gpio_ext_driver "GPIO extender" GPIO extender API.
+- @ref gas_sensor      "Gas sensor" Digital gas sensor API, including the CCS811 gas sensor.
+- @ref humidity_driver "Humidity sensor" Humidity sensor API, including the HTS221 sensor.
+- @ref mic_driver	   "Microphone" Microphone driver API.	
+- @ref motion_driver   "Motion sensor" Motion sensor API.
+- @ref press_driver	   "Pressure sensor" Pressure sensor API, including the LPS22HB sensor.
+- @ref speaker_driver  "Speaker" Speaker driver API.
+
+@subsection comp_modules Thingy modules
+
+- @ref m_ble         "BLE handling" BLE handling module API, including its flash configuration.
+- @ref m_batt_meas   "Battery measurement" Battery measurement module API, including its flash configuration.
+- @ref m_environment "Environment" Environment module API, including its flash configuration.
+- @ref m_ui          "User interface" User interface module API, including its flash configuration.
+- @ref m_motion      "Motion" Motion module API, including its flash configuration.
+- @ref m_sound       "Sound" Sound module API.
+
+@subsection comp_utils Utilities
+
+- @ref macros_common         "Common macros" A set of useful macros.
+- @ref ble_sdk_adv_beacon    "Eddystone beacon" A set of APIs related to Eddystone beacon advertising.
+- @ref sx150x_led_drv_regs   "Sx150x LED driver registers" Settings for all LED driver registers on the Sx150x.
+- @ref sx150x_led_drv_calc	 "Sx150x LED driver register calculation" Sx150x LED driver register calculation API.
+- @ref support_func			 "Support functions" Support functions.
+- @ref macros_common		 "Common macros" A set of useful macros.
+
+*/

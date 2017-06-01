@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="iso-8859-1"?>
+
+<workspace>  <project>
+    <path>$WS_DIR$\pca10028\iar\secure_dfu_secure_dfu_ble_s130_pca10028.ewp</path>
+  </project>  <project>
+    <path>$WS_DIR$\pca10040\iar\secure_dfu_secure_dfu_ble_s132_pca10040.ewp</path>
+  </project>  <project>
+    <path>$WS_DIR$\pca10028_debug\iar\secure_dfu_secure_dfu_ble_s130_pca10028_debug.ewp</path>
+  </project>  <project>
+    <path>$WS_DIR$\pca10040_debug\iar\secure_dfu_secure_dfu_ble_s132_pca10040_debug.ewp</path>
+  </project>  <batchBuild/>
+</workspace>

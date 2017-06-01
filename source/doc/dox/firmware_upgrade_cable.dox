@@ -1,0 +1,19 @@
+/**
+@page dfu_cable Firmware upgrade using nRFgo Studio (cable connection)
+
+This firmware upgrade scenario involves uploading the Thingy application onto the board using a cable connection. Optionally, you can also flash the bootloader and its settings.
+
+You will require <a href="http://www.nordicsemi.com/eng/Products/2.4GHz-RF/nRFgo-Studio/(language)/eng-GB" target="blank">nRFgo Studio</a> to run this procedure.
+
+To upgrade the firmware with nRFgo Studio, follow these steps:
+
+-# Start nRFgo Studio.
+-# Connect your board to the host.
+-# Select <strong>nRF52 development boards</strong>.
+-# Select the <strong>Program Application</strong> tab.
+-# Click <strong>Browse</strong> to locate the application HEX file that you want to program.
+-# Click <strong>Program</strong>.
+
+@image html firmware_cable.png "Application programming in nRFgo Studio"
+
+*/

@@ -1,0 +1,46 @@
+r|Status|Status register
+	f|err|0|1|Error flag
+		v|None|0|No error
+		v|Error|1|There is an error, the ERR_ID register (0xE0) contains the error source
+	f|data_ready|3|1|Data ready flag
+		v|None|0|No new data samples are ready
+		v|Ready|1|A new data sample is ready in ALG_RESULT_DATA
+	f|app_valid|4|1|Firmware loaded flag
+		v|No|0|No application firmware loaded
+		v|Yes|1|Valid application firmware loaded
+	f|fw_mode|7|1|Toggles from '0' to '1' if the OTP1 (rectifier) temperature sensor falls below the limit
+		v|Appl|0|Firmware is in application mode. CCS811 is ready to take ADC measurements
+		v|Boot|1|Firmware is in boot mode, this allows new firmware to be loaded
+r|meas_mode|Measure Mode register
+	f|thresh|2|1|Interrupt mode configuration bit
+		v|Normal|0|Interrupt mode (if selected) operates normally
+		v|Activated|1|Interrupt mode (if selected) only asserts the nINT signal if the new ALG_RESULT_DATA above any configured threshold
+	f|interrupt|3|1|Interrupt enable bit
+		v|Disable|0|Interrupts are disabled
+		v|Enable|1|ALG_RESULT_DATA interrupt enabled
+	f|drive_mode|4|3|Drive modes
+		v|Idle|0|Idle (Measurements are disabled in this mode)
+		v|ConstPwr|1|Constant power mode, IAQ measurement every second
+		v|PulseHeat|2|Pulse heating mode IAQ measurement every 10 seconds
+		v|LowPwrPulseHeat|3|Low power pulse heating mode IAQ measurement every 60 seconds
+		v|FastConstPwr|4|Constant power mode, sensor measurement every 250ms
+r|raw_data|Raw data register
+	f|RawADC|0|10|The raw ADC reading
+	f|CurrSel|10|6|The currently selected ADC
+r|hw_version|Hardware version register
+	f|variant|0|4|The hardware variant
+	f|major|4|4|The hardware major version
+r|fw_boot_version|Firmware bootloader version register
+	f|trivial|0|8|Firmware bootloader trivial version
+	f|minor|8|4|Firmware bootloader minor version
+	f|major|12|4|Firmware bootloader major version
+r|fw_app_version|Firmware application major version
+	f|trivial|0|8|Firmware application trivial version
+	f|minor|8|4|Firmware application minor version
+	f|major|12|4|Firmware application major version
+r|err_id|Error identifier register
+	f|error_code|0|2|Error code field
+		v|None|0|No error
+		v|SmbMsgInvalid|1|Invalid mailbox ID or the wrong size
+		v|SmbReadInvalid|2|Mailbox ID invalid in read request
+		v|MeasModeInvalid|3|Unsupported measurement mode requested

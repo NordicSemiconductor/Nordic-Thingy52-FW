@@ -1,0 +1,31 @@
+/**
+@defgroup drivers Drivers
+
+@brief This section contains API documentation of the drivers that are part of the Thingy firmware.
+
+*/
+
+/**
+@defgroup ble_sdk_srv BLE services
+
+@brief This section contains API documentation of the BLE services that are part of the Thingy firmware.
+
+*/
+
+/**
+@defgroup modules Thingy modules
+
+@brief This section contains API documentation of the modules that are part of the Thingy firmware.
+
+*/
+
+/**
+@defgroup util Utilities
+
+@brief This section contains API documentation of various utilities that are part of the Thingy firmware.
+
+*/
+
+
+
+

@@ -1,0 +1,26 @@
+var structble__tms__s =
+[
+    [ "config_handles", "structble__tms__s.html#a11a2e2d06c8e71048abad3d974f201cf", null ],
+    [ "conn_handle", "structble__tms__s.html#a291e1cb1a00e5d2eab1d808719931dcb", null ],
+    [ "euler_handles", "structble__tms__s.html#a98362ff4566d41804a6ee5522fa4d42b", null ],
+    [ "evt_handler", "structble__tms__s.html#a896927ef232b6cf154c1b81491075427", null ],
+    [ "gravity_handles", "structble__tms__s.html#a3cda72a29dcfbf62db7caa3a0ff8bd71", null ],
+    [ "heading_handles", "structble__tms__s.html#a2ef7257cb735ba8f5f517de174af6a91", null ],
+    [ "is_euler_notif_enabled", "structble__tms__s.html#a432a57227ee9209f6d08a2fe8bb3e048", null ],
+    [ "is_gravity_notif_enabled", "structble__tms__s.html#af8cd444fb4407ae511abe43a3b27db32", null ],
+    [ "is_heading_notif_enabled", "structble__tms__s.html#a4b906db9e7271014d8875b6ab93a3fbc", null ],
+    [ "is_orientation_notif_enabled", "structble__tms__s.html#a637800236f1d89c0b910ec075d92c743", null ],
+    [ "is_pedo_notif_enabled", "structble__tms__s.html#ad82b43448b63af284c97d865604d34b7", null ],
+    [ "is_quat_notif_enabled", "structble__tms__s.html#a5c060407793094abcdae5fad4820d8e4", null ],
+    [ "is_raw_notif_enabled", "structble__tms__s.html#a96cb30d192df41a29025ea005f11bd3f", null ],
+    [ "is_rot_mat_notif_enabled", "structble__tms__s.html#ac2c18cc683c06c7c73b1f5bccd9a2ba6", null ],
+    [ "is_tap_notif_enabled", "structble__tms__s.html#a499adbebea609113257a164b01b4df36", null ],
+    [ "orientation_handles", "structble__tms__s.html#a8247e36053b95838ec8a84d641254fea", null ],
+    [ "pedo_handles", "structble__tms__s.html#a4a8378cad33a5d231fd1dc53859a7363", null ],
+    [ "quat_handles", "structble__tms__s.html#a17b793065cf8fcd9d24f4a3efb3a84bd", null ],
+    [ "raw_handles", "structble__tms__s.html#a6760a4b9d47b9ab53d0e0ad045baffd3", null ],
+    [ "rot_mat_handles", "structble__tms__s.html#a37b905ebebc898d0fe57df56b7cb1ca7", null ],
+    [ "service_handle", "structble__tms__s.html#a22d06c50c636cb24111299d5dd4d5364", null ],
+    [ "tap_handles", "structble__tms__s.html#a3d1a0c57b0eab9749b684eb1c511ce59", null ],
+    [ "uuid_type", "structble__tms__s.html#adf610dcfe680194d9f5a5184fd8befbd", null ]
+];
