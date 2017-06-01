@@ -139,7 +139,7 @@ ASM_SOURCE_FILES  = $(abspath ../../../sdk_components/toolchain/gcc/gcc_startup_
 
 #includes common to all targets
 INC_PATHS += -I$(abspath ../../../sdk_components/device)
-INC_PATHS += -I$(abspath ../../../sdk_components/toolchain/CMSIS/Include)
+INC_PATHS += -I$(abspath ../../../sdk_components/toolchain/cmsis/include)
 INC_PATHS += -I$(abspath ../../../sdk_components/toolchain/gcc)
 INC_PATHS += -I$(abspath ../../../sdk_components/toolchain)
 INC_PATHS += -I$(abspath ../config)
