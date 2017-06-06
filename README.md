@@ -16,6 +16,8 @@ Before running the scripts below, make sure you have the following software inst
 5. Create a user at https://www.invensense.com/. Under "Downloads" download "Embedded MotionDriver 6.12". Unzip the downloaded `motion_driver_6.12` folder and navigate to `motion_driver_6.12\mpl libraries\arm\Keil`.
 Unzip the folder `libmpllib_Keil_M4FP.zip`. Copy the newly created folder `libmpllib_Keil_M4FP` to `<your Thingy folder>/libs`. Finally, unzip `\motion_driver_6.12\mpl libraries\arm\gcc4.9.3\liblibmplmpu_m4_hardfp.zip` and copy the newly created folder `liblibmplmpu_m4_hardfp` to `<your Thingy folder>/libs`.
 
+> Note that the setup_sdk.py script is expecting the default installation path for Git and GNU ARM embedded toolchain. If those are installed on a custom location or are of an older version, the paths might not match and the setup script will fail.
+
 ## Setting up the SDK
 Run `setup_sdk.bat` on Windows or `setup_sdk.sh` on Linux/Mac.
 
