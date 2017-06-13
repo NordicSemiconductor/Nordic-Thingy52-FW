@@ -1,4 +1,4 @@
-PROJECT_NAME := ble_app_thingy_s132_pca20020
+PROJECT_NAME := ble_app_thingy_s332_pca20020
 
 export OUTPUT_FILENAME
 #MAKEFILE_NAME := $(CURDIR)/$(word $(words $(MAKEFILE_LIST)),$(MAKEFILE_LIST))
@@ -134,6 +134,7 @@ $(abspath ../../../sdk_components/ble/ble_services/ble_dfu/ble_dfu.c) \
 $(abspath ../../../sdk_components/ble/ble_services/ble_bas/ble_bas.c) \
 $(abspath ../../../sdk_components/libraries/bootloader/dfu/nrf_dfu_settings.c) \
 $(abspath ../../../sdk_components/libraries/crc32/crc32.c) \
+$(abspath ../../../sdk_components/ant/ant_stack_config/ant_stack_config.c) \
 #assembly files common to all targets
 ASM_SOURCE_FILES  = $(abspath ../../../sdk_components/toolchain/gcc/gcc_startup_nrf52.S)
 
@@ -172,8 +173,8 @@ INC_PATHS += -I$(abspath ../../../sdk_components/libraries/crc32)
 INC_PATHS += -I$(abspath ../../../sdk_components/libraries/led_softblink)
 INC_PATHS += -I$(abspath ../../../sdk_components/libraries/low_power_pwm)
 INC_PATHS += -I$(abspath ../../../sdk_components/softdevice/common/softdevice_handler)
-INC_PATHS += -I$(abspath ../../../sdk_components/softdevice/s132/headers)
-INC_PATHS += -I$(abspath ../../../sdk_components/softdevice/s132/headers/nrf52)
+INC_PATHS += -I$(abspath ../../../sdk_components/softdevice/s332/headers)
+INC_PATHS += -I$(abspath ../../../sdk_components/softdevice/s332/headers/nrf52)
 INC_PATHS += -I$(abspath ../../../sdk_components/ble/ble_services/ble_dfu)
 INC_PATHS += -I$(abspath ../../../sdk_components/ble/ble_services/ble_bas)
 INC_PATHS += -I$(abspath ../../../include/ble_services)
@@ -196,6 +197,7 @@ INC_PATHS += -I$(abspath ../../../libs/eMD6/core/driver/nRF52)
 INC_PATHS += -I$(abspath ../../../libs/sr3_audio)
 INC_PATHS += -I$(abspath ../../../libs/dvi_adpcm)
 INC_PATHS += -I$(abspath ../../../libs/bv32fp-1.2)
+INC_PATHS += -I$(abspath ../../../sdk_components/ant/ant_stack_config)
 
 OBJECT_DIRECTORY = _build
 LISTING_DIRECTORY = $(OBJECT_DIRECTORY)
@@ -209,6 +211,7 @@ CFLAGS = -DNRF52
 CFLAGS += -DNRF52832
 CFLAGS += -DNRF_SD_BLE_API_VERSION=3
 CFLAGS += -DBLE_STACK_SUPPORT_REQD
+CFLAGS += -DANT_STACK_SUPPORT_REQD
 CFLAGS += -D__HEAP_SIZE=0
 CFLAGS += -DNRF_LOG_USES_RTT
 CFLAGS += -DNRF52_PAN_12
@@ -225,7 +228,7 @@ CFLAGS += -DNRF52_PAN_58
 CFLAGS += -DNRF52_PAN_62
 CFLAGS += -DNRF52_PAN_63
 CFLAGS += -DNRF52_PAN_64
-CFLAGS += -DS132
+CFLAGS += -DS332
 CFLAGS += -DNRF_LOG_USES_RTT=1
 CFLAGS += -DBLE_DFU_APP_SUPPORT
 CFLAGS += -DNRF_DFU_SETTINGS_VERSION=1
@@ -262,6 +265,7 @@ LDFLAGS += --specs=nano.specs -lc -lnosys
 ASMFLAGS += -x assembler-with-cpp
 ASMFLAGS += -DNRF52
 ASMFLAGS += -DBLE_STACK_SUPPORT_REQD
+ASMFLAGS += -DANT_STACK_SUPPORT_REQD
 ASMFLAGS += -DNRF52_PAN_12
 ASMFLAGS += -DNRF52_PAN_15
 ASMFLAGS += -DNRF52_PAN_20
@@ -276,11 +280,10 @@ ASMFLAGS += -DNRF52_PAN_58
 ASMFLAGS += -DNRF52_PAN_62
 ASMFLAGS += -DNRF52_PAN_63
 ASMFLAGS += -DNRF52_PAN_64
-ASMFLAGS += -DS132
+ASMFLAGS += -DS332
 ASMFLAGS += -DNRF_LOG_USES_RTT=1
 ASMFLAGS += -DSOFTDEVICE_PRESENT
 ASMFLAGS += -DSWI_DISABLE0
-ASMFLAGS += -DDEBUG
 ASMFLAGS += -DBSP_DEFINES_ONLY
 ASMFLAGS += -DARM_MATH_CM4
 ASMFLAGS += -DMPU9250
@@ -289,17 +292,17 @@ ASMFLAGS += -DUSE_DMP
 ASMFLAGS += -DEMPL_TARGET_NRF52
 
 #default target - first one defined
-default: clean nrf52832_xxaa_s132
+default: clean nrf52832_xxaa_s332
 
 #building all targets
 all: clean
 	$(NO_ECHO)$(MAKE) -f $(MAKEFILE_NAME) -C $(MAKEFILE_DIR) -e cleanobj
-	$(NO_ECHO)$(MAKE) -f $(MAKEFILE_NAME) -C $(MAKEFILE_DIR) -e nrf52832_xxaa_s132
+	$(NO_ECHO)$(MAKE) -f $(MAKEFILE_NAME) -C $(MAKEFILE_DIR) -e nrf52832_xxaa_s332
 
 #target for printing all targets
 help:
 	@echo following targets are available:
-	@echo 	nrf52832_xxaa_s132
+	@echo 	nrf52832_xxaa_s332
 	@echo 	flash_softdevice
 
 C_SOURCE_FILE_NAMES = $(notdir $(C_SOURCE_FILES))
@@ -315,10 +318,10 @@ vpath %.S $(ASM_PATHS)
 
 OBJECTS = $(C_OBJECTS) $(ASM_OBJECTS)
 
-nrf52832_xxaa_s132: OUTPUT_FILENAME := nrf52832_xxaa_s132
-nrf52832_xxaa_s132: LINKER_SCRIPT=ble_app_thingy_gcc_nrf52.ld
+nrf52832_xxaa_s332: OUTPUT_FILENAME := nrf52832_xxaa_s332
+nrf52832_xxaa_s332: LINKER_SCRIPT=armgcc_s332_nrf52832_xxaa.ld
 
-nrf52832_xxaa_s132: $(BUILD_DIRECTORIES) $(OBJECTS)
+nrf52832_xxaa_s332: $(BUILD_DIRECTORIES) $(OBJECTS)
 	@echo Linking target: $(OUTPUT_FILENAME).out
 	$(NO_ECHO)$(CC) $(LDFLAGS) $(OBJECTS) $(LIBS) -lm -o $(OUTPUT_BINARY_DIRECTORY)/$(OUTPUT_FILENAME).out
 	$(NO_ECHO)$(MAKE) -f $(MAKEFILE_NAME) -C $(MAKEFILE_DIR) -e finalize
@@ -371,13 +374,13 @@ clean:
 
 cleanobj:
 	$(RM) $(BUILD_DIRECTORIES)/*.o
-flash: nrf52832_xxaa_s132
+flash: nrf52832_xxaa_s332
 	@echo Flashing: $(OUTPUT_BINARY_DIRECTORY)/$<.hex
 	nrfjprog --program $(OUTPUT_BINARY_DIRECTORY)/$<.hex -f nrf52  --sectorerase
 	nrfjprog --reset -f nrf52
 
 ## Flash softdevice
 flash_softdevice:
-	@echo Flashing: s132_nrf52_2.0.0_softdevice.hex
-	nrfjprog --program ../../../sdk_components/softdevice/s132/hex/s132_nrf52_2.0.0_softdevice.hex -f nrf52 --chiperase
+	@echo Flashing: ANT_s332_nrf52_2.0.1.hex
+	nrfjprog --program ../../../sdk_components/softdevice/s332/hex/ANT_s332_nrf52_2.0.1.hex -f nrf52 --chiperase
 	nrfjprog --reset -f nrf52

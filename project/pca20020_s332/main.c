@@ -386,7 +386,7 @@ static void thingy_init(void)
 
     err_code = m_ui_led_set_event(M_UI_BLE_DISCONNECTED);
     APP_ERROR_CHECK(err_code);
-    
+
     err_code = support_func_ble_mac_address_print_rtt();
     APP_ERROR_CHECK(err_code);
 }
