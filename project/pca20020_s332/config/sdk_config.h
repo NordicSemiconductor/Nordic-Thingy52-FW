@@ -42,6 +42,51 @@
 #ifdef USE_APP_CONFIG
 #include "app_config.h"
 #endif
+
+// <h> nRF_ANT
+
+//==========================================================
+// <q> ANT_CHANNEL_CONFIG_ENABLED  - ant_channel_config - ANT common channel configuration
+
+
+#ifndef ANT_CHANNEL_CONFIG_ENABLED
+#define ANT_CHANNEL_CONFIG_ENABLED 0
+#endif
+
+// <q> ANT_SEARCH_CONFIG_ENABLED  - ant_search_config - ANT search configuration
+#ifndef ANT_SEARCH_CONFIG_ENABLED
+#define ANT_SEARCH_CONFIG_ENABLED 0
+#endif
+
+// <e> ANT_STACK_CONFIG_ENABLED - ant_stack_config - Common ANT stack configuration
+//==========================================================
+#ifndef ANT_STACK_CONFIG_ENABLED
+#define ANT_STACK_CONFIG_ENABLED 1
+#endif
+#if  ANT_STACK_CONFIG_ENABLED
+// <o> ANT_CONFIG_TOTAL_CHANNELS_ALLOCATED - Allocated ANT channels
+#ifndef ANT_CONFIG_TOTAL_CHANNELS_ALLOCATED
+#define ANT_CONFIG_TOTAL_CHANNELS_ALLOCATED 1
+#endif
+
+// <o> ANT_CONFIG_ENCRYPTED_CHANNELS - Encrypted ANT channels
+#ifndef ANT_CONFIG_ENCRYPTED_CHANNELS
+#define ANT_CONFIG_ENCRYPTED_CHANNELS 0
+#endif
+
+// <o> ANT_CONFIG_EVENT_QUEUE_SIZE - Event queue size
+#ifndef ANT_CONFIG_EVENT_QUEUE_SIZE
+#define ANT_CONFIG_EVENT_QUEUE_SIZE 32
+#endif
+
+// <o> ANT_CONFIG_BURST_QUEUE_SIZE - ANT burst queue size
+#ifndef ANT_CONFIG_BURST_QUEUE_SIZE
+#define ANT_CONFIG_BURST_QUEUE_SIZE 128
+#endif
+
+#endif //ANT_STACK_CONFIG_ENABLED
+// </e>
+
 // <h> nRF_BLE
 
 //==========================================================

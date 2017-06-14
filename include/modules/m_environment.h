@@ -51,6 +51,7 @@
 #include <stdint.h>
 #include <stdbool.h>
 #include "m_ble.h"
+#include "m_ant.h"
 #include "ble_tes.h"
 #include "nrf_drv_twi.h"
 
@@ -104,6 +105,15 @@ uint32_t m_environment_stop(void);
  * @param[in] p_params    Pointer to the init parameters.
  */
 uint32_t m_environment_init(m_ble_service_handle_t * p_handle, m_environment_init_t * p_params);
+
+/**@brief Function used for ANT to request data from this module
+ *
+ * When this function is called, it should trigger the environment module to take a sensor sample. When the sampling is
+ * finished, the appropriate ANT module function should be used to load the sensor data into the ANT module.
+ *
+ * @param[in] type_of_data An enum to denote what kind of data is requested from this module.
+ */
+void m_environment_ant_requested_sensor_data(ant_page_number_t type_of_data);
 #endif
 
 /** @} */
