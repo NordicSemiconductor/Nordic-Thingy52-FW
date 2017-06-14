@@ -55,6 +55,7 @@ $(abspath ../../../source/modules/m_motion_flash.c) \
 $(abspath ../../../source/modules/m_ui.c) \
 $(abspath ../../../source/modules/m_ui_flash.c) \
 $(abspath ../../../source/modules/m_batt_meas.c) \
+$(abspath ../../../source/modules/m_ant.c) \
 $(abspath ../../../source/drivers/drv_gas_sensor.c) \
 $(abspath ../../../source/drivers/drv_ccs811.c) \
 $(abspath ../../../source/drivers/drv_pressure.c) \
@@ -284,6 +285,7 @@ ASMFLAGS += -DS332
 ASMFLAGS += -DNRF_LOG_USES_RTT=1
 ASMFLAGS += -DSOFTDEVICE_PRESENT
 ASMFLAGS += -DSWI_DISABLE0
+ASMFLAGS += -DDEBUG
 ASMFLAGS += -DBSP_DEFINES_ONLY
 ASMFLAGS += -DARM_MATH_CM4
 ASMFLAGS += -DMPU9250

@@ -87,6 +87,9 @@ static bool        m_temp_humid_for_ble_transfer    = false;    ///< Set when hu
 static uint32_t calibrate_gas_sensor(uint16_t humid, float temp);
 static uint32_t gas_load_baseline_flash(uint16_t * p_gas_baseline);
 
+static uint32_t humidity_begin_sample(void);
+static uint32_t temperature_begin_sample(void);
+
 APP_TIMER_DEF(temperature_timer_id);
 APP_TIMER_DEF(pressure_timer_id);
 APP_TIMER_DEF(humidity_timer_id);
@@ -172,7 +175,17 @@ static void drv_humidity_evt_handler(drv_humidity_evt_t event)
     {
         ble_tes_temperature_t temp;
         ble_tes_humidity_t humid;
+        float raw_temperature = drv_humidity_temp_get();
+        int16_t raw_humid_percent = drv_humidity_get();
 
+        temperature_conv_data(raw_temperature, &temp);
+        
+        // Update the ANT module with the latest temp data
+        m_ant_update_temp(raw_temperature);
+        m_ant_update_humidity(raw_humid_percent);
+        
+        humidity_conv_data(raw_humid_percent, &humid);
+        
         float temperature = drv_humidity_temp_get();
         uint16_t humidity = drv_humidity_get();
 
@@ -186,7 +199,7 @@ static void drv_humidity_evt_handler(drv_humidity_evt_t event)
             m_calib_gas_sensor = false;
         }
 
-        if (m_get_temperature == true)
+        else if (m_get_temperature == true)
         {
             err_code = ble_tes_temperature_set(&m_tes, &temp);
             APP_ERROR_CHECK(err_code);
@@ -269,22 +282,15 @@ static void drv_color_data_handler(drv_color_data_t const * p_data)
 static void temperature_timeout_handler(void * p_context)
 {
     uint32_t err_code;
-    m_get_temperature = true;
 
     // Read temperature from humidity sensor.
     err_code = drv_humidity_sample();
     APP_ERROR_CHECK(err_code);
 }
 
-
-/**@brief Function for starting temperature sampling.
- */
-static uint32_t temperature_start(void)
+static uint32_t temperature_begin_sample()
 {
     uint32_t err_code;
-
-    m_get_temperature = true;
-    m_temp_humid_for_ble_transfer = true;
 
     err_code = drv_humidity_enable();
     RETURN_IF_ERROR(err_code);
@@ -300,6 +306,20 @@ static uint32_t temperature_start(void)
     return NRF_SUCCESS;
 }
 
+/**@brief Function for starting temperature sampling for BLE.
+ *
+ */
+static uint32_t temperature_start()
+{
+    uint32_t err_code;
+
+    m_get_temperature = true;
+    m_temp_humid_for_ble_transfer = true;
+
+    err_code = temperature_begin_sample();
+
+    return err_code;
+}
 
 /**@brief Function for stopping temperature sampling.
  */
@@ -473,21 +493,16 @@ static uint32_t humidity_temp_stop_for_gas_calibration(void)
 static void humidity_timeout_handler(void * p_context)
 {
     uint32_t err_code;
-    m_get_humidity = true;
 
     // Sample humidity sensor.
     err_code = drv_humidity_sample();
     APP_ERROR_CHECK(err_code);
 }
 
-/**@brief Function for starting humidity sampling.
- */
-static uint32_t humidity_start(void)
+
+static uint32_t humidity_begin_sample(void)
 {
     uint32_t err_code;
-
-    m_get_humidity = true;
-    m_temp_humid_for_ble_transfer = true;
 
     err_code = drv_humidity_enable();
     RETURN_IF_ERROR(err_code);
@@ -500,6 +515,19 @@ static uint32_t humidity_start(void)
                            NULL);
 }
 
+/**@brief Function for starting humidity sampling for BLE.
+ */
+static uint32_t humidity_start(void)
+{
+    uint32_t err_code;
+
+    m_get_humidity = true;
+    m_temp_humid_for_ble_transfer = true;
+
+    err_code = humidity_begin_sample();
+
+    return err_code;
+}
 
 /**@brief Function for stopping humidity sampling.
  */
@@ -1095,6 +1123,20 @@ uint32_t m_environment_stop(void)
     return NRF_SUCCESS;
 }
 
+void m_environment_ant_requested_sensor_data(ant_page_number_t type_of_data)
+{
+   switch(type_of_data)
+   {
+   case THINGY_ANT_PAGE_TEMP:
+       temperature_begin_sample();
+       break;
+   case THINGY_ANT_PAGE_HUMIDITY:
+      humidity_begin_sample();
+      break;
+   default:
+       break;
+   }
+}
 
 uint32_t m_environment_init(m_ble_service_handle_t * p_handle, m_environment_init_t * p_params)
 {

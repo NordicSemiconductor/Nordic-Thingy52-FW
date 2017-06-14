@@ -486,6 +486,13 @@ static uint32_t ble_stack_init(void)
     {
         return err_code;
     }
+    
+     // Configure Softdevice for ANT
+    err_code = ant_stack_static_config();
+    if (err_code != NRF_SUCCESS)
+    {
+        return err_code;
+    }
 
     err_code = softdevice_sys_evt_handler_set(sys_evt_dispatch);
     if (err_code != NRF_SUCCESS)

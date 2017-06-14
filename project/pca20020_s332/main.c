@@ -71,6 +71,7 @@
 #include "pca20020.h"
 #include "app_error.h"
 #include "support_func.h"
+#include "m_ant.h"
 
 #define DEAD_BEEF   0xDEADBEEF          /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
 #define SCHED_MAX_EVENT_DATA_SIZE   MAX(APP_TIMER_SCHED_EVT_SIZE, BLE_STACK_HANDLER_SCHED_EVT_SIZE) /**< Maximum size of scheduler events. */
@@ -79,6 +80,7 @@
 static const nrf_drv_twi_t     m_twi_sensors = NRF_DRV_TWI_INSTANCE(TWI_SENSOR_INSTANCE);
 static m_ble_service_handle_t  m_ble_service_handles[THINGY_SERVICES_MAX];
 
+static uint16_t battery_voltage = 0;
 
 void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
 {
@@ -262,6 +264,11 @@ static void power_manage(void)
     APP_ERROR_CHECK(err_code);
 }
 
+static void battery_ant_requested_sensor_data(ant_page_number_t page)
+{
+   return; // No implementation needed since battery is constantly being sampled anyway.
+         // If that changes, this should kick off a battery sampling.
+}
 
 /**@brief Battery module data handler.
  */
@@ -270,6 +277,10 @@ static void m_batt_meas_handler(m_batt_meas_event_t const * p_batt_meas_event)
     (void)SEGGER_RTT_printf(0, "batt meas handler: Voltage: %d V, Charge: %d %%, Event type: %d \n",
         p_batt_meas_event->voltage_mv, p_batt_meas_event->level_percent, p_batt_meas_event->type);
 
+    battery_voltage = p_batt_meas_event->voltage_mv;
+
+    m_ant_update_battery(battery_voltage); // Pass the battery voltage to ANT module for transmitting.
+        
     if (p_batt_meas_event != NULL)
     {
         if( p_batt_meas_event->type == M_BATT_MEAS_EVENT_LOW)
@@ -341,6 +352,12 @@ static void thingy_init(void)
     m_motion_init_t          motion_params;
     m_ble_init_t             ble_params;
     batt_meas_init_t         batt_meas_init = BATT_MEAS_PARAM_CFG;
+    
+    // Set up the functions that ANT module can use to request fresh sensor data
+    ant_request_sensor_data_handler_t request_sensor_data_handlers[NUM_PAGE_TYPES];
+    request_sensor_data_handlers[THINGY_ANT_PAGE_BATTERY] = &battery_ant_requested_sensor_data;
+    request_sensor_data_handlers[THINGY_ANT_PAGE_TEMP] = &m_environment_ant_requested_sensor_data;
+    request_sensor_data_handlers[THINGY_ANT_PAGE_HUMIDITY] =   &m_environment_ant_requested_sensor_data;
 
     /**@brief Initialize the TWI manager. */
     err_code = twi_manager_init(APP_IRQ_PRIORITY_THREAD);
@@ -382,6 +399,15 @@ static void thingy_init(void)
     ble_params.service_num       = 5;
 
     err_code = m_ble_init(&ble_params);
+    APP_ERROR_CHECK(err_code);
+
+    err_code = m_ant_init(request_sensor_data_handlers);
+    APP_ERROR_CHECK(err_code);
+
+    // ANT events from SoftDevice passed into the ANT module
+    softdevice_ant_evt_handler_set(&m_ant_evt_handler);
+
+    err_code = m_ant_open();
     APP_ERROR_CHECK(err_code);
 
     err_code = m_ui_led_set_event(M_UI_BLE_DISCONNECTED);
