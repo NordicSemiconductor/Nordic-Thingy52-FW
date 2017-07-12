@@ -1,0 +1,13 @@
+# Set the default behavior, in case people don't have core.autocrlf set.
+* text=auto
+
+# Explicitly declare text files you want to always be normalized and converted
+# to native line endings on checkout.
+*.c text
+*.h text
+
+# .sh scripts will be LF
+*.sh text eol=lf
+
+# This file is used to patch CRLF files
+external/sdk_12.1.diff text eol=crlf
