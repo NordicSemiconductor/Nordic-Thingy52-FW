@@ -54,6 +54,7 @@
 #include "advertiser_beacon.h"
 #include "pca20020.h"
 #include "nrf_delay.h"
+#include "ant_stack_config.h"
 
 #ifdef BLE_DFU_APP_SUPPORT
     #include "ble_dfu.h"
