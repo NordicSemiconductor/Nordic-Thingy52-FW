@@ -52,7 +52,7 @@ static drv_ext_gpio_init_t m_drv_ext_gpio;
 #define RETURN_IF_ERROR_EXT_GPIO_CLOSE(err_code)                                                   \
 if ((err_code) != NRF_SUCCESS)                                                                     \
 {                                                                                                  \
-    (void)SEGGER_RTT_printf(0, RTT_CTRL_TEXT_BRIGHT_RED                                            \
+    DEBUG_PRINTF(0, RTT_CTRL_TEXT_BRIGHT_RED                                                       \
     "ERROR. Returned in file: %s, line: %d, with error code %d \r\n"RTT_CTRL_RESET,                \
     __FILE__, __LINE__, err_code);                                                                 \
     (void)drv_sx1509_close();                                                                      \
