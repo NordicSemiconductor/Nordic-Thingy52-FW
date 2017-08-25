@@ -47,7 +47,6 @@
 #ifndef __MACROS_COMMON_H__
 #define __MACROS_COMMON_H__
 
-#include "SEGGER_RTT.h"
 
 /**@brief global debug flag will enable debug print from all files
  */
@@ -56,6 +55,7 @@
 #endif
 
 #ifdef LOCAL_DEBUG
+    #include "SEGGER_RTT.h"
     #define DEBUG_PRINTF    (void)SEGGER_RTT_printf
 #else
     #define DEBUG_PRINTF(...)
@@ -66,7 +66,7 @@
 #define RETURN_IF_ERROR(err_code)                                                                  \
 if ((err_code) != NRF_SUCCESS)                                                                     \
 {                                                                                                  \
-    (void)SEGGER_RTT_printf(0, RTT_CTRL_TEXT_BRIGHT_RED                                            \
+    DEBUG_PRINTF(0, RTT_CTRL_TEXT_BRIGHT_RED                                                       \
     "ERROR. Returned in file: %s, line: %d, with error code %d \r\n"RTT_CTRL_RESET,                \
     __FILE__, __LINE__, err_code);                                                                 \
     return (err_code);                                                                             \
