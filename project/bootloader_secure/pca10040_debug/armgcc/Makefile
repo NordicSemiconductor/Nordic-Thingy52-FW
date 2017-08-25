@@ -2,7 +2,7 @@ PROJECT_NAME     := secure_dfu_secure_dfu_ble_s132_pca10040_debug
 TARGETS          := nrf52832_xxaa_s132
 OUTPUT_DIRECTORY := _build
 
-SDK_ROOT := ../../../../..
+SDK_ROOT := ../../../../external/sdk
 PROJ_DIR := ../..
 
 $(OUTPUT_DIRECTORY)/nrf52832_xxaa_s132.out: \
@@ -29,9 +29,10 @@ SRC_FILES += \
   $(SDK_ROOT)/components/drivers_nrf/common/nrf_drv_common.c \
   $(SDK_ROOT)/components/drivers_nrf/rng/nrf_drv_rng.c \
   $(SDK_ROOT)/components/drivers_nrf/hal/nrf_nvmc.c \
+  $(SDK_ROOT)/components/drivers_nrf/twi_master/nrf_drv_twi.c \
   $(SDK_ROOT)/components/libraries/bootloader/ble_dfu/nrf_ble_dfu.c \
   $(PROJ_DIR)/dfu-cc.pb.c \
-  $(PROJ_DIR)/dfu_public_key.c \
+  $(PROJ_DIR)/keys/public_key.c \
   $(PROJ_DIR)/dfu_req_handling.c \
   $(PROJ_DIR)/main.c \
   $(SDK_ROOT)/external/segger_rtt/RTT_Syscalls_GCC.c \
@@ -53,21 +54,27 @@ SRC_FILES += \
   $(SDK_ROOT)/components/libraries/bootloader/dfu/nrf_dfu_settings.c \
   $(SDK_ROOT)/components/libraries/bootloader/dfu/nrf_dfu_transport.c \
   $(SDK_ROOT)/components/libraries/bootloader/dfu/nrf_dfu_utils.c \
+  $(PROJ_DIR)/../../source/drivers/drv_ext_light.c \
+  $(PROJ_DIR)/../../source/drivers/drv_sx1509.c \
+  $(PROJ_DIR)/../../source/util/sx150x_led_drv_calc.c \
+  $(PROJ_DIR)/../../source/util/twi_manager.c \
 
 # Include folders common to all targets
 INC_FOLDERS += \
-  $(PROJ_DIR)/config/secure_dfu_secure_dfu_ble_s132_pca10040_debug \
-  $(PROJ_DIR)/config \
   $(SDK_ROOT)/components/toolchain/cmsis/include \
-  $(PROJ_DIR)/../../bsp \
   $(SDK_ROOT)/components/drivers_nrf/rng \
   $(SDK_ROOT)/components/toolchain \
   $(SDK_ROOT)/components/device \
   $(SDK_ROOT)/components/drivers_nrf/hal \
+  $(SDK_ROOT)/components/drivers_nrf/twi_master \
   $(SDK_ROOT)/components/libraries/sha256 \
   $(SDK_ROOT)/components/libraries/crc32 \
   $(SDK_ROOT)/components/libraries/experimental_section_vars \
   $(PROJ_DIR) \
+  $(PROJ_DIR)/../../include/board \
+  $(PROJ_DIR)/../../include/drivers \
+  $(PROJ_DIR)/../../include/macros \
+  $(PROJ_DIR)/../../include/util \
   $(SDK_ROOT)/components/libraries/fstorage \
   $(SDK_ROOT)/components/libraries/util \
   $(SDK_ROOT)/components \
@@ -81,7 +88,6 @@ INC_FOLDERS += \
   $(SDK_ROOT)/components/drivers_nrf/delay \
   $(SDK_ROOT)/components/ble/common \
   $(SDK_ROOT)/components/libraries/fifo \
-  $(SDK_ROOT)/components/libraries/bootloader/ble_dfu/includes \
   $(SDK_ROOT)/components/libraries/svc \
   $(SDK_ROOT)/components/libraries/log \
   $(SDK_ROOT)/components/libraries/hci \
