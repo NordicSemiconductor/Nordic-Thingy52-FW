@@ -107,9 +107,8 @@ static struct
     drv_sx1509_cfg_t const *p_cfg;
 } m_drv_sx1509;
 
-#ifdef SX1509_DEBUG
-    #define LOCAL_DEBUG
-#endif
+#define  NRF_LOG_MODULE_NAME "drv_sx1509    "
+#include "nrf_log.h"
 #include "macros_common.h"
 
 static __INLINE uint8_t  m_onoffcfgx_base_addr_get(uint8_t pin_no)
@@ -164,8 +163,6 @@ static bool reg_set(uint8_t reg_addr, uint8_t value)
         uint8_t               twi_addr   = m_drv_sx1509.p_cfg->twi_addr;
         uint8_t tx_buffer[2] = {reg_addr, value};
 
-        DEBUG_PRINTF(0, "TWI write addr: 0x%02X  val: 0x%02X  p_cfg: 0x%x.\n", reg_addr, value, m_drv_sx1509.p_cfg);
-
         return ( nrf_drv_twi_tx(p_instance, twi_addr, &(tx_buffer[0]), 2, M_TWI_STOP) == NRF_SUCCESS );
     }
 
@@ -183,8 +180,6 @@ static bool reg_get(uint8_t reg_addr, uint8_t *p_value)
         if ( (nrf_drv_twi_tx(p_instance, twi_addr, &reg_addr, 1, M_TWI_SUSPEND) == NRF_SUCCESS)
         &&   (nrf_drv_twi_rx(p_instance, twi_addr, p_value, 1)      == NRF_SUCCESS) )
         {
-            DEBUG_PRINTF(0, "TWI read  addr: 0x%02X  val: 0x%02X.\n", reg_addr, *p_value);
-
             return ( true );
         }
     }
@@ -563,6 +558,18 @@ uint32_t drv_sx1509_data_get(uint16_t *p_data)
 
     return ( DRV_SX1509_STATUS_CODE_DISALLOWED );
 }
+
+
+uint32_t drv_sx1509_data_set(uint16_t data)
+{
+    if ( !reg_set(M_REGDATAB, (data >> DRV_SX1509_DIR_PIN8_Pos) & 0xFF) 
+    ||   !reg_set(M_REGDATAA, (data >> DRV_SX1509_DIR_PIN0_Pos) & 0xFF) )
+    {
+        return ( DRV_SX1509_STATUS_CODE_DISALLOWED );
+    }
+    
+    return ( DRV_SX1509_STATUS_CODE_SUCCESS );
+} 
 
 
 uint32_t drv_sx1509_data_modify(uint16_t set_mask, uint16_t clr_mask)

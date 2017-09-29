@@ -260,7 +260,7 @@ static void on_authorize_req(ble_tms_t * p_tms, ble_evt_t * p_ble_evt)
             ble_gatts_rw_authorize_reply_params_t rw_authorize_reply;
             bool                                  valid_data = true;
 
-            // Check for valid data
+            // Check for valid data.
             if(p_evt_rw_authorize_request->request.write.len != sizeof(ble_tms_config_t))
             {
                 valid_data = false;
@@ -269,16 +269,16 @@ static void on_authorize_req(ble_tms_t * p_tms, ble_evt_t * p_ble_evt)
             {
                 ble_tms_config_t * p_config = (ble_tms_config_t *)p_evt_rw_authorize_request->request.write.data;
 
-                if ( (p_config->pedo_interval_ms < BLE_TMS_CONFIG_PEDO_INT_MIN)    ||
-                     (p_config->pedo_interval_ms > BLE_TMS_CONFIG_PEDO_INT_MAX)    ||
-                     (p_config->temp_interval_ms < BLE_TMS_CONFIG_TEMP_INT_MIN)    ||
-                     (p_config->temp_interval_ms > BLE_TMS_CONFIG_TEMP_INT_MAX)    ||
-                     (p_config->compass_interval_ms < BLE_TMS_CONFIG_COMP_INT_MIN) ||
-                     (p_config->compass_interval_ms > BLE_TMS_CONFIG_COMP_INT_MAX) ||
-                     (p_config->motion_freq_hz < BLE_TMS_CONFIG_MPUF_MIN)          ||
-                     (p_config->motion_freq_hz > BLE_TMS_CONFIG_MPUF_MAX)          ||
-                  /* (p_config->wake_on_motion < BLE_TMS_CONFIG_WOM_MIN)           || */
-                     (p_config->wake_on_motion > BLE_TMS_CONFIG_WOM_MAX) )
+                if ( (p_config->pedo_interval_ms    < BLE_TMS_CONFIG_PEDO_INT_MIN)      ||
+                     (p_config->pedo_interval_ms    > BLE_TMS_CONFIG_PEDO_INT_MAX)      ||
+                     (p_config->temp_interval_ms    < BLE_TMS_CONFIG_TEMP_INT_MIN)      ||
+                     (p_config->temp_interval_ms    > BLE_TMS_CONFIG_TEMP_INT_MAX)      ||
+                     (p_config->compass_interval_ms < BLE_TMS_CONFIG_COMP_INT_MIN)      ||
+                     (p_config->compass_interval_ms > BLE_TMS_CONFIG_COMP_INT_MAX)      ||
+                     (p_config->motion_freq_hz      < BLE_TMS_CONFIG_MPUF_MIN)          ||
+                     (p_config->motion_freq_hz      > BLE_TMS_CONFIG_MPUF_MAX)          ||
+                  /* (p_config->wake_on_motion      < BLE_TMS_CONFIG_WOM_MIN)           || */
+                     (p_config->wake_on_motion      > BLE_TMS_CONFIG_WOM_MAX) )
                 {
                     valid_data = false;
                 }

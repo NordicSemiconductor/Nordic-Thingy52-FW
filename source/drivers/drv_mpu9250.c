@@ -46,9 +46,8 @@
 #include "app_scheduler.h"
 #include "twi_manager.h"
 
-#ifdef MPU9250_DEBUG
-    #define LOCAL_DEBUG
-#endif
+#define  NRF_LOG_MODULE_NAME "drv_mpu9250   "
+#include "nrf_log.h"
 #include "macros_common.h"
 
 static struct
@@ -70,8 +69,6 @@ static void gpiote_evt_sceduled(void * p_event_data, uint16_t event_size)
     {
         m_mpu9250.cb();
         m_mpu9250.evt_sheduled--;
-
-        DEBUG_PRINTF(0, "drv_mpu9250: evt handled - %d\r\n", m_mpu9250.evt_sheduled);
     }
 }
 
@@ -96,8 +93,6 @@ static void gpiote_evt_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t a
             err_code = app_sched_event_put(0, 0, gpiote_evt_sceduled);
             APP_ERROR_CHECK(err_code);
         }
-
-        DEBUG_PRINTF(0, "drv_mpu9250: evt added - %d\r\n", m_mpu9250.evt_sheduled);
     }
 }
 
@@ -107,8 +102,6 @@ static void gpiote_evt_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t a
 static __inline uint32_t twi_open(void)
 {
     uint32_t err_code;
-
-    DEBUG_PRINTF(0, "drv_mpu9250: twi_open\r\n");
 
     err_code = twi_manager_request(m_mpu9250.init.p_twi_instance,
                                    m_mpu9250.init.p_twi_cfg,
@@ -131,8 +124,6 @@ static __inline uint32_t twi_close(void)
 
     nrf_drv_twi_uninit(m_mpu9250.init.p_twi_instance);
 
-    DEBUG_PRINTF(0, "drv_mpu9250: twi_closed\r\n");
-
     return NRF_SUCCESS;
 }
 
@@ -154,7 +145,7 @@ int drv_mpu9250_write(unsigned char slave_addr, unsigned char reg_addr, unsigned
                                false);
     if (err_code != NRF_SUCCESS)
     {
-        DEBUG_PRINTF(0, RTT_CTRL_TEXT_BRIGHT_RED"drv_mpu9250_write"RTT_CTRL_RESET": Failed!\r\n");
+        NRF_LOG_ERROR("drv_mpu9250_write Failed!\r\n");
     }
 
     err_code = twi_close();
@@ -178,7 +169,7 @@ int drv_mpu9250_read(unsigned char slave_addr, unsigned char reg_addr, unsigned 
                                true );
     if (err_code != NRF_SUCCESS)
     {
-        DEBUG_PRINTF(0, RTT_CTRL_TEXT_BRIGHT_RED"drv_mpu9250_read"RTT_CTRL_RESET": Failed!\r\n");
+        NRF_LOG_ERROR("drv_mpu9250_read Failed!\r\n");
     }
 
     err_code = nrf_drv_twi_rx( m_mpu9250.init.p_twi_instance,
@@ -187,7 +178,7 @@ int drv_mpu9250_read(unsigned char slave_addr, unsigned char reg_addr, unsigned 
                                length );
     if (err_code != NRF_SUCCESS)
     {
-        DEBUG_PRINTF(0, RTT_CTRL_TEXT_BRIGHT_RED"drv_mpu9250_read"RTT_CTRL_RESET": Failed!\r\n");
+        NRF_LOG_ERROR("drv_mpu9250_read Failed!\r\n");
     }
 
     err_code = twi_close();

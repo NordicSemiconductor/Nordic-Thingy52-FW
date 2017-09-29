@@ -55,8 +55,8 @@
  */
 typedef enum
 {
-    DRV_PRESSURE_EVT_DATA,    /**<Converted value ready to be read*/
-    DRV_PRESSURE_EVT_ERROR    /**<HW error on the communication bus*/
+    DRV_PRESSURE_EVT_DATA,    /**<Converted value ready to be read.*/
+    DRV_PRESSURE_EVT_ERROR    /**<HW error on the communication bus.*/
 }drv_pressure_evt_type_t;
 
 /**@brief Pressure modes of operation.
@@ -134,13 +134,13 @@ uint32_t drv_pressure_mode_set(drv_pressure_mode_t mode);
  */
 float drv_pressure_get(void);
 
-/**@brief Function to start sampling.
+/**@brief Function for starting the sampling.
  *
  * @retval NRF_SUCCESS             If start sampling was successful.
  */
 uint32_t drv_pressure_sample(void);
 
-/**@brief Function to put sensor in sleep.
+/**@brief Function for putting the sensor to sleep.
  *
  * @retval NRF_SUCCESS             If sleep was successful.
  */

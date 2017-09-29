@@ -45,13 +45,11 @@
 #include "drv_ext_gpio.h"
 #include "drv_mic.h"
 #include "app_util_platform.h"
+#define  NRF_LOG_MODULE_NAME "drv_mic       "
+#include "nrf_log.h"
+#include "macros_common.h"
 
 STATIC_ASSERT(CONFIG_PDM_BUFFER_SIZE_SAMPLES == (1 * CONFIG_AUDIO_FRAME_SIZE_SAMPLES));
-
-#ifdef DRV_MIC_DEBUG
-    #define LOCAL_DEBUG
-#endif
-#include "macros_common.h"
 
 typedef struct
 {
@@ -69,6 +67,8 @@ static pdm_buf_t              m_pdm_buf[PDM_BUF_NUM];
 static void mic_power_on(void)
 {
     uint32_t err_code;
+    
+    nrf_gpio_cfg_input(MIC_DOUT, NRF_GPIO_PIN_NOPULL);
 
     #if defined(THINGY_HW_v0_7_0)
         err_code = drv_ext_gpio_pin_clear(SX_MIC_PWR_CTRL);
@@ -96,6 +96,9 @@ static void mic_power_off(void)
     #else
         err_code = drv_ext_gpio_pin_clear(SX_MIC_PWR_CTRL);
     #endif
+    
+    nrf_gpio_cfg_input(MIC_DOUT, NRF_GPIO_PIN_PULLDOWN);
+    
     APP_ERROR_CHECK(err_code);
 }
 
@@ -129,7 +132,7 @@ static void m_audio_process(void * p_event_data, uint16_t event_size)
     status = m_data_handler(&frame_buf);
     if (status != NRF_SUCCESS)
     {
-        DEBUG_PRINTF(0, "%s(): WARNING: Cannot schedule audio frame transmission!\r\n", __func__);
+        NRF_LOG_WARNING("Cannot schedule audio frame transmission!\r\n");
         /*
          * Do not clear CONFIG_IO_DBG_PCM. This will make debugging pulse wider
          * than expected and easier to spot on the logic analyzer.
@@ -170,7 +173,7 @@ static void m_audio_buffer_handler(int16_t *p_buffer, uint16_t samples)
     }
     else
     {
-        DEBUG_PRINTF(0, "m_audio_buffer_handler: BUFFER FULL!!\r\n");
+        NRF_LOG_WARNING("m_audio_buffer_handler: BUFFER FULL!!\r\n");
     }
 }
 
@@ -179,7 +182,7 @@ uint32_t drv_mic_start(void)
 {
     ret_code_t status;
 
-    DEBUG_PRINTF(0, "m_audio: Enabled\r\n");
+    NRF_LOG_DEBUG("m_audio: Enabled\r\n");
 
     if(m_audio_enabled == true)
     {
@@ -202,7 +205,7 @@ uint32_t drv_mic_stop(void)
 {
     ret_code_t status;
 
-    DEBUG_PRINTF(0, "m_audio: Disabled\r\n");
+    NRF_LOG_DEBUG("m_audio: Disabled\r\n");
 
     if(m_audio_enabled == false)
     {

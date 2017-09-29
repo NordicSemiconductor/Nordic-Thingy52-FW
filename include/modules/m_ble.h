@@ -49,6 +49,7 @@
 #define __THINGY_BLE_H__
 
 #include <stdint.h>
+#include <stdbool.h>
 #include "thingy_config.h"
 #include "ble.h"
 
@@ -72,10 +73,10 @@ typedef struct
 
 typedef void (*m_ble_evt_handler_t)(m_ble_evt_t * p_evt);
 
-/**@brief  BLE service callback definitions
+/**@brief  BLE service callback definitions.
 */
 typedef void (*m_ble_service_evt_cb_t)(ble_evt_t * p_ble_evt);
-typedef uint32_t (*m_ble_service_init_cb_t)(void);
+typedef uint32_t (*m_ble_service_init_cb_t)(bool flash_reinit);
 
 /**@brief BLE service handle structure.
 */
@@ -97,6 +98,8 @@ typedef struct
 /**@brief Function for initializing the BLE handling module..
  *
  * @param[in] p_params    Pointer to the init parameters.
+ *
+ * @retval NRF_SUCCESS If initialization was successful.
  */
 uint32_t m_ble_init(m_ble_init_t * p_params);
 

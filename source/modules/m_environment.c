@@ -49,10 +49,8 @@
 #include "nrf_delay.h"
 #include "fstorage.h"
 #include "m_ui.h"
-
-#ifdef ENV_DEBUG
-    #define LOCAL_DEBUG
-#endif
+#define  NRF_LOG_MODULE_NAME "m_env         "
+#include "nrf_log.h"
 #include "macros_common.h"
 
 /**@brief Different GAS sensor states.
@@ -102,9 +100,7 @@ static void temperature_conv_data(float in_temp, ble_tes_temperature_t * p_out_t
     p_out_temp->integer = (int8_t)in_temp;
     f_decimal = in_temp - p_out_temp->integer;
     p_out_temp->decimal = (uint8_t)(f_decimal * 100.0f);
-    DEBUG_PRINTF(0, "%stemperature%s_conv_data: Temperature: ,%d.%d,C\r\n", RTT_CTRL_TEXT_BRIGHT_MAGENTA,
-                                                                            RTT_CTRL_RESET,
-                                                                            p_out_temp->integer, p_out_temp->decimal);
+    NRF_LOG_DEBUG("temperature_conv_data: Temperature: ,%d.%d,C\r\n", p_out_temp->integer, p_out_temp->decimal);
 }
 
 
@@ -113,9 +109,7 @@ static void temperature_conv_data(float in_temp, ble_tes_temperature_t * p_out_t
 static void humidity_conv_data(uint8_t humid, ble_tes_humidity_t * p_out_humid)
 {
    *p_out_humid = (uint8_t)humid;
-   DEBUG_PRINTF(0, "%shumidity%s_conv_data: Relative Humidty: ,%d,%%\r\n", RTT_CTRL_TEXT_BRIGHT_MAGENTA,
-                                                                           RTT_CTRL_RESET,
-                                                                           humid);
+   NRF_LOG_DEBUG("humidity_conv_data: Relative Humidty: ,%d,%%\r\n", humid);
 }
 
 
@@ -128,9 +122,7 @@ static void pressure_conv_data(float in_press, ble_tes_pressure_t * p_out_press)
     p_out_press->integer = (int32_t)in_press;
     f_decimal = in_press - p_out_press->integer;
     p_out_press->decimal = (uint8_t)(f_decimal * 100.0f);
-    DEBUG_PRINTF(0, "%spressure%s_conv_data: Pressure/Altitude: %d.%d Pa/m\r\n", RTT_CTRL_TEXT_BRIGHT_MAGENTA,
-                                                                         RTT_CTRL_RESET,
-                                                                         p_out_press->integer, p_out_press->decimal);
+    NRF_LOG_DEBUG("pressure_conv_data: Pressure/Altitude: %d.%d Pa/m\r\n", p_out_press->integer, p_out_press->decimal);
 }
 
 
@@ -217,10 +209,8 @@ static void drv_gas_data_handler(drv_gas_sensor_data_t const * p_data)
         data.eco2_ppm = p_data->ec02_ppm;
         data.tvoc_ppb = p_data->tvoc_ppb;
 
-        DEBUG_PRINTF(0 ,"%sgas%s_data_handler eCO2:, %d, - TVOC:, %d,\r\n", RTT_CTRL_TEXT_BRIGHT_MAGENTA,
-                                                                            RTT_CTRL_RESET,
-                                                                            p_data->ec02_ppm,
-                                                                            p_data->tvoc_ppb);
+        NRF_LOG_DEBUG("gas_data_handler eCO2:, %d, - TVOC:, %d,\r\n", p_data->ec02_ppm,
+                                                                      p_data->tvoc_ppb);
 
         (void)ble_tes_gas_set(&m_tes, &data);
 
@@ -247,12 +237,10 @@ static void drv_color_data_handler(drv_color_data_t const * p_data)
     if (p_data != NULL)
     {
         ble_tes_color_t data;
-        DEBUG_PRINTF(0 ,"%scolor%s_data_handler r: %d - g: %d - b: %d - c: %d\r\n", RTT_CTRL_TEXT_BRIGHT_MAGENTA,
-                                                                                    RTT_CTRL_RESET,
-                                                                                    p_data->red,
-                                                                                    p_data->green,
-                                                                                    p_data->blue,
-                                                                                    p_data->clear);
+        NRF_LOG_DEBUG("color_data_handler r: %d - g: %d - b: %d - c: %d\r\n", p_data->red,
+                                                                              p_data->green,
+                                                                              p_data->blue,
+                                                                              p_data->clear);
         data.red   = p_data->red;
         data.green = p_data->green;
         data.blue  = p_data->blue;
@@ -293,7 +281,7 @@ static uint32_t temperature_start(void)
     RETURN_IF_ERROR(err_code);
 
     err_code = app_timer_start(temperature_timer_id,
-                               APP_TIMER_TICKS(m_p_config->temperature_interval_ms, APP_TIMER_PRESCALER),
+                               APP_TIMER_TICKS(m_p_config->temperature_interval_ms),
                                NULL);
     RETURN_IF_ERROR(err_code);
 
@@ -358,7 +346,7 @@ static uint32_t pressure_start(void)
 
 
     return app_timer_start(pressure_timer_id,
-                           APP_TIMER_TICKS(m_p_config->pressure_interval_ms, APP_TIMER_PRESCALER),
+                           APP_TIMER_TICKS(m_p_config->pressure_interval_ms),
                            NULL);
 }
 
@@ -382,7 +370,7 @@ static uint32_t pressure_stop(void)
 static void gas_calib_timeout_handler(void * p_context)
 {
     uint32_t err_code;
-    uint16_t gas_baseline;
+    uint16_t gas_baseline = 0;
 
     if (m_gas_state == GAS_STATE_WARMUP)
     {
@@ -391,7 +379,7 @@ static void gas_calib_timeout_handler(void * p_context)
 
         if (gas_baseline == 0)
         {
-            DEBUG_PRINTF(0, RTT_CTRL_TEXT_BRIGHT_YELLOW"Env: No valid baseline stored in flash. Baseline not written to gas sensor."RTT_CTRL_RESET"\n");
+            NRF_LOG_WARNING("No valid baseline stored in flash. Baseline not written to gas sensor.\r\n");
         }
         else
         {
@@ -428,7 +416,7 @@ static uint32_t calibrate_gas_sensor(uint16_t humid, float temp)
         uint16_t rh_ppt    = humid * 10;
         int32_t temp_mdeg = (int32_t)(temp * 1000.0f);
 
-        DEBUG_PRINTF(0, "Env: Calibrating gas sensor: humid out %d [ppt], temp out: %d [mdeg C]\n", rh_ppt, temp_mdeg);
+        NRF_LOG_DEBUG("Calibrating gas sensor: humid out %d [ppt], temp out: %d [mdeg C]\r\n", rh_ppt, temp_mdeg);
 
         err_code = drv_gas_sensor_calibrate_humid_temp(rh_ppt, temp_mdeg);
         RETURN_IF_ERROR(err_code);
@@ -496,7 +484,7 @@ static uint32_t humidity_start(void)
     RETURN_IF_ERROR(err_code);
 
     return app_timer_start(humidity_timer_id,
-                           APP_TIMER_TICKS(m_p_config->humidity_interval_ms, APP_TIMER_PRESCALER),
+                           APP_TIMER_TICKS(m_p_config->humidity_interval_ms),
                            NULL);
 }
 
@@ -540,22 +528,22 @@ static uint32_t gas_load_baseline_flash(uint16_t * p_gas_baseline)
     {
         case GAS_MODE_250MS:
             *p_gas_baseline = m_p_baseline->mode_250ms;
-            DEBUG_PRINTF(0, "Env: Gas sensor baseline loaded from flash, value 0x%04x, mode: GAS_MODE_250MS \n", *p_gas_baseline);
+            NRF_LOG_DEBUG("Gas sensor baseline loaded from flash, value 0x%04x, mode: GAS_MODE_250MS \r\n", *p_gas_baseline);
         break;
 
         case GAS_MODE_1S:
             *p_gas_baseline = m_p_baseline->mode_1s;
-            DEBUG_PRINTF(0, "Env: Gas sensor baseline loaded from flash, value 0x%04x, mode: GAS_MODE_1S \n", *p_gas_baseline);
+            NRF_LOG_DEBUG("Gas sensor baseline loaded from flash, value 0x%04x, mode: GAS_MODE_1S \r\n", *p_gas_baseline);
         break;
 
         case GAS_MODE_10S:
             *p_gas_baseline = m_p_baseline->mode_10s;
-            DEBUG_PRINTF(0, "Env: Gas sensor baseline loaded from flash, value 0x%04x, mode: GAS_MODE_10S \n", *p_gas_baseline);
+            NRF_LOG_DEBUG("Gas sensor baseline loaded from flash, value 0x%04x, mode: GAS_MODE_10S \r\n", *p_gas_baseline);
         break;
 
         case GAS_MODE_60S:
             *p_gas_baseline = m_p_baseline->mode_60s;
-            DEBUG_PRINTF(0, "Env: Gas sensor baseline loaded from flash, value 0x%04x, mode: GAS_MODE_60S \n", *p_gas_baseline);
+            NRF_LOG_DEBUG("Gas sensor baseline loaded from flash, value 0x%04x, mode: GAS_MODE_60S \r\n", *p_gas_baseline);
         break;
 
         default:
@@ -576,22 +564,22 @@ static uint32_t gas_store_baseline_flash(uint16_t baseline)
     {
         case GAS_MODE_250MS:
             m_p_baseline->mode_250ms = baseline;
-            DEBUG_PRINTF(0, "Env: Gas sensor baseline stored to flash, value 0x%04x, mode: GAS_MODE_250MS\n", baseline);
+            NRF_LOG_DEBUG("Gas sensor baseline stored to flash, value 0x%04x, mode: GAS_MODE_250MS\r\n", baseline);
         break;
 
         case GAS_MODE_1S:
             m_p_baseline->mode_1s = baseline;
-            DEBUG_PRINTF(0, "Env: Gas sensor baseline stored to flash, value 0x%04x, mode: GAS_MODE_1S\n", baseline);
+            NRF_LOG_DEBUG("Gas sensor baseline stored to flash, value 0x%04x, mode: GAS_MODE_1S\r\n", baseline);
         break;
 
         case GAS_MODE_10S:
             m_p_baseline->mode_10s = baseline;
-            DEBUG_PRINTF(0, "Env: Gas sensor baseline stored to flash, value 0x%04x, mode: GAS_MODE_10S\n", baseline);
+            NRF_LOG_DEBUG("Gas sensor baseline stored to flash, value 0x%04x, mode: GAS_MODE_10S\r\n", baseline);
         break;
 
         case GAS_MODE_60S:
             m_p_baseline->mode_60s = baseline;
-            DEBUG_PRINTF(0, "Env: Gas sensor baseline stored to flash, value 0x%04x, mode: GAS_MODE_60S\n", baseline);
+            NRF_LOG_DEBUG("Gas sensor baseline stored to flash, value 0x%04x, mode: GAS_MODE_60S\r\n", baseline);
         break;
 
         default:
@@ -607,7 +595,7 @@ static uint32_t gas_store_baseline_flash(uint16_t baseline)
 
 static uint32_t gas_start(void)
 {
-    DEBUG_PRINTF(0, "Env: Gas start: mode: 0x%x \n", m_p_config->gas_interval_mode);
+    NRF_LOG_DEBUG("Gas start: mode: 0x%x \r\n", m_p_config->gas_interval_mode);
 
     uint32_t err_code;
     drv_gas_sensor_mode_t mode;
@@ -637,7 +625,7 @@ static uint32_t gas_start(void)
     m_gas_state = GAS_STATE_WARMUP;
 
     return app_timer_start(gas_calib_timer_id,
-                           APP_TIMER_TICKS(M_GAS_BASELINE_WRITE_MS, APP_TIMER_PRESCALER),
+                           APP_TIMER_TICKS(M_GAS_BASELINE_WRITE_MS),
                            NULL);
 }
 
@@ -702,7 +690,7 @@ static uint32_t color_start(void)
     APP_ERROR_CHECK(err_code);
 
     return app_timer_start(color_timer_id,
-                           APP_TIMER_TICKS(m_p_config->color_interval_ms, APP_TIMER_PRESCALER),
+                           APP_TIMER_TICKS(m_p_config->color_interval_ms),
                            NULL);
 }
 
@@ -733,8 +721,8 @@ static uint32_t config_verify(ble_tes_config_t * p_config)
          (p_config->pressure_interval_ms > BLE_TES_CONFIG_PRESSURE_INT_MAX)          ||
          (p_config->humidity_interval_ms < BLE_TES_CONFIG_HUMIDITY_INT_MIN)          ||
          (p_config->humidity_interval_ms > BLE_TES_CONFIG_HUMIDITY_INT_MAX)          ||
-         (p_config->color_interval_ms < BLE_TES_CONFIG_COLOR_INT_MIN)         ||
-         (p_config->color_interval_ms > BLE_TES_CONFIG_COLOR_INT_MAX)         ||
+         (p_config->color_interval_ms < BLE_TES_CONFIG_COLOR_INT_MIN)                ||
+         (p_config->color_interval_ms > BLE_TES_CONFIG_COLOR_INT_MAX)                ||
          (p_config->gas_interval_mode < BLE_TES_CONFIG_GAS_MODE_MIN)                 ||
          ((int)p_config->gas_interval_mode > (int)BLE_TES_CONFIG_GAS_MODE_MAX))
     {
@@ -812,7 +800,7 @@ static void ble_tes_evt_handler( ble_tes_t        * p_tes,
     switch (evt_type)
     {
         case BLE_TES_EVT_NOTIF_TEMPERATURE:
-            DEBUG_PRINTF(0, "tes_evt_handler: BLE_TES_EVT_NOTIF_TEMPERATURE: %d\r\n", p_tes->is_temperature_notif_enabled);
+            NRF_LOG_DEBUG("tes_evt_handler: BLE_TES_EVT_NOTIF_TEMPERATURE: %d\r\n", p_tes->is_temperature_notif_enabled);
             if (p_tes->is_temperature_notif_enabled)
             {
                 err_code = temperature_start();
@@ -826,7 +814,7 @@ static void ble_tes_evt_handler( ble_tes_t        * p_tes,
             break;
 
         case BLE_TES_EVT_NOTIF_PRESSURE:
-            DEBUG_PRINTF(0, "tes_evt_handler: BLE_TES_EVT_NOTIF_PRESSURE: %d\r\n", p_tes->is_pressure_notif_enabled);
+            NRF_LOG_DEBUG("tes_evt_handler: BLE_TES_EVT_NOTIF_PRESSURE: %d\r\n", p_tes->is_pressure_notif_enabled);
             if (p_tes->is_pressure_notif_enabled)
             {
                 err_code = pressure_start();
@@ -840,7 +828,7 @@ static void ble_tes_evt_handler( ble_tes_t        * p_tes,
             break;
 
         case BLE_TES_EVT_NOTIF_HUMIDITY:
-            DEBUG_PRINTF(0, "tes_evt_handler: BLE_TES_EVT_NOTIF_HUMIDITY: %d\r\n", p_tes->is_humidity_notif_enabled);
+            NRF_LOG_DEBUG("tes_evt_handler: BLE_TES_EVT_NOTIF_HUMIDITY: %d\r\n", p_tes->is_humidity_notif_enabled);
             if (p_tes->is_humidity_notif_enabled)
             {
                 err_code = humidity_start();
@@ -854,7 +842,7 @@ static void ble_tes_evt_handler( ble_tes_t        * p_tes,
             break;
 
         case BLE_TES_EVT_NOTIF_GAS:
-            DEBUG_PRINTF(0, "tes_evt_handler: BLE_TES_EVT_NOTIF_GAS: %d\r\n", p_tes->is_gas_notif_enabled);
+            NRF_LOG_DEBUG("tes_evt_handler: BLE_TES_EVT_NOTIF_GAS: %d\r\n", p_tes->is_gas_notif_enabled);
             if (p_tes->is_gas_notif_enabled)
             {
                 err_code = gas_start();
@@ -868,7 +856,7 @@ static void ble_tes_evt_handler( ble_tes_t        * p_tes,
             break;
 
         case BLE_TES_EVT_NOTIF_COLOR:
-            DEBUG_PRINTF(0, "tes_evt_handler: BLE_TES_EVT_NOTIF_COLOR: %d\r\n", p_tes->is_color_notif_enabled);
+            NRF_LOG_DEBUG("tes_evt_handler: BLE_TES_EVT_NOTIF_COLOR: %d\r\n", p_tes->is_color_notif_enabled);
             if (p_tes->is_color_notif_enabled)
             {
                 err_code = color_start();
@@ -883,7 +871,7 @@ static void ble_tes_evt_handler( ble_tes_t        * p_tes,
 
         case BLE_TES_EVT_CONFIG_RECEIVED:
         {
-            DEBUG_PRINTF(0, "tes_evt_handler: BLE_TES_EVT_CONFIG_RECEIVED: %d\r\n", length);
+            NRF_LOG_DEBUG("tes_evt_handler: BLE_TES_EVT_CONFIG_RECEIVED: %d\r\n", length);
             APP_ERROR_CHECK_BOOL(length == sizeof(ble_tes_config_t));
 
             err_code = m_env_flash_config_store((ble_tes_config_t *)p_data);
@@ -907,19 +895,28 @@ static void ble_tes_evt_handler( ble_tes_t        * p_tes,
  *
  * @retval NRF_SUCCESS If initialization was successful.
  */
-static uint32_t environment_service_init(void)
+static uint32_t environment_service_init(bool major_minor_fw_ver_changed)
 {
     uint32_t              err_code;
     ble_tes_temperature_t temperature = {.integer = 0, .decimal = 0};
     ble_tes_pressure_t    pressure    = {.integer = 0, .decimal = 0};
     ble_tes_humidity_t    humidity    = 0;
-    ble_tes_color_t       color       = {.red=0, .green=0, .blue=0, .clear=0};
+    ble_tes_color_t       color       = {.red = 0, .green = 0, .blue = 0, .clear = 0};
     ble_tes_gas_t         gas         = {.eco2_ppm = 0, .tvoc_ppb = 0};
     ble_tes_init_t        tes_init;
 
     /**@brief Load configuration from flash. */
     err_code = m_env_flash_init(&m_default_config, &m_p_config, &m_default_baseline, &m_p_baseline);
     RETURN_IF_ERROR(err_code);
+
+    if (major_minor_fw_ver_changed)
+    {
+        err_code = m_env_flash_config_store(&m_default_config);
+        APP_ERROR_CHECK(err_code);
+
+        err_code = m_env_flash_baseline_store(&m_default_baseline);
+        APP_ERROR_CHECK(err_code);
+    }
 
     err_code = config_verify(m_p_config);
     RETURN_IF_ERROR(err_code);
@@ -934,11 +931,9 @@ static uint32_t environment_service_init(void)
     tes_init.p_init_config = m_p_config;
     tes_init.evt_handler = ble_tes_evt_handler;
 
-    DEBUG_PRINTF(0, "environment_service_init: ble_tes_init ");
+    NRF_LOG_INFO("Init: ble_tes_init \r\n");
     err_code = ble_tes_init(&m_tes, &tes_init);
     RETURN_IF_ERROR(err_code);
-
-    DEBUG_PRINTF(0, "\r\n");
 
     (void)config_apply(m_p_config);
 
@@ -1103,7 +1098,7 @@ uint32_t m_environment_init(m_ble_service_handle_t * p_handle, m_environment_ini
     NULL_PARAM_CHECK(p_handle);
     NULL_PARAM_CHECK(p_params);
 
-    DEBUG_PRINTF(0, "environment_init: \r\n");
+    NRF_LOG_INFO("Init: \r\n");
 
     p_handle->ble_evt_cb = environment_on_ble_evt;
     p_handle->init_cb    = environment_service_init;

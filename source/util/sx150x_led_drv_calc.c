@@ -41,10 +41,8 @@
 #include <math.h>
 #include <stdint.h>
 #include <stdlib.h>
-
-#ifdef DRV_EXT_LIGHT_DEBUG
-    #define LOCAL_DEBUG
-#endif
+#define  NRF_LOG_MODULE_NAME "sx150x_led_..."
+#include "nrf_log.h"
 #include "macros_common.h"
 
 #define REG_ONOFF_TIME_LOW_MULTIPLIER       64
@@ -391,7 +389,7 @@ ret_code_t sx150x_led_drv_calc_convert(uint16_t port_mask,
     {
         if ((real_vals->fade_in_time_ms != 0) || (real_vals->fade_out_time_ms != 0))
         {
-            DEBUG_PRINTF(0, RTT_CTRL_TEXT_BRIGHT_YELLOW"The given pin does not support rise/fall. These values have been ignored."RTT_CTRL_RESET"\n");
+            NRF_LOG_DEBUG("The given pin does not support rise/fall. These values have been ignored.\r\n");
         }
 
         real_vals->fade_in_time_ms  = 0;

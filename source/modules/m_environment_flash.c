@@ -44,10 +44,8 @@
 #include "ble_tes.h"
 #include "app_error.h"
 #include "app_scheduler.h"
-
-#ifdef ENV_F_DEBUG
-    #define LOCAL_DEBUG
-#endif
+#define  NRF_LOG_MODULE_NAME "m_env_flash   "
+#include "nrf_log.h"
 #include "macros_common.h"
 
 #define WS_FLASH_CONFIG_VALID   0x42UL
@@ -112,7 +110,7 @@ static void env_fds_evt_handler( fds_evt_t const * const p_fds_evt )
             else
             {
                 // Initialization failed.
-                DEBUG_PRINTF(0, "[ENV_F]: FDS init failed!\r\n");
+                NRF_LOG_ERROR("FDS init failed!\r\n");
                 APP_ERROR_CHECK_BOOL(false);
             }
             break;
@@ -121,42 +119,42 @@ static void env_fds_evt_handler( fds_evt_t const * const p_fds_evt )
             {
                 if (p_fds_evt->write.file_id == ENV_FILE_ID)
                 {
-                    DEBUG_PRINTF(0, "[ENV_F]: FDS config write success! %d FileId: 0x%x RecKey:0x%x\r\n",   p_fds_evt->write.is_record_updated,
-                                                                                                            p_fds_evt->write.file_id,
-                                                                                                            p_fds_evt->write.record_key);
+                    NRF_LOG_INFO("FDS config write success! %d FileId: 0x%x RecKey:0x%x\r\n",   p_fds_evt->write.is_record_updated,
+                                                                                                p_fds_evt->write.file_id,
+                                                                                                p_fds_evt->write.record_key);
                     m_fds_config_write_success = true;
                 }
 
                 if (p_fds_evt->write.file_id == ENV_FILE_BASELINE_ID)
                 {
-                    DEBUG_PRINTF(0, "[ENV_F]: FDS baseline write success! %d FileId: 0x%x RecKey:0x%x\r\n", p_fds_evt->write.is_record_updated,
-                                                                                                            p_fds_evt->write.file_id,
-                                                                                                            p_fds_evt->write.record_key);
+                    NRF_LOG_INFO("FDS baseline write success! %d FileId: 0x%x RecKey:0x%x\r\n", p_fds_evt->write.is_record_updated,
+                                                                                                p_fds_evt->write.file_id,
+                                                                                                p_fds_evt->write.record_key);
                     m_fds_baseline_write_success = true;
                 }
             }
             else
             {
                 // Initialization failed.
-                DEBUG_PRINTF(0, "[ENV_F]: FDS write failed!\r\n");
+                NRF_LOG_ERROR("FDS write failed!\r\n");
                 APP_ERROR_CHECK_BOOL(false);
             }
             break;
         default:
-            DEBUG_PRINTF(0, "[ENV_F]: FDS handler - %d - %d\r\n", p_fds_evt->id, p_fds_evt->result);
+            NRF_LOG_INFO("FDS handler - %d - %d\r\n", p_fds_evt->id, p_fds_evt->result);
             APP_ERROR_CHECK(p_fds_evt->result);
             break;
     }
 }
 
 
-uint32_t m_env_flash_config_store(ble_tes_config_t * p_config)
+uint32_t m_env_flash_config_store(const ble_tes_config_t * p_config)
 {
     uint32_t            err_code;
     fds_record_t        record;
     fds_record_chunk_t  record_chunk;
 
-    DEBUG_PRINTF(0, "[ENV_F]: Storing configuration\r\n");
+    NRF_LOG_INFO("Storing configuration\r\n");
 
     NULL_PARAM_CHECK(p_config);
 
@@ -187,7 +185,7 @@ uint32_t m_env_flash_config_load(ble_tes_config_t ** p_config)
 
     memset(&ftok, 0x00, sizeof(fds_find_token_t));
 
-    DEBUG_PRINTF(0, "[ENV_F]: Loading configuration\r\n");
+    NRF_LOG_INFO("Loading configuration\r\n");
 
     err_code = fds_record_find(ENV_FILE_ID, ENV_REC_KEY, &m_record_config_desc, &ftok);
     RETURN_IF_ERROR(err_code);
@@ -206,13 +204,13 @@ uint32_t m_env_flash_config_load(ble_tes_config_t ** p_config)
 }
 
 
-uint32_t m_env_flash_baseline_store(m_gas_baseline_t * p_baseline)
+uint32_t m_env_flash_baseline_store(const m_gas_baseline_t * p_baseline)
 {
     uint32_t            err_code;
     fds_record_t        record;
     fds_record_chunk_t  record_chunk;
 
-    DEBUG_PRINTF(0, "[ENV_F]: Storing baseline \r\n");
+    NRF_LOG_DEBUG("Storing baseline \r\n");
 
     NULL_PARAM_CHECK(p_baseline);
 
@@ -243,7 +241,7 @@ uint32_t m_env_flash_baseline_load(m_gas_baseline_t ** p_baseline)
 
     memset(&ftok, 0x00, sizeof(fds_find_token_t));
 
-    DEBUG_PRINTF(0, "[ENV_F]: Loading baseline\r\n");
+    NRF_LOG_DEBUG("Loading baseline\r\n");
 
     err_code = fds_record_find(ENV_FILE_BASELINE_ID, ENV_REC_BASELINE_KEY, &m_record_baseline_desc, &ftok);
     RETURN_IF_ERROR(err_code);
@@ -269,7 +267,8 @@ uint32_t m_env_flash_init(const ble_tes_config_t * p_default_config,
 {
     uint32_t err_code;
 
-    DEBUG_PRINTF(0, "[ENV_F]: Initialization\r\n");
+    NRF_LOG_INFO("Initialization\r\n");
+    
     NULL_PARAM_CHECK(p_default_config);
     NULL_PARAM_CHECK(p_default_baseline);
 
@@ -285,9 +284,10 @@ uint32_t m_env_flash_init(const ble_tes_config_t * p_default_config,
     }
 
     err_code = m_env_flash_config_load(p_config);
+    
     if (err_code == FDS_ERR_NOT_FOUND)
     {
-        DEBUG_PRINTF(0, "[ENV_F]: Writing default config\r\n");
+        NRF_LOG_INFO("Writing default config\r\n");
 
         fds_record_t        record;
         fds_record_chunk_t  record_chunk;
@@ -326,7 +326,7 @@ uint32_t m_env_flash_init(const ble_tes_config_t * p_default_config,
         fds_record_t        record;
         fds_record_chunk_t  record_chunk;
 
-        DEBUG_PRINTF(0, "[ENV_F]: Writing default baseline to flash 0x%04x 0x%04x 0x%04x 0x%04x \r\n",
+        NRF_LOG_INFO("Writing default baseline to flash 0x%04x 0x%04x 0x%04x 0x%04x \r\n",
         p_default_baseline->mode_250ms, p_default_baseline->mode_1s, p_default_baseline->mode_10s, p_default_baseline->mode_60s);
 
         memcpy(&m_gas_baseline.data.baseline, p_default_baseline, sizeof(m_gas_baseline_t));

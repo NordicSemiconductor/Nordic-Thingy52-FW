@@ -48,14 +48,11 @@
 #include "nrf_delay.h"
 #include "drv_ext_gpio.h"
 #include "sounds.h"
-
-#define SEQ_REPEATES 7 // 8kHz sample rate
-
-#ifdef DRV_SPKR_DEBUG
-    #define LOCAL_DEBUG
-#endif
+#define  NRF_LOG_MODULE_NAME "drv_speaker   "
+#include "nrf_log.h"
 #include "macros_common.h"
 
+#define SEQ_REPEATES 7 // 8kHz sample rate
 #define SPEAKER_VOLUME VOLUME
 
 static nrf_drv_pwm_t m_speaker_pwm = NRF_DRV_PWM_INSTANCE(0);
@@ -151,7 +148,7 @@ static void power_spkr_on(void)
 
 static void ramp_down(uint16_t * p_seq_buf, nrf_pwm_sequence_t * p_seq)
 {
-    DEBUG_PRINTF(0, "ramp_down!\r\n");
+    NRF_LOG_DEBUG("ramp_down!\r\n");
     for (uint32_t i = 0; i < SEQ_BUF_SIZE; i++)
     {
         p_seq_buf[i] = ramp_down_dat[i];
@@ -162,7 +159,7 @@ static void ramp_down(uint16_t * p_seq_buf, nrf_pwm_sequence_t * p_seq)
     p_seq->repeats         = SEQ_REPEATES;
     p_seq->end_delay       = 0;
 
-    nrf_drv_pwm_simple_playback(&m_speaker_pwm, p_seq, 1, NRF_DRV_PWM_FLAG_STOP);
+    (void)nrf_drv_pwm_simple_playback(&m_speaker_pwm, p_seq, 1, NRF_DRV_PWM_FLAG_STOP);
 }
 
 
@@ -289,11 +286,11 @@ static void pwm_handler(nrf_drv_pwm_evt_type_t event_type)
             #endif
             power_off_spkr(true);
 
-            DEBUG_PRINTF(0, "NRF_DRV_PWM_EVT_STOPPED\r\n");
+            NRF_LOG_DEBUG("NRF_DRV_PWM_EVT_STOPPED\r\n");
             s_params.evt_handler(DRV_SPEAKER_EVT_FINISHED);
             break;
         case NRF_DRV_PWM_EVT_FINISHED:
-            DEBUG_PRINTF(0, "NRF_DRV_PWM_EVT_FINISHED - %d\r\n", s_pcm.ramp_down_started);
+            NRF_LOG_DEBUG("NRF_DRV_PWM_EVT_FINISHED - %d\r\n", s_pcm.ramp_down_started);
             s_pcm.ramp_down_started = false;
             break;
         case NRF_DRV_PWM_EVT_END_SEQ0:
@@ -324,7 +321,7 @@ uint32_t drv_speaker_flash_pcm_play(uint8_t const * const p_sound, uint32_t size
 
     power_spkr_on();
 
-    nrf_drv_pwm_complex_playback(&m_speaker_pwm, &s_pcm.seq0, &s_pcm.seq1, 1, (pwm_flags | NRF_DRV_PWM_FLAG_LOOP));
+    (void)nrf_drv_pwm_complex_playback(&m_speaker_pwm, &s_pcm.seq0, &s_pcm.seq1, 1, (pwm_flags | NRF_DRV_PWM_FLAG_LOOP));
 
     #if defined(THINGY_HW_v0_8_0)
         nrf_gpio_pin_set(SPEAKER_VOLUME);
@@ -352,7 +349,7 @@ uint32_t drv_speaker_ble_pcm_play(uint8_t * p_sound, uint32_t length)
 
         if ( length > free_size)
         {
-            DEBUG_PRINTF(0, "drv_speaker_ble_pcm_play: NRF_ERROR_NO_MEM\r\n");
+            NRF_LOG_DEBUG("drv_speaker_ble_pcm_play: NRF_ERROR_NO_MEM\r\n");
             // Buffer is FULL
             return NRF_ERROR_NO_MEM;
         }
@@ -411,7 +408,7 @@ uint32_t drv_speaker_ble_pcm_play(uint8_t * p_sound, uint32_t length)
 
             power_spkr_on();
 
-            nrf_drv_pwm_complex_playback(&m_speaker_pwm, &s_pcm.seq0, &s_pcm.seq1, 1, (pwm_flags | NRF_DRV_PWM_FLAG_LOOP));
+            (void)nrf_drv_pwm_complex_playback(&m_speaker_pwm, &s_pcm.seq0, &s_pcm.seq1, 1, (pwm_flags | NRF_DRV_PWM_FLAG_LOOP));
 
             #if defined(THINGY_HW_v0_8_0)
                 nrf_gpio_pin_set(SPEAKER_VOLUME);
@@ -431,7 +428,7 @@ uint32_t drv_speaker_sample_play(uint8_t sample_id)
     uint8_t const * p_sound;
     uint32_t        len;
 
-    DEBUG_PRINTF(0, "drv_speaker_sample_play: %d\r\n", sample_id);
+    NRF_LOG_DEBUG("drv_speaker_sample_play: %d\r\n", sample_id);
 
     switch(sample_id)
     {
@@ -508,7 +505,7 @@ uint32_t drv_speaker_tone_start(uint16_t freq_hz, uint32_t duration_ms, uint8_t 
         return NRF_SUCCESS;
     }
 
-    DEBUG_PRINTF(0, "drv_speaker_tone_start: %dHz - %dms - %d vol\r\n", freq_hz, duration_ms, volume);
+    NRF_LOG_DEBUG("drv_speaker_tone_start: %dHz - %dms - %d vol\r\n", freq_hz, duration_ms, volume);
 
     period = 1.0f / freq_hz;
     num  = (uint32_t)(period / 16.0e-6f);
@@ -529,7 +526,7 @@ uint32_t drv_speaker_tone_start(uint16_t freq_hz, uint32_t duration_ms, uint8_t 
 
     power_spkr_on();
 
-    nrf_drv_pwm_simple_playback(&m_speaker_pwm, &seq, loop, NRF_DRV_PWM_FLAG_STOP);
+    (void)nrf_drv_pwm_simple_playback(&m_speaker_pwm, &seq, loop, NRF_DRV_PWM_FLAG_STOP);
 
     #if defined(THINGY_HW_v0_8_0)
         nrf_gpio_pin_set(SPEAKER_VOLUME);

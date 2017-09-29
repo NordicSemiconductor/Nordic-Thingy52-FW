@@ -37,11 +37,11 @@
  */
 
 #include <stdint.h>
-
 #include "nrf.h"
 #include "nrf_assert.h"
+#define  NRF_LOG_MODULE_NAME "drv_aud_cod..."
+#include "nrf_log.h"
 #include "macros_common.h"
-
 #include "drv_audio.h"
 #include "drv_audio_coder.h"
 
@@ -63,7 +63,7 @@ void drv_audio_coder_init(void)
 {
     Reset_BV32_Coder(&m_enc_state);
 
-    DEBUG_PRINTF(0, "drv_audio: BV32FP Codec selected");
+    NRF_LOG_DEBUG("drv_audio: BV32FP Codec selected");
 }
 
 void drv_audio_coder_encode(int16_t *input_samples, m_audio_frame_t *p_frame)

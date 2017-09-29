@@ -45,17 +45,15 @@
 #include "twi_manager.h"
 #include "nrf_gpio.h"
 #include "nrf_delay.h"
-
-#ifdef ACC_LIS3DH_DEBUG
-    #define LOCAL_DEBUG
-#endif
+#define  NRF_LOG_MODULE_NAME "drv_acc_lis3dh"
+#include "nrf_log.h"
 #include "macros_common.h"
 
 /* Accelerometer parameters. */
 #define ACC_INT1_THRESHOLD  0x04  /**< Acceleration threshold. Actual value (G) depends on fullscale (FS) configuration. */
 #define ACC_INT1_DURATION   0x00  /**< Acceleration duration. Actual value (sec) depends on sampling rate (ODR). */
 #define I2C_TX_LEN_MAX      24    /**< Maximal number of concurrent bytes for I2C transmission. */
-#define BOOT_DELAY_MS       6     /**< Number of milliseconds delay to allow the LIS3DH to boot after init/reset. 5 ms according to datasheet. */
+#define BOOT_DELAY_MS       10    /**< Number of milliseconds delay to allow the LIS3DH to boot after init/reset. 5 ms according to datasheet. */
 
 /**@brief Forward declaration of lis3dh_read_regs. */
 static ret_code_t lis3dh_read_regs (uint8_t reg,       uint8_t       * const content);
@@ -103,10 +101,8 @@ static __inline ret_code_t twi_close(void)
 
 
 /**@brief Resets the memory contents to its default state.
- *
- * @note This function contains a delay in order for the device to finish boot after reset.
  */
-static ret_code_t lis3dh_reset(void)
+static ret_code_t lis3dh_reboot_mem(void)
 {
     ret_code_t  err_code;
     uint8_t     reg_val = CTRL_REG5_BOOT;
@@ -229,7 +225,7 @@ ret_code_t drv_acc_wakeup_prepare(bool wakeup)
 
     if(wakeup)
     {
-        DEBUG_PRINTF(0, "Configuring LIS3DH for wake on motion \r\n");
+        NRF_LOG_DEBUG("Configuring LIS3DH for wake on motion \r\n");
 
         uint8_t ctrl_regs[] = {(ODR_10Hz << 4) | CTRL_REG1_LPEN | CTRL_REG1_ZEN | CTRL_REG1_YEN | CTRL_REG1_XEN,  // CTRL_REG1
                                 CTRL_REG2_FDS | CTRL_REG2_HP_IA1,                                                 // CTRL_REG2
@@ -292,17 +288,22 @@ ret_code_t drv_acc_init(drv_acc_cfg_t const * const p_cfg)
 
     if (m_acc.p_cfg.cpu_wake_pin == 0)
     {
-        DEBUG_PRINTF(0, RTT_CTRL_TEXT_BRIGHT_GREEN"No pin configured for CPU wake \r\n"RTT_CTRL_RESET);
+        NRF_LOG_WARNING("No pin configured for CPU wake \r\n");
         return DRV_ACC_STATUS_CODE_INVALID_PARAM;
     }
 
     err_code = twi_open();
     RETURN_IF_ERROR(err_code);
-
-    // Post-reset the LIS2DH will be in power-down mode.
-    err_code = lis3dh_reset();
+    
+    // Reboot memory contents. 
+    err_code = lis3dh_reboot_mem();
     RETURN_IF_ERROR(err_code);
-
+    
+    // Explicitly set the LIS3DH in power-down mode.
+    uint8_t reg_val = CTRL_REG1_LPEN;
+    err_code = lis3dh_write_regs(CTRL_REG1, &reg_val, 1);
+    RETURN_IF_ERROR(err_code);
+    
     // Check correct ID.
     if (!lis3dh_verify_id())
     {
@@ -311,7 +312,7 @@ ret_code_t drv_acc_init(drv_acc_cfg_t const * const p_cfg)
 
     // Clear any interrupts.
     (void)lis3dh_int1_clear();
-
+    
     // Disable the pull-up.
     uint8_t disable_pullup[] = {CTRL_REG0_SDO_PU_DISC | CTRL_REG0_CORRECT_OPER};
     err_code = lis3dh_write_regs(CTRL_REG0,  disable_pullup, 1);

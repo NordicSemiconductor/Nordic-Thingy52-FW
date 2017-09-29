@@ -49,9 +49,8 @@
 #include <stdint.h>
 #include <string.h>
 
-#ifdef BATT_MEAS_DEBUG
-    #define LOCAL_DEBUG
-#endif
+#define  NRF_LOG_MODULE_NAME "m_batt_meas   "
+#include "nrf_log.h"
 #include "macros_common.h"
 
 #define ADC_GAIN                    NRF_SAADC_GAIN1     // ADC gain.
@@ -191,7 +190,7 @@ static void batt_event_handler_adc(void * p_event_data, uint16_t size)
         err_code = ble_bas_battery_level_update(&m_bas, battery_level_percent);
         if ((err_code != NRF_SUCCESS) &&
             (err_code != NRF_ERROR_INVALID_STATE) &&
-            (err_code != BLE_ERROR_NO_TX_PACKETS) &&
+//            (err_code != BLE_ERROR_NO_TX_PACKETS) &&
             (err_code != BLE_ERROR_GATTS_SYS_ATTR_MISSING))
         {
             APP_ERROR_HANDLER(err_code);
@@ -255,7 +254,7 @@ static void gpiote_evt_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t u
         event_source = M_BATT_MEAS_EVENT_USB_DISCONN;
     }
 
-    DEBUG_PRINTF(0, "m_batt_meas, GPIOTE handler, event source %d \n", event_source);
+    NRF_LOG_DEBUG("GPIOTE handler, event source %d \r\n", event_source);
 
     err_code = app_sched_event_put((void*)&event_source, sizeof(event_source), batt_event_handler_charge);
     APP_ERROR_CHECK(err_code);
@@ -298,7 +297,7 @@ static uint32_t saadc_init(void)
     RETURN_IF_ERROR(err_code);
 
     nrf_saadc_channel_config_t channel_config =
-    NRF_DRV_SAADC_DEFAULT_CHANNEL_CONFIG_SE(nrf_drv_saadc_gpio_to_ain(m_batt_meas_param.adc_pin_no));
+    NRF_DRV_SAADC_DEFAULT_CHANNEL_CONFIG_SE(m_batt_meas_param.adc_pin_no);
 
     /* Burst enabled to oversample the SAADC. */
     channel_config.burst    = NRF_SAADC_BURST_ENABLED;
@@ -322,6 +321,10 @@ static void app_timer_periodic_handler(void * unused)
     uint32_t err_code;
 
     err_code = saadc_init();
+    if (err_code == NRF_ERROR_INVALID_STATE) // ADC already initialized.
+    {
+        return;
+    }
     APP_ERROR_CHECK(err_code);
 
     err_code = nrf_drv_saadc_sample();
@@ -419,11 +422,11 @@ static void ble_bas_evt_handler(ble_bas_t * p_bas, ble_bas_evt_t * p_evt)
     switch (p_evt->evt_type)
     {
         case BLE_BAS_EVT_NOTIFICATION_ENABLED:
-            DEBUG_PRINTF(0, "m_batt_meas: BLE_BAS_EVT_NOTIFICATION_ENABLED \r\n");
+            NRF_LOG_DEBUG("BLE_BAS_EVT_NOTIFICATION_ENABLED \r\n");
             break;
 
         case BLE_BAS_EVT_NOTIFICATION_DISABLED:
-            DEBUG_PRINTF(0, "m_batt_meas: BLE_BAS_EVT_NOTIFICATION_DISABLED \r\n");
+            NRF_LOG_DEBUG("BLE_BAS_EVT_NOTIFICATION_DISABLED \r\n");
             break;
 
         default:
@@ -438,14 +441,14 @@ static void ble_bas_evt_handler(ble_bas_t * p_bas, ble_bas_evt_t * p_evt)
  *
  * @retval NRF_SUCCESS If initialization was successful.
  */
-static uint32_t battery_service_init(void)
+static uint32_t battery_service_init(bool major_minor_fw_ver_changed)
 {
     uint32_t              err_code;
     ble_bas_init_t        bas_init;
 
     memset(&bas_init, 0, sizeof(bas_init));
 
-    DEBUG_PRINTF(0, "battery_service_init: ble_bas_init \r\n ");
+    NRF_LOG_DEBUG("battery_service_init: ble_bas_init \r\n ");
 
     // Security level for the Battery Service
     BLE_GAP_CONN_SEC_MODE_SET_OPEN(     &bas_init.battery_level_char_attr_md.cccd_write_perm);
@@ -491,7 +494,7 @@ uint32_t m_batt_meas_enable(uint32_t meas_interval_ms)
     RETURN_IF_ERROR(err_code);
 
     err_code = app_timer_start(batt_meas_app_timer_id,
-                               APP_TIMER_TICKS(meas_interval_ms, (uint64_t)m_batt_meas_param.app_timer_prescaler), NULL);
+                               APP_TIMER_TICKS(meas_interval_ms), NULL);
     RETURN_IF_ERROR(err_code);
 
     return M_BATT_STATUS_CODE_SUCCESS;
@@ -522,7 +525,7 @@ uint32_t m_batt_meas_init(m_ble_service_handle_t * p_handle, batt_meas_init_t co
     NULL_PARAM_CHECK(p_handle);
     NULL_PARAM_CHECK(p_batt_meas_init);
 
-    DEBUG_PRINTF(0, "Battery measurement init \r\n");
+    NRF_LOG_DEBUG("Init \r\n");
 
     p_handle->ble_evt_cb = battery_on_ble_evt;
     p_handle->init_cb    = battery_service_init;  // Pointer to ble init function.

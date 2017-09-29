@@ -38,10 +38,8 @@
 
 #include "twi_manager.h"
 #include "nrf_error.h"
-
-#ifdef TWI_DEBUG
-    #define LOCAL_DEBUG
-#endif
+#define  NRF_LOG_MODULE_NAME "twi_manager   "
+#include "nrf_log.h"
 #include "macros_common.h"
 
 static app_irq_priority_t s_context_limit = APP_IRQ_PRIORITY_HIGHEST;
@@ -57,7 +55,7 @@ uint32_t twi_manager_request(nrf_drv_twi_t const *        p_instance,
 
     if (current_context < s_context_limit)
     {
-        DEBUG_PRINTF(0, RTT_CTRL_TEXT_BRIGHT_RED"twi_manager_request"RTT_CTRL_RESET": current_context < s_context_limit %d\r\n", current_context);
+        NRF_LOG_ERROR("twi_manager_request: current_context < s_context_limit %d\r\n", current_context);
         return NRF_ERROR_FORBIDDEN;
     }
 
@@ -69,7 +67,7 @@ uint32_t twi_manager_request(nrf_drv_twi_t const *        p_instance,
     {
         s_collisions++;
 
-        DEBUG_PRINTF(0, RTT_CTRL_TEXT_BRIGHT_RED"twi_manager_request"RTT_CTRL_RESET": collision %d\r\n", s_collisions);
+        NRF_LOG_ERROR("twi_manager_request: collision %d\r\n", s_collisions);
         return err_code;
     }
 

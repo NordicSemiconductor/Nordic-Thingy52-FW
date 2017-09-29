@@ -56,14 +56,14 @@
 typedef enum
 {
     DRV_HUMIDITY_EVT_DATA,    /**<Converted value ready to be read.*/
-    DRV_HUMIDITY_EVT_ERROR    /**<HW error on the communication bus.*/
+    DRV_HUMIDITY_EVT_ERROR    /**<Hardware error on the communication bus.*/
 }drv_humidity_evt_t;
 
 /**@brief Humidity driver event handler callback type.
  */
 typedef void (*drv_humidity_evt_handler_t)(drv_humidity_evt_t evt);
 
-/**@brief Initialization struct for humidity driver.
+/**@brief Initialization struct for the humidity driver.
  */
 typedef struct
 {

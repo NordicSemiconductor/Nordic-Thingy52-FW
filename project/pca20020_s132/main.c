@@ -53,11 +53,9 @@
 #include "ble_advertising.h"
 #include "ble_conn_params.h"
 #include "softdevice_handler.h"
-#include "app_timer_appsh.h"
 #include "app_scheduler.h"
 #include "app_button.h"
 #include "app_util_platform.h"
-#include "SEGGER_RTT.h"
 #include "m_ble.h"
 #include "m_environment.h"
 #include "m_sound.h"
@@ -68,26 +66,33 @@
 #include "drv_ext_gpio.h"
 #include "nrf_delay.h"
 #include "twi_manager.h"
+#include "support_func.h"
 #include "pca20020.h"
 #include "app_error.h"
-#include "support_func.h"
+
+#define  NRF_LOG_MODULE_NAME "main          "
+#include "nrf_log.h"
+#include "nrf_log_ctrl.h"
 
 #define DEAD_BEEF   0xDEADBEEF          /**< Value used as error code on stack dump, can be used to identify stack location on stack unwind. */
-#define SCHED_MAX_EVENT_DATA_SIZE   MAX(APP_TIMER_SCHED_EVT_SIZE, BLE_STACK_HANDLER_SCHED_EVT_SIZE) /**< Maximum size of scheduler events. */
+#define SCHED_MAX_EVENT_DATA_SIZE   MAX(APP_TIMER_SCHED_EVENT_DATA_SIZE, BLE_STACK_HANDLER_SCHED_EVT_SIZE) /**< Maximum size of scheduler events. */
 #define SCHED_QUEUE_SIZE            60  /**< Maximum number of events in the scheduler queue. */
 
 static const nrf_drv_twi_t     m_twi_sensors = NRF_DRV_TWI_INSTANCE(TWI_SENSOR_INSTANCE);
 static m_ble_service_handle_t  m_ble_service_handles[THINGY_SERVICES_MAX];
 
-
 void app_error_fault_handler(uint32_t id, uint32_t pc, uint32_t info)
 {
-    error_info_t * err_info = (error_info_t*)info;
-    (void)SEGGER_RTT_printf(0, RTT_CTRL_TEXT_BRIGHT_RED"ASSERT: id = %d, pc = %d, file = %s, line number: %d, error code = %d \r\n"RTT_CTRL_RESET, \
-    id, pc, err_info->p_file_name, err_info->line_num, err_info->err_code);
-
+    #if NRF_LOG_ENABLED
+        error_info_t * err_info = (error_info_t*)info;
+        NRF_LOG_ERROR(" id = %d, pc = %d, file = %s, line number: %d, error code = %d = %s \r\n", \
+        id, pc, nrf_log_push((char*)err_info->p_file_name), err_info->line_num, err_info->err_code, nrf_log_push((char*)nrf_strerror_find(err_info->err_code)));
+    #endif
+    
     (void)m_ui_led_set_event(M_UI_ERROR);
-    nrf_delay_ms(100);
+    NRF_LOG_FINAL_FLUSH();
+    nrf_delay_ms(5);
+    
     // On assert, the system can only recover with a reset.
     #ifndef DEBUG
         NVIC_SystemReset();
@@ -111,99 +116,6 @@ void assert_nrf_callback(uint16_t line_num, const uint8_t * p_file_name)
     app_error_handler(DEAD_BEEF, line_num, p_file_name);
 }
 
-/**@brief Function for traversing all GPIOs for lowest power consumption.
- *
- * @param[in] vdd_on    If true, keep VDD turned on.
- */
-static void configure_gpio_for_sleep(vdd_state_t vdd_on)
-{
-    ret_code_t err_code;
-
-    sx_gpio_cfg_t  ioext_sys_off_pin_cfg[SX_IOEXT_NUM_PINS] = IOEXT_SYSTEM_OFF_PIN_CFG;
-
-    nrf_gpio_cfg_t   nrf_sys_off_pin_cfg[NRF_NUM_GPIO_PINS] = NRF_SYSTEM_OFF_PIN_CFG;
-
-    #if    defined(THINGY_HW_v0_7_0)
-        // VDD always on.
-    #elif  defined(THINGY_HW_v0_8_0)
-        // VDD always on.
-    #elif  defined(THINGY_HW_v0_9_0)
-        // VDD always on.
-    #else
-        if (vdd_on)
-        {
-            nrf_sys_off_pin_cfg[VDD_PWR_CTRL] = (nrf_gpio_cfg_t)NRF_PIN_OUTPUT_SET;
-        }
-    #endif
-
-    err_code = drv_ext_gpio_reset();
-    APP_ERROR_CHECK(err_code);
-
-    /* Set all IO extender pins in system off state. IO extender will be powered down as well,
-    Hence, this config will not be retained when VDD is turned off. */
-    for (uint8_t i = 0; i < SX_IOEXT_NUM_PINS; i++)
-    {
-        err_code = drv_ext_gpio_cfg(i,
-                         ioext_sys_off_pin_cfg[i].dir,
-                         ioext_sys_off_pin_cfg[i].input_buf,
-                         ioext_sys_off_pin_cfg[i].pull_config,
-                         ioext_sys_off_pin_cfg[i].drive_type,
-                         ioext_sys_off_pin_cfg[i].slew_rate);
-        APP_ERROR_CHECK(err_code);
-
-        switch(ioext_sys_off_pin_cfg[i].state)
-        {
-            case PIN_CLEAR:
-                err_code = drv_ext_gpio_pin_clear(i);
-                APP_ERROR_CHECK(err_code);
-                break;
-
-            case PIN_SET:
-                err_code = drv_ext_gpio_pin_set(i);
-                APP_ERROR_CHECK(err_code);
-                break;
-
-            case PIN_NO_OUTPUT:
-                err_code = NRF_SUCCESS;     // Do nothing.
-                APP_ERROR_CHECK(err_code);
-                break;
-
-            default:
-                err_code = NRF_ERROR_NOT_SUPPORTED;
-        }
-    }
-
-    // Set all nRF pins in desired state for power off.
-    for(uint8_t i = 0; i < NRF_NUM_GPIO_PINS; i++)
-    {
-        nrf_gpio_cfg(i,
-                     nrf_sys_off_pin_cfg[i].dir,
-                     nrf_sys_off_pin_cfg[i].input,
-                     nrf_sys_off_pin_cfg[i].pull,
-                     nrf_sys_off_pin_cfg[i].drive,
-                     nrf_sys_off_pin_cfg[i].sense);
-
-        switch(nrf_sys_off_pin_cfg[i].state)
-        {
-            case PIN_CLEAR:
-                nrf_gpio_pin_clear(i);
-                break;
-
-            case PIN_SET:
-                nrf_gpio_pin_set(i);
-                break;
-
-            case PIN_NO_OUTPUT:
-                // Do nothing.
-                break;
-
-            default:
-                APP_ERROR_CHECK(NRF_ERROR_NOT_SUPPORTED);
-        }
-    }
-}
-
-
 /**@brief Function for putting Thingy into sleep mode.
  *
  * @note This function will not return.
@@ -212,24 +124,25 @@ static void sleep_mode_enter(void)
 {
     uint32_t err_code;
 
-    // Enable wake on button press.
-    nrf_gpio_cfg_sense_input(BUTTON, NRF_GPIO_PIN_PULLUP, NRF_GPIO_PIN_SENSE_LOW);
-
-    (void)SEGGER_RTT_printf(0, "Entering sleep mode \r\n");
+    NRF_LOG_INFO("Entering sleep mode \r\n");
     err_code = m_motion_sleep_prepare(true);
     APP_ERROR_CHECK(err_code);
 
-    configure_gpio_for_sleep(VDD_OFF);
-
+    err_code = support_func_configure_io_shutdown();
+    APP_ERROR_CHECK(err_code);
+    
     // Enable wake on button press.
     nrf_gpio_cfg_sense_input(BUTTON, NRF_GPIO_PIN_PULLUP, NRF_GPIO_PIN_SENSE_LOW);
     // Enable wake on low power accelerometer.
     nrf_gpio_cfg_sense_input(LIS_INT1, NRF_GPIO_PIN_NOPULL, NRF_GPIO_PIN_SENSE_HIGH);
-
+   
+    NRF_LOG_FLUSH();
+    nrf_delay_ms(5);
     // Go to system-off (sd_power_system_off() will not return; wakeup will cause a reset). When debugging, this function may return and code execution will continue.
     err_code = sd_power_system_off();
-    (void)SEGGER_RTT_printf(0, "sd_power_system_off() returned. -Probably due to debugger being used. Instructions will still run. \r\n");
-
+    NRF_LOG_WARNING("sd_power_system_off() returned. -Probably due to debugger being used. Instructions will still run. \r\n");
+    NRF_LOG_FLUSH();
+    
     #ifdef DEBUG
         if(!support_func_sys_halt_debug_enabled())
         {
@@ -237,7 +150,9 @@ static void sleep_mode_enter(void)
         }
         else
         {
-            (void)SEGGER_RTT_printf(0, "Exec stopped, busy wait \r\n");
+            NRF_LOG_WARNING("Exec stopped, busy wait \r\n");
+            NRF_LOG_FLUSH();
+            
             while(true) // Only reachable when entering emulated system off.
             {
                 // Infinte loop to ensure that code stops in debug mode.
@@ -267,20 +182,23 @@ static void power_manage(void)
  */
 static void m_batt_meas_handler(m_batt_meas_event_t const * p_batt_meas_event)
 {
-    (void)SEGGER_RTT_printf(0, "batt meas handler: Voltage: %d V, Charge: %d %%, Event type: %d \n",
-        p_batt_meas_event->voltage_mv, p_batt_meas_event->level_percent, p_batt_meas_event->type);
-
+    NRF_LOG_INFO("Voltage: %d V, Charge: %d %%, Event type: %d \r\n",
+                p_batt_meas_event->voltage_mv, p_batt_meas_event->level_percent, p_batt_meas_event->type);
+   
     if (p_batt_meas_event != NULL)
     {
         if( p_batt_meas_event->type == M_BATT_MEAS_EVENT_LOW)
         {
             uint32_t err_code;
-            configure_gpio_for_sleep(VDD_OFF);
 
+            err_code = support_func_configure_io_shutdown();
+            APP_ERROR_CHECK(err_code);
+            
             // Enable wake on USB detect only.
             nrf_gpio_cfg_sense_input(USB_DETECT, NRF_GPIO_PIN_NOPULL, NRF_GPIO_PIN_SENSE_HIGH);
 
-            (void)SEGGER_RTT_printf(0, RTT_CTRL_TEXT_BRIGHT_YELLOW"Battery voltage low, shutting down Thingy. Connect USB to charge. "RTT_CTRL_RESET"\n");
+            NRF_LOG_WARNING("Battery voltage low, shutting down Thingy. Connect USB to charge \r\n");
+            NRF_LOG_FINAL_FLUSH();
             // Go to system-off mode (This function will not return; wakeup will cause a reset).
             err_code = sd_power_system_off();
 
@@ -291,7 +209,8 @@ static void m_batt_meas_handler(m_batt_meas_event_t const * p_batt_meas_event)
                 }
                 else
                 {
-                    (void)SEGGER_RTT_printf(0, "Exec stopped, busy wait \r\n");
+                    NRF_LOG_WARNING("Exec stopped, busy wait \r\n");
+                    NRF_LOG_FLUSH();
                     while(true) // Only reachable when entering emulated system off.
                     {
                         // Infinte loop to ensure that code stops in debug mode.
@@ -312,18 +231,18 @@ static void thingy_ble_evt_handler(m_ble_evt_t * p_evt)
     switch (p_evt->evt_type)
     {
         case thingy_ble_evt_connected:
-            (void)SEGGER_RTT_WriteString(0, RTT_CTRL_TEXT_BRIGHT_GREEN"Thingy_ble_evt_connected"RTT_CTRL_RESET"\n");
+            NRF_LOG_INFO(NRF_LOG_COLOR_CODE_GREEN "Thingy_ble_evt_connected \r\n");
             break;
 
         case thingy_ble_evt_disconnected:
-            (void)SEGGER_RTT_WriteString(0, RTT_CTRL_TEXT_BRIGHT_GREEN"Thingy_ble_evt_disconnected"RTT_CTRL_RESET"\n");
+            NRF_LOG_INFO(NRF_LOG_COLOR_CODE_YELLOW "Thingy_ble_evt_disconnected \r\n");
+            NRF_LOG_FINAL_FLUSH();
             nrf_delay_ms(5);
             NVIC_SystemReset();
             break;
 
         case thingy_ble_evt_timeout:
-            (void)SEGGER_RTT_WriteString(0, RTT_CTRL_TEXT_BRIGHT_GREEN"Thingy_ble_evt_timeout"RTT_CTRL_RESET"\n");
-            nrf_delay_ms(5);
+            NRF_LOG_INFO(NRF_LOG_COLOR_CODE_YELLOW "Thingy_ble_evt_timeout \r\n");
             sleep_mode_enter();
             NVIC_SystemReset();
             break;
@@ -379,15 +298,12 @@ static void thingy_init(void)
     /**@brief Initialize BLE handling module. */
     ble_params.evt_handler       = thingy_ble_evt_handler;
     ble_params.p_service_handles = m_ble_service_handles;
-    ble_params.service_num       = 5;
+    ble_params.service_num       = THINGY_SERVICES_MAX;
 
     err_code = m_ble_init(&ble_params);
     APP_ERROR_CHECK(err_code);
 
     err_code = m_ui_led_set_event(M_UI_BLE_DISCONNECTED);
-    APP_ERROR_CHECK(err_code);
-    
-    err_code = support_func_ble_mac_address_print_rtt();
     APP_ERROR_CHECK(err_code);
 }
 
@@ -400,16 +316,10 @@ static void board_init(void)
     #if defined(THINGY_HW_v0_7_0)
         #error   "HW version v0.7.0 not supported."
     #elif defined(THINGY_HW_v0_8_0)
-        (void)SEGGER_RTT_WriteString(0, RTT_CTRL_TEXT_BRIGHT_YELLOW"FW compiled for depricated Thingy HW v0.8.0"RTT_CTRL_RESET"\n");
+        NRF_LOG_WARNING("FW compiled for depricated Thingy HW v0.8.0 \r\n");
     #elif defined(THINGY_HW_v0_9_0)
-        (void)SEGGER_RTT_WriteString(0, RTT_CTRL_TEXT_BRIGHT_YELLOW"FW compiled for depricated Thingy HW v0.9.0"RTT_CTRL_RESET"\n");
+        NRF_LOG_WARNING("FW compiled for depricated Thingy HW v0.9.0 \r\n");
     #endif
-
-    /**@brief Enable power on VDD. */
-    nrf_gpio_cfg_output(VDD_PWR_CTRL);
-    nrf_gpio_pin_set(VDD_PWR_CTRL);
-
-    nrf_delay_ms(75);
 
     static const nrf_drv_twi_config_t twi_config =
     {
@@ -427,38 +337,9 @@ static void board_init(void)
     };
 
     ext_gpio_init.p_cfg = &sx1509_cfg;
-
-    err_code = drv_ext_gpio_init(&ext_gpio_init, true);
+    
+    err_code = support_func_configure_io_startup(&ext_gpio_init);
     APP_ERROR_CHECK(err_code);
-
-    configure_gpio_for_sleep(VDD_ON);    // Set all pins to their default state, with the exception of VDD_PWR_CTRL.
-
-    err_code = drv_ext_gpio_cfg_output(SX_LIGHTWELL_R);
-    APP_ERROR_CHECK(err_code);
-    err_code = drv_ext_gpio_cfg_output(SX_LIGHTWELL_G);
-    APP_ERROR_CHECK(err_code);
-    err_code = drv_ext_gpio_cfg_output(SX_LIGHTWELL_B);
-    APP_ERROR_CHECK(err_code);
-    err_code = drv_ext_gpio_pin_set(SX_LIGHTWELL_R);
-    APP_ERROR_CHECK(err_code);
-    err_code = drv_ext_gpio_pin_set(SX_LIGHTWELL_G);
-    APP_ERROR_CHECK(err_code);
-    err_code = drv_ext_gpio_pin_set(SX_LIGHTWELL_B);
-    APP_ERROR_CHECK(err_code);
-
-    #if defined(THINGY_HW_v0_8_0)
-        nrf_gpio_cfg_output(VOLUME);
-        nrf_gpio_pin_clear(VOLUME);
-
-        err_code = drv_ext_gpio_cfg_output(SX_SPK_PWR_CTRL);
-        APP_ERROR_CHECK(err_code);
-
-        err_code = drv_ext_gpio_pin_clear(SX_SPK_PWR_CTRL);
-        APP_ERROR_CHECK(err_code);
-    #else
-        nrf_gpio_cfg_output(SPK_PWR_CTRL);
-        nrf_gpio_pin_clear(SPK_PWR_CTRL);
-    #endif
 
     nrf_delay_ms(100);
 }
@@ -468,11 +349,16 @@ static void board_init(void)
  */
 int main(void)
 {
-    (void)SEGGER_RTT_WriteString(0, RTT_CTRL_TEXT_BRIGHT_GREEN"===== Start!! ====="RTT_CTRL_RESET"\n");
+    uint32_t err_code;
+    err_code = NRF_LOG_INIT(NULL);
+    APP_ERROR_CHECK(err_code);
 
+    NRF_LOG_INFO(NRF_LOG_COLOR_CODE_GREEN"===== Thingy started! =====\r\n");
+    
     // Initialize.
     APP_SCHED_INIT(SCHED_MAX_EVENT_DATA_SIZE, SCHED_QUEUE_SIZE);
-    APP_TIMER_APPSH_INIT(APP_TIMER_PRESCALER, APP_TIMER_OP_QUEUE_SIZE, true);
+    err_code = app_timer_init();
+    APP_ERROR_CHECK(err_code);
 
     board_init();
     thingy_init();
@@ -480,6 +366,10 @@ int main(void)
     for (;;)
     {
         app_sched_execute();
-        power_manage();
+        
+        if (!NRF_LOG_PROCESS()) // Process logs
+        { 
+            power_manage();
+        }
     }
 }

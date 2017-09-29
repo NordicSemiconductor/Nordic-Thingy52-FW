@@ -39,15 +39,11 @@
 #include "advertiser_beacon.h"
 #include <stdio.h>
 #include <string.h>
-
 #include "nrf_soc.h"
 #include "app_error.h"
 #include "app_util.h"
-
-
-#ifdef ABT_DEBUG_PRINT
-    #define LOCAL_DEBUG
-#endif
+#define  NRF_LOG_MODULE_NAME "adv_beacon_..."
+#include "nrf_log.h"
 #include "macros_common.h"
 
 #define ADV_PACK_LENGTH_IDX     1
@@ -61,7 +57,7 @@
 #define FREQ_ADV_CHANNEL_37     2
 #define FREQ_ADV_CHANNEL_38    26
 #define FREQ_ADV_CHANNEL_39    80
-#define BEACON_SLOT_LENGTH     5500
+#define BEACON_SLOT_LENGTH   5500
 
 static struct
 {
@@ -270,7 +266,6 @@ static nrf_radio_signal_callback_return_param_t * m_timeslot_callback(uint8_t si
 
         if (mode == ADV_DONE)
         {
-            DEBUG_PRINTF(0, "app_beacon_adv_done:\r\n");
             NRF_PPI->CHENCLR = (1 << 8);
             if (m_beacon.keep_running)
             {
@@ -302,7 +297,7 @@ void app_beacon_on_sys_evt(uint32_t event)
 {
     uint32_t err_code;
 
-    DEBUG_PRINTF(0, "app_beacon_on_sys_evt: %d\r\n", event);
+    NRF_LOG_INFO("app_beacon_on_sys_evt: %d\r\n", event);
 
     switch (event)
     {
@@ -339,7 +334,7 @@ void app_beacon_on_sys_evt(uint32_t event)
 
 void app_beacon_init(ble_beacon_init_t * p_init)
 {
-    DEBUG_PRINTF(0, "app_beacon_init:\r\n");
+    NRF_LOG_INFO("app_beacon_init:\r\n");
     m_beacon.adv_interval  = p_init->adv_interval;
     m_beacon.slot_length   = BEACON_SLOT_LENGTH;
     m_beacon.beacon_addr   = p_init->beacon_addr;
@@ -356,7 +351,7 @@ void app_beacon_start(void)
         return;
     }
 
-    DEBUG_PRINTF(0, "app_beacon_start:\r\n");
+    NRF_LOG_INFO("app_beacon_start:\r\n");
     m_beacon.keep_running = true;
     m_beacon.is_running   = true;
 
@@ -376,6 +371,6 @@ void app_beacon_start(void)
 
 void app_beacon_stop(void)
 {
-    DEBUG_PRINTF(0, "app_beacon_stop:\r\n");
+    NRF_LOG_INFO("app_beacon_stop:\r\n");
     m_beacon.keep_running = false;
 }

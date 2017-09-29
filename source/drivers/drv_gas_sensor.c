@@ -45,10 +45,8 @@
 #include "sdk_errors.h"
 #include "drv_ccs811.h"
 #include "drv_ccs811_bitfields.h"
-
-#ifdef GAS_SENSOR_DEBUG
-    #define LOCAL_DEBUG
-#endif
+#define  NRF_LOG_MODULE_NAME "drv_gas_sensor"
+#include "nrf_log.h"
 #include "macros_common.h"
 
 #define GAS_SENSOR_ID                       (0x81)   ///< HW ID of the gas sensor.
@@ -58,18 +56,18 @@
 
 /**@brief Reads the ERROR_ID register from the gas sensor.
  */
-#define CCS811_PRINT_IF_SENSOR_ERROR                                                                                                                           \
-{                                                                                                                                                              \
-    uint8_t err_id;                                                                                                                                            \
-    if (drv_ccs811_err_id_get(&err_id))                                                                                                                        \
-    {                                                                                                                                                          \
-        DEBUG_PRINTF(0, RTT_CTRL_TEXT_BRIGHT_RED"Error from CCS811, could not read error ID. file: %s, line: %d  "RTT_CTRL_RESET"\n", __FILE__, __LINE__);     \
-    }                                                                                                                                                          \
-                                                                                                                                                               \
-    if (err_id)                                                                                                                                                \
-    {                                                                                                                                                          \
-        DEBUG_PRINTF(0, RTT_CTRL_TEXT_BRIGHT_RED"Error from CCS811, code: 0x%x, file: %s, line: %d "RTT_CTRL_RESET"\n", err_id, __FILE__, __LINE__);           \
-    }                                                                                                                                                          \
+#define CCS811_PRINT_IF_SENSOR_ERROR                                                           \
+{                                                                                              \
+    uint8_t err_id;                                                                            \
+    if (drv_ccs811_err_id_get(&err_id))                                                        \
+    {                                                                                          \
+        NRF_LOG_DEBUG("Error from CCS811, could not read error ID. line: %d \r\n",  __LINE__); \
+    }                                                                                          \
+                                                                                               \
+    if (err_id)                                                                                \
+    {                                                                                          \
+        NRF_LOG_ERROR("Error from CCS811, code: 0x%x, line: %d \r\n", err_id, __LINE__);       \
+    }                                                                                          \
 }
 
 
@@ -198,7 +196,7 @@ static void gpiote_evt_sceduled(void * p_event_data, uint16_t event_size)
     drv_ccs811_alg_result_descr_t   result_descr = DRV_CCS811_ALG_RESULT_DESCR_ALL;
     static drv_ccs811_alg_result_t  s_result;
 
-    DEBUG_PRINTF(0, "Gas sensor pin interrupt detected. \r\n");
+    NRF_LOG_DEBUG("Gas sensor pin interrupt detected. \r\n");
 
     err_code = ccs811_open();
     APP_ERROR_CHECK(err_code);
@@ -332,7 +330,7 @@ ret_code_t drv_gas_sensor_baseline_get(uint16_t * p_baseline)
     err_code = ccs811_close();
     RETURN_IF_ERROR(err_code);
 
-    DEBUG_PRINTF(0, "Gas sensor baseline get:, 0x%x \n", *p_baseline);
+    NRF_LOG_DEBUG("Gas sensor baseline get:, 0x%x \r\n", *p_baseline);
 
     return NRF_SUCCESS;
 }
@@ -352,7 +350,7 @@ ret_code_t drv_gas_sensor_baseline_set(uint16_t baseline)
     err_code = ccs811_close();
     RETURN_IF_ERROR(err_code);
 
-    DEBUG_PRINTF(0, "Gas sensor baseline set:, 0x%x \n", baseline);
+    NRF_LOG_DEBUG("Gas sensor baseline set:, 0x%x \r\n", baseline);
 
     return NRF_SUCCESS;
 }
@@ -375,7 +373,7 @@ ret_code_t drv_gas_sensor_raw_data_get(uint8_t * p_current_selected, uint16_t * 
     *p_current_selected = (raw_data >> DRV_CCS811_RAW_DATA_CURRSEL_Pos);
     *p_raw_adc_reading = (raw_data & DRV_CCS811_RAW_DATA_RAWADC_Msk);
 
-    DEBUG_PRINTF(0, "Gas sensor raw data get. Current: %d [uA], ADC read: %d \n", *p_current_selected, *p_raw_adc_reading);
+    NRF_LOG_DEBUG("Gas sensor raw data get. Current: %d [uA], ADC read: %d \r\n", *p_current_selected, *p_raw_adc_reading);
 
     return NRF_SUCCESS;
 }
@@ -411,6 +409,9 @@ ret_code_t drv_gas_sensor_start(drv_gas_sensor_mode_t mode)
         default:
             return NRF_ERROR_INVALID_PARAM;
     }
+    
+    err_code = gpiote_init(CCS_INT);
+    APP_ERROR_CHECK(err_code);
 
     // Power on gas sensor.
     #if defined(THINGY_HW_v0_7_0)
@@ -430,9 +431,7 @@ ret_code_t drv_gas_sensor_start(drv_gas_sensor_mode_t mode)
     APP_ERROR_CHECK(err_code);
 
     nrf_delay_ms(GAS_SENSOR_PWR_ON_DELAY_MS); // Allow the CCS811 to power up.
-
-    err_code = gpiote_init(CCS_INT);
-    APP_ERROR_CHECK(err_code);
+    
     nrf_drv_gpiote_in_event_enable(CCS_INT, true);
 
     err_code = ccs811_open();
@@ -569,7 +568,7 @@ ret_code_t drv_gas_sensor_init(drv_gas_init_t * p_init)
         err_code = gas_sensor_info_get(&hw_id, &hw_version, &fw_boot_version, &fw_app_version);
         RETURN_IF_ERROR(err_code);
 
-        DEBUG_PRINTF(0, RTT_CTRL_TEXT_BRIGHT_GREEN"Gas sensor: HW ID: 0x%x, HW version: 0x%x, FW boot version: 0x%x, FW app version: 0x%x "RTT_CTRL_RESET"\n", hw_id, hw_version, fw_boot_version, fw_app_version);
+        NRF_LOG_DEBUG(" HW ID: 0x%x, HW version: 0x%x, FW boot version: 0x%x, FW app version: 0x%x \r\n", hw_id, hw_version, fw_boot_version, fw_app_version);
     #endif
 
     err_code = drv_ext_gpio_pin_clear(SX_CCS_RESET);

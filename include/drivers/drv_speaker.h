@@ -70,7 +70,7 @@ typedef struct
     drv_speaker_evt_handler_t evt_handler;
 }drv_speaker_init_t;
 
-/**@brief Initializes the speaker driver.
+/**@brief Function for initializing the speaker driver.
  *
  * @param[in] p_params   Initialization parameters.
  *
@@ -80,10 +80,10 @@ typedef struct
  */
 uint32_t drv_speaker_init(drv_speaker_init_t * p_params);
 
-/**@brief Plays a single tone through the speaker.
+/**@brief Function for playing a single tone through the speaker.
  *
- * @param[in] freq_hz       Tone frequency (>100 Hz)
- * @param[in] duration_ms   Tone length [ms]
+ * @param[in] freq_hz       Tone frequency (>100 Hz).
+ * @param[in] duration_ms   Tone length [ms].
  * @param[in] volume        Speaker volume (0 to 100). 0 Volume will cause the function to return
  * immediately with NRF_SUCCESS.
  *
@@ -92,7 +92,7 @@ uint32_t drv_speaker_init(drv_speaker_init_t * p_params);
  */
 uint32_t drv_speaker_tone_start(uint16_t freq_hz, uint32_t duration_ms, uint8_t volume);
 
-/**@brief Play an 8-bit 8kHz PCM encoded audio sample.
+/**@brief Function for playing an 8-bit 8 kHz PCM encoded audio sample.
  *
  * @param[in] p_sound   Sound sample. PCM encoded, 8-bit.
  * @param[in] size      Size of the sample.
@@ -102,7 +102,7 @@ uint32_t drv_speaker_tone_start(uint16_t freq_hz, uint32_t duration_ms, uint8_t 
  */
 uint32_t drv_speaker_flash_pcm_play(uint8_t const * const p_sound, uint32_t size);
 
-/**@brief Play an 8-bit 8kHz PCM encoded audio split into packages.
+/**@brief Function for playing an 8-bit 8 kHz PCM encoded audio split into packages.
  *
  * @param[in] p_sound   Sound sample. PCM encoded, 8-bit.
  * @param[in] length    Length of the package.
@@ -112,7 +112,7 @@ uint32_t drv_speaker_flash_pcm_play(uint8_t const * const p_sound, uint32_t size
  */
 uint32_t drv_speaker_ble_pcm_play(uint8_t * p_sound, uint32_t length);
 
-/**@brief Play one of the prestored samples. @ref sounds.h.
+/**@brief Function for playing one of the prestored samples. See @ref sounds.h.
  *
  * @param[in] sample_id   ID of the sample to play.
  *

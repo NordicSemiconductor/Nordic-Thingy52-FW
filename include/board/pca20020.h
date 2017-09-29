@@ -86,27 +86,28 @@ typedef enum
                                 NRF_GPIO_PIN_NOSENSE,          \
                                 PIN_SET}
 // Standard input pullup
-#define NRF_PIN_INPUT_PULLUP   {NRF_GPIO_PIN_DIR_INPUT,        \
-                                NRF_GPIO_PIN_INPUT_CONNECT,    \
+#define NRF_PIN_DISCON_PULLUP  {NRF_GPIO_PIN_DIR_INPUT,        \
+                                NRF_GPIO_PIN_INPUT_DISCONNECT, \
                                 NRF_GPIO_PIN_PULLUP,           \
                                 NRF_GPIO_PIN_S0S1,             \
                                 NRF_GPIO_PIN_NOSENSE,          \
                                 PIN_NO_OUTPUT}
 // Standard input nopull
-#define NRF_PIN_INPUT_NOPULL   {NRF_GPIO_PIN_DIR_INPUT,        \
-                                NRF_GPIO_PIN_INPUT_CONNECT,    \
+#define NRF_PIN_DISCON_NOPULL  {NRF_GPIO_PIN_DIR_INPUT,        \
+                                NRF_GPIO_PIN_INPUT_DISCONNECT, \
                                 NRF_GPIO_PIN_NOPULL,           \
                                 NRF_GPIO_PIN_S0S1,             \
                                 NRF_GPIO_PIN_NOSENSE,          \
                                 PIN_NO_OUTPUT}
 // Standard input pulldown
-#define NRF_PIN_INPUT_PULLDOWN {NRF_GPIO_PIN_DIR_INPUT,        \
-                                NRF_GPIO_PIN_INPUT_CONNECT,    \
+#define NRF_PIN_DISCON_PULLDOWN {NRF_GPIO_PIN_DIR_INPUT,       \
+                                NRF_GPIO_PIN_INPUT_DISCONNECT, \
                                 NRF_GPIO_PIN_PULLDOWN,         \
                                 NRF_GPIO_PIN_S0S1,             \
                                 NRF_GPIO_PIN_NOSENSE,          \
                                 PIN_NO_OUTPUT}
 
+/* IO extender configuration. The input buf must be enabled on all pins. */
 #define SX_PIN_OUTPUT_CLEAR    {DRV_EXT_GPIO_PIN_DIR_OUTPUT,                   \
                                 DRV_EXT_GPIO_PIN_INPUT_BUF_ENABLED,            \
                                 DRV_EXT_GPIO_PIN_NOPULL,                       \
@@ -114,7 +115,7 @@ typedef enum
                                 DRV_EXT_GPIO_PIN_INCREASED_SLEWRATE_DISABLED,  \
                                 PIN_CLEAR}
 
-#define SX_PIN_OUTPUT_SET       {DRV_EXT_GPIO_PIN_DIR_OUTPUT,                  \
+#define SX_PIN_OUTPUT_SET      {DRV_EXT_GPIO_PIN_DIR_OUTPUT,                   \
                                 DRV_EXT_GPIO_PIN_INPUT_BUF_ENABLED,            \
                                 DRV_EXT_GPIO_PIN_NOPULL,                       \
                                 DRV_EXT_GPIO_PIN_DRIVE_PUSHPULL,               \
@@ -128,6 +129,19 @@ typedef enum
                                 DRV_EXT_GPIO_PIN_INCREASED_SLEWRATE_DISABLED,  \
                                 PIN_NO_OUTPUT}
 
+#define SX_PIN_INPUT_PULLDOWN  {DRV_EXT_GPIO_PIN_DIR_INPUT,                    \
+                                DRV_EXT_GPIO_PIN_INPUT_BUF_ENABLED,            \
+                                DRV_EXT_GPIO_PIN_PULLDOWN,                     \
+                                DRV_EXT_GPIO_PIN_DRIVE_PUSHPULL,               \
+                                DRV_EXT_GPIO_PIN_INCREASED_SLEWRATE_DISABLED,  \
+                                PIN_NO_OUTPUT}                                
+
+#define SX_PIN_INPUT_PULLUP    {DRV_EXT_GPIO_PIN_DIR_INPUT,                    \
+                                DRV_EXT_GPIO_PIN_INPUT_BUF_ENABLED,            \
+                                DRV_EXT_GPIO_PIN_PULLUP,                       \
+                                DRV_EXT_GPIO_PIN_DRIVE_PUSHPULL,               \
+                                DRV_EXT_GPIO_PIN_INCREASED_SLEWRATE_DISABLED,  \
+                                PIN_NO_OUTPUT}       
 
 typedef struct
 {
@@ -156,294 +170,315 @@ typedef enum
 }vdd_state_t;
 
 // IO extender pin configuration for system off
-#define SX_IOEXT_NUM_PINS               16
+#define SX_IOEXT_NUM_PINS                   16
 
-#define SX_IOEXT_0                      0
-#define IOEXT_PIN00_SYSTEM_OFF_CFG      SX_PIN_OUTPUT_CLEAR
+#define SX_IOEXT_0                          0
+#define IOEXT_PIN00_SYSTEM_DEFAULT_CFG      SX_PIN_OUTPUT_CLEAR
 
-#define SX_IOEXT_1                      1
-#define IOEXT_PIN01_SYSTEM_OFF_CFG      SX_PIN_OUTPUT_CLEAR
+#define SX_IOEXT_1                          1
+#define IOEXT_PIN01_SYSTEM_DEFAULT_CFG      SX_PIN_OUTPUT_CLEAR
 
-#define SX_IOEXT_2                      2
-#define IOEXT_PIN02_SYSTEM_OFF_CFG      SX_PIN_OUTPUT_CLEAR
+#define SX_IOEXT_2                          2
+#define IOEXT_PIN02_SYSTEM_DEFAULT_CFG      SX_PIN_OUTPUT_CLEAR
 
 #if defined(THINGY_HW_v0_7_0)
-    #define SX_BAT_CHG_EN               3
-    #define IOEXT_PIN03_SYSTEM_OFF_CFG  SX_PIN_INPUT_NOPULL
+    #define SX_BAT_CHG_EN                   3
+    #define IOEXT_PIN03_SYSTEM_DEFAULT_CFG  SX_PIN_INPUT_NOPULL
 #elif  defined(THINGY_HW_v0_8_0)
-    #define SX_BAT_CHG_EN               3
-    #define IOEXT_PIN03_SYSTEM_OFF_CFG  SX_PIN_INPUT_NOPULL
+    #define SX_BAT_CHG_EN                   3
+    #define IOEXT_PIN03_SYSTEM_DEFAULT_CFG  SX_PIN_INPUT_NOPULL
 #else
-    #define SX_IOEXT_3                  3
-    #define IOEXT_PIN03_SYSTEM_OFF_CFG  SX_PIN_OUTPUT_CLEAR
+    #define SX_IOEXT_3                      3
+    #define IOEXT_PIN03_SYSTEM_DEFAULT_CFG  SX_PIN_OUTPUT_CLEAR
 #endif
 
 #if defined(THINGY_HW_v0_7_0)
-    #define SX_SPK_PWR_CTRL             4
-    #define IOEXT_PIN04_SYSTEM_OFF_CFG  SX_PIN_OUTPUT_CLEAR
+    #define SX_SPK_PWR_CTRL                 4
+    #define IOEXT_PIN04_SYSTEM_DEFAULT_CFG  SX_PIN_OUTPUT_CLEAR
 #elif defined(THINGY_HW_v0_8_0)
-    #define SX_SPK_PWR_CTRL             4
-    #define IOEXT_PIN04_SYSTEM_OFF_CFG  SX_PIN_OUTPUT_CLEAR
+    #define SX_SPK_PWR_CTRL                 4
+    #define IOEXT_PIN04_SYSTEM_DEFAULT_CFG  SX_PIN_OUTPUT_CLEAR
 #else
-    #define SX_BAT_MON_EN               4
-    #define IOEXT_PIN04_SYSTEM_OFF_CFG  SX_PIN_OUTPUT_CLEAR
+    #define SX_BAT_MON_EN                   4
+    #define IOEXT_PIN04_SYSTEM_DEFAULT_CFG  SX_PIN_INPUT_NOPULL
 #endif
 
-#define SX_LIGHTWELL_G                  5
-#define IOEXT_PIN05_SYSTEM_OFF_CFG      SX_PIN_OUTPUT_SET
+#define SX_LIGHTWELL_G                      5
+#define IOEXT_PIN05_SYSTEM_DEFAULT_CFG      SX_PIN_OUTPUT_SET
 
-#define SX_LIGHTWELL_B                  6
-#define IOEXT_PIN06_SYSTEM_OFF_CFG      SX_PIN_OUTPUT_SET
+#define SX_LIGHTWELL_B                      6
+#define IOEXT_PIN06_SYSTEM_DEFAULT_CFG      SX_PIN_OUTPUT_SET
 
-#define SX_LIGHTWELL_R                  7
-#define IOEXT_PIN07_SYSTEM_OFF_CFG      SX_PIN_OUTPUT_SET
+#define SX_LIGHTWELL_R                      7
+#define IOEXT_PIN07_SYSTEM_DEFAULT_CFG      SX_PIN_OUTPUT_SET
 
 #if defined(THINGY_HW_v0_7_0)
-    #define SX_MPU_PWR_CTRL             8
-    #define IOEXT_PIN08_SYSTEM_OFF_CFG  SX_PIN_OUTPUT_SET
+    #define SX_MPU_PWR_CTRL                 8
+    #define IOEXT_PIN08_SYSTEM_DEFAULT_CFG  SX_PIN_OUTPUT_SET
 #elif defined(THINGY_HW_v0_8_0)
-    #define SX_MPU_PWR_CTRL             8
-    #define IOEXT_PIN08_SYSTEM_OFF_CFG  SX_PIN_OUTPUT_SET
+    #define SX_MPU_PWR_CTRL                 8
+    #define IOEXT_PIN08_SYSTEM_DEFAULT_CFG  SX_PIN_OUTPUT_SET
 #elif defined(THINGY_HW_v0_9_0)
-    #define SX_MPU_PWR_CTRL             8
-    #define IOEXT_PIN08_SYSTEM_OFF_CFG  SX_PIN_OUTPUT_SET
+    #define SX_MPU_PWR_CTRL                 8
+    #define IOEXT_PIN08_SYSTEM_DEFAULT_CFG  SX_PIN_OUTPUT_SET
 #else
-    #define SX_MPU_PWR_CTRL             8
-    #define IOEXT_PIN08_SYSTEM_OFF_CFG  SX_PIN_OUTPUT_CLEAR
+    #define SX_MPU_PWR_CTRL                 8
+    #define IOEXT_PIN08_SYSTEM_DEFAULT_CFG  SX_PIN_OUTPUT_CLEAR
 #endif
 
 #if defined(THINGY_HW_v0_7_0)
-    #define SX_MIC_PWR_CTRL             9
-    #define IOEXT_PIN09_SYSTEM_OFF_CFG  SX_PIN_OUTPUT_SET
+    #define SX_MIC_PWR_CTRL                 9
+    #define IOEXT_PIN09_SYSTEM_DEFAULT_CFG  SX_PIN_OUTPUT_SET
 #elif defined(THINGY_HW_v0_8_0)
-    #define SX_MIC_PWR_CTRL             9
-    #define IOEXT_PIN09_SYSTEM_OFF_CFG  SX_PIN_OUTPUT_SET
+    #define SX_MIC_PWR_CTRL                 9
+    #define IOEXT_PIN09_SYSTEM_DEFAULT_CFG  SX_PIN_OUTPUT_SET
 #elif defined(THINGY_HW_v0_9_0)
-    #define SX_MIC_PWR_CTRL             9
-    #define IOEXT_PIN09_SYSTEM_OFF_CFG  SX_PIN_OUTPUT_SET
+    #define SX_MIC_PWR_CTRL                 9
+    #define IOEXT_PIN09_SYSTEM_DEFAULT_CFG  SX_PIN_OUTPUT_SET
 #else
-    #define SX_MIC_PWR_CTRL             9
-    #define IOEXT_PIN09_SYSTEM_OFF_CFG  SX_PIN_OUTPUT_CLEAR
+    #define SX_MIC_PWR_CTRL                 9
+    #define IOEXT_PIN09_SYSTEM_DEFAULT_CFG  SX_PIN_OUTPUT_CLEAR
 #endif
 
 #if defined(THINGY_HW_v0_7_0)
-    #define SX_CCS_PWR_CTRL             10
-    #define IOEXT_PIN10_SYSTEM_OFF_CFG  SX_PIN_OUTPUT_SET
+    #define SX_CCS_PWR_CTRL                 10
+    #define IOEXT_PIN10_SYSTEM_DEFAULT_CFG  SX_PIN_OUTPUT_SET
 #elif defined(THINGY_HW_v0_8_0)
-    #define SX_CCS_PWR_CTRL             10
-    #define IOEXT_PIN10_SYSTEM_OFF_CFG  SX_PIN_OUTPUT_SET
+    #define SX_CCS_PWR_CTRL                 10
+    #define IOEXT_PIN10_SYSTEM_DEFAULT_CFG  SX_PIN_OUTPUT_SET
 #elif defined(THINGY_HW_v0_9_0)
-    #define SX_CCS_PWR_CTRL             10
-    #define IOEXT_PIN10_SYSTEM_OFF_CFG  SX_PIN_OUTPUT_SET
+    #define SX_CCS_PWR_CTRL                 10
+    #define IOEXT_PIN10_SYSTEM_DEFAULT_CFG  SX_PIN_OUTPUT_SET
 #else
-    #define SX_CCS_PWR_CTRL             10
-    #define IOEXT_PIN10_SYSTEM_OFF_CFG  SX_PIN_OUTPUT_CLEAR
+    #define SX_CCS_PWR_CTRL                 10
+    #define IOEXT_PIN10_SYSTEM_DEFAULT_CFG  SX_PIN_OUTPUT_CLEAR
 #endif
 
-#define SX_CCS_RESET                    11
-#define IOEXT_PIN11_SYSTEM_OFF_CFG      SX_PIN_OUTPUT_CLEAR
+#define SX_CCS_RESET                        11
+#define IOEXT_PIN11_SYSTEM_DEFAULT_CFG      SX_PIN_INPUT_PULLDOWN
 
-#define SX_CCS_WAKE                     12
-#define IOEXT_PIN12_SYSTEM_OFF_CFG      SX_PIN_OUTPUT_CLEAR
+#define SX_CCS_WAKE                         12
+#define IOEXT_PIN12_SYSTEM_DEFAULT_CFG      SX_PIN_INPUT_PULLDOWN
 
-#define SX_SENSE_LED_R                  13
-#define IOEXT_PIN13_SYSTEM_OFF_CFG      SX_PIN_OUTPUT_SET
+#define SX_SENSE_LED_R                      13
+#define IOEXT_PIN13_SYSTEM_DEFAULT_CFG      SX_PIN_OUTPUT_SET
 
-#define SX_SENSE_LED_G                  14
-#define IOEXT_PIN14_SYSTEM_OFF_CFG      SX_PIN_OUTPUT_SET
+#define SX_SENSE_LED_G                      14
+#define IOEXT_PIN14_SYSTEM_DEFAULT_CFG      SX_PIN_OUTPUT_SET
 
-#define SX_SENSE_LED_B                  15
-#define IOEXT_PIN15_SYSTEM_OFF_CFG      SX_PIN_OUTPUT_SET
+#define SX_SENSE_LED_B                      15
+#define IOEXT_PIN15_SYSTEM_DEFAULT_CFG      SX_PIN_OUTPUT_SET
 
-//const nrf_gpio_cfg_t SX_GPIO_STD_CFG[SX_IOEXT_NUM_PINS]=
-#define IOEXT_SYSTEM_OFF_PIN_CFG \
-{                                \
-    IOEXT_PIN00_SYSTEM_OFF_CFG,  \
-    IOEXT_PIN01_SYSTEM_OFF_CFG,  \
-    IOEXT_PIN02_SYSTEM_OFF_CFG,  \
-    IOEXT_PIN03_SYSTEM_OFF_CFG,  \
-    IOEXT_PIN04_SYSTEM_OFF_CFG,  \
-    IOEXT_PIN05_SYSTEM_OFF_CFG,  \
-    IOEXT_PIN06_SYSTEM_OFF_CFG,  \
-    IOEXT_PIN07_SYSTEM_OFF_CFG,  \
-    IOEXT_PIN08_SYSTEM_OFF_CFG,  \
-    IOEXT_PIN09_SYSTEM_OFF_CFG,  \
-    IOEXT_PIN10_SYSTEM_OFF_CFG,  \
-    IOEXT_PIN11_SYSTEM_OFF_CFG,  \
-    IOEXT_PIN12_SYSTEM_OFF_CFG,  \
-    IOEXT_PIN13_SYSTEM_OFF_CFG,  \
-    IOEXT_PIN14_SYSTEM_OFF_CFG,  \
-    IOEXT_PIN15_SYSTEM_OFF_CFG   \
+#define IOEXT_SYSTEM_DEFAULT_PIN_CFG \
+{                                    \
+    IOEXT_PIN00_SYSTEM_DEFAULT_CFG,  \
+    IOEXT_PIN01_SYSTEM_DEFAULT_CFG,  \
+    IOEXT_PIN02_SYSTEM_DEFAULT_CFG,  \
+    IOEXT_PIN03_SYSTEM_DEFAULT_CFG,  \
+    IOEXT_PIN04_SYSTEM_DEFAULT_CFG,  \
+    IOEXT_PIN05_SYSTEM_DEFAULT_CFG,  \
+    IOEXT_PIN06_SYSTEM_DEFAULT_CFG,  \
+    IOEXT_PIN07_SYSTEM_DEFAULT_CFG,  \
+    IOEXT_PIN08_SYSTEM_DEFAULT_CFG,  \
+    IOEXT_PIN09_SYSTEM_DEFAULT_CFG,  \
+    IOEXT_PIN10_SYSTEM_DEFAULT_CFG,  \
+    IOEXT_PIN11_SYSTEM_DEFAULT_CFG,  \
+    IOEXT_PIN12_SYSTEM_DEFAULT_CFG,  \
+    IOEXT_PIN13_SYSTEM_DEFAULT_CFG,  \
+    IOEXT_PIN14_SYSTEM_DEFAULT_CFG,  \
+    IOEXT_PIN15_SYSTEM_DEFAULT_CFG   \
 };
 
-
 //nRF pin configuration for system off
-#define NRF_NUM_GPIO_PINS               32
+#define NRF_NUM_GPIO_PINS                   32
 
-#define OSC_XL1                         0
-#define PIN00_SYSTEM_OFF_CFG            NRF_PIN_OUTPUT_CLEAR
+#define OSC_XL1                             0
+#define PIN00_SYSTEM_DEFAULT_CFG            NRF_PIN_OUTPUT_CLEAR
 
-#define OSC_XL2                         1
-#define PIN01_SYSTEM_OFF_CFG            NRF_PIN_OUTPUT_CLEAR
+#define OSC_XL2                             1
+#define PIN01_SYSTEM_DEFAULT_CFG            NRF_PIN_OUTPUT_CLEAR
 
-#define ANA_DIG0                        2
-#define PIN02_SYSTEM_OFF_CFG            NRF_PIN_OUTPUT_CLEAR
+#define ANA_DIG0                            2
+#define PIN02_SYSTEM_DEFAULT_CFG            NRF_PIN_DISCON_PULLDOWN
 
-#define ANA_DIG1                        3
-#define PIN03_SYSTEM_OFF_CFG            NRF_PIN_OUTPUT_CLEAR
+#define ANA_DIG1                            3
+#define PIN03_SYSTEM_DEFAULT_CFG            NRF_PIN_DISCON_PULLDOWN
 
-#define ANA_DIG2                        4
-#define PIN04_SYSTEM_OFF_CFG            NRF_PIN_OUTPUT_CLEAR
+#define ANA_DIG2                            4
+#define PIN04_SYSTEM_DEFAULT_CFG            NRF_PIN_DISCON_PULLDOWN
 
 #if defined(THINGY_HW_v0_7_0)
-    #define ANA_DIG3                    5
-    #define PIN05_SYSTEM_OFF_CFG        NRF_PIN_OUTPUT_CLEAR
+    #define ANA_DIG3                        5
+    #define PIN05_SYSTEM_DEFAULT_CFG        NRF_PIN_DISCON_PULLDOWN
 #elif defined(THINGY_HW_v0_8_0)
-    #define ANA_DIG3                    5
-    #define PIN05_SYSTEM_OFF_CFG        NRF_PIN_OUTPUT_CLEAR
+    #define ANA_DIG3                        5
+    #define PIN05_SYSTEM_DEFAULT_CFG        NRF_PIN_DISCON_PULLDOWN
 #elif defined(THINGY_HW_v0_9_0)
-    #define ANA_DIG3                    5
-    #define PIN05_SYSTEM_OFF_CFG        NRF_PIN_OUTPUT_CLEAR
+    #define ANA_DIG3                        5
+    #define PIN05_SYSTEM_DEFAULT_CFG        NRF_PIN_DISCON_PULLDOWN
 #else
-    #define IOEXT_OSCIO                 5
-    #define PIN05_SYSTEM_OFF_CFG        NRF_PIN_INPUT_PULLDOWN
+    #define IOEXT_OSCIO                     5
+    #define PIN05_SYSTEM_DEFAULT_CFG        NRF_PIN_DISCON_PULLDOWN
 #endif
 
-#define MPU_INT                         6
-#define PIN06_SYSTEM_OFF_CFG            NRF_PIN_OUTPUT_CLEAR
+#define MPU_INT                             6
+#define PIN06_SYSTEM_DEFAULT_CFG            NRF_PIN_DISCON_PULLDOWN
 
-#define TWI_SDA                         7
-#define PIN07_SYSTEM_OFF_CFG            NRF_PIN_INPUT_NOPULL
+#define TWI_SDA                             7
+#define PIN07_SYSTEM_DEFAULT_CFG            NRF_PIN_DISCON_NOPULL
 
-#define TWI_SCL                         8
-#define PIN08_SYSTEM_OFF_CFG            NRF_PIN_INPUT_NOPULL
+#define TWI_SCL                             8
+#define PIN08_SYSTEM_DEFAULT_CFG            NRF_PIN_DISCON_NOPULL
 
-#define NFC1                            9
-#define PIN09_SYSTEM_OFF_CFG            NRF_PIN_OUTPUT_CLEAR
+#define NFC1                                9
+#define PIN09_SYSTEM_DEFAULT_CFG            NRF_PIN_DISCON_NOPULL
 
-#define NFC2                            10
-#define PIN10_SYSTEM_OFF_CFG            NRF_PIN_OUTPUT_CLEAR
+#define NFC2                                10
+#define PIN10_SYSTEM_DEFAULT_CFG            NRF_PIN_DISCON_NOPULL
 
-#define BUTTON                          11
-#define PIN11_SYSTEM_OFF_CFG            NRF_PIN_INPUT_PULLUP
+#define BUTTON                              11
+#define PIN11_SYSTEM_DEFAULT_CFG            NRF_PIN_DISCON_PULLUP
 
-#define LIS_INT1                        12
-#define PIN12_SYSTEM_OFF_CFG            NRF_PIN_INPUT_NOPULL
+#define LIS_INT1                            12
+#define PIN12_SYSTEM_DEFAULT_CFG            NRF_PIN_DISCON_NOPULL
 
-#define USB_DETECT                      13
-#define PIN13_SYSTEM_OFF_CFG            NRF_PIN_INPUT_NOPULL
+#define USB_DETECT                          13
+#define PIN13_SYSTEM_DEFAULT_CFG            NRF_PIN_DISCON_NOPULL
 
-#define TWI_SDA_EXT                     14
-#define PIN14_SYSTEM_OFF_CFG            NRF_PIN_INPUT_NOPULL
+#define TWI_SDA_EXT                         14
+#define PIN14_SYSTEM_DEFAULT_CFG            NRF_PIN_DISCON_NOPULL
 
-#define TWI_SCL_EXT                     15
-#define PIN15_SYSTEM_OFF_CFG            NRF_PIN_INPUT_NOPULL
+#define TWI_SCL_EXT                         15
+#define PIN15_SYSTEM_DEFAULT_CFG            NRF_PIN_DISCON_NOPULL
 
-#define DIG0                            16
-#define PIN16_SYSTEM_OFF_CFG            NRF_PIN_INPUT_NOPULL
+#define SX_RESET                            16
+#define PIN16_SYSTEM_DEFAULT_CFG            NRF_PIN_DISCON_NOPULL
 
-#define BAT_CHG_STAT                    17
-#define PIN17_SYSTEM_OFF_CFG            NRF_PIN_INPUT_NOPULL
+#define BAT_CHG_STAT                        17
+#define PIN17_SYSTEM_DEFAULT_CFG            NRF_PIN_DISCON_NOPULL
 
-#define MOS_1                           18
-#define PIN18_SYSTEM_OFF_CFG            NRF_PIN_OUTPUT_CLEAR
+#define MOS_1                               18
+#define PIN18_SYSTEM_DEFAULT_CFG            NRF_PIN_OUTPUT_CLEAR
 
-#define MOS_2                           19
-#define PIN19_SYSTEM_OFF_CFG            NRF_PIN_OUTPUT_CLEAR
+#define MOS_2                               19
+#define PIN19_SYSTEM_DEFAULT_CFG            NRF_PIN_OUTPUT_CLEAR
 
-#define MOS_3                           20
-#define PIN20_SYSTEM_OFF_CFG            NRF_PIN_OUTPUT_CLEAR
+#define MOS_3                               20
+#define PIN20_SYSTEM_DEFAULT_CFG            NRF_PIN_OUTPUT_CLEAR
 
-#define MOS_4                           21
-#define PIN21_SYSTEM_OFF_CFG            NRF_PIN_OUTPUT_CLEAR
+#define MOS_4                               21
+#define PIN21_SYSTEM_DEFAULT_CFG            NRF_PIN_OUTPUT_CLEAR
 
-#define CCS_INT                         22
-#define PIN22_SYSTEM_OFF_CFG            NRF_PIN_OUTPUT_CLEAR
+#define CCS_INT                             22
+#define PIN22_SYSTEM_DEFAULT_CFG            NRF_PIN_DISCON_PULLDOWN
 
-#define LPS_INT                         23
-#define PIN23_SYSTEM_OFF_CFG            NRF_PIN_OUTPUT_CLEAR
+#define LPS_INT                             23
+#if defined(THINGY_HW_v0_7_0)
+    #define PIN23_SYSTEM_DEFAULT_CFG        NRF_PIN_DISCON_NOPULL  
+#elif  defined(THINGY_HW_v0_8_0)
+    #define PIN23_SYSTEM_DEFAULT_CFG        NRF_PIN_DISCON_NOPULL  
+#elif  defined(THINGY_HW_v0_9_0)
+    #define PIN23_SYSTEM_DEFAULT_CFG        NRF_PIN_DISCON_NOPULL  
+#else
+    #define PIN23_SYSTEM_DEFAULT_CFG        NRF_PIN_DISCON_PULLDOWN
+#endif
 
-#define HTS_INT                         24
-#define PIN24_SYSTEM_OFF_CFG            NRF_PIN_OUTPUT_CLEAR
+#define HTS_INT                             24
+#if defined(THINGY_HW_v0_7_0)
+    #define PIN24_SYSTEM_DEFAULT_CFG        NRF_PIN_DISCON_NOPULL  
+#elif  defined(THINGY_HW_v0_8_0)                                   
+    #define PIN24_SYSTEM_DEFAULT_CFG        NRF_PIN_DISCON_NOPULL  
+#elif  defined(THINGY_HW_v0_9_0)                                   
+    #define PIN24_SYSTEM_DEFAULT_CFG        NRF_PIN_DISCON_NOPULL  
+#else                                                              
+    #define PIN24_SYSTEM_DEFAULT_CFG        NRF_PIN_DISCON_PULLDOWN
+#endif
 
-#define MIC_DOUT                        25
-#define PIN25_SYSTEM_OFF_CFG            NRF_PIN_OUTPUT_CLEAR
+#define MIC_DOUT                            25
+#define PIN25_SYSTEM_DEFAULT_CFG            NRF_PIN_DISCON_PULLDOWN
 
-#define MIC_CLK                         26
-#define PIN26_SYSTEM_OFF_CFG            NRF_PIN_OUTPUT_CLEAR
+#define MIC_CLK                             26
+#define PIN26_SYSTEM_DEFAULT_CFG            NRF_PIN_DISCON_PULLDOWN
 
-#define SPEAKER                         27
-#define PIN27_SYSTEM_OFF_CFG            NRF_PIN_OUTPUT_CLEAR
+#define SPEAKER                             27
+#define PIN27_SYSTEM_DEFAULT_CFG            NRF_PIN_OUTPUT_CLEAR
 
-#define BATTERY                         28
-#define PIN28_SYSTEM_OFF_CFG            NRF_PIN_INPUT_NOPULL
+#define BATTERY                             28
+#define PIN28_SYSTEM_DEFAULT_CFG            NRF_PIN_DISCON_NOPULL
 
 #if defined(THINGY_HW_v0_7_0)
-    #define VOLUME                      29
-    #define PIN29_SYSTEM_OFF_CFG        NRF_PIN_OUTPUT_CLEAR
+    #define VOLUME                          29
+    #define PIN29_SYSTEM_DEFAULT_CFG        NRF_PIN_OUTPUT_CLEAR
 #elif  defined(THINGY_HW_v0_8_0)
-    #define VOLUME                      29
-    #define PIN29_SYSTEM_OFF_CFG        NRF_PIN_OUTPUT_CLEAR
+    #define VOLUME                          29
+    #define PIN29_SYSTEM_DEFAULT_CFG        NRF_PIN_OUTPUT_CLEAR
 #elif  defined(THINGY_HW_v0_9_0)
-    #define SPK_PWR_CTRL                29
-    #define PIN29_SYSTEM_OFF_CFG        NRF_PIN_OUTPUT_CLEAR
+    #define SPK_PWR_CTRL                    29
+    #define PIN29_SYSTEM_DEFAULT_CFG        NRF_PIN_OUTPUT_CLEAR
 #else
-    #define SPK_PWR_CTRL                29
-    #define PIN29_SYSTEM_OFF_CFG        NRF_PIN_OUTPUT_CLEAR
+    #define SPK_PWR_CTRL                    29
+    #define PIN29_SYSTEM_DEFAULT_CFG        NRF_PIN_OUTPUT_CLEAR
 #endif
 
 /** Thingy VDD power. Is kept on in earlier versions to have power to the low power accelerometer.
 In newer versions, the low power accelerometer is connected to a different power domain, and will
-remain on to wake the system even if VDD is turned off */
-#define VDD_PWR_CTRL                    30
+remain on to wake the system even if VDD is turned off. */
+#define VDD_PWR_CTRL                        30
 #if defined(THINGY_HW_v0_7_0)
-    #define PIN30_SYSTEM_OFF_CFG        NRF_PIN_OUTPUT_SET      /** VDD ON!. */
+    #define PIN30_SYSTEM_DEFAULT_CFG        NRF_PIN_OUTPUT_SET      /** VDD ON!. */
 #elif  defined(THINGY_HW_v0_8_0)
-    #define PIN30_SYSTEM_OFF_CFG        NRF_PIN_OUTPUT_SET      /** VDD ON!. */
+    #define PIN30_SYSTEM_DEFAULT_CFG        NRF_PIN_OUTPUT_SET      /** VDD ON!. */
 #elif  defined(THINGY_HW_v0_9_0)
-    #define PIN30_SYSTEM_OFF_CFG        NRF_PIN_OUTPUT_SET      /** VDD ON!. */
+    #define PIN30_SYSTEM_DEFAULT_CFG        NRF_PIN_OUTPUT_SET      /** VDD ON!. */
 #else
-    #define PIN30_SYSTEM_OFF_CFG        NRF_PIN_OUTPUT_CLEAR    /** VDD OFF. */
+    #define PIN30_SYSTEM_DEFAULT_CFG        NRF_PIN_OUTPUT_CLEAR    /** VDD OFF. */
 #endif
 
-#define BH_INT                          31
-#define PIN31_SYSTEM_OFF_CFG            NRF_PIN_OUTPUT_CLEAR
+#define BH_INT                              31
+#if defined(THINGY_HW_v0_7_0)
+    #define PIN31_SYSTEM_DEFAULT_CFG        NRF_PIN_DISCON_NOPULL
+#elif  defined(THINGY_HW_v0_8_0)
+    #define PIN31_SYSTEM_DEFAULT_CFG        NRF_PIN_DISCON_NOPULL
+#elif  defined(THINGY_HW_v0_9_0)
+    #define PIN31_SYSTEM_DEFAULT_CFG        NRF_PIN_DISCON_NOPULL
+#else
+    #define PIN31_SYSTEM_DEFAULT_CFG        NRF_PIN_DISCON_PULLDOWN
+#endif
 
-
-#define NRF_SYSTEM_OFF_PIN_CFG      \
-{                                   \
-    PIN00_SYSTEM_OFF_CFG,           \
-    PIN01_SYSTEM_OFF_CFG,           \
-    PIN02_SYSTEM_OFF_CFG,           \
-    PIN03_SYSTEM_OFF_CFG,           \
-    PIN04_SYSTEM_OFF_CFG,           \
-    PIN05_SYSTEM_OFF_CFG,           \
-    PIN06_SYSTEM_OFF_CFG,           \
-    PIN07_SYSTEM_OFF_CFG,           \
-    PIN08_SYSTEM_OFF_CFG,           \
-    PIN09_SYSTEM_OFF_CFG,           \
-    PIN10_SYSTEM_OFF_CFG,           \
-    PIN11_SYSTEM_OFF_CFG,           \
-    PIN12_SYSTEM_OFF_CFG,           \
-    PIN13_SYSTEM_OFF_CFG,           \
-    PIN14_SYSTEM_OFF_CFG,           \
-    PIN15_SYSTEM_OFF_CFG,           \
-    PIN16_SYSTEM_OFF_CFG,           \
-    PIN17_SYSTEM_OFF_CFG,           \
-    PIN18_SYSTEM_OFF_CFG,           \
-    PIN19_SYSTEM_OFF_CFG,           \
-    PIN20_SYSTEM_OFF_CFG,           \
-    PIN21_SYSTEM_OFF_CFG,           \
-    PIN22_SYSTEM_OFF_CFG,           \
-    PIN23_SYSTEM_OFF_CFG,           \
-    PIN24_SYSTEM_OFF_CFG,           \
-    PIN25_SYSTEM_OFF_CFG,           \
-    PIN26_SYSTEM_OFF_CFG,           \
-    PIN27_SYSTEM_OFF_CFG,           \
-    PIN28_SYSTEM_OFF_CFG,           \
-    PIN29_SYSTEM_OFF_CFG,           \
-    PIN30_SYSTEM_OFF_CFG,           \
-    PIN31_SYSTEM_OFF_CFG            \
+#define NRF_SYSTEM_DEFAULT_PIN_CFG      \
+{                                       \
+    PIN00_SYSTEM_DEFAULT_CFG,           \
+    PIN01_SYSTEM_DEFAULT_CFG,           \
+    PIN02_SYSTEM_DEFAULT_CFG,           \
+    PIN03_SYSTEM_DEFAULT_CFG,           \
+    PIN04_SYSTEM_DEFAULT_CFG,           \
+    PIN05_SYSTEM_DEFAULT_CFG,           \
+    PIN06_SYSTEM_DEFAULT_CFG,           \
+    PIN07_SYSTEM_DEFAULT_CFG,           \
+    PIN08_SYSTEM_DEFAULT_CFG,           \
+    PIN09_SYSTEM_DEFAULT_CFG,           \
+    PIN10_SYSTEM_DEFAULT_CFG,           \
+    PIN11_SYSTEM_DEFAULT_CFG,           \
+    PIN12_SYSTEM_DEFAULT_CFG,           \
+    PIN13_SYSTEM_DEFAULT_CFG,           \
+    PIN14_SYSTEM_DEFAULT_CFG,           \
+    PIN15_SYSTEM_DEFAULT_CFG,           \
+    PIN16_SYSTEM_DEFAULT_CFG,           \
+    PIN17_SYSTEM_DEFAULT_CFG,           \
+    PIN18_SYSTEM_DEFAULT_CFG,           \
+    PIN19_SYSTEM_DEFAULT_CFG,           \
+    PIN20_SYSTEM_DEFAULT_CFG,           \
+    PIN21_SYSTEM_DEFAULT_CFG,           \
+    PIN22_SYSTEM_DEFAULT_CFG,           \
+    PIN23_SYSTEM_DEFAULT_CFG,           \
+    PIN24_SYSTEM_DEFAULT_CFG,           \
+    PIN25_SYSTEM_DEFAULT_CFG,           \
+    PIN26_SYSTEM_DEFAULT_CFG,           \
+    PIN27_SYSTEM_DEFAULT_CFG,           \
+    PIN28_SYSTEM_DEFAULT_CFG,           \
+    PIN29_SYSTEM_DEFAULT_CFG,           \
+    PIN30_SYSTEM_DEFAULT_CFG,           \
+    PIN31_SYSTEM_DEFAULT_CFG            \
 };
 
 #define DRV_EXT_RGB_LED_SENSE        0

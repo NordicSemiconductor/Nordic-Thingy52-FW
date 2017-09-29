@@ -52,7 +52,7 @@
 #include <stdbool.h>
 #include "m_ble.h"
 
-/**@brief Function to initialize sound module.
+/**@brief Function for initializing the sound module.
  *
  * @param[out] p_handle   Configuration struct.
  *

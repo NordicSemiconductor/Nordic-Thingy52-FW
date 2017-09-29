@@ -7,6 +7,7 @@ This document consists of the following sections:
 
 - @ref firmware_architecture  "Firmware architecture" - Overview of the firmware architecture.
 - @ref firmware_compile       "Compiling new firmware" - Instructions on how to compile the firmware using Keil or GCC.
+- @ref nfc                    "NFC support" - Details on Near Field Communication (NFC) support in Thingy.						
 - @ref dfu                    "Firmware Upgrade" - Firmware upgrade procedures, including Over-the-air Device Firmware Update (OTA-DFU).
 - @ref release_notes 		  "Release Notes" - Release notes and firmware changelog.
 
@@ -14,7 +15,7 @@ This document consists of the following sections:
 <b>Related documentation:</b>
 
 - <a href="http://infocenter.nordicsemi.com/topic/com.nordic.infocenter.rds/dita/rds/designs/thingy/intro/frontpage.html" target="blank">Nordic Thingy:52 User Guide</a>
-- <a href="http://infocenter.nordicsemi.com/topic/com.nordic.infocenter.sdk5.v12.0.0/index.html" target="blank">nRF5 SDK v12.1.0 documentation</a>
+- <a href="http://infocenter.nordicsemi.com/topic/com.nordic.infocenter.sdk5.v13.0.0/index.html" target="blank">nRF5 SDK v13.0.0 documentation</a>
 - <a href="http://infocenter.nordicsemi.com/topic/com.nordic.infocenter.nrf52/dita/nrf52/development/nrf52_dev_kit.html" target="blank">nRF52 Development Kit documentation</a>
 - <a href="http://infocenter.nordicsemi.com/topic/com.nordic.infocenter.nrf52/dita/nrf52/chips/nrf52832_ps.html" target="blank">nRF52832 Product Specification document</a>
 

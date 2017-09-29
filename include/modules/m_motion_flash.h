@@ -58,7 +58,7 @@
  * @retval NRF_ERROR_NULL   If a NULL pointer was supplied.
  * @retval Other codes from the underlying drivers.
  */
-uint32_t m_motion_flash_config_store(ble_tms_config_t * p_config);
+uint32_t m_motion_flash_config_store(const ble_tms_config_t * p_config);
 
 /**@brief Function for storing the configuration.
  *

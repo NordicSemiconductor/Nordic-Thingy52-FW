@@ -42,10 +42,8 @@
 #include "drv_speaker.h"
 #include "drv_mic.h"
 #include "ble_tss.h"
-
-#ifdef SOUND_DEBUG
-    #define LOCAL_DEBUG
-#endif
+#define  NRF_LOG_MODULE_NAME "m_sound       "
+#include "nrf_log.h"
 #include "macros_common.h"
 
 static ble_tss_t              m_tss;  /**< Structure to identify the Thingy Sound Service. */
@@ -56,21 +54,21 @@ static void drv_speaker_evt_handler(drv_speaker_evt_t evt)
     {
         case DRV_SPEAKER_EVT_FINISHED:
         {
-            DEBUG_PRINTF(0, "drv_speaker_evt_handler: DRV_SPEAKER_EVT_FINISHED\r\n");
+            NRF_LOG_DEBUG("drv_speaker_evt_handler: DRV_SPEAKER_EVT_FINISHED\r\n");
             (void)ble_tss_spkr_stat_set(&m_tss, BLE_TSS_SPKR_STAT_FINISHED);
         }
         break;
         //
         case DRV_SPEAKER_EVT_BUFFER_WARNING:
         {
-            DEBUG_PRINTF(0, "drv_speaker_evt_handler: DRV_SPEAKER_EVT_BUFFER_WARNING\r\n");
+            NRF_LOG_WARNING("drv_speaker_evt_handler: DRV_SPEAKER_EVT_BUFFER_WARNING\r\n");
             (void)ble_tss_spkr_stat_set(&m_tss, BLE_TSS_SPKR_STAT_BUFFER_WARNING);
         }
         break;
         //
         case DRV_SPEAKER_EVT_BUFFER_READY:
         {
-            DEBUG_PRINTF(0, "drv_speaker_evt_handler: DRV_SPEAKER_EVT_BUFFER_READY\r\n");
+            NRF_LOG_DEBUG("drv_speaker_evt_handler: DRV_SPEAKER_EVT_BUFFER_READY\r\n");
             (void)ble_tss_spkr_stat_set(&m_tss, BLE_TSS_SPKR_STAT_BUFFER_READY);
         }
         break;
@@ -88,13 +86,13 @@ static uint32_t drv_mic_data_handler(m_audio_frame_t * p_frame)
 
     if (p_frame->data_size != CONFIG_AUDIO_FRAME_SIZE_BYTES)
     {
-        DEBUG_PRINTF(0, "drv_mic_data_handler: size = %d", p_frame->data_size);
+        NRF_LOG_WARNING("drv_mic_data_handler: size = %d \r\n", p_frame->data_size);
     }
 
     err_code = ble_tss_mic_set(&m_tss, p_frame->data, p_frame->data_size);
     if (err_code != NRF_SUCCESS)
     {
-        DEBUG_PRINTF(0, "drv_mic_data_handler: Failed to send\r\n");
+        NRF_LOG_ERROR("drv_mic_data_handler: Failed to send\r\n");
     }
 
     return NRF_SUCCESS;
@@ -172,7 +170,7 @@ static void ble_tss_evt_handler( ble_tss_t        * p_tes,
             break;
 
         case BLE_TSS_EVT_NOTIF_MIC:
-            DEBUG_PRINTF(0, "tss_evt_handler: BLE_TES_EVT_NOTIF_MIC - %d\r\n", p_tes->is_mic_notif_enabled);
+            NRF_LOG_INFO("tss_evt_handler: BLE_TES_EVT_NOTIF_MIC - %d\r\n", p_tes->is_mic_notif_enabled);
             if (p_tes->is_mic_notif_enabled)
             {
                 err_code = drv_mic_start();
@@ -190,7 +188,7 @@ static void ble_tss_evt_handler( ble_tss_t        * p_tes,
             APP_ERROR_CHECK_BOOL(length == sizeof(ble_tss_config_t));
 
             ble_tss_config_t * p_config = (ble_tss_config_t *)p_data;
-            DEBUG_PRINTF(0, "tes_evt_handler: BLE_TES_EVT_CONFIG_RECEIVED - %d\r\n", p_config->spkr_mode);
+            NRF_LOG_INFO("tes_evt_handler: BLE_TES_EVT_CONFIG_RECEIVED - %d\r\n", p_config->spkr_mode);
             mode = p_config->spkr_mode;
         }
         break;
@@ -208,7 +206,7 @@ static void ble_tss_evt_handler( ble_tss_t        * p_tes,
  *
  * @retval NRF_SUCCESS If initialization was successful.
  */
-static uint32_t sound_service_init(void)
+static uint32_t sound_service_init(bool major_minor_fw_ver_changed)
 {
     uint32_t              err_code;
     ble_tss_init_t        tss_init;
@@ -221,15 +219,13 @@ static uint32_t sound_service_init(void)
     tss_init.p_init_config = &init_cfg;
     tss_init.evt_handler   = ble_tss_evt_handler;
 
-    DEBUG_PRINTF(0, "sound_service_init: ble_tss_init ");
+    NRF_LOG_INFO("sound_service_init: ble_tss_init \r\n");
     err_code = ble_tss_init(&m_tss, &tss_init);
     if (err_code != NRF_SUCCESS)
     {
-        DEBUG_PRINTF(0, "FAILED - %d\r\n", err_code);
+        NRF_LOG_ERROR("FAILED - %d\r\n", err_code);
         return err_code;
     }
-
-    DEBUG_PRINTF(0, "\r\n");
 
     return NRF_SUCCESS;
 }
@@ -261,7 +257,7 @@ uint32_t m_sound_init(m_ble_service_handle_t * p_handle)
 
     NULL_PARAM_CHECK(p_handle);
 
-    DEBUG_PRINTF(0, "sound_init: \r\n");
+    NRF_LOG_INFO("Sound_init \r\n");
 
     p_handle->ble_evt_cb = sound_on_ble_evt;
     p_handle->init_cb    = sound_service_init;

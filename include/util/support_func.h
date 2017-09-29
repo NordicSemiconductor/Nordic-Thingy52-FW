@@ -49,20 +49,24 @@
 #define __SUPPORT_FUNC_H__
 
 #include "sdk_errors.h"
+#include "drv_ext_gpio.h"
 #include <stdbool.h>
 
-/**@brief Prints the MAC addess of the device.
+#define SUPPORT_FUNC_MAC_ADDR_STR_LEN ( (BLE_GAP_ADDR_LEN * 2) + 5 + 1) /**< 6 bytes + 5 colon separators + NUL termination */
+
+/**@brief Function for printing the MAC addess of the device.
  *
- * @note The softdevice must be enabled before this call is made.
+ * @note The SoftDevice must be enabled before this call is made.
+ *
+ * @param[out] p_mac_addr    Pointer to char array of length SUPPORT_FUNC_MAC_ADDR_STR_LEN.
  *
  * @return NRF_SUCCESS                          If the call was successful.
- * @return NRF_ERROR_SOFTDEVICE_NOT_ENABLED     The softdevice has not been enabled.
- * @return Other codes from the underlying driver(s).
+ * @return NRF_ERROR_SOFTDEVICE_NOT_ENABLED     The SoftDevice has not been enabled.
+ * @return Other codes from the underlying drivers.
  */
-ret_code_t support_func_ble_mac_address_print_rtt(void);
+ret_code_t support_func_ble_mac_address_get(char * p_mac_addr);
 
-
-/**@brief Checks if the device is in debug mode.
+/**@brief Function for checking if the device is in debug mode.
  *
  * @note Checks if the C_DEBUGEN flag is set in the DHCSR register (Debug Halting Control and Status Register).
  *
@@ -70,6 +74,24 @@ ret_code_t support_func_ble_mac_address_print_rtt(void);
  * @return False    System is not in debug mode.
  */
 bool support_func_sys_halt_debug_enabled(void);
+
+/**@brief Function for configuring nRF IO and the GPIO extender for startup.
+ *
+ * @param[in] p_ext_gpio_init    Pointer to IO extender configuration.
+ *
+ * @return NRF_SUCCESS           If the call was successful.
+ * @return Other codes from the underlying drivers.
+ */
+ret_code_t support_func_configure_io_startup(drv_ext_gpio_init_t const * const p_ext_gpio_init);
+
+/**@brief Function for configuring nRF IO and the GPIO extender for shutdown.
+ *
+ * @note For Thingy HW v1.0.0, this function will only return NRF_SUCCESS as errors are ignored.
+ *
+ * @return NRF_SUCCESS           If the call was successful.
+ * @return Other codes from the underlying drivers.
+ */
+ret_code_t support_func_configure_io_shutdown(void);
 
 #endif
 

@@ -58,7 +58,7 @@
 #define DEFAULT_LED_FADE_IN_TIME        2000    ///< LED fade in time [ms].
 #define DEFAULT_LED_FADE_OUT_TIME        500    ///< LED fade out time [ms].
 
-/** @brief m_ui status return codes.
+/** @brief User interface module status return codes.
  */
 enum
 {
@@ -75,7 +75,7 @@ enum
     {                                                           \
         .mode_breathe =                                         \
         {                                                       \
-            .color_mix  = (uint8_t)DRV_EXT_LIGHT_COLOR_CYAN,    \
+            .color_mix  = (uint8_t)DRV_EXT_LIGHT_COLOR_GREEN,   \
             .intensity  = DEFAULT_LED_INTENSITY_PERCENT,        \
             .delay      = DEFAULT_LED_OFF_TIME_MS               \
         }                                                       \
@@ -114,7 +114,7 @@ enum
     }                                                           \
 }
 
-/** @brief Default LED sequence values
+/** @brief Default LED sequence values.
  */
 #define SEQUENCE_DEFAULT_VALUES                                     \
 {                                                                   \
@@ -143,20 +143,23 @@ typedef struct
 
 /**@brief Function for initializing all UI components (Buttons and LEDs).
  *
+ * @param[in] p_handle  Pointer to BLE service handle structure.
+ * @param[in] p_params  Initialization parameters.
+ *
  * @retval NRF_SUCCESS      Operation was successful.
  * @retval NRF_ERROR_NULL   NULL pointer supplied.
  * @retval Other codes from the underlying drivers.
  */
 ret_code_t m_ui_init(m_ble_service_handle_t * p_handle, m_ui_init_t * p_params);
 
-/**@brief Function for setting the RGB value of a led.
+/**@brief Function for setting the RGB value of an LED.
  *
  * @param[in]   r   Red intensity (0 to 255).
  * @param[in]   g   Green intensity (0 to 255).
  * @param[in]   b   Blue intensity (0 to 255).
  *
- * @note in Breathe or One-shot mode the intensity will be set via a separate intensity variable.
- * The values entered in these two modes will be treated as binary (boolean) for each color.
+ * @note In Breathe or One-shot mode, the intensity will be set via a separate intensity variable.
+ * The values entered in these two modes will be treated as binary (Boolean) for each color.
  *
  * @retval NRF_SUCCESS      Operation was successful.
  * @retval Other codes from the underlying drivers.
@@ -164,9 +167,9 @@ ret_code_t m_ui_init(m_ble_service_handle_t * p_handle, m_ui_init_t * p_params);
 ret_code_t m_ui_led_set(uint8_t r, uint8_t g, uint8_t b);
 
 /**
- * @brief Function for setting LED color according to predefined events
+ * @brief Function for setting LED color according to predefined events.
  *
- * @param[in]   event_code  Predefined event code
+ * @param[in]   event_code  Predefined event code.
  *
  * @retval NRF_SUCCESS      If initialization was successful.
  * @retval Other codes from the underlying drivers.

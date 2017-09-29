@@ -65,7 +65,7 @@
 #include <stdbool.h>
 
 #define BLE_UUID_TCS_SERVICE 0x0100                      /**< The UUID of the Thingy Configuration Service. */
-#define BLE_TCS_MAX_DATA_LEN (GATT_MTU_SIZE_DEFAULT - 3) /**< Maximum length of data (in bytes) that can be transmitted to the peer by the Thingy Configuration service module. */
+#define BLE_TCS_MAX_DATA_LEN (BLE_GATT_ATT_MTU_DEFAULT - 3) /**< Maximum length of data (in bytes) that can be transmitted to the peer by the Thingy Configuration service module. */
 
 #define BLE_TCS_DEVICE_NAME_LEN_MAX 10
 #define BLE_TCS_BEACON_LEN_MAX      17

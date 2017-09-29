@@ -82,71 +82,71 @@ typedef struct
 } drv_gas_init_t;
 
 
-/**@brief Calibrates the gas sensor based on the ambient humidity and temperature.
+/**@brief Function for calibrating the gas sensor based on the ambient humidity and temperature.
  *
  * @param[in] rh_ppth       Relative humidity in parts per thousand (ppt).
  * @param[in] temp_mdeg     Temperature in millidegrees Centigrade.
  *
  * @return NRF_SUCCESS  If the call was successful.
- * @return Other codes from the underlying driver(s).
+ * @return Other codes from the underlying drivers.
  */
 ret_code_t drv_gas_sensor_calibrate_humid_temp(uint16_t rh_ppth, int32_t temp_mdeg);
 
 
-/**@brief Reads the baseline value from the gas sensor.
+/**@brief Function for reading a baseline value from the gas sensor.
  *
  * @param[out] p_baseline   Baseline value read from the sensor.
  *
  * @return NRF_SUCCESS  If the call was successful.
- * @return Other codes from the underlying driver(s).
+ * @return Other codes from the underlying drivers.
  */
 ret_code_t drv_gas_sensor_baseline_get(uint16_t * p_baseline);
 
-/**@brief Writes baseline value to the gas sensor.
+/**@brief Function for writing a baseline value to the gas sensor.
  *
  * @param[in] baseline   Baseline value for writing to the sensor.
  *
  * @return NRF_SUCCESS  If the call was successful.
- * @return Other codes from the underlying driver(s).
+ * @return Other codes from the underlying drivers.
  */
 ret_code_t drv_gas_sensor_baseline_set(uint16_t baseline);
 
 
-/**@brief Writes baseline value to the gas sensor.
+/**@brief Function for getting a baseline value from the gas sensor.
  *
- * @param[out] p_current_selected   The current trough the sensor [uA] (0 to 63 uA).
+ * @param[out] p_current_selected   The current through the sensor [uA] (0 to 63 uA).
  * @param[out] p_raw_adc_reading    Raw ADC read (0 to 1023).
  *
  * @return NRF_SUCCESS  If the call was successful.
- * @return Other codes from the underlying driver(s).
+ * @return Other codes from the underlying drivers.
  */
 ret_code_t drv_gas_sensor_raw_data_get(uint8_t * p_current_selected, uint16_t * p_raw_adc_reading);
 
-/**@brief Starts data acquisition from the the gas sensor.
+/**@brief Function for starting data acquisition from the the gas sensor.
  *
  * @param[in] mode   The given mode (frequency) of sensor reads.
  *
  * @return NRF_SUCCESS  If the call was successful.
- * @return Other codes from the underlying driver(s).
+ * @return Other codes from the underlying drivers.
  */
 ret_code_t drv_gas_sensor_start(drv_gas_sensor_mode_t mode);
 
-/**@brief Stops data acquisition from the the gas sensor.
+/**@brief Function for stopping data acquisition from the the gas sensor.
  *
  * @return NRF_SUCCESS              If the call was successful.
  * @return NRF_ERROR_NOT_SUPPORTED  The mode is currently not supported.
  * @return NRF_ERROR_INVALID_PARAM  Invalid parameters supplied.
  * @return NRF_ERROR_INVALID_STATE  The sensor is in an invalid state.
- * @return Other codes from the underlying driver(s).
+ * @return Other codes from the underlying drivers.
  */
 ret_code_t drv_gas_sensor_stop(void);
 
-/**@brief Initializes the the gas sensor.
+/**@brief Function for initializing the gas sensor.
  *
  * @param[in] p_init    Pointer with configuration parameters.
  *
  * @return NRF_SUCCESS  If the call was successful.
- * @return Other codes from the underlying driver(s).
+ * @return Other codes from the underlying drivers.
  */
 ret_code_t drv_gas_sensor_init(drv_gas_init_t * p_init);
 

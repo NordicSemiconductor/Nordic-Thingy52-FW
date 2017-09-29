@@ -72,7 +72,15 @@ typedef struct
     nrf_drv_twi_t         const * p_twi_instance;
 }m_motion_init_t;
 
-/**@brief Function to initialize motion module.
+/**@brief Function for preparing for sleep mode.
+ *
+ * @param[in] wakeup   Boolean indicating either wakeup or sleep forever.
+ *
+ * @retval NRF_SUCCESS.
+ */
+uint32_t m_motion_sleep_prepare(bool wakeup);
+
+/**@brief Function for initializing motion module.
  *
  * @param[out] p_handle   Handle for BLE services.
  * @param[in]  p_params   Init parameters.
@@ -80,14 +88,6 @@ typedef struct
  * @retval NRF_SUCCESS.
  */
 uint32_t m_motion_init(m_ble_service_handle_t * p_handle, m_motion_init_t * p_params);
-
-/**@brief Function to prepare for sleep mode.
- *
- * @param[in] wakeup   Boolean indicating wakeup or sleep for ever.
- *
- * @retval NRF_SUCCESS.
- */
-uint32_t m_motion_sleep_prepare(bool wakeup);
 
 #endif
 

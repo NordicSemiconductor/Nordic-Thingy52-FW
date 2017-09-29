@@ -62,7 +62,7 @@
 #define DRV_EXT_LIGHT_NUM_LIGHTS_MAX            (((DRV_SX1509_HIGHINPMODE_PIN15_Pos + 1) < (16)) ? \
                                                 (DRV_SX1509_HIGHINPMODE_PIN15_Pos + 1) : (16))          ///< Maximum number of lights, depends on the IO extender and maximum of current implementation (16).
 #define DRV_EXT_LIGHT_IOEXT_CLKX_DIV_MAX        (DRV_SX1509_MISC_CLKX_Msk >> DRV_SX1509_MISC_CLKX_Pos)  ///< Maximum ClkX divider.
-
+#define DRV_EXT_LIGHT_INVALID_RESYNC_PIN        255     ///< If IO extender resync pin is unused.
 /**@brief The GPIO extender LED driver status codes.
  */
 enum
@@ -182,7 +182,7 @@ typedef struct
     uint8_t                      num_lights;            ///< Number of connected lights.
     drv_ext_light_clkx_div_t     clkx_div;              ///< IO extender clock divider.
     drv_sx1509_cfg_t const     * p_twi_conf;            ///< pointer to TWI (I2C) configuration for communication between master and IO extender.
-    uint8_t                      app_timer_prescaler;   ///< Prescaler used for the app timer.
+    uint8_t                      resync_pin;            ///< Pin used to resync IO extender counters. Use DRV_EXT_LIGHT_INVALID_RESYNC_PIN if unused.
 } drv_ext_light_init_t;
 
 /**@brief Simplified struct for setting RGB intensity directly.
@@ -202,7 +202,7 @@ typedef struct
     drv_ext_light_sequence_t  sequence_vals;    ///< Defines sequence values: on/off/fade_in/fade_out times, and on/off intensities.
 }drv_ext_light_rgb_sequence_t;
 
-/**@brief Macro to initialize the sequence struct with default values.
+/**@brief Macro for initializing the sequence struct with default values.
  */
 #define SEQUENCE_REAL_VAL_INIT(PARAM) drv_ext_light_sequence_t PARAM = SEQUENCE_DEFAULT_VAL
 
@@ -215,7 +215,7 @@ typedef struct
  */
 ret_code_t drv_ext_light_reset(void);
 
-/**@brief Turn a given light on.
+/**@brief Function for turning a given light on.
  *
  * @param[in] id            Valid light ID.
  *
@@ -227,7 +227,7 @@ ret_code_t drv_ext_light_reset(void);
  */
 ret_code_t drv_ext_light_on(uint32_t id);
 
-/**@brief Turn a given light off.
+/**@brief Function for turning a given light off.
  *
  * @param[in] id            Valid light ID (Has to be in the range [0, num_lights-1]).
  *
@@ -253,7 +253,7 @@ ret_code_t drv_ext_light_intensity_set(uint32_t id, uint8_t intensity);
 /**@brief Function for setting color for RGB LEDs.
  *
  * @param[in] id            Specifies the ID of the given light. (Has to be in the range [0, num_lights-1]).
- * @param[in] intensity     (0-255).
+ * @param[in] p_intensity   (0-255).
  *
  * @return Status codes from this function. (Return codes may originate from other underlying modules/drivers as well which are not listed below).
  * @retval DRV_EXT_LIGHT_STATUS_CODE_SUCCESS
@@ -262,7 +262,7 @@ ret_code_t drv_ext_light_intensity_set(uint32_t id, uint8_t intensity);
 ret_code_t drv_ext_light_rgb_intensity_set(uint32_t id, drv_ext_light_rgb_intensity_t const * const p_intensity);
 
 /**
- * @brief Set color for a given light through the GPIO extender.
+ * @brief Function for setting color for a given light through the GPIO extender.
  *
  * @param[in] id                Specifies the ID of the given light. (Has to be in the range [0, num_lights-1]).
  * @param[in,out] p_sequence    Sequence struct.
@@ -270,8 +270,9 @@ ret_code_t drv_ext_light_rgb_intensity_set(uint32_t id, drv_ext_light_rgb_intens
  * @note    The actual timings in milliseconds will not necessarily correspond to the supplied times.
  *          The underlying functionality will choose register values to obtain timings as close as possible.
  *          Adjusting DRV_EXT_LIGHT_CLKX_DIV will influence the accuracy of this function.
- *          Also note that for the remaining intenstiry and fade parameters, values will be set as close as possible to the desired values.
+ *          Also note that for the remaining intensity and fade parameters, values will be set as close as possible to the desired values.
  *          The user may read back p_sequence, which will be populated with the actual values.
+ * @note    If the resync_pin is used, calling this function will resync all counters on the IO extender.
  *
  * @return Status codes from this function. (Return codes may originate from other underlying modules/drivers as well which are not listed below).
  * @retval DRV_EXT_LIGHT_STATUS_CODE_SUCCESS
@@ -280,7 +281,7 @@ ret_code_t drv_ext_light_rgb_intensity_set(uint32_t id, drv_ext_light_rgb_intens
 ret_code_t drv_ext_light_sequence(uint32_t id, drv_ext_light_sequence_t * const p_sequence);
 
 /**
- * @brief Set color for a given light through the GPIO extender.
+ * @brief Function for setting color for a given light through the GPIO extender.
  *
  * @param[in] id                Specifies the ID of the given light. (Has to be in the range [0, num_lights-1]).
  * @param[in,out] p_sequence    RGB sequence struct.
@@ -288,8 +289,9 @@ ret_code_t drv_ext_light_sequence(uint32_t id, drv_ext_light_sequence_t * const 
  * @note    The actual timings in milliseconds will not necessarily correspond to the supplied times.
  *          The underlying functionality will choose register values to obtain timings as close as possible.
  *          Adjusting drv_ext_light_clkx_div_t::clkx_div supplied to drv_ext_light_init will influence the accuracy of this function.
- *          Also note that for the remaining intenstiry and fade parameters, values will be set as close as possible to the desired values.
+ *          Also note that for the remaining intensity and fade parameters, values will be set as close as possible to the desired values.
  *          The user may read back p_sequence, which will be populated with the actual values.
+ * @note    If the resync_pin is used, calling this function will resync all counters on the IO extender.
  *
  * @return Status codes from this function. (Return codes may originate from other underlying modules/drivers as well which are not listed below).
  * @retval DRV_EXT_LIGHT_STATUS_CODE_SUCCESS
@@ -303,9 +305,9 @@ ret_code_t drv_ext_light_rgb_sequence(uint32_t id, drv_ext_light_rgb_sequence_t 
  * @param[in] on_init_reset     If true, the io extender will be reset on init. This will put the
  *                              io extender in a known state, but will delete any previous configurations, even from other drivers.
  *
- * @note Make sure that @ref APP_SCHED_INIT and @ref APP_TIMER_APPSH_INIT have been run prior to this function call.
- * Also note that this driver will take full control of the IO extender oscillator. This may influence other HW connected to the extender on other pins.
- * p_init->p_light_conf->p_data must reside in RAM.
+ * @note    Make sure that APP_SCHED_INIT and APP_TIMER_APPSH_INIT have been run prior to this function call.
+ *          Also note that this driver will take full control of the IO extender oscillator. This may influence other HW connected to the extender on other pins.
+ *          p_init->p_light_conf->p_data must reside in RAM.
  *
  * @return Status codes from this function. (Return codes may originate from other underlying modules/drivers as well which are not listed below).
  * @retval DRV_EXT_LIGHT_STATUS_CODE_SUCCESS

@@ -39,10 +39,8 @@
 #include "drv_bh1745.h"
 #include "twi_manager.h"
 #include "nrf_error.h"
-
-#ifdef BH1745_DEBUG
-    #define LOCAL_DEBUG
-#endif
+#define  NRF_LOG_MODULE_NAME "drv_bh1745    "
+#include "nrf_log.h"
 #include "macros_common.h"
 
 /**@brief Check if the driver is open, if not return NRF_ERROR_INVALID_STATE.

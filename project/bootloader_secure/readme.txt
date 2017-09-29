@@ -4,13 +4,13 @@ Usage:
 You will need to download the protoc compiler from:
 https://developers.google.com/protocol-buffers/docs/downloads
 
-    A. From examples\dfu\bootloader_secure\, run:
+    A. From examples\dfu\dfu_req_handling\, run:
 
        protoc.exe -odfu-cc.pb dfu-cc.proto
 
        This generates a 'dfu-cc.pb' file, which will be used by the Python script
 
-    B. From examples\dfu\bootloader_secure\, run python script:
+    B. From examples\dfu\dfu_req_handling\, run python script:
 
        python ..\..\..\external\nano-pb\generator\nanopb_generator.py dfu-cc.pb -f dfu-cc.options
 

@@ -58,7 +58,7 @@
  * @retval NRF_ERROR_NULL   If a NULL pointer was supplied.
  * @retval Other codes from the underlying drivers.
  */
-uint32_t m_ble_flash_config_store(ble_tcs_params_t * p_config);
+uint32_t m_ble_flash_config_store(const ble_tcs_params_t * p_config);
 
 /**@brief Function for loading the configuration.
  *
@@ -78,7 +78,7 @@ uint32_t m_ble_flash_config_load(ble_tcs_params_t ** p_config);
  * @retval NRF_ERROR_NULL   If a NULL pointer was supplied.
  * @retval Other codes from the underlying drivers.
  */
-uint32_t m_ble_flash_init(const ble_tcs_params_t * p_default_config, ble_tcs_params_t ** p_config);
+ uint32_t m_ble_flash_init(const ble_tcs_params_t * p_default_config, ble_tcs_params_t ** p_config);
 
 #endif
 

@@ -47,6 +47,8 @@
 
 #include <stdio.h>
 #include <math.h>
+#define  NRF_LOG_MODULE_NAME "a2lsp         "
+#include "nrf_log.h"
 #include "macros_common.h"
 #include "typedef.h"
 #include "bvcommon.h"
@@ -239,7 +241,7 @@ void a2lsp(
 
    /* if LPCO roots have not been found */
    if (nf != LPCO) {
-      DEBUG_PRINTF(0, "BV32: WARNING: a2lsp failed to find all lsp nf=%d LPCO=%d", nf, LPCO);
+      NRF_LOG_WARNING("BV32: WARNING: a2lsp failed to find all lsp nf=%d LPCO=%d", nf, LPCO);
       for(i=0; i<LPCO; i++)
          lsp[i] = old_lsp[i];
    }

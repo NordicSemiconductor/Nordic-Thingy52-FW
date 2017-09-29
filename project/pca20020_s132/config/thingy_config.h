@@ -42,43 +42,54 @@
 #define APP_TIMER_PRESCALER             0                                           /**< Value of the RTC1 PRESCALER register. */
 #define APP_TIMER_OP_QUEUE_SIZE         75                                          /**< Size of timer operation queues: 6 LEDs, 2 buttons, 3 sensor notification timers, 3 sensor data convertion timers   . */
 
-
 #define IS_SRVC_CHANGED_CHARACT_PRESENT 1                                           /**< Include the service_changed characteristic. If not enabled, the server's database cannot be changed for the lifetime of the device. */
 
-#define CENTRAL_LINK_COUNT              0                                           /**<number of central links used by the application. When changing this number remember to adjust the RAM settings*/
-#define PERIPHERAL_LINK_COUNT           1                                           /**<number of peripheral links used by the application. When changing this number remember to adjust the RAM settings*/
+#define CENTRAL_LINK_COUNT              0                                           /**< Number of central links used by the application. When changing this number remember to adjust the RAM settings*/
+#define PERIPHERAL_LINK_COUNT           1                                           /**< Number of peripheral links used by the application. When changing this number remember to adjust the RAM settings*/
 
 #define DEVICE_NAME                     "Thingy"                                    /**< Name of device. Will be included in the advertising data. */
+#define NORDIC_COMPANY_ID               0x0059                                      /**< Nordic Semiconductor ASA company identifier. */
 
-#define APP_ADV_INTERVAL_MS             380                                         /**< The advertising interval (in units of 0.625 ms. This value corresponds to 40 ms). */
-#define APP_ADV_TIMEOUT_IN_SECONDS      180                                         /**< The advertising timeout (in units of seconds). */
+#define APP_ADV_INTERVAL_MS             380                                         /**< The advertising interval in ms. */
+#define APP_ADV_TIMEOUT_IN_SECONDS      180                                         /**< The advertising timeout in s. */
 
-#define MIN_CONN_INTERVAL_MS            7.5                                         /**< Minimum acceptable connection interval (20 ms), Connection interval uses 1.25 ms units. */
-#define MAX_CONN_INTERVAL_MS            30                                          /**< Maximum acceptable connection interval (75 ms), Connection interval uses 1.25 ms units. */
+#define MIN_CONN_INTERVAL_MS            7.5                                         /**< Minimum acceptable connection interval in ms. */
+#define MAX_CONN_INTERVAL_MS            30                                          /**< Maximum acceptable connection interval in ms. */
 #define SLAVE_LATENCY                   0                                           /**< Slave latency. */
 #define CONN_SUP_TIMEOUT_MS             3200                                        /**< Connection supervisory timeout (4 seconds), Supervision Timeout uses 10 ms units. */
-#define FIRST_CONN_PARAMS_UPDATE_DELAY  APP_TIMER_TICKS(1000, APP_TIMER_PRESCALER)  /**< Time from initiating event (connect or start of notification) to first time sd_ble_gap_conn_param_update is called (5 seconds). */
-#define NEXT_CONN_PARAMS_UPDATE_DELAY   APP_TIMER_TICKS(30000, APP_TIMER_PRESCALER) /**< Time between each call to sd_ble_gap_conn_param_update after the first call (30 seconds). */
+#define FIRST_CONN_PARAMS_UPDATE_DELAY  APP_TIMER_TICKS(1000)  /**< Time from initiating event (connect or start of notification) to first time sd_ble_gap_conn_param_update is called (1 second). */
+#define NEXT_CONN_PARAMS_UPDATE_DELAY   APP_TIMER_TICKS(30000) /**< Time between each call to sd_ble_gap_conn_param_update after the first call (30 seconds). */
 #define MAX_CONN_PARAMS_UPDATE_COUNT    3                                           /**< Number of attempts before giving up the connection parameter negotiation. */
 
-#define THINGY_SERVICE_ENVIRONMENT     0
-#define THINGY_SERVICE_MOTION          1
-#define THINGY_SERVICE_UI              2
-#define THINGY_SERVICE_SOUND           3
-#define THINGY_SERVICE_BATTERY         4
-
-#define THINGY_SERVICES_MAX            5
+#define THINGY_SERVICE_ENVIRONMENT      0
+#define THINGY_SERVICE_MOTION           1
+#define THINGY_SERVICE_UI               2
+#define THINGY_SERVICE_SOUND            3
+#define THINGY_SERVICE_BATTERY          4
+    
+#define THINGY_SERVICES_MAX             5
 
 /**@brief Thingy default beacon configuration. Eddystone url */
-#define THINGY_BEACON_ADV_INTERVAL     760                            /**< The Beacon's advertising interval, in milliseconds*/
-#define THINGY_BEACON_URL_DEFAULT     "\x03goo.gl/pIWdir" // https://goo.gl/pIWdir short for https://developer.nordicsemi.com/thingy/52/
-#define THINGY_BEACON_URL_LEN         14
-#define THINGY_CLOUD_TOKEN_DEFAULT ""
-#define THINGY_CLOUD_TOKEN_LEN      0
+#define THINGY_BEACON_ADV_INTERVAL      760                 /**< The Beacon's advertising interval, in milliseconds*/
+#define THINGY_BEACON_URL_DEFAULT       "\x03goo.gl/pIWdir" /**< https://goo.gl/pIWdir short for https://developer.nordicsemi.com/thingy/52/ */
+#define THINGY_BEACON_URL_LEN           14
+#define THINGY_CLOUD_TOKEN_DEFAULT      ""
+#define THINGY_CLOUD_TOKEN_LEN          0
 
-#define THINGY_FW_VERSION_MAJOR     0
-#define THINGY_FW_VERSION_MINOR     0
-#define THINGY_FW_VERSION_PATCH     0
+/**@brief Thingy NFC default configuration. */
+#define THINGY_NFC_URI_DEFAULT              "nordicsemi.com/thingy"            /**< Is appended with http://www. in drv_nfc.c */
+#define THINGY_NFC_URI_LEN                  sizeof(THINGY_NFC_URI_DEFAULT)
+#define THINGY_NFC_APP_ANDROID_NAME_DEFAULT "no.nordicsemi.android.nrfthingy"  /**< Android app name */
+#define THINGY_NFC_APP_ANDROID_NAME_LEN     sizeof(THINGY_NFC_APP_ANDROID_NAME_DEFAULT)
+/** The text fields will by default be filled with the MAC address and a random generated address */
+
+
+/**@brief Thingy FW version.
+* 0xFF indicates a custom build from source. 
+Version numbers are changed for releases. */
+#define THINGY_FW_VERSION_MAJOR     (0xFF)
+#define THINGY_FW_VERSION_MINOR     (0xFF)
+#define THINGY_FW_VERSION_PATCH     (0xFF)
 
 /**@brief Thingy default configuration. */
 #define THINGY_CONFIG_DEFAULT                         \
@@ -90,15 +101,15 @@
     },                                                \
     .adv_params =                                     \
     {                                                 \
-        .interval = MSEC_TO_UNITS(APP_ADV_INTERVAL_MS, UNIT_0_625_MS),              \
+        .interval = MSEC_TO_UNITS(APP_ADV_INTERVAL_MS, UNIT_0_625_MS),                  \
         .timeout = APP_ADV_TIMEOUT_IN_SECONDS         \
     },                                                \
     .conn_params =                                    \
     {                                                 \
-        .min_conn_int  = (uint16_t)MSEC_TO_UNITS(MIN_CONN_INTERVAL_MS, UNIT_1_25_MS),        \
-        .max_conn_int  = MSEC_TO_UNITS(MAX_CONN_INTERVAL_MS, UNIT_1_25_MS),        \
-        .slave_latency = SLAVE_LATENCY,               \
-        .sup_timeout   = MSEC_TO_UNITS(CONN_SUP_TIMEOUT_MS, UNIT_10_MS)        \
+        .min_conn_int  = (uint16_t)MSEC_TO_UNITS(MIN_CONN_INTERVAL_MS, UNIT_1_25_MS),   \
+        .max_conn_int  = MSEC_TO_UNITS(MAX_CONN_INTERVAL_MS, UNIT_1_25_MS),             \
+        .slave_latency = SLAVE_LATENCY,                                                 \
+        .sup_timeout   = MSEC_TO_UNITS(CONN_SUP_TIMEOUT_MS, UNIT_10_MS)                 \
     },                                                \
     .eddystone_url =                                  \
     {                                                 \

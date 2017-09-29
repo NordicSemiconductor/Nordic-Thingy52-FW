@@ -47,37 +47,24 @@
 #ifndef __MACROS_COMMON_H__
 #define __MACROS_COMMON_H__
 
-#include "SEGGER_RTT.h"
+#include "nrf_log.h"
 
-/**@brief global debug flag will enable debug print from all files
+/**@brief Check if the error code is equal to NRF_SUCCESS. If not, return the error code.
  */
-#ifdef GLOBAL_DEBUG
-    #define LOCAL_DEBUG
-#endif
-
-#ifdef LOCAL_DEBUG
-    #define DEBUG_PRINTF    (void)SEGGER_RTT_printf
-#else
-    #define DEBUG_PRINTF(...)
-#endif
-
-/**@brief Check if the error code is equal to NRF_SUCCESS, if not return the error code.
- */
-#define RETURN_IF_ERROR(err_code)                                                                  \
-if ((err_code) != NRF_SUCCESS)                                                                     \
-{                                                                                                  \
-    (void)SEGGER_RTT_printf(0, RTT_CTRL_TEXT_BRIGHT_RED                                            \
-    "ERROR. Returned in file: %s, line: %d, with error code %d \r\n"RTT_CTRL_RESET,                \
-    __FILE__, __LINE__, err_code);                                                                 \
-    return (err_code);                                                                             \
+#define RETURN_IF_ERROR(err_code)                                                    \
+if ((err_code) != NRF_SUCCESS)                                                       \
+{                                                                                    \
+    NRF_LOG_WARNING("Err code returned in file: %s, line: %d, code %d \r\n",         \
+    nrf_log_push(__FILE__), __LINE__, err_code);                                     \
+    return (err_code);                                                               \
 }
 
-/**@brief Check if the input pointer is NULL, if so it returns NRF_ERROR_NULL.
+/**@brief Check if the input pointer is NULL. If so, return NRF_ERROR_NULL.
  */
-#define NULL_PARAM_CHECK(param)                                                                    \
-        if ((param) == NULL)                                                                       \
-        {                                                                                          \
-            return NRF_ERROR_NULL;                                                                 \
+#define NULL_PARAM_CHECK(param)         \
+        if ((param) == NULL)            \
+        {                               \
+            return NRF_ERROR_NULL;      \
         }
 
 #endif /*__MACROS_COMMON_H__*/

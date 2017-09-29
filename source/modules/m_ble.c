@@ -50,10 +50,17 @@
 #include "fstorage.h"
 #include "m_ble.h"
 #include "m_ble_flash.h"
+#include "drv_nfc.h"
 #include "thingy_config.h"
 #include "advertiser_beacon.h"
 #include "pca20020.h"
 #include "nrf_delay.h"
+#include "nrf_drv_rng.h"
+#include "support_func.h"
+
+#define  NRF_LOG_MODULE_NAME "m_ble         "
+#include "nrf_log.h"
+#include "macros_common.h"
 
 #ifdef BLE_DFU_APP_SUPPORT
     #include "ble_dfu.h"
@@ -69,24 +76,23 @@
     STATIC_ASSERT(IS_SRVC_CHANGED_CHARACT_PRESENT);                                     /** When having DFU Service support in application the Service Changed Characteristic should always be present. */
 #endif // BLE_DFU_APP_SUPPORT
 
-#ifdef TB_DEBUG
-    #define LOCAL_DEBUG
-#endif
-#include "macros_common.h"
+#define RANDOM_VECTOR_DEVICE_ID_SIZE         4                                          /** Length of random ID vector. Must be <= 32. */
 
-static uint16_t                   m_conn_handle = BLE_CONN_HANDLE_INVALID;      /**< Handle of the current connection. */
+static uint16_t                   m_conn_handle = BLE_CONN_HANDLE_INVALID;              /**< Handle of the current connection. */
 static m_ble_evt_handler_t        m_evt_handler = 0;
 static m_ble_service_handle_t   * m_service_handles = 0;
 static uint32_t                   m_service_num = 0;
-
 static ble_tcs_t                  m_tcs;
 static ble_tcs_params_t         * m_ble_config;
 static const ble_tcs_params_t     m_ble_default_config = THINGY_CONFIG_DEFAULT;
 static ble_tcs_mtu_t              m_mtu;
 static bool                       m_flash_disconnect = false;
+static bool                       m_major_minor_fw_ver_changed = false;
+static char                       m_mac_addr[SUPPORT_FUNC_MAC_ADDR_STR_LEN];            /**< The device MAC address. */
+static uint8_t                    m_random_vector_device_id[RANDOM_VECTOR_DEVICE_ID_SIZE];        /**< Device random ID. Used for NFC BLE pairng on iOS. */
 
 #if (NRF_SD_BLE_API_VERSION == 3)
-    #define NRF_BLE_MAX_MTU_SIZE            GATT_MTU_SIZE_DEFAULT*12            /**< MTU size used in the softdevice enabling and to reply to a BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST event. */
+    #define NRF_BLE_MAX_MTU_SIZE            BLE_GATT_ATT_MTU_DEFAULT*12         /**< MTU size used in the softdevice enabling and to reply to a BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST event. */
 #endif
 
 #ifdef BLE_DFU_APP_SUPPORT
@@ -97,23 +103,24 @@ static bool                       m_flash_disconnect = false;
         switch (p_evt->type)
         {
             case BLE_DFU_EVT_INDICATION_DISABLED:
-                DEBUG_PRINTF(0, "Indication for BLE_DFU is disabled\r\n");
+                NRF_LOG_INFO("Indication for BLE_DFU is disabled\r\n");
                 break;
 
             case BLE_DFU_EVT_INDICATION_ENABLED:
-                DEBUG_PRINTF(0, "Indication for BLE_DFU is enabled\r\n");
+                NRF_LOG_INFO("Indication for BLE_DFU is enabled\r\n");
                 break;
 
             case BLE_DFU_EVT_ENTERING_BOOTLOADER:
-                DEBUG_PRINTF(0, "Device is entering bootloader mode!\r\n");
+                NRF_LOG_INFO("Device is entering bootloader mode!\r\n");
                 break;
             default:
-                DEBUG_PRINTF(0, "Unknown event from ble_dfu\r\n");
+                NRF_LOG_WARNING("Unknown event from ble_dfu\r\n");
                 break;
         }
     }
 
 #endif // BLE_DFU_APP_SUPPORT
+#define CONN_CFG_TAG_THINGY 1
 
 
 /**@brief Check if flash is currently being accessed.
@@ -129,6 +136,47 @@ static bool flash_access_ongoing(void)
     return (flash_op_cnt == 0) ? false : true;
 }
 
+/**@brief Generate random number.
+ */
+static uint32_t random_vector_generate(uint8_t * p_buff, uint8_t size)
+{
+    uint32_t err_code;
+    uint8_t  bytes_available = 0;
+
+    nrf_drv_rng_bytes_available(&bytes_available);
+    uint8_t retries = 0;
+    
+    while (bytes_available < size)
+    {
+        retries++;
+        NRF_LOG_WARNING("Too few random bytes available. Trying again \r\n");
+        nrf_drv_rng_bytes_available(&bytes_available);
+        nrf_delay_ms(5);
+        
+        if (retries > 5)    // Return after n attempts.
+        {
+            return NRF_ERROR_TIMEOUT;
+        }
+    }
+    
+    NRF_LOG_INFO("Available random bytes: %d \r\n", bytes_available);
+
+    err_code = nrf_drv_rng_rand(p_buff, size);
+    RETURN_IF_ERROR(err_code);
+    
+    NRF_LOG_INFO("Random value (hex): ");
+    
+    for (uint8_t i = 0; i < size; i++)
+    {
+        NRF_LOG_RAW_INFO("%02x", p_buff[i]);
+    }
+    
+    NRF_LOG_RAW_INFO("\r\n");
+
+    return NRF_SUCCESS;
+}
+
+
 /**@brief Function for the GAP initialization.
  *
  * @details This function will set up all the necessary GAP (Generic Access Profile) parameters of
@@ -140,7 +188,7 @@ static uint32_t gap_params_init(void)
     ble_gap_conn_params_t   gap_conn_params;
     ble_gap_conn_sec_mode_t sec_mode;
 
-    BLE_GAP_CONN_SEC_MODE_SET_OPEN(&sec_mode);
+    BLE_GAP_CONN_SEC_MODE_SET_NO_ACCESS(&sec_mode);
 
     err_code = sd_ble_gap_device_name_set(&sec_mode,
                                           m_ble_config->dev_name.name,
@@ -205,14 +253,14 @@ static void on_conn_params_evt(ble_conn_params_evt_t * p_evt)
 
     if(p_evt->evt_type == BLE_CONN_PARAMS_EVT_FAILED)
     {
+        NRF_LOG_ERROR("on_conn_params_evt: BLE_CONN_PARAMS_EVT_FAILED\r\n");
+        
         err_code = sd_ble_gap_disconnect(m_conn_handle, BLE_HCI_CONN_INTERVAL_UNACCEPTABLE);
         APP_ERROR_CHECK(err_code);
-
-        DEBUG_PRINTF(0, "on_conn_params_evt: BLE_CONN_PARAMS_EVT_FAILED\r\n");
     }
     else if (p_evt->evt_type == BLE_CONN_PARAMS_EVT_SUCCEEDED)
     {
-        DEBUG_PRINTF(0, "on_conn_params_evt: BLE_CONN_PARAMS_EVT_SUCCEEDED\r\n");
+        NRF_LOG_INFO("on_conn_params_evt: BLE_CONN_PARAMS_EVT_SUCCEEDED\r\n");
     }
     else
     {
@@ -227,7 +275,7 @@ static void on_conn_params_evt(ble_conn_params_evt_t * p_evt)
  */
 static void conn_params_error_handler(uint32_t nrf_error)
 {
-    DEBUG_PRINTF(0, "conn_params_error_handler: %d\r\n", nrf_error);
+    NRF_LOG_ERROR("conn_params_error_handler: %d\r\n", nrf_error);
     APP_ERROR_HANDLER(nrf_error);
 }
 
@@ -258,6 +306,7 @@ static uint32_t conn_params_init(void)
     cp_init.error_handler                  = conn_params_error_handler;
 
     err_code = ble_conn_params_init(&cp_init);
+
     if (err_code != NRF_SUCCESS)
     {
         return err_code;
@@ -281,10 +330,10 @@ static void on_adv_evt(ble_adv_evt_t ble_adv_evt)
     switch (ble_adv_evt)
     {
         case BLE_ADV_EVT_FAST:
-            DEBUG_PRINTF(0, "on_adv_evt: BLE_ADV_EVT_FAST\r\n");
+            NRF_LOG_INFO("on_adv_evt: BLE_ADV_EVT_FAST\r\n");
             break;
         case BLE_ADV_EVT_IDLE:
-            DEBUG_PRINTF(0, "on_adv_evt: BLE_ADV_EVT_IDLE\r\n");
+            NRF_LOG_INFO("on_adv_evt: BLE_ADV_EVT_IDLE\r\n");
             evt.evt_type = thingy_ble_evt_timeout;
             m_evt_handler(&evt);
 
@@ -310,7 +359,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
     switch (p_ble_evt->header.evt_id)
     {
         case BLE_GAP_EVT_CONNECTED:
-            DEBUG_PRINTF(0, "on_ble_evt: BLE_GAP_EVT_CONNECTED\r\n");
+            NRF_LOG_INFO("on_ble_evt: BLE_GAP_EVT_CONNECTED\r\n");
             m_conn_handle = p_ble_evt->evt.gap_evt.conn_handle;
 
             evt.evt_type = thingy_ble_evt_connected;
@@ -318,7 +367,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             break;
 
         case BLE_GAP_EVT_DISCONNECTED:
-            DEBUG_PRINTF(0, "on_ble_evt: BLE_GAP_EVT_DISCONNECTED\r\n");
+            NRF_LOG_INFO("on_ble_evt: BLE_GAP_EVT_DISCONNECTED. Reason: 0x%x \r\n", p_ble_evt->evt.gap_evt.params.disconnected.reason);
             m_conn_handle = BLE_CONN_HANDLE_INVALID;
 
             if (flash_access_ongoing())
@@ -354,7 +403,7 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
 #if (NRF_SD_BLE_API_VERSION == 3)
         case BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST:
         {
-            DEBUG_PRINTF(0, "on_ble_evt: BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST - %d\r\n", p_ble_evt->evt.gatts_evt.params.exchange_mtu_request.client_rx_mtu);
+            NRF_LOG_INFO("on_ble_evt: BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST - %d\r\n", p_ble_evt->evt.gatts_evt.params.exchange_mtu_request.client_rx_mtu);
             err_code = sd_ble_gatts_exchange_mtu_reply(p_ble_evt->evt.gatts_evt.conn_handle,
                                                        NRF_BLE_MAX_MTU_SIZE);
             APP_ERROR_CHECK(err_code);
@@ -367,9 +416,21 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
 #endif
 
         case BLE_GATTC_EVT_EXCHANGE_MTU_RSP:
-            DEBUG_PRINTF(0, "on_ble_evt: BLE_GATTC_EVT_EXCHANGE_MTU_RSP - %d\r\n", p_ble_evt->evt.gattc_evt.params.exchange_mtu_rsp.server_rx_mtu);
+            NRF_LOG_INFO("on_ble_evt: BLE_GATTC_EVT_EXCHANGE_MTU_RSP - %d\r\n", p_ble_evt->evt.gattc_evt.params.exchange_mtu_rsp.server_rx_mtu);
             break;
 
+        case BLE_GAP_EVT_DATA_LENGTH_UPDATE_REQUEST:
+            /* Allow SoftDevice to choose Data Length Update Procedure parameters
+            automatically. */
+            NRF_LOG_INFO("on_ble_evt: BLE_GAP_EVT_DATA_LENGTH_UPDATE_REQUEST\r\n");
+            err_code = sd_ble_gap_data_length_update(p_ble_evt->evt.gap_evt.conn_handle, NULL, NULL);
+            APP_ERROR_CHECK(err_code);
+            break;
+        
+        case BLE_GAP_EVT_DATA_LENGTH_UPDATE:
+            NRF_LOG_INFO("on_ble_evt: BLE_GAP_EVT_DATA_LENGTH_UPDATE\r\n");
+        break;
+        
         default:
             // No implementation needed.
             break;
@@ -450,36 +511,64 @@ static uint32_t ble_stack_init(void)
     // Initialize SoftDevice.
     SOFTDEVICE_HANDLER_APPSH_INIT(&clock_lf_cfg, true);
     //SOFTDEVICE_HANDLER_INIT(&clock_lf_cfg, NULL);
+    uint32_t app_ram_start = 0;
+    err_code = softdevice_app_ram_start_get(&app_ram_start);
+    APP_ERROR_CHECK(err_code);
+    
+    ble_cfg_t ble_cfg;
 
-    ble_enable_params_t ble_enable_params;
-    err_code = softdevice_enable_get_default_config(CENTRAL_LINK_COUNT,
-                                                    PERIPHERAL_LINK_COUNT,
-                                                    &ble_enable_params);
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
+    // Configure long MTU.
+    memset(&ble_cfg, 0, sizeof(ble_cfg));
+    ble_cfg.conn_cfg.conn_cfg_tag = CONN_CFG_TAG_THINGY;
+    ble_cfg.conn_cfg.params.gatt_conn_cfg.att_mtu = 276;
+    err_code = sd_ble_cfg_set(BLE_CONN_CFG_GATT, &ble_cfg, app_ram_start);
+    APP_ERROR_CHECK(err_code);
+    
+    // Configure event length (7.5ms)
+    memset(&ble_cfg, 0, sizeof(ble_cfg));
+    ble_cfg.conn_cfg.conn_cfg_tag = CONN_CFG_TAG_THINGY;
+    ble_cfg.conn_cfg.params.gap_conn_cfg.conn_count = 1;
+    ble_cfg.conn_cfg.params.gap_conn_cfg.event_length = 6;
+    err_code = sd_ble_cfg_set(BLE_CONN_CFG_GAP, &ble_cfg, app_ram_start);
+    APP_ERROR_CHECK(err_code);
+    
+    // Configure HVN queue size
+    memset(&ble_cfg, 0, sizeof(ble_cfg));
+    ble_cfg.conn_cfg.conn_cfg_tag = CONN_CFG_TAG_THINGY;
+    ble_cfg.conn_cfg.params.gatts_conn_cfg.hvn_tx_queue_size = 16;
+    err_code = sd_ble_cfg_set(BLE_CONN_CFG_GATTS, &ble_cfg, app_ram_start);
+    APP_ERROR_CHECK(err_code);
+    
+    // Configure WRITE_CMD queue size
+    memset(&ble_cfg, 0, sizeof(ble_cfg));
+    ble_cfg.conn_cfg.conn_cfg_tag = CONN_CFG_TAG_THINGY;
+    ble_cfg.conn_cfg.params.gattc_conn_cfg.write_cmd_tx_queue_size = 2;
+    err_code = sd_ble_cfg_set(BLE_CONN_CFG_GATTC, &ble_cfg, app_ram_start);
+    APP_ERROR_CHECK(err_code);
+    
+    memset(&ble_cfg, 0, sizeof(ble_cfg));    
+    ble_cfg.common_cfg.vs_uuid_cfg.vs_uuid_count = 2;
+    err_code = sd_ble_cfg_set(BLE_COMMON_CFG_VS_UUID, &ble_cfg, app_ram_start);
+    APP_ERROR_CHECK(err_code);
 
-    ble_enable_params.common_enable_params.vs_uuid_count = 2 + m_service_num; // ble_tcs + ble_dfu + other thingy services
-    ble_enable_params.gatts_enable_params.attr_tab_size = 3000;
-
-#ifdef BLE_DFU_APP_SUPPORT
-    ble_enable_params.gatts_enable_params.service_changed = 1;
-#endif // BLE_DFU_APP_SUPPORT
-
-    //Check the ram settings against the used number of links.
-    CHECK_RAM_START_ADDR(CENTRAL_LINK_COUNT,PERIPHERAL_LINK_COUNT);
-
-    // Enable BLE stack.
-#if (NRF_SD_BLE_API_VERSION == 3)
-    ble_enable_params.gatt_enable_params.att_mtu = NRF_BLE_MAX_MTU_SIZE;
-#endif
-    err_code = softdevice_enable(&ble_enable_params);
-    if (err_code != NRF_SUCCESS)
-    {
-        return err_code;
-    }
-
+    memset(&ble_cfg, 0, sizeof(ble_cfg));
+    ble_cfg.gap_cfg.role_count_cfg.periph_role_count  = 1;
+    err_code = sd_ble_cfg_set(BLE_GAP_CFG_ROLE_COUNT, &ble_cfg, app_ram_start);
+    APP_ERROR_CHECK(err_code);
+    
+    memset(&ble_cfg, 0, sizeof(ble_cfg));
+    ble_cfg.gatts_cfg.attr_tab_size.attr_tab_size = 3000;
+    err_code = sd_ble_cfg_set(BLE_GATTS_CFG_ATTR_TAB_SIZE, &ble_cfg, app_ram_start);
+    APP_ERROR_CHECK(err_code);
+    
+    memset(&ble_cfg, 0, sizeof(ble_cfg));
+    ble_cfg.gatts_cfg.service_changed.service_changed = 1;
+    err_code = sd_ble_cfg_set(BLE_GATTS_CFG_SERVICE_CHANGED, &ble_cfg, app_ram_start);
+    APP_ERROR_CHECK(err_code);
+    
+    err_code = softdevice_enable(&app_ram_start);
+    APP_ERROR_CHECK(err_code);
+    
     // Subscribe for BLE events.
     err_code = softdevice_ble_evt_handler_set(ble_evt_dispatch);
     if (err_code != NRF_SUCCESS)
@@ -515,27 +604,48 @@ static uint32_t advertising_init(void)
 {
     uint32_t      err_code;
     ble_advdata_t advdata;
-    ble_uuid_t    adv_uuids = {BLE_UUID_TCS_SERVICE,m_tcs.uuid_type};
-
+    ble_uuid_t    adv_uuids = {BLE_UUID_TCS_SERVICE, m_tcs.uuid_type};
+    
     // Build advertising data struct to pass into @ref ble_advertising_init.
     memset(&advdata, 0, sizeof(advdata));
-    advdata.name_type          = BLE_ADVDATA_FULL_NAME;
-    advdata.include_appearance = false;
-    advdata.flags              = BLE_GAP_ADV_FLAGS_LE_ONLY_LIMITED_DISC_MODE;
-    advdata.uuids_more_available.uuid_cnt = 1;
-    advdata.uuids_more_available.p_uuids = &adv_uuids;
+    
+    advdata.name_type                       = BLE_ADVDATA_FULL_NAME;
+    advdata.include_appearance              = false;
+    advdata.flags                           = BLE_GAP_ADV_FLAGS_LE_ONLY_GENERAL_DISC_MODE;
+    advdata.uuids_more_available.uuid_cnt   = 1;
+    advdata.uuids_more_available.p_uuids    = &adv_uuids;
 
     ble_adv_modes_config_t options = {0};
     options.ble_adv_fast_enabled  = true;
     options.ble_adv_fast_interval = m_ble_config->adv_params.interval;
     options.ble_adv_fast_timeout  = m_ble_config->adv_params.timeout;
+    
+    // Build scan response data struct to pass into @ref ble_advertising_init.
+    ble_advdata_t scan_response_data;
+    memset(&scan_response_data, 0, sizeof(scan_response_data));
 
-    err_code = ble_advertising_init(&advdata, NULL, &options, on_adv_evt, NULL);
-    if (err_code != NRF_SUCCESS)
+    // Manufacturer specific data in advertising packet.
+    ble_advdata_manuf_data_t adv_manuf_data;
+    
+    uint8_t random_vector_device_id_reversed[RANDOM_VECTOR_DEVICE_ID_SIZE];
+    
+    for (uint8_t i = 0; i < RANDOM_VECTOR_DEVICE_ID_SIZE; i++)
     {
-        return err_code;
+        random_vector_device_id_reversed[i] = m_random_vector_device_id[RANDOM_VECTOR_DEVICE_ID_SIZE - i - 1];
     }
+    
+    adv_manuf_data.company_identifier   = NORDIC_COMPANY_ID;
+    adv_manuf_data.data.p_data          = random_vector_device_id_reversed;
+    adv_manuf_data.data.size            = RANDOM_VECTOR_DEVICE_ID_SIZE;
 
+    scan_response_data.name_type             = BLE_ADVDATA_NO_NAME; 
+    scan_response_data.p_manuf_specific_data = &adv_manuf_data;
+    
+    // Set both advertisement data and scan response data.
+    err_code = ble_advertising_init(&advdata, &scan_response_data, &options, on_adv_evt, NULL);
+    RETURN_IF_ERROR(err_code);
+    
+    ble_advertising_conn_cfg_tag_set(CONN_CFG_TAG_THINGY);
     return NRF_SUCCESS;
 }
 
@@ -666,7 +776,7 @@ static void tcs_evt_handler (ble_tcs_t        * p_tcs,
 
                 if (p_mtu->req == TCS_MTU_REQ_EXCHANGE)
                 {
-                    DEBUG_PRINTF(0, "tcs_evt_handler: TCS_MTU_REQ_EXCHANGE - %d\r\n", p_mtu->size);
+                    NRF_LOG_INFO("tcs_evt_handler: TCS_MTU_REQ_EXCHANGE - %d\r\n", p_mtu->size);
                     err_code = sd_ble_gattc_exchange_mtu_request(m_conn_handle, p_mtu->size);
                     if (err_code == NRF_SUCCESS)
                     {
@@ -697,17 +807,47 @@ static void tcs_evt_handler (ble_tcs_t        * p_tcs,
 }
 
 
+/**@brief Checks the current version of the FW against the previous version stored in flash.
+ * If a major or minor FW change is detected, modules must reinitialize their flash storage.
+ *
+ * @note: If the FW version is changed while erasing all flash, a FW change cannot be detected.
+ */
 static uint32_t thingy_config_verify(void)
 {
     bool update_flash = false;
     uint32_t err_code;
+    
+    bool fw_version_major_changed = ( m_ble_config->fw_version.major != m_ble_default_config.fw_version.major );
+    bool fw_version_minor_changed = ( m_ble_config->fw_version.minor != m_ble_default_config.fw_version.minor );
+    bool fw_version_patch_changed = ( m_ble_config->fw_version.patch != m_ble_default_config.fw_version.patch );
+    
+    ble_tcs_fw_version_t prev_fw_version = m_ble_config->fw_version;
 
-    if ( (m_ble_config->fw_version.major != m_ble_default_config.fw_version.major) ||
-         (m_ble_config->fw_version.minor != m_ble_default_config.fw_version.minor) ||
-         (m_ble_config->fw_version.patch != m_ble_default_config.fw_version.patch) )
+    if ( fw_version_major_changed || fw_version_minor_changed || fw_version_patch_changed)
     {
-        err_code = m_ble_flash_config_store((ble_tcs_params_t *)&m_ble_default_config);
-        APP_ERROR_CHECK(err_code);
+        m_ble_config->fw_version.major = m_ble_default_config.fw_version.major;
+        m_ble_config->fw_version.minor = m_ble_default_config.fw_version.minor;
+        m_ble_config->fw_version.patch = m_ble_default_config.fw_version.patch;
+        
+        update_flash = true;
+        
+        if(fw_version_major_changed || fw_version_minor_changed)
+        {       
+            update_flash = false;
+            m_major_minor_fw_ver_changed = true;
+            
+            err_code = m_ble_flash_config_store(&m_ble_default_config);
+            APP_ERROR_CHECK(err_code);
+        }
+    }
+    
+    NRF_LOG_INFO(NRF_LOG_COLOR_CODE_GREEN"m_ble: Current FW: v%d.%d.%d \r\n",
+    m_ble_default_config.fw_version.major, m_ble_default_config.fw_version.minor, m_ble_default_config.fw_version.patch);
+    
+    if(m_major_minor_fw_ver_changed)
+    {
+        NRF_LOG_INFO(NRF_LOG_COLOR_CODE_YELLOW"m_ble: Major or minor FW version changed. Prev. FW (from flash): v%d.%d.%d \r\n",
+        prev_fw_version.major, prev_fw_version.minor, prev_fw_version.patch);
     }
 
     // Check Eddystone URL length.
@@ -731,7 +871,7 @@ static uint32_t thingy_config_verify(void)
         err_code = m_ble_flash_config_store(m_ble_config);
         APP_ERROR_CHECK(err_code);
     }
-
+    
     return NRF_SUCCESS;
 }
 
@@ -745,6 +885,7 @@ static uint32_t thingy_config_init(void)
 
     params.evt_handler = tcs_evt_handler;
     err_code = ble_tcs_init(&m_tcs, &params);
+
     if (err_code != NRF_SUCCESS)
     {
         return err_code;
@@ -762,19 +903,18 @@ static uint32_t services_init(m_ble_service_handle_t * p_service_handles, uint32
 
     err_code = thingy_config_init();
     APP_ERROR_CHECK(err_code);
-
+    
     for (uint32_t i = 0; i < num_services; i++)
     {
         if (p_service_handles[i].init_cb != NULL)
         {
-            err_code = p_service_handles[i].init_cb();
+            err_code = p_service_handles[i].init_cb(m_major_minor_fw_ver_changed);
             if (err_code != NRF_SUCCESS)
             {
                 return err_code;
             }
         }
     }
-
 
     #ifdef BLE_DFU_APP_SUPPORT
         ble_dfu_init_t   dfus_init;
@@ -795,6 +935,45 @@ static uint32_t services_init(m_ble_service_handle_t * p_service_handles, uint32
 }
 
 
+uint32_t nfc_init(void)
+{
+    uint32_t err_code;
+    
+    err_code = drv_nfc_init();
+    RETURN_IF_ERROR(err_code);
+    
+    err_code = drv_nfc_app_launch_android_record_add(THINGY_NFC_APP_ANDROID_NAME_DEFAULT, THINGY_NFC_APP_ANDROID_NAME_LEN);
+    RETURN_IF_ERROR(err_code);
+    
+    uint8_t NFC_STR_LEN = SUPPORT_FUNC_MAC_ADDR_STR_LEN + (RANDOM_VECTOR_DEVICE_ID_SIZE * 2) + 1; // MAC (with '\0') + space + random vector.
+    char nfc_string[NFC_STR_LEN];
+    nfc_string[0] = '\0';
+    
+    strcat(nfc_string, m_mac_addr);
+    strcat(nfc_string, " ");
+    
+    for (uint8_t i = 0; i < RANDOM_VECTOR_DEVICE_ID_SIZE; i++)
+    {
+        char tmp[3] = {0};
+        sprintf(tmp, "%02x", m_random_vector_device_id[i]);
+        strcat(nfc_string, tmp);
+    }
+    
+    NRF_LOG_INFO("nfc string: %s \r\n", nrf_log_push(nfc_string));
+    
+    err_code = drv_nfc_string_record_add(nfc_string, NFC_STR_LEN);
+    RETURN_IF_ERROR(err_code);
+                                                   
+    err_code = drv_nfc_uri_record_add(NFC_URI_HTTP_WWW, THINGY_NFC_URI_DEFAULT, THINGY_NFC_URI_LEN);
+    RETURN_IF_ERROR(err_code);
+                                                   
+    err_code = drv_nfc_enable();
+    RETURN_IF_ERROR(err_code);
+
+    return NRF_SUCCESS;
+}
+
+
 uint32_t m_ble_init(m_ble_init_t * p_params)
 {
     uint32_t err_code;
@@ -804,9 +983,10 @@ uint32_t m_ble_init(m_ble_init_t * p_params)
     m_service_num     = p_params->service_num;
 
     err_code = ble_stack_init();
+
     if (err_code != NRF_SUCCESS)
     {
-        DEBUG_PRINTF(0, "thingy_ble_init: ble_stack_init failed - %d\r\n", err_code);
+        NRF_LOG_ERROR("ble_stack_init failed - %d\r\n", err_code);
         return err_code;
     }
 
@@ -816,63 +996,97 @@ uint32_t m_ble_init(m_ble_init_t * p_params)
         __DSB();
         __ISB();
     #endif
+    
+    err_code = random_vector_generate(m_random_vector_device_id, RANDOM_VECTOR_DEVICE_ID_SIZE);
 
-    /**@brief Load configuration from flash. */
-    err_code = m_ble_flash_init(&m_ble_default_config, &m_ble_config);
     if (err_code != NRF_SUCCESS)
     {
-        DEBUG_PRINTF(0, "thingy_ble_init: m_ble_flash_init failed - %d\r\n", err_code);
+        NRF_LOG_ERROR("random_vector_generate failed - %d\r\n", err_code);
+        return err_code;
+    }
+    
+    /**@brief Load configuration from flash. */
+    err_code = m_ble_flash_init(&m_ble_default_config, &m_ble_config);
+
+    if (err_code != NRF_SUCCESS)
+    {
+        NRF_LOG_ERROR(" m_ble_flash_init failed - %d\r\n", err_code);
         return err_code;
     }
 
     err_code = thingy_config_verify();
+
     if (err_code != NRF_SUCCESS)
     {
-        DEBUG_PRINTF(0, "thingy_ble_init: thingy_config_verify failed - %d\r\n", err_code);
+        NRF_LOG_ERROR("Thingy_config_verify failed - %d\r\n", err_code);
         return err_code;
     }
 
     err_code = gap_params_init();
+
     if (err_code != NRF_SUCCESS)
     {
-        DEBUG_PRINTF(0, "thingy_ble_init: gap_params_init failed - %d\r\n", err_code);
+        NRF_LOG_ERROR("gap_params_init failed - %d\r\n", err_code);
         return err_code;
     }
 
     err_code = services_init(m_service_handles, m_service_num);
+
     if (err_code != NRF_SUCCESS)
     {
-        DEBUG_PRINTF(0, "thingy_ble_init: services_init failed - %d\r\n", err_code);
+        NRF_LOG_ERROR("Thingy_ble_init: services_init failed - %d\r\n", err_code);
         return err_code;
     }
 
     err_code = advertising_init();
+
     if (err_code != NRF_SUCCESS)
     {
-        DEBUG_PRINTF(0, "thingy_ble_init: advertising_init failed - %d\r\n", err_code);
+        NRF_LOG_ERROR("Advertising_init failed - %d\r\n", err_code);
         return err_code;
     }
 
     err_code = conn_params_init();
+
     if (err_code != NRF_SUCCESS)
     {
-        DEBUG_PRINTF(0, "thingy_ble_init: conn_params_init failed - %d\r\n", err_code);
+        NRF_LOG_ERROR("Conn_params_init failed - %d\r\n", err_code);
         return err_code;
     }
-
+    
     err_code = ble_advertising_start(BLE_ADV_MODE_FAST);
+
     if (err_code != NRF_SUCCESS)
     {
-        DEBUG_PRINTF(0, "thingy_ble_init: ble_advertising_start failed - %d\r\n", err_code);
+        NRF_LOG_ERROR("ble_advertising_start failed - %d\r\n", err_code);
         return err_code;
     }
+    
+    err_code = support_func_ble_mac_address_get(m_mac_addr);
 
+    if (err_code != NRF_SUCCESS)
+    {
+        NRF_LOG_ERROR("mac address get failed - %d\r\n", err_code);
+        return err_code;
+    }
+    
+    NRF_LOG_RAW_INFO("MAC addr-> %s \r\n", nrf_log_push(m_mac_addr));
+    
+    err_code = nfc_init();
+
+    if (err_code != NRF_SUCCESS)
+    {
+        NRF_LOG_ERROR("nfc init failed - %d\r\n", err_code);
+        return err_code;
+    }
+    
     nrf_delay_ms (10);
 
     err_code = timeslot_init();
+
     if (err_code != NRF_SUCCESS)
     {
-        DEBUG_PRINTF(0, "thingy_ble_init: timeslot_init failed - %d\r\n", err_code);
+        NRF_LOG_ERROR("timeslot_init failed - %d\r\n", err_code);
         return err_code;
     }
 

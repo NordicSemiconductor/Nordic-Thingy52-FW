@@ -40,10 +40,8 @@
 #include "pca20020.h"
 #include "nrf_drv_gpiote.h"
 #include "app_scheduler.h"
-
-#ifdef COLOR_DEBUG
-    #define LOCAL_DEBUG
-#endif
+#define  NRF_LOG_MODULE_NAME "drv_color     "
+#include "nrf_log.h"
 #include "macros_common.h"
 
 static drv_bh1745_cfg_t         m_bh1745_cfg;

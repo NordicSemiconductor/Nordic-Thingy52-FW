@@ -42,16 +42,14 @@
 #include "drv_motion.h"
 #include "sdk_errors.h"
 #include "pca20020.h"
+#define  NRF_LOG_MODULE_NAME "m_motion      "
+#include "nrf_log.h"
+#include "macros_common.h"
 
 #define RAW_PARAM_NUM                 9     // Number of raw parameters (3 * acc + 3 * gyro + 3 * compass).
 #define RAW_Q_FORMAT_ACC_INTEGER_BITS 6     // Number of bits used for integer part of raw data.
 #define RAW_Q_FORMAT_GYR_INTEGER_BITS 11    // Number of bits used for integer part of raw data.
 #define RAW_Q_FORMAT_CMP_INTEGER_BITS 12    // Number of bits used for integer part of raw data.
-
-#ifdef MOTION_DEBUG
-    #define LOCAL_DEBUG
-#endif
-#include "macros_common.h"
 
 static ble_tms_t              m_tms;
 static ble_tms_config_t     * m_config;
@@ -85,11 +83,11 @@ static void ble_tms_evt_handler(ble_tms_t        * p_tms,
                                 uint16_t           length)
 {
     uint32_t err_code;
-
+    
     switch (evt_type)
     {
         case BLE_TMS_EVT_NOTIF_TAP:
-            DEBUG_PRINTF(0, "ble_tms_evt_handler: BLE_TMS_EVT_NOTIF_TAP - %d\r\n", p_tms->is_tap_notif_enabled);
+            NRF_LOG_INFO("ble_tms_evt_handler: BLE_TMS_EVT_NOTIF_TAP - %d\r\n", p_tms->is_tap_notif_enabled);
             if (p_tms->is_tap_notif_enabled)
             {
                 err_code = drv_motion_enable(DRV_MOTION_FEATURE_MASK_TAP);
@@ -103,7 +101,7 @@ static void ble_tms_evt_handler(ble_tms_t        * p_tms,
             break;
 
         case BLE_TMS_EVT_NOTIF_ORIENTATION:
-            DEBUG_PRINTF(0, "ble_tms_evt_handler: BLE_TMS_EVT_NOTIF_ORIENTATION - %d\r\n", p_tms->is_orientation_notif_enabled);
+            NRF_LOG_INFO("ble_tms_evt_handler: BLE_TMS_EVT_NOTIF_ORIENTATION - %d\r\n", p_tms->is_orientation_notif_enabled);
             if (p_tms->is_orientation_notif_enabled)
             {
                 err_code = drv_motion_enable(DRV_MOTION_FEATURE_MASK_ORIENTATION);
@@ -117,7 +115,7 @@ static void ble_tms_evt_handler(ble_tms_t        * p_tms,
             break;
 
         case BLE_TMS_EVT_NOTIF_QUAT:
-            DEBUG_PRINTF(0, "ble_tms_evt_handler: BLE_TMS_EVT_NOTIF_QUAT - %d\r\n", p_tms->is_quat_notif_enabled);
+            NRF_LOG_INFO("ble_tms_evt_handler: BLE_TMS_EVT_NOTIF_QUAT - %d\r\n", p_tms->is_quat_notif_enabled);
             if (p_tms->is_quat_notif_enabled)
             {
                 err_code = drv_motion_enable(DRV_MOTION_FEATURE_MASK_QUAT);
@@ -131,7 +129,7 @@ static void ble_tms_evt_handler(ble_tms_t        * p_tms,
             break;
 
         case BLE_TMS_EVT_NOTIF_PEDOMETER:
-            DEBUG_PRINTF(0, "ble_tms_evt_handler: BLE_TMS_EVT_NOTIF_PEDOMETER - %d\r\n", p_tms->is_pedo_notif_enabled);
+            NRF_LOG_INFO("ble_tms_evt_handler: BLE_TMS_EVT_NOTIF_PEDOMETER - %d\r\n", p_tms->is_pedo_notif_enabled);
             if (p_tms->is_pedo_notif_enabled)
             {
                 err_code = drv_motion_enable(DRV_MOTION_FEATURE_MASK_PEDOMETER);
@@ -145,7 +143,7 @@ static void ble_tms_evt_handler(ble_tms_t        * p_tms,
             break;
 
         case BLE_TMS_EVT_NOTIF_RAW:
-            DEBUG_PRINTF(0, "ble_tms_evt_handler: BLE_TMS_EVT_NOTIF_RAW - %d\r\n", p_tms->is_raw_notif_enabled);
+            NRF_LOG_INFO("ble_tms_evt_handler: BLE_TMS_EVT_NOTIF_RAW - %d\r\n", p_tms->is_raw_notif_enabled);
             if (p_tms->is_raw_notif_enabled)
             {
                 err_code = drv_motion_enable(DRV_MOTION_FEATURE_MASK_RAW);
@@ -159,7 +157,7 @@ static void ble_tms_evt_handler(ble_tms_t        * p_tms,
             break;
 
         case BLE_TMS_EVT_NOTIF_EULER:
-            DEBUG_PRINTF(0, "ble_tms_evt_handler: BLE_TMS_EVT_NOTIF_EULER - %d\r\n", p_tms->is_euler_notif_enabled);
+            NRF_LOG_INFO("ble_tms_evt_handler: BLE_TMS_EVT_NOTIF_EULER - %d\r\n", p_tms->is_euler_notif_enabled);
             if (p_tms->is_euler_notif_enabled)
             {
                 err_code = drv_motion_enable(DRV_MOTION_FEATURE_MASK_EULER);
@@ -173,7 +171,7 @@ static void ble_tms_evt_handler(ble_tms_t        * p_tms,
             break;
 
         case BLE_TMS_EVT_NOTIF_ROT_MAT:
-            DEBUG_PRINTF(0, "ble_tms_evt_handler: BLE_TMS_EVT_NOTIF_ROT_MAT - %d\r\n", p_tms->is_rot_mat_notif_enabled);
+            NRF_LOG_INFO("ble_tms_evt_handler: BLE_TMS_EVT_NOTIF_ROT_MAT - %d\r\n", p_tms->is_rot_mat_notif_enabled);
             if (p_tms->is_rot_mat_notif_enabled)
             {
                 err_code = drv_motion_enable(DRV_MOTION_FEATURE_MASK_ROT_MAT);
@@ -187,7 +185,7 @@ static void ble_tms_evt_handler(ble_tms_t        * p_tms,
             break;
 
         case BLE_TMS_EVT_NOTIF_HEADING:
-            DEBUG_PRINTF(0, "ble_tms_evt_handler: BLE_TMS_EVT_NOTIF_HEADING - %d\r\n", p_tms->is_heading_notif_enabled);
+            NRF_LOG_INFO("ble_tms_evt_handler: BLE_TMS_EVT_NOTIF_HEADING - %d\r\n", p_tms->is_heading_notif_enabled);
             if (p_tms->is_heading_notif_enabled)
             {
                 err_code = drv_motion_enable(DRV_MOTION_FEATURE_MASK_HEADING);
@@ -201,7 +199,7 @@ static void ble_tms_evt_handler(ble_tms_t        * p_tms,
             break;
 
         case BLE_TMS_EVT_NOTIF_GRAVITY:
-            DEBUG_PRINTF(0, "ble_tms_evt_handler: BLE_TMS_EVT_NOTIF_GRAVITY - %d\r\n", p_tms->is_gravity_notif_enabled);
+            NRF_LOG_INFO("ble_tms_evt_handler: BLE_TMS_EVT_NOTIF_GRAVITY - %d\r\n", p_tms->is_gravity_notif_enabled);
             if (p_tms->is_gravity_notif_enabled)
             {
                 err_code = drv_motion_enable(DRV_MOTION_FEATURE_MASK_GRAVITY_VECTOR);
@@ -215,7 +213,7 @@ static void ble_tms_evt_handler(ble_tms_t        * p_tms,
             break;
 
         case BLE_TMS_EVT_CONFIG_RECEIVED:
-            DEBUG_PRINTF(0, "ble_tms_evt_handler: BLE_TMS_EVT_CONFIG_RECEIVED - %d\r\n", length);
+            NRF_LOG_INFO("ble_tms_evt_handler: BLE_TMS_EVT_CONFIG_RECEIVED - %d\r\n", length);
             APP_ERROR_CHECK_BOOL(length == sizeof(ble_tms_config_t));
 
             err_code = m_motion_flash_config_store((ble_tms_config_t *)p_data);
@@ -238,7 +236,7 @@ static void ble_tms_evt_handler(ble_tms_t        * p_tms,
  *
  * @retval NRF_SUCCESS If initialization was successful.
  */
-static uint32_t motion_service_init(void)
+static uint32_t motion_service_init(bool major_minor_fw_ver_changed)
 {
     uint32_t              err_code;
     ble_tms_init_t        tms_init;
@@ -246,6 +244,12 @@ static uint32_t motion_service_init(void)
     /**@brief Load configuration from flash. */
     err_code = m_motion_flash_init(&m_default_config, &m_config);
     RETURN_IF_ERROR(err_code);
+    
+    if (major_minor_fw_ver_changed)
+    {
+        err_code = m_motion_flash_config_store(&m_default_config);
+        APP_ERROR_CHECK(err_code);
+    }
 
     err_code = m_motion_configuration_apply(m_config);
     RETURN_IF_ERROR(err_code);
@@ -255,15 +259,14 @@ static uint32_t motion_service_init(void)
     tms_init.p_init_config = m_config;
     tms_init.evt_handler = ble_tms_evt_handler;
 
-    DEBUG_PRINTF(0, "motion_service_init: ble_tms_init ");
+    NRF_LOG_INFO("motion_service_init: ble_tms_init \r\n");
     err_code = ble_tms_init(&m_tms, &tms_init);
     if (err_code != NRF_SUCCESS)
     {
-        DEBUG_PRINTF(0, "FAILED - %d\r\n", err_code);
+        NRF_LOG_ERROR("FAILED - %d\r\n", err_code);
         return err_code;
     }
-
-    DEBUG_PRINTF(0, "\r\n");
+    
     return NRF_SUCCESS;
 }
 
@@ -286,6 +289,7 @@ static void motion_on_ble_evt(ble_evt_t * p_ble_evt)
     }
 }
 
+
 static void drv_motion_evt_handler(drv_motion_evt_t const * p_evt, void * p_data, uint32_t size)
 {
     switch (*p_evt)
@@ -297,7 +301,7 @@ static void drv_motion_evt_handler(drv_motion_evt_t const * p_evt, void * p_data
             ble_tms_raw_t data;
             int32_t     * p_raw = (int32_t *)p_data;
 
-            /* p_raw is in 16Q16 format. This is compressed for BLE transfer */
+            /* p_raw is in 16Q16 format. This is compressed for BLE transfer. */
 
             // Set upper and lower overflow limits.
             static const int16_t overflow_limit_upper[RAW_PARAM_NUM] = {
@@ -330,12 +334,12 @@ static void drv_motion_evt_handler(drv_motion_evt_t const * p_evt, void * p_data
 
                 if (overflow_check >= overflow_limit_upper[i])
                 {
-                    DEBUG_PRINTF(0, RTT_CTRL_TEXT_BRIGHT_YELLOW"motion: p_raw[%d] over limit. Val: %d limit: %d \r\n"RTT_CTRL_RESET, i, overflow_check, overflow_limit_upper[i]);
+                    NRF_LOG_WARNING("p_raw[%d] over limit. Val: %d limit: %d \r\n", i, overflow_check, overflow_limit_upper[i]);
                     p_raw[i] = overflow_limit_upper[i] << 16;
                 }
                 else if (overflow_check < overflow_limit_lower[i])
                 {
-                    DEBUG_PRINTF(0, RTT_CTRL_TEXT_BRIGHT_YELLOW"motion: p_raw[%d] below limit. Val: %d limit: %d \r\n"RTT_CTRL_RESET, i, overflow_check, overflow_limit_lower[i]);
+                    NRF_LOG_WARNING("p_raw[%d] below limit. Val: %d limit: %d \r\n", i, overflow_check, overflow_limit_lower[i]);
                     p_raw[i] = overflow_limit_lower[i] << 16;
                 }
                 else
@@ -344,20 +348,20 @@ static void drv_motion_evt_handler(drv_motion_evt_t const * p_evt, void * p_data
                 }
             }
 
-            data.accel.x = (int16_t)(p_raw[0] >> RAW_Q_FORMAT_ACC_INTEGER_BITS);
-            data.accel.y = (int16_t)(p_raw[1] >> RAW_Q_FORMAT_ACC_INTEGER_BITS);
-            data.accel.z = (int16_t)(p_raw[2] >> RAW_Q_FORMAT_ACC_INTEGER_BITS);
+            data.accel.x =      (int16_t)(p_raw[0] >> RAW_Q_FORMAT_ACC_INTEGER_BITS);
+            data.accel.y =      (int16_t)(p_raw[1] >> RAW_Q_FORMAT_ACC_INTEGER_BITS);
+            data.accel.z =      (int16_t)(p_raw[2] >> RAW_Q_FORMAT_ACC_INTEGER_BITS);
 
-            data.gyro.x = (int16_t)(p_raw[3] >> RAW_Q_FORMAT_GYR_INTEGER_BITS);
-            data.gyro.y = (int16_t)(p_raw[4] >> RAW_Q_FORMAT_GYR_INTEGER_BITS);
-            data.gyro.z = (int16_t)(p_raw[5] >> RAW_Q_FORMAT_GYR_INTEGER_BITS);
+            data.gyro.x =       (int16_t)(p_raw[3] >> RAW_Q_FORMAT_GYR_INTEGER_BITS);
+            data.gyro.y =       (int16_t)(p_raw[4] >> RAW_Q_FORMAT_GYR_INTEGER_BITS);
+            data.gyro.z =       (int16_t)(p_raw[5] >> RAW_Q_FORMAT_GYR_INTEGER_BITS);
 
-            data.compass.x = (int16_t)(p_raw[6] >> RAW_Q_FORMAT_CMP_INTEGER_BITS);
-            data.compass.y = (int16_t)(p_raw[7] >> RAW_Q_FORMAT_CMP_INTEGER_BITS);
-            data.compass.z = (int16_t)(p_raw[8] >> RAW_Q_FORMAT_CMP_INTEGER_BITS);
+            data.compass.y =   -(int16_t)(p_raw[6] >> RAW_Q_FORMAT_CMP_INTEGER_BITS); // Changed axes and inverted. Corrected for rotation of axes.
+            data.compass.x =    (int16_t)(p_raw[7] >> RAW_Q_FORMAT_CMP_INTEGER_BITS); // Changed axes. Corrected for rotation of axes.
+            data.compass.z =    (int16_t)(p_raw[8] >> RAW_Q_FORMAT_CMP_INTEGER_BITS);
 
-            #ifdef MOTION_DEBUG
-                DEBUG_PRINTF(0, "DRV_MOTION_EVT_RAW:\r\n");
+            #if NRF_LOG_ENABLED
+                NRF_LOG_DEBUG("DRV_MOTION_EVT_RAW:\r\n");
 
                 double f_buf;
                 char buffer[8];
@@ -365,49 +369,50 @@ static void drv_motion_evt_handler(drv_motion_evt_t const * p_evt, void * p_data
                 f_buf = (double)p_raw[0];
                 f_buf = f_buf/(1<<16);
                 sprintf(buffer, "%.2f", f_buf);
-                DEBUG_PRINTF(0, " accel.x [G's] = %s:\r\n", buffer);
+                NRF_LOG_DEBUG(" accel.x [G's] = %s:\r\n", nrf_log_push(buffer));
 
                 f_buf = (double)p_raw[1];
                 f_buf = f_buf/(1<<16);
                 sprintf(buffer, "%.2f", f_buf);
-                DEBUG_PRINTF(0, " accel.y [G's] = %s:\r\n", buffer);
+                NRF_LOG_DEBUG(" accel.y [G's] = %s:\r\n", nrf_log_push(buffer));
 
                 f_buf = (double)p_raw[2];
                 f_buf = f_buf/(1<<16);
                 sprintf(buffer, "%.2f", f_buf);
-                DEBUG_PRINTF(0, " accel.z [G's] = %s:\r\n", buffer);
+                NRF_LOG_DEBUG(" accel.z [G's] = %s:\r\n", nrf_log_push(buffer));
 
-
+                
                 f_buf = (double)p_raw[3];
                 f_buf = f_buf/(1<<16);
                 sprintf(buffer, "%.2f", f_buf);
-                DEBUG_PRINTF(0, " gyro.x [deg/s] = %s:\r\n", buffer);
+                NRF_LOG_DEBUG(" gyro.x [deg/s] = %s:\r\n", nrf_log_push(buffer));
 
                 f_buf = (double)p_raw[4];
                 f_buf = f_buf/(1<<16);
                 sprintf(buffer, "%.2f", f_buf);
-                DEBUG_PRINTF(0, " gyro.y [deg/s] = %s:\r\n", buffer);
+                NRF_LOG_DEBUG(" gyro.y [deg/s] = %s:\r\n", nrf_log_push(buffer));
 
                 f_buf = (double)p_raw[5];
                 f_buf = f_buf/(1<<16);
                 sprintf(buffer, "%.2f", f_buf);
-                DEBUG_PRINTF(0, " gyro.z [deg/s] = %s:\r\n", buffer);
+                NRF_LOG_DEBUG(" gyro.z [deg/s] = %s:\r\n", nrf_log_push(buffer));
 
 
-                f_buf = (double)p_raw[6];
+                f_buf = (double)p_raw[7];  // Changed axes. Corrected for rotation of axes.
                 f_buf = f_buf/(1<<16);
                 sprintf(buffer, "%.2f", f_buf);
-                DEBUG_PRINTF(0, " mag.x [uT] = %s:\r\n", buffer);
+                NRF_LOG_DEBUG(" mag.x [uT] = %s:\r\n", nrf_log_push(buffer));
 
-                f_buf = (double)p_raw[7];
+                f_buf = -(double)p_raw[6]; // Changed axes and inverted. Corrected for rotation of axes.
                 f_buf = f_buf/(1<<16);
                 sprintf(buffer, "%.2f", f_buf);
-                DEBUG_PRINTF(0, " mag.y [uT] = %s:\r\n", buffer);
+                NRF_LOG_DEBUG(" mag.y [uT] = %s:\r\n", nrf_log_push(buffer));
 
                 f_buf = (double)p_raw[8];
                 f_buf = f_buf/(1<<16);
                 sprintf(buffer, "%.2f", f_buf);
-                DEBUG_PRINTF(0, " mag.z [uT] = %s:\r\n", buffer);
+                NRF_LOG_DEBUG(" mag.z [uT] = %s:\r\n", nrf_log_push(buffer));
+
             #endif
 
             (void)ble_tms_raw_set(&m_tms, &data);
@@ -426,7 +431,7 @@ static void drv_motion_evt_handler(drv_motion_evt_t const * p_evt, void * p_data
             data.y = p_quat[2];
             data.z = p_quat[3];
 
-            #ifdef MOTION_DEBUG
+            #if NRF_LOG_ENABLED
                 static const uint8_t QUAT_ELEMENTS = 4;
                 double f_buf;
                 char buffer[QUAT_ELEMENTS][7];
@@ -438,7 +443,10 @@ static void drv_motion_evt_handler(drv_motion_evt_t const * p_evt, void * p_data
                     sprintf(buffer[i], "% 1.3f", f_buf);
                 }
 
-                DEBUG_PRINTF(0, "DRV_MOTION_EVT_QUAT: \n w:%s x:%s y:%s z:%s\r\n", buffer[0], buffer[1], buffer[2], buffer[3]);
+                NRF_LOG_DEBUG("DRV_MOTION_EVT_QUAT: w:%s x:%s y:%s z:%s\r\n", nrf_log_push(buffer[0]),
+                                                                              nrf_log_push(buffer[1]),
+                                                                              nrf_log_push(buffer[2]),
+                                                                              nrf_log_push(buffer[3]));
             #endif
 
             (void)ble_tms_quat_set(&m_tms, &data);
@@ -456,9 +464,7 @@ static void drv_motion_evt_handler(drv_motion_evt_t const * p_evt, void * p_data
             data.pitch  = p_euler[1];
             data.yaw    = p_euler[2];
 
-            #ifdef MOTION_DEBUG
-                DEBUG_PRINTF(0, "DRV_MOTION_EVT_EULER, [deg]:  roll(x):%3d   pitch(y):%3d   yaw(z):%3d  \r\n", data.roll/(1<<16), data.pitch/(1<<16), data.yaw/(1<<16));
-            #endif
+            NRF_LOG_DEBUG("DRV_MOTION_EVT_EULER, [deg]:  roll(x):%3d   pitch(y):%3d   yaw(z):%3d  \r\n", data.roll/(1<<16), data.pitch/(1<<16), data.yaw/(1<<16));
 
             (void)ble_tms_euler_set(&m_tms, &data);
         }
@@ -481,7 +487,7 @@ static void drv_motion_evt_handler(drv_motion_evt_t const * p_evt, void * p_data
             data.matrix[7] = (int16_t)(p_matrix[7] >> 16);
             data.matrix[8] = (int16_t)(p_matrix[8] >> 16);
 
-            #ifdef MOTION_DEBUG
+            #if NRF_LOG_ENABLED
                 static const uint8_t ROT_MAT_ELEMENTS = 9;
                 char buffer[ROT_MAT_ELEMENTS][6];
                 double tmp;
@@ -490,16 +496,11 @@ static void drv_motion_evt_handler(drv_motion_evt_t const * p_evt, void * p_data
                     tmp = p_matrix[i]/(double)(1<<30);
                     sprintf(buffer[i], "% 1.2f", tmp);
                 }
-                    DEBUG_PRINTF(0, "DRV_MOTION_EVT_ROT_MAT:\r\n[%s %s %s]\r\n[%s %s %s]\r\n[%s %s %s]\r\n",
-                                buffer[0],
-                                buffer[1],
-                                buffer[2],
-                                buffer[3],
-                                buffer[4],
-                                buffer[5],
-                                buffer[6],
-                                buffer[7],
-                                buffer[8]);
+                
+                NRF_LOG_DEBUG("DRV_MOTION_EVT_ROT_MAT:\r\n");
+                NRF_LOG_DEBUG("[%s %s %s]\r\n", nrf_log_push(buffer[0]), nrf_log_push(buffer[1]), nrf_log_push(buffer[2]));
+                NRF_LOG_DEBUG("[%s %s %s]\r\n", nrf_log_push(buffer[3]), nrf_log_push(buffer[4]), nrf_log_push(buffer[5]));
+                NRF_LOG_DEBUG("[%s %s %s]\r\n", nrf_log_push(buffer[6]), nrf_log_push(buffer[7]), nrf_log_push(buffer[8]));
             #endif
 
             (void)ble_tms_rot_mat_set(&m_tms, &data);
@@ -509,13 +510,11 @@ static void drv_motion_evt_handler(drv_motion_evt_t const * p_evt, void * p_data
         case DRV_MOTION_EVT_HEADING:
         {
             APP_ERROR_CHECK_BOOL(size == sizeof(long));
+            ble_tms_heading_t heading = *(ble_tms_heading_t *)p_data;
 
-            #ifdef MOTION_DEBUG
-                int32_t heading = *(int32_t *)p_data;
-                DEBUG_PRINTF(0, "DRV_MOTION_EVT_HEADING [deg]:  h: %d\r\n", heading/(1<<16));
-            #endif
+            NRF_LOG_DEBUG("DRV_MOTION_EVT_HEADING [deg]:  h: %d\r\n", heading/(1<<16));
 
-            (void)ble_tms_heading_set(&m_tms, (ble_tms_heading_t *)p_data);
+            (void)ble_tms_heading_set(&m_tms, &heading);
         }
         break;
 
@@ -530,7 +529,7 @@ static void drv_motion_evt_handler(drv_motion_evt_t const * p_evt, void * p_data
             data.y = p_gravity[1];
             data.z = p_gravity[2];
 
-            #ifdef MOTION_DEBUG
+            #if NRF_LOG_ENABLED
                 static const uint8_t GRAVITY_ELEMENTS = 3;
                 char buffer[GRAVITY_ELEMENTS][8];
 
@@ -539,7 +538,9 @@ static void drv_motion_evt_handler(drv_motion_evt_t const * p_evt, void * p_data
                     sprintf(buffer[i], "% 2.3f", p_gravity[i]);
                 }
 
-                DEBUG_PRINTF(0, "DRV_MOTION_EVT_GRAVITY [m/s^2]:  [%s, %s, %s]\r\n", buffer[0], buffer[1], buffer[2]);
+                NRF_LOG_DEBUG("DRV_MOTION_EVT_GRAVITY [m/s^2]:  [%s, %s, %s]\r\n", nrf_log_push(buffer[0]),
+                                                                                   nrf_log_push(buffer[1]),
+                                                                                   nrf_log_push(buffer[2]));
             #endif
 
             (void)ble_tms_gravity_set(&m_tms, &data);
@@ -556,12 +557,8 @@ static void drv_motion_evt_handler(drv_motion_evt_t const * p_evt, void * p_data
             data.dir = p_tap[0];
             data.cnt = p_tap[1];
 
-            #ifdef MOTION_DEBUG
-                DEBUG_PRINTF(0, "%sDRV_MOTION_EVT_TAP:%s [%d %d]\r\n", RTT_CTRL_TEXT_BRIGHT_YELLOW,
-                                                                       RTT_CTRL_RESET,
-                                                                       data.cnt,
-                                                                       data.dir);
-            #endif
+            NRF_LOG_DEBUG("DRV_MOTION_EVT_TAP: [%d %d]\r\n", data.cnt,
+                                                             data.dir);
 
             (void)ble_tms_tap_set(&m_tms, &data);
         }
@@ -571,11 +568,7 @@ static void drv_motion_evt_handler(drv_motion_evt_t const * p_evt, void * p_data
         {
             APP_ERROR_CHECK_BOOL(size == sizeof(uint8_t));
 
-            #ifdef MOTION_DEBUG
-                DEBUG_PRINTF(0, "%sDRV_MOTION_EVT_ORIENTATION:%s %d\r\n", RTT_CTRL_TEXT_BRIGHT_YELLOW,
-                                                                          RTT_CTRL_RESET,
-                                                                          *(ble_tms_orientation_t *)p_data);
-            #endif
+            NRF_LOG_DEBUG("DRV_MOTION_EVT_ORIENTATION: %d\r\n", *(ble_tms_orientation_t *)p_data);
 
             (void)ble_tms_orientation_set(&m_tms, (ble_tms_orientation_t *)p_data);
         }
@@ -588,24 +581,26 @@ static void drv_motion_evt_handler(drv_motion_evt_t const * p_evt, void * p_data
             ble_tms_pedo_t  data;
             unsigned long * p_pedo = (unsigned long *)p_data;
 
-            data.steps = p_pedo[0];
-            data.time_ms  = p_pedo[1];
+            data.steps   = p_pedo[0];
+            data.time_ms = p_pedo[1];
 
-            #ifdef MOTION_DEBUG
-                DEBUG_PRINTF(0, "%sDRV_MOTION_EVT_PEDOMETER:%s %d steps %d ms\r\n", RTT_CTRL_TEXT_BRIGHT_YELLOW,
-                                                                                   RTT_CTRL_RESET,
-                                                                                   p_pedo[0],
-                                                                                   p_pedo[1]);
-            #endif
+            NRF_LOG_DEBUG("DRV_MOTION_EVT_PEDOMETER: %d steps %d ms\r\n", p_pedo[0],
+                                                                          p_pedo[1]);
 
             (void)ble_tms_pedo_set(&m_tms, &data);
         }
         break;
 
         default:
-            DEBUG_PRINTF(0, "m_motion: drv_motion_evt_handler: Unknown data!\r\n");
+            NRF_LOG_WARNING("drv_motion_evt_handler: Unknown data!\r\n");
             break;
     }
+}
+
+
+uint32_t m_motion_sleep_prepare(bool wakeup)
+{
+    return drv_motion_sleep_prepare(wakeup);
 }
 
 
@@ -645,7 +640,7 @@ uint32_t m_motion_init(m_ble_service_handle_t * p_handle, m_motion_init_t * p_pa
     NULL_PARAM_CHECK(p_handle);
     NULL_PARAM_CHECK(p_params);
 
-    DEBUG_PRINTF(0, "m_motion_init: \r\n");
+    NRF_LOG_INFO("Init \r\n");
 
     p_handle->ble_evt_cb = motion_on_ble_evt;
     p_handle->init_cb    = motion_service_init;
@@ -660,10 +655,4 @@ uint32_t m_motion_init(m_ble_service_handle_t * p_handle, m_motion_init_t * p_pa
     RETURN_IF_ERROR(err_code);
 
     return NRF_SUCCESS;
-}
-
-
-uint32_t m_motion_sleep_prepare(bool wakeup)
-{
-    return drv_motion_sleep_prepare(wakeup);
 }

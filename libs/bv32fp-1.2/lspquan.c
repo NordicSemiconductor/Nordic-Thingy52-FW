@@ -27,6 +27,8 @@
 ******************************************************************************/
 
 #include <stdio.h>
+#define  NRF_LOG_MODULE_NAME "lspquan       "
+#include "nrf_log.h"
 #include "macros_common.h"
 #include "typedef.h"
 #include "bv32cnst.h"
@@ -211,7 +213,7 @@ void vqwmse_stbl(
    }
 
    if(*idx == -1){
-      DEBUG_PRINTF(0, "BV32 WARNING: Encoder-decoder synchronization lost for clean channel!!!");
+      NRF_LOG_WARNING("BV32 WARNING: Encoder-decoder synchronization lost for clean channel!!!");
       *idx = 1;
    }
 

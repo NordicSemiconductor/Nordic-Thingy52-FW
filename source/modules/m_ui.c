@@ -49,9 +49,8 @@
 #include "app_scheduler.h"
 #include "app_timer.h"
 
-#ifdef UI_DEBUG
-    #define LOCAL_DEBUG
-#endif
+#define  NRF_LOG_MODULE_NAME "m_ui          "
+#include "nrf_log.h"
 #include "macros_common.h"
 
 static ble_uis_led_t     * mp_config_ui;
@@ -157,7 +156,7 @@ static ret_code_t led_set(ble_uis_led_t const * const p_config_ui,
     if (mp_config_ui->mode == BLE_UIS_LED_MODE_OFF)
     {
         conf_ui.mode = BLE_UIS_LED_MODE_OFF;         // If LED configured as off in the static config, let the LED remain off when BLE is disconnected as well.
-        DEBUG_PRINTF(0, "m_ui: Mode: BLE_UIS_LED_MODE_OFF \r\n");
+        NRF_LOG_INFO("Mode: BLE_UIS_LED_MODE_OFF \r\n");
         return NRF_SUCCESS;
     }
     else if (conf_ui.mode == BLE_UIS_LED_MODE_CONST)
@@ -172,7 +171,7 @@ static ret_code_t led_set(ble_uis_led_t const * const p_config_ui,
         color.r = conf_ui.data.mode_const.r;
         color.g = conf_ui.data.mode_const.g;
         color.b = conf_ui.data.mode_const.b;
-        DEBUG_PRINTF(0, "m_ui: Mode: BLE_UIS_LED_MODE_CONST. Color hex: %x, %x, %x, \r\n", conf_ui.data.mode_const.r, conf_ui.data.mode_const.g, conf_ui.data.mode_const.b);
+        NRF_LOG_INFO("Mode: BLE_UIS_LED_MODE_CONST. Color hex: %x, %x, %x, \r\n", conf_ui.data.mode_const.r, conf_ui.data.mode_const.g, conf_ui.data.mode_const.b);
 
         return drv_ext_light_rgb_intensity_set(DRV_EXT_RGB_LED_LIGHTWELL, &color);
     }
@@ -184,7 +183,7 @@ static ret_code_t led_set(ble_uis_led_t const * const p_config_ui,
         led_sequence.sequence_vals.off_time_ms = conf_ui.data.mode_breathe.delay;
         led_sequence.color = (drv_ext_light_color_mix_t)conf_ui.data.mode_breathe.color_mix;
 
-        DEBUG_PRINTF(0, "m_ui: Mode: BLE_UIS_LED_MODE_BREATHE \r\n");
+        NRF_LOG_INFO("Mode: BLE_UIS_LED_MODE_BREATHE \r\n");
         return drv_ext_light_rgb_sequence(DRV_EXT_RGB_LED_LIGHTWELL, &led_sequence);
     }
     else if (conf_ui.mode == BLE_UIS_LED_MODE_BREATHE_ONE_SHOT)
@@ -195,7 +194,7 @@ static ret_code_t led_set(ble_uis_led_t const * const p_config_ui,
         led_sequence.sequence_vals.off_time_ms = 0; // Set to zero so it is detected as one-shot
         led_sequence.color = (drv_ext_light_color_mix_t)conf_ui.data.mode_breathe_one_shot.color_mix;
 
-        DEBUG_PRINTF(0, "m_ui: Mode: BLE_UIS_LED_MODE_BREATHE_ONE_SHOT \r\n");
+        NRF_LOG_INFO("Mode: BLE_UIS_LED_MODE_BREATHE_ONE_SHOT \r\n");
         return drv_ext_light_rgb_sequence(DRV_EXT_RGB_LED_LIGHTWELL, &led_sequence);
     }
     else
@@ -225,14 +224,14 @@ static void thingy_ui_on_ble_evt(ble_evt_t * p_ble_evt)
     switch(p_ble_evt->header.evt_id)
     {
         case BLE_GAP_EVT_CONNECTED: // Upon reconnect, read last stored configuraion.
-            DEBUG_PRINTF(0, "m_ui BLE connected\r\n");
+            NRF_LOG_INFO("BLE connected\r\n");
             err_code = led_set(mp_config_ui, NULL);
             APP_ERROR_CHECK(err_code);
 
             break;
 
         case BLE_GAP_EVT_DISCONNECTED: // When disconnecting, revert to the default LED config.
-            DEBUG_PRINTF(0, "m_ui BLE disonnected\r\n");
+            NRF_LOG_INFO("BLE disonnected\r\n");
             err_code = m_ui_led_set_event(M_UI_BLE_DISCONNECTED);
             APP_ERROR_CHECK(err_code);
             break;
@@ -275,11 +274,11 @@ static void ble_uis_led_write_handler(ble_uis_t * p_uis, ble_uis_led_t * input)
 static void ble_uis_pin_write_handler(ble_uis_t * p_uis, ble_uis_pin_t * pin)
 {
 
-    DEBUG_PRINTF(0, "ble_uis_pin_write_handler: MOS_1 %d, MOS_2 %d, MOS_3 %d, MOS_4 %d\r\n",
-                                                                                 pin->mos_1,
-                                                                                 pin->mos_2,
-                                                                                 pin->mos_3,
-                                                                                 pin->mos_4);
+    NRF_LOG_INFO("ble_uis_pin_write_handler: MOS_1 %d, MOS_2 %d, MOS_3 %d, MOS_4 %d\r\n",
+                                                                              pin->mos_1,
+                                                                              pin->mos_2,
+                                                                              pin->mos_3,
+                                                                              pin->mos_4);
 
    if (pin->mos_1)
    {
@@ -325,7 +324,7 @@ static void ble_uis_pin_write_handler(ble_uis_t * p_uis, ble_uis_pin_t * pin)
  *
  * @retval NRF_SUCCESS If initialization was successful.
  */
-static ret_code_t thingy_ui_service_init(void)
+static ret_code_t thingy_ui_service_init(bool major_minor_fw_ver_changed)
 {
     uint32_t        err_code;
     ble_uis_init_t  uis_init;
@@ -333,6 +332,12 @@ static ret_code_t thingy_ui_service_init(void)
     /**@brief Load configuration from flash. */
     err_code = m_ui_flash_init(&m_default_config_connected, &mp_config_ui);
     RETURN_IF_ERROR(err_code);
+    
+    if (major_minor_fw_ver_changed)
+    {
+        err_code = m_ui_flash_config_store(&m_default_config_connected);
+        APP_ERROR_CHECK(err_code);
+    }
 
     uis_init.p_init_led        = mp_config_ui;
     uis_init.init_pin.mos_1    = 0;
@@ -420,7 +425,7 @@ static ret_code_t button_init(void)
         .button_handler = button_evt_handler
     };
 
-    err_code = app_button_init(&button_cfg, 1, APP_TIMER_TICKS(50, APP_TIMER_PRESCALER));
+    err_code = app_button_init(&button_cfg, 1, APP_TIMER_TICKS(50));
     RETURN_IF_ERROR(err_code);
 
     return app_button_enable();
@@ -459,14 +464,14 @@ uint32_t m_ui_init(m_ble_service_handle_t * p_handle, m_ui_init_t * p_params)
     led_init.num_lights          = DRV_EXT_LIGHT_NUM;
     led_init.clkx_div            = DRV_EXT_LIGHT_CLKX_DIV_8;
     led_init.p_twi_conf          = &sx1509_cfg;
-    led_init.app_timer_prescaler = APP_TIMER_PRESCALER;
+    led_init.resync_pin          = SX_RESET;
 
     err_code = drv_ext_light_init(&led_init, false);
     APP_ERROR_CHECK(err_code);
 
     (void)drv_ext_light_off(DRV_EXT_RGB_LED_SENSE);
     (void)drv_ext_light_off(DRV_EXT_RGB_LED_LIGHTWELL);
-
+    
     nrf_gpio_cfg_output(MOS_1);
     nrf_gpio_cfg_output(MOS_2);
     nrf_gpio_cfg_output(MOS_3);

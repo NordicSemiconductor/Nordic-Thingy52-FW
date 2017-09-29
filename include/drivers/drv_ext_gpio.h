@@ -52,7 +52,7 @@
 #include "nrf_error.h"
 #include "drv_sx1509.h"
 
-/**@brief The GPIO extender status codes.
+/**@brief GPIO extender status codes.
  */
 enum
 {
@@ -112,9 +112,9 @@ typedef enum
  *
  * @param[in] pin_number  Specifies the pin number (Allowed values: 0 to DRV_EXT_GPIO_PIN_HIGHEST_ID).
  * @param[in] dir         Pin direction.
- * @param[in] input       Connect or disconnect input buffer.
- * @param[in] pull        Pull configuration.
- * @param[in] drive type  Push-pull or open drain.
+ * @param[in] input_buf   Connect or disconnect input buffer.
+ * @param[in] pull_config Pull configuration.
+ * @param[in] drive_type  Push-pull or open drain.
  * @param[in] slew_rate   Normal or increased slew rate.
  *
  * @return DRV_EXT_GPIO_STATUS_CODE_SUCCESS         If the call was successful.
@@ -145,6 +145,23 @@ typedef struct
  * @return Other codes from the underlying driver.
  */
 uint32_t drv_ext_gpio_reset(void);
+
+/**@brief Function for setting all the RegData registers at the same time.
+ *
+ * @note When reading RegData from the IO extender, it reads the data seen at the IOs (if the input
+ * buffer is enabled) independent of IO configured direction. Writing changes the value of RegData.
+ * As some functions in drv_sx1509 reads a register and does not write back if there
+ * is no apparant change this may cause unintended effects for RegData.
+ * This function writes to RegData regardless of previous contents and sets all bits in this function.
+ * The feature is valuable on IO extender initialization.
+ *
+ * @param[in] data    The value to be written to the RegData regsiters. (Max 2^DRV_EXT_GPIO_NUM_PINS_TOTAL) - 1
+ *
+ * @return DRV_EXT_GPIO_STATUS_CODE_SUCCESS         If the call was successful.
+ * @return DRV_EXT_GPIO_STATUS_CODE_INVALID_PIN     Pin value is too large.
+ * @return Other codes from the underlying driver.
+ */
+uint32_t drv_ext_gpio_reg_data_init(uint32_t data);
 
 /**@brief Function for configuring the given GPIO pin_number as output with given initial value set, hiding inner details.
  *
@@ -183,7 +200,7 @@ uint32_t drv_ext_gpio_pin_dir_modify(uint32_t pin_number, drv_ext_gpio_pin_dir_t
 /**@brief Function for enabling or disabling increased slew rate for a given GPIO pin.
  *
  * @param[in] pin_number    The pin number (allowed values 0-DRV_EXT_GPIO_PIN_HIGHEST_ID).
- * @param[in] direction     The direction.
+ * @param[in] slew_rate     Enabled or disabled.
  *
  * @return DRV_EXT_GPIO_STATUS_CODE_SUCCESS         If the call was successful.
  * @return DRV_EXT_GPIO_STATUS_CODE_INVALID_PARAM   Invalid parameters supplied.
@@ -195,7 +212,7 @@ uint32_t drv_ext_gpio_pin_slew_rate_modify(uint32_t pin_number, drv_ext_gpio_pin
 /**@brief Function for setting the drive type a given GPIO pin.
  *
  * @param[in] pin_number    The pin number (allowed values 0-DRV_EXT_GPIO_PIN_HIGHEST_ID).
- * @param[in] drive type    Pin drive: push-pull or open drain.
+ * @param[in] drive_type    Pin drive: push-pull or open drain.
  *
  * @return DRV_EXT_GPIO_STATUS_CODE_SUCCESS         If the call was successful.
  * @return DRV_EXT_GPIO_STATUS_CODE_INVALID_PARAM   Invalid parameters supplied.
@@ -207,7 +224,7 @@ uint32_t drv_ext_gpio_pin_drive_type_modify(uint32_t pin_number, drv_ext_gpio_pi
 /**@brief Function for enabling and disabling the input buffer.
  *
  * @param[in] pin_number    The pin number (allowed values 0-DRV_EXT_GPIO_PIN_HIGHEST_ID).
- * @param[in] input buffer  Disabled or enabled.
+ * @param[in] input_buf     Disabled or enabled.
  *
  * @return DRV_EXT_GPIO_STATUS_CODE_SUCCESS         If the call was successful.
  * @return DRV_EXT_GPIO_STATUS_CODE_INVALID_PARAM   Invalid parameters supplied.
@@ -334,8 +351,8 @@ uint32_t drv_ext_gpio_pins_read(uint32_t * const p_pins);
 
 /**@brief Function for initializing the GPIO extender.
  *
- * @param[in] drv_ext_gpio_init_t   Configuration struct.
- * @param[in] on_init_reset         If true, the IO extender will be reset on init. This will put the
+ * @param[in] p_init            Configuration struct.
+ * @param[in] on_init_reset     If true, the IO extender will be reset on init. This will put the
  * IO extender in a known state, but will delete any previous configurations, even from other drivers.
  *
  * @return DRV_EXT_GPIO_STATUS_CODE_SUCCESS         If the call was successful.

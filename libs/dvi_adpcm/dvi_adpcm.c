@@ -22,15 +22,6 @@
 #include <stdint.h>
 #include "dvi_adpcm.h"
 
-#define ADPCM_DEBUG
-
-#ifdef ADPCM_DEBUG
-    #include "SEGGER_RTT.h"
-    #define DEBUG_PRINTF (void)SEGGER_RTT_printf
-#else
-    #define DEBUG_PRINTF(...)
-#endif
-
 #ifndef htons
 #define htons(a)                    \
     ((((a) >> 8) & 0x00ff) | \

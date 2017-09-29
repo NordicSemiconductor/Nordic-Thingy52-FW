@@ -2,7 +2,7 @@
 
 @page firmware_architecture Firmware architecture
 
-The Thingy firmware is built on top of nRF5 Software Development Kit (SDK) v12.1.0 and utilizes many of its components, such as SDK peripheral drivers, SDK HAL, and the SoftDevice.
+The Thingy firmware is built on top of nRF5 Software Development Kit (SDK) v13.1.0 and utilizes many of its components, such as SDK peripheral drivers, SDK HAL, and the SoftDevice.
 
 @image html thingy_firmware_arch.png "Thingy firmware architecture framework"
 
@@ -13,7 +13,7 @@ Thingy adds the following modules on top of the nRF5 SDK:
 - Flash storage - Flash storage of configuration parameters. 
 - BLE services -  Layer containing all the custom BLE services used by the Thingy modules. These services are discussed in detail in the @ref fw_arch_ble_services section.
 
-- Thingy modules - Layer containing high level functionality and features. Controlling both the sensor drivers and the corresponding BLE services. Also, responsible for handling persistent storage of configuration and the default configuration.
+- Thingy modules - Layer containing high level functionality and features. Controlls both the sensor drivers and the corresponding BLE services. Responsible for handling persistent storage of configuration and the default configuration.
 
 - Thingy application
 
@@ -60,12 +60,12 @@ The Thingy configuration service is responsible for handling all general configu
 				<li>Same as above.</li>
 			</ul>
 			</li>
-		<li>uint16_t - Slave latency.
+		<li>uint16_t - Slave latency (number of connection events).
 			<ul>
 				<li>Range 0-499</li>
 			</ul>
 		</li>
-		<li>uint16_t - Supervision timeout.
+		<li>uint16_t - Supervision timeout (unit 10 ms).
 			<ul>
 				<li>Min 10 -> 100 ms</li>
 				<li>Max 3200 -> 32 s</li>
@@ -77,7 +77,7 @@ The Thingy configuration service is responsible for handling all general configu
 			The Supervision_Timeout in milliseconds must be larger than
 			(1 + Conn_Latency) * Conn_Interval_Max * 2, where Conn_Interval_Max is given in milliseconds.</p>
 	</ul>
-<tr><td>Eddystone URL   <td>0105 <td>Write/Read <td>max 17 bytes 
+<tr><td>Eddystone URL   <td>0105 <td>Write/Read <td>3-17 bytes 
 	<td>Eddystone URL. Data format:
 	<ul>
 	<li>Byte 0: <a href="https://github.com/google/eddystone/tree/master/eddystone-url#url-scheme-prefix" target="blank">URL Scheme Prefix</a></li>
@@ -110,7 +110,7 @@ The Thingy configuration service is responsible for handling all general configu
 
 @subsection arch_env Environment service
 
-The environment module is responsible for reading the temperature, pressure, humidity, air quality/gas, and light intensity/color sensors, as well as for sending data and configuration. It is running on top of the environment BLE service (ble_tes), the environment sensor drivers, and the environment flash storage with base UUID EF68xxxx-9B35-4933-9B10-52FFA9740042. The configuration is stored in flash. To turn on sensor reading, enable notifications from the desired characteristic by writing 0x0001 to the Client Characteristic Configuration Descriptor (CCCD) for that characteristic.
+The environment module is responsible for reading the temperature, pressure, humidity, air quality/gas, and light intensity/color sensors, as well as for sending data and configuration.  It is running on top of the environment BLE service (ble_tes), the environment sensor drivers, and the environment flash storage with base UUID EF68xxxx-9B35-4933-9B10-52FFA9740042. The configuration is stored in flash. To turn on sensor reading, enable notifications from the desired characteristic by writing 0x0001 to the Client Characteristic Configuration Descriptor (CCCD) for that characteristic.
 
 <table>
 <tr><th>Name</th><th>UUID</th><th>Type</th><th>Data</th><th>Description</th></tr>
@@ -191,10 +191,10 @@ The environment module is responsible for reading the temperature, pressure, hum
                     <td>12 bytes</td>
                     <td>
                         <ul>
-                            <li>uint16_t - Temperature interval in ms (100 ms - 5000 ms).</li>
-                            <li>uint16_t - Pressure interval in ms (50 ms - 5000 ms).</li>
-                            <li>uint16_t - Humidity interval in ms (100 ms - 5000 ms).</li>
-                            <li>uint16_t - Color interval in ms (200 ms - 5000 ms).</li>
+                            <li>uint16_t - Temperature interval in ms (100 ms - 60 s).</li>
+                            <li>uint16_t - Pressure interval in ms (50 ms - 60 s).</li>
+                            <li>uint16_t - Humidity interval in ms (100 ms - 60 s).</li>
+                            <li>uint16_t - Color interval in ms (200 ms - 60 s).</li>
                             <li>uint8_t - Gas mode <ul>
                                     <li>1 = 1 s interval</li>
                                     <li>2 = 10 s interval</li>
@@ -214,7 +214,7 @@ The environment module is responsible for reading the temperature, pressure, hum
 
 @subsection arch_user_interface User interface service
 		
-The UI module handles the onboard LEDs, buttons, and other potential UI components like a quadrature decoder, touchscreen etc. The UI module runs on top of the UI BLE Service (ble_uis), the LED and button drivers, and the UI flash storage with base UUID EF68xxxx-9B35-4933-9B10-52FFA9740042. This module enables RGB LED value setting and button event notifications via BLE. Button notification is enabled by writing 0x1000 to the CCCD of the button characteristic.
+The UI module handles the onboard LEDs, buttons, and other potential UI components like a quadrature decoder, touchscreen etc. The UI module runs on top of the UI BLE Service (ble_uis), the LED and button drivers, and the UI flash storage with base UUID EF68xxxx-9B35-4933-9B10-52FFA9740042. This module enables RGB LED value setting and button event notifications via BLE. Button notification is enabled by writing 0x0001 to the CCCD of the button characteristic.
 
 <table>
                 <tr>
@@ -244,7 +244,7 @@ The UI module handles the onboard LEDs, buttons, and other potential UI componen
                     <td>Write&nbsp;req/Read</td>
                     <td>Max 5 bytes</td>
                     <td> RGB Value:<ul>
-                            <li> uint8_t - Mode - (retained for BLE connected and disconnected):<ul>
+                            <li> uint8_t - Mode (retained for BLE connected and disconnected):<ul>
                                     <li>0 = Off</li>
                                     <li>1 = Constant</li>
                                     <li>2 = Breathe</li>
@@ -265,7 +265,7 @@ The UI module handles the onboard LEDs, buttons, and other potential UI componen
                                     <li>0x07 - WHITE</li>
                                 </ul></li>
                             <li>uint8_t - intensity (1-100) [%] </li>
-                            <li>uint16_t - delay [ms] (1 ms - 10 s) </li>
+                            <li>uint16_t - delay [ms] (50 ms - 10 s) </li>
                         </ul>One shot mode (retained for BLE connected):<ul>
                             <li>uint8_t - color:<ul>
                                     <li>0x01 - RED</li>
@@ -349,8 +349,8 @@ The motion module is responsible for reading the 9-axis motion sensor and the lo
                     <td>Motion configuration:<ul>
                             <li> uint16_t - Step counter interval in ms (100 ms - 5 s).</li>
                             <li> uint16_t - Temperature compensation interval in ms (100 ms - 5 s).</li>
-                            <li> uint16_t - Magnetometer compensation interval in ms (100 ms - 5 s).</li>
-                            <li> uint16_t - Motion processing unit frequency in Hz (1 - 200 Hz).</li>
+                            <li> uint16_t - Magnetometer compensation interval in ms (100 ms - 1 s).</li>
+                            <li> uint16_t - Motion processing unit frequency in Hz (5 - 200 Hz).</li>
                             <li> uint8_t - Wake-on-motion <ul>
                                     <li> 0x00 = Off </li>
                                     <li> 0x01 = On </li>
@@ -410,7 +410,7 @@ The motion module is responsible for reading the 9-axis motion sensor and the lo
                     <td>Step counter characteristic </td>
                     <td>0405</td>
                     <td>Notify</td>
-                    <td>4 bytes</td>
+                    <td>8 bytes</td>
                     <td>Step counter:<ul>
                             <li> uint32_t - Steps </li>
                             <li> uint32_t - Time [ms]</li>
@@ -532,8 +532,8 @@ The sound module is responsible for handling both the speaker and the microphone
                     <td>Write without resp</td>
                     <td>Max 273 bytes</td>
                     <td>In frequency mode:<ul>
-                            <li>uint16_t - Frequency in Hz.</li>
-                            <li>uint16_t - Duration in ms. 0 != forever.</li>
+                            <li>uint16_t - Frequency in Hz (0 - stop forever).</li>
+                            <li>uint16_t - Duration in ms (0 = forever).</li>
                             <li>uint8_t - Volume in % (0-100).</li>
                         </ul>In PCM mode:<ul>
                             <li>uint8_t [20 - 273] 8-bit PCM samples</li>
@@ -575,10 +575,36 @@ The sound module is responsible for handling both the speaker and the microphone
                 </tr>
         </table>
 		
-		
+@subsection arch_battery Battery service
+
+This module is responsible for handling battery level information.
+
+<table>
+                <tr>
+                    <th>Name</th>
+                    <th>UUID</th>
+                    <th>Type</th>
+                    <th>Data</th>
+                    <th>Description</th>
+                </tr>
+                <tr>
+                    <td>UUID</td>
+                    <td>180F</td>
+                    <td>Notify/Read</td>
+                    <td>1 byte</td>
+                    <td><ul>
+                            <li>uint8_t battery level [%] (0-100)</li>
+                        </ul>
+						Uses a basic linear model to convert from voltage to percent.
+						Will only update/notify if there is a change in remaining battery level.
+					</td>
+                </tr>
+        </table>	
+
+	
 @subsection arch_dfu DFU service
 
-This module is responsible for running Device Firmware Updates on the Thingy.
+This module is responsible for running Device Firmware Updates on Thingy.
 
 <table>
                 <tr>
@@ -607,7 +633,7 @@ This module is responsible for running Device Firmware Updates on the Thingy.
                     <td>8EC90001-F315-4F60-9FB8-838830DAEA50</td>
                     <td>Notify/Write</td>
                     <td>1 byte</td>
-                    <td>Steps to put the Thingy into Buttonless DFU mode:<ul>
+                    <td>Steps to put Thingy into Buttonless DFU mode:<ul>
                             <li>Enable notifications for the DFU Control point characteristic</li>
                             <li>Write 0x01 to the characteristic</li>
                         </ul>
@@ -623,11 +649,11 @@ This firmware consists of the following components. Follow the links for their A
 
 @subsection comp_ble_services BLE services
 
-- @ref ble_sdk_srv_tes  "Thingy Environment Service" GATT-based service with multiple characteristics for reading environment sensor data and configuring the sensors.
-- @ref ble_sdk_srv_uis  "User interface service" Service that handles the Thingy RGB LED and button.
-- @ref ble_sdk_srv_wss  "Thingy Motion Service" GATT-based service with multiple characteristics for reading motion sensor data and configuring the sensors.
-- @ref ble_srv_tss      "Sound service" GATT-based service that handles the Thingy microphone and speaker.
 - @ref ble_sdk_srv_tcs  "Thingy Configuration Service" Service that handles various configuration characteristics.
+- @ref ble_sdk_srv_tes  "Thingy Environment Service" GATT-based service with multiple characteristics for reading environment sensor data and configuring the sensors.
+- @ref ble_sdk_srv_wss  "Thingy Motion Service" GATT-based service with multiple characteristics for reading motion sensor data and configuring the sensors.
+- @ref ble_srv_tss      "Thingy Sound service" GATT-based service that handles the Thingy microphone and speaker.
+- @ref ble_sdk_srv_uis  "Thingy User interface service" Service that handles the Thingy RGB LED and button.
 
 @subsection comp_drivers Drivers
 
@@ -638,6 +664,7 @@ This firmware consists of the following components. Follow the links for their A
 - @ref humidity_driver "Humidity sensor" Humidity sensor API, including the HTS221 sensor.
 - @ref mic_driver	   "Microphone" Microphone driver API.	
 - @ref motion_driver   "Motion sensor" Motion sensor API.
+- @ref NFC_driver      "NFC driver" Near Field Communnication (NFC) driver API.
 - @ref press_driver	   "Pressure sensor" Pressure sensor API, including the LPS22HB sensor.
 - @ref speaker_driver  "Speaker" Speaker driver API.
 
@@ -646,9 +673,9 @@ This firmware consists of the following components. Follow the links for their A
 - @ref m_ble         "BLE handling" BLE handling module API, including its flash configuration.
 - @ref m_batt_meas   "Battery measurement" Battery measurement module API, including its flash configuration.
 - @ref m_environment "Environment" Environment module API, including its flash configuration.
-- @ref m_ui          "User interface" User interface module API, including its flash configuration.
 - @ref m_motion      "Motion" Motion module API, including its flash configuration.
 - @ref m_sound       "Sound" Sound module API.
+- @ref m_ui          "User interface" User interface module API, including its flash configuration.
 
 @subsection comp_utils Utilities
 
@@ -657,6 +684,5 @@ This firmware consists of the following components. Follow the links for their A
 - @ref sx150x_led_drv_regs   "Sx150x LED driver registers" Settings for all LED driver registers on the Sx150x.
 - @ref sx150x_led_drv_calc	 "Sx150x LED driver register calculation" Sx150x LED driver register calculation API.
 - @ref support_func			 "Support functions" Support functions.
-- @ref macros_common		 "Common macros" A set of useful macros.
 
 */

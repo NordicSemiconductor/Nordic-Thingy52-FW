@@ -103,13 +103,13 @@
 #define INTERRUPT_CFG_REG_PHE_Disable           0
 #define INTERRUPT_CFG_REG_PHE_Enable            1
 
-/**@brief User defined threshold value for pressure interrupt event (Least significant bits). */
+/**@brief User-defined threshold value for pressure interrupt event (Least significant bits). */
 #define THS_P_L_REG                             0x0C
 
-/**@brief User defined threshold value for pressure interrupt event (Most significant bits). */
+/**@brief User-defined threshold value for pressure interrupt event (Most significant bits). */
 #define THS_P_H_REG                             0x0D
 
-/**@brief Device Who am I register. */
+/**@brief Device WHO_AM_I register. */
 #define WHO_AM_I_REG                            0x0F
 #define WHO_AM_I_REG_VALUE                      0xB1
 
@@ -332,7 +332,7 @@
 /**@brief Low-pass filter reset register.  */
 #define LPFP_RES_REG                            0x33
 
-/**@brief Configuration struct for lps22hb pressure sensor.
+/**@brief Configuration struct for the LPS22HB pressure sensor.
  */
 typedef struct
 {
@@ -345,7 +345,7 @@ typedef struct
     uint8_t  res_conf;
 }drv_lps22hb_cfg_t;
 
-/**@brief Initialization struct for lps22hb pressure sensor driver.
+/**@brief Initialization struct for the LPS22HB pressure sensor driver.
  */
 typedef struct
 {
@@ -367,25 +367,27 @@ typedef enum
     DRV_LPS22HB_ODR_75Hz
 }drv_lps22hb_odr_t;
 
-/**@brief Inits the lps22hb driver.
+/**@brief Function for initializing the LPS22HB driver.
+ *
+ * @return NRF_SUCCESS    Only possible return value.
  */
 uint32_t drv_lps22hb_init(void);
 
-/**@brief Opens the lps22hb driver according to the specified configuration.
+/**@brief Function for opening the LPS22HB driver according to the specified configuration.
  *
- * @param[in]   p_twi_cfg Pointer to the driver configuration for the session to be opened.
+ * @param[in] p_twi_cfg     Pointer to the driver configuration for the session to be opened.
  *
  * @return NRF_SUCCESS    If the call was successful.
  */
 uint32_t drv_lps22hb_open(drv_lps22hb_twi_cfg_t const * const p_twi_cfg);
 
-/**@brief Close the lps22hb driver.
+/**@brief Function for closing the LPS22HB driver.
  *
  * @return NRF_SUCCESS    If the call was successful.
  */
 uint32_t drv_lps22hb_close(void);
 
-/**@brief Read and check the WHO_AM_I register of the lps22hb sensor.
+/**@brief Function for reading and checking the WHO_AM_I register of the LPS22HB sensor.
  *
  * @param[in]   who_am_i Pointer to store the data.
  *
@@ -393,7 +395,7 @@ uint32_t drv_lps22hb_close(void);
  */
 uint32_t drv_lps22hb_verify(uint8_t * who_am_i);
 
-/**@brief Configures the lps22hb sensor according to the specified configuration.
+/**@brief Function for configuring the LPS22HB sensor according to the specified configuration.
  *
  * @param[in]   p_cfg Pointer to the sensor configuration.
  *
@@ -401,93 +403,113 @@ uint32_t drv_lps22hb_verify(uint8_t * who_am_i);
  */
 uint32_t drv_lps22hb_cfg_set(drv_lps22hb_cfg_t const * const p_cfg);
 
-/**@brief Reads the configuration of the lps22hb sensor.
+/**@brief Function for reading the configuration of the LPS22HB sensor.
  *
- * @param[in]   p_cfg Pointer to the driver configuration for the session to be opened.
+ * @param[out]  p_cfg Pointer to the driver configuration for the session to be opened.
  *
  * @return NRF_SUCCESS    If the call was successful.
  */
 uint32_t drv_lps22hb_cfg_get(drv_lps22hb_cfg_t *  p_cfg);
 
-/**@brief Function to set reference pressure.
+/**@brief Function for setting reference pressure.
+ *
+ * @param[in] ref_press     Reference pressure (register format).
  *
  * @return NRF_SUCCESS    If the call was successful.
  */
 uint32_t drv_lps22hb_ref_pressure_set(uint32_t ref_press);
 
-/**@brief Function to get reference pressure.
+/**@brief Function for getting reference pressure.
+ *
+ * @param[in] p_ref_press   Reference pressure(register format).
  *
  * @return NRF_SUCCESS    If the call was successful.
  */
 uint32_t drv_lps22hb_ref_pressure_get(uint32_t * p_ref_press);
 
-/**@brief Function to set pressure offset.
+/**@brief Function for setting pressure offset.
+ *
+ * @param[in] offset    Pressure offset.
  *
  * @return NRF_SUCCESS    If the call was successful.
  */
 uint32_t drv_lps22hb_pressure_offset_set(uint16_t offset);
 
-/**@brief Function to get pressure offset.
+/**@brief Function for getting pressure offset.
+ *
+ * @param[out]   p_offset    Pressure offset.
  *
  * @return NRF_SUCCESS    If the call was successful.
  */
 uint32_t drv_lps22hb_pressure_offset_get(uint16_t * p_offset);
 
-/**@brief Reboot the lps22hb memory content.
+/**@brief Function for rebooting the LPS22HB memory content.
  *
  * @return NRF_SUCCESS    If the call was successful.
  */
 uint32_t drv_lps22hb_reboot(void);
 
-/**@brief Perform Software Reset of the lps22hb.
+/**@brief Function for performing a software reset of the LPS22HB.
  *
  * @return NRF_SUCCESS    If the call was successful.
  */
 uint32_t drv_lps22hb_sw_reset(void);
 
-/**@brief Start One-Shot conversion of the lps22hb sensor data.
+/**@brief Function for starting a one-shot conversion of the LPS22HB sensor data.
  *
  * @return NRF_SUCCESS    If the call was successful.
  */
 uint32_t drv_lps22hb_one_shot(void);
 
-/**@brief Function to get the FIFO status.
+/**@brief Function for getting the FIFO status.
+ *
+ * @param[out] p_status     Content of FIFO status register.
  *
  * @return NRF_SUCCESS    If the call was successful.
  */
 uint32_t drv_lps22hb_fifo_status_get(uint8_t * p_status);
 
-/**@brief Function to get the status.
+/**@brief Function for getting the status.
+ *
+ * @param[out] p_status     Content of status register.
  *
  * @return NRF_SUCCESS    If the call was successful.
  */
 uint32_t drv_lps22hb_status_get(uint8_t * p_status);
 
-/**@brief Function to get the interrupt source register.
+/**@brief Function for getting the interrupt source register.
+ *
+ * @param[out] p_source     Content of source register.
  *
  * @return NRF_SUCCESS    If the call was successful.
  */
 uint32_t drv_lps22hb_int_source_get(uint8_t * p_source);
 
-/**@brief Function to get the pressure data. To calculate p(hPa) = *p_pressure(LSB) / 4096(LSB/hPa).
+/**@brief Function for getting the pressure data. To calculate p(hPa) = *p_pressure(LSB) / 4096(LSB/hPa).
+ *
+ * @param[out] p_pressure   Content of pressure registers.
  *
  * @return NRF_SUCCESS    If the call was successful.
  */
 uint32_t drv_lps22hb_pressure_get(uint32_t * p_pressure);
 
-/**@brief Function to get the temperature data.
+/**@brief Function for getting the temperature data.
+ *
+ * @param[out] p_temperature    Content of temperature registers.
  *
  * @return NRF_SUCCESS    If the call was successful.
  */
 uint32_t drv_lps22hb_temperature_get(uint16_t * p_temperature);
 
-/**@brief Function to output data rate of the lps22hb.
+/**@brief Function for outputting data rate of the LPS22HB.
+ *
+ * @param[in] odr   Output Data Rate fequency.
  *
  * @return NRF_SUCCESS    If the call was successful.
  */
 uint32_t drv_lps22hb_odr_set(drv_lps22hb_odr_t odr);
 
-/**@brief Function to reset low-pass filter of the lps22hb.
+/**@brief Function for resetting low-pass filter of the LPS22HB.
  *
  * @return NRF_SUCCESS    If the call was successful.
  */

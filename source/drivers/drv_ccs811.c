@@ -42,10 +42,8 @@
 #include "twi_manager.h"
 #include <stdbool.h>
 #include <stdlib.h>
-
-#ifdef CSS811_DEBUG
-    #define LOCAL_DEBUG
-#endif
+#define  NRF_LOG_MODULE_NAME "drv_ccs811    "
+#include "nrf_log.h"
 #include "macros_common.h"
 
 #define M_TWI_STOP      false
@@ -605,7 +603,6 @@ uint32_t drv_ccs811_app_start(void)
     &&   ((tmp_u8 & (DRV_CCS811_STATUS_APP_VALID_Yes << DRV_CCS811_STATUS_APP_VALID_Pos)) != 0)
     &&   (multi_byte_register_set(1, &app_start_cmd) ) )
     {
-        // TODO: Add FW mode check
         return ( DRV_CCS811_STATUS_CODE_SUCCESS );
     }
 

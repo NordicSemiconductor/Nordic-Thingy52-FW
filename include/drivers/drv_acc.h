@@ -51,7 +51,7 @@
 #include <stdint.h>
 #include "nrf_drv_twi.h"
 
-/**@brief The return status codes.
+/**@brief Return status codes.
  */
 enum
 {
@@ -71,7 +71,7 @@ typedef struct
     uint8_t                      cpu_wake_pin;    ///< Pin on the nRF used to wake from sleep.
 } drv_acc_cfg_t;
 
-/**@brief Prepare for sleep and subsequent wakeup.
+/**@brief Function for preparing for sleep and subsequent wakeup.
  *
  * @param[in] p_wakeup  If false, go to deepest sleep and do not prepare to wake up the system.
  *
@@ -84,7 +84,7 @@ typedef struct
  */
 ret_code_t drv_acc_wakeup_prepare(bool p_wakeup);
 
-/**@brief Accelerometer driver initialization.
+/**@brief Function for initializing the accelerometer driver.
  *
  * @param[in] p_cfg     Initialization struct.
  *

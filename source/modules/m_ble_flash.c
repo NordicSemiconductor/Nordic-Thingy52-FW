@@ -45,10 +45,8 @@
 #include "app_error.h"
 #include "app_scheduler.h"
 
-
-#ifdef BLE_FLASH_DEBUG
-    #define LOCAL_DEBUG
-#endif
+#define  NRF_LOG_MODULE_NAME "m_ble_flash   "
+#include "nrf_log.h"
 #include "macros_common.h"
 
 #define TC_FLASH_CONFIG_VALID 0x42UL
@@ -91,7 +89,7 @@ static void tc_fds_evt_handler( fds_evt_t const * const p_fds_evt )
             else
             {
                 // Initialization failed.
-                DEBUG_PRINTF(0, "[TC_F]: FDS init failed!\r\n");
+                NRF_LOG_ERROR("FDS init failed!\r\n");
                 APP_ERROR_CHECK_BOOL(false);
             }
             break;
@@ -100,41 +98,41 @@ static void tc_fds_evt_handler( fds_evt_t const * const p_fds_evt )
             {
                 if (p_fds_evt->write.file_id == TC_FILE_ID)
                 {
-                    DEBUG_PRINTF(0, "[TC_F]: FDS write success! %d FileId: 0x%x RecKey:0x%x\r\n", p_fds_evt->write.is_record_updated,
-                                                                                                  p_fds_evt->write.file_id,
-                                                                                                  p_fds_evt->write.record_key);
+                    NRF_LOG_INFO("FDS write success! %d FileId: 0x%x RecKey:0x%x\r\n", p_fds_evt->write.is_record_updated,
+                                                                                       p_fds_evt->write.file_id,
+                                                                                       p_fds_evt->write.record_key);
                     m_fds_write_success = true;
                 }
             }
             else
             {
                 // Initialization failed.
-                DEBUG_PRINTF(0, "[TC_F]: FDS write failed!\r\n");
+                NRF_LOG_ERROR("FDS write failed!\r\n");
                 APP_ERROR_CHECK_BOOL(false);
             }
             break;
         case FDS_EVT_GC:
             if (p_fds_evt->result == FDS_SUCCESS)
             {
-                DEBUG_PRINTF(0, "[TC_F]: garbage collect success\r\n");
+                NRF_LOG_INFO("garbage collect success\r\n");
                 m_fds_gc_run = true;
             }
             break;
         default:
-            DEBUG_PRINTF(0, "[TC_F]: FDS handler - %d - %d\r\n", p_fds_evt->id, p_fds_evt->result);
+            NRF_LOG_INFO("FDS handler - %d - %d\r\n", p_fds_evt->id, p_fds_evt->result);
             APP_ERROR_CHECK(p_fds_evt->result);
             break;
     }
 }
 
 
-uint32_t m_ble_flash_config_store(ble_tcs_params_t * p_config)
+uint32_t m_ble_flash_config_store(const ble_tcs_params_t * p_config)
 {
     uint32_t            err_code;
     fds_record_t        record;
     fds_record_chunk_t  record_chunk;
 
-    DEBUG_PRINTF(0, "[TC_F]: Storing configuration\r\n");
+    NRF_LOG_INFO("Storing configuration \r\n");
 
     NULL_PARAM_CHECK(p_config);
 
@@ -165,7 +163,7 @@ uint32_t m_ble_flash_config_load(ble_tcs_params_t ** p_config)
 
     memset(&ftok, 0x00, sizeof(fds_find_token_t));
 
-    DEBUG_PRINTF(0, "[TC_F]: Loading configuration\r\n");
+    NRF_LOG_INFO("Loading configuration\r\n");
 
     err_code = fds_record_find(TC_FILE_ID, TC_REC_KEY, &m_record_desc, &ftok);
     RETURN_IF_ERROR(err_code);
@@ -184,12 +182,12 @@ uint32_t m_ble_flash_config_load(ble_tcs_params_t ** p_config)
 }
 
 
-uint32_t m_ble_flash_init(const ble_tcs_params_t * p_default_config,
-                          ble_tcs_params_t      ** p_config)
+uint32_t m_ble_flash_init(const ble_tcs_params_t    * p_default_config,
+                          ble_tcs_params_t         ** p_config)
 {
     uint32_t                err_code;
 
-    DEBUG_PRINTF(0, "[TC_F]: Initialization\r\n");
+    NRF_LOG_INFO("Initialization\r\n");
     NULL_PARAM_CHECK(p_default_config);
 
     err_code = fds_register(tc_fds_evt_handler);
@@ -212,12 +210,13 @@ uint32_t m_ble_flash_init(const ble_tcs_params_t * p_default_config,
     }
 
     err_code = m_ble_flash_config_load(p_config);
+
     if (err_code == FDS_ERR_NOT_FOUND)
     {
         fds_record_t        record;
         fds_record_chunk_t  record_chunk;
 
-        DEBUG_PRINTF(0, "[TC_F]: Writing default config\r\n");
+        NRF_LOG_INFO("Writing default config\r\n");
 
         memcpy(&m_config.data.config, p_default_config, sizeof(ble_tcs_params_t));
         m_config.data.valid = TC_FLASH_CONFIG_VALID;

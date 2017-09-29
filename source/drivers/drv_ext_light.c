@@ -42,6 +42,7 @@
 #include "nrf_gpio.h"
 #include "sx150x_led_drv_calc.h"
 #include "sx150x_led_drv_regs.h"
+#include "nrf_delay.h"
 #include <stdint.h>
 
 #define COLOR_R_POS  0                              ///< Bitwise position of red color.
@@ -56,23 +57,23 @@
 #define POWER_SAVE_ON_TIME_MARGIN_PERCENT        40 /**< As there may be some clock drift between the master and IO extender, a margin is added.
                                                     This margin is in effect between when the IO extender ends a given light cycle,
                                                     and before the master turns off the IO extender oscillator for power saving.*/
+#define  NRF_LOG_MODULE_NAME "drv_ext_light "
+#include "nrf_log.h"
+#include "macros_common.h"
 
 #ifdef DRV_EXT_LIGHT_DEBUG
     #define IOEXT_OSC_RUNNING_LIGHT     5           ///< Debug LED indication of external oscillator running.
     #define OSC_RUN_LIGHT_ON            nrf_gpio_pin_clear(IOEXT_OSC_RUNNING_LIGHT);
     #define OSC_RUN_LIGHT_OFF           nrf_gpio_pin_set  (IOEXT_OSC_RUNNING_LIGHT);
-    #define LOCAL_DEBUG
 #endif
-#include "macros_common.h"
 
 /**@brief Checks that light ID is within valid range
  */
-#define VALID_LIGHT_ID_CHECK(ID)                                                                   \
-if ( (ID > (m_num_lights - 1))  || ID > DRV_EXT_LIGHT_NUM_LIGHTS_MAX)                              \
-{                                                                                                  \
-    DEBUG_PRINTF(0, RTT_CTRL_TEXT_BRIGHT_RED"Valid light id check failed"RTT_CTRL_RESET":          \
-    with error code %d\r\n", DRV_EXT_LIGHT_STATUS_CODE_INVALID_PARAM);                             \
-    return DRV_EXT_LIGHT_STATUS_CODE_INVALID_PARAM;                                                \
+#define VALID_LIGHT_ID_CHECK(ID)                                                                                    \
+if ( (ID > (m_num_lights - 1))  || ID > DRV_EXT_LIGHT_NUM_LIGHTS_MAX)                                               \
+{                                                                                                                   \
+    NRF_LOG_ERROR("Valid light id check failed: with error code %d\r\n", DRV_EXT_LIGHT_STATUS_CODE_INVALID_PARAM);  \
+    return DRV_EXT_LIGHT_STATUS_CODE_INVALID_PARAM;                                                                 \
 }
 
 
@@ -113,7 +114,7 @@ static const drv_sx1509_cfg_t     * m_p_drv_sx1509_cfg;     ///< IO extender com
 static uint32_t                     m_clkx_tics_pr_sec;     ///< IO extender ticks per second.
 static drv_ext_light_clkx_div_t     m_clkx_div;             ///< IO extender clock divider.
 static uint32_t                     m_num_lights;           ///< Number of connected lights.
-static uint8_t                      m_app_timer_prescaler;  ///< Prescaler used for the nRF app timers.
+static uint8_t                      m_resync_pin;           ///< Optional pin for external timer sync in IO extender.
 
 /**@brief Function for checking if the given light ID is of type RGB.
  */
@@ -274,30 +275,30 @@ static ret_code_t ioext_osc_start_stop(m_ioext_osc_give_take_t give_or_take_ioex
      */
     static void m_ioext_osc_status_print(void)
     {
-        DEBUG_PRINTF(0, RTT_CTRL_TEXT_BRIGHT_BLUE"----- OSC status ----- \n"RTT_CTRL_RESET);
+        NRF_LOG_DEBUG("----- OSC status ----- \r\n");
 
         for (uint8_t i = 0; i < m_num_lights; i++)
         {
             switch(m_p_light_conf[i].p_data->p_status->ioext_osc_status)
             {
                 case EXTENDER_OSC_USED_RUNNING:
-                    DEBUG_PRINTF(0, RTT_CTRL_TEXT_BRIGHT_BLUE"light_id: "RTT_CTRL_RESET"%d  osc used running \n", i);
+                    NRF_LOG_DEBUG("light_id: %d  osc used running \r\n", i);
                     break;
 
                 case EXTENDER_OSC_USED_PERM:
-                    DEBUG_PRINTF(0, RTT_CTRL_TEXT_BRIGHT_BLUE"light_id: "RTT_CTRL_RESET"%d  osc used perm on \n", i);
+                    NRF_LOG_DEBUG("light_id: %d  osc used perm on \r\n", i);
                     break;
 
                 case EXTENDER_OSC_USED_PAUSED:
-                    DEBUG_PRINTF(0, RTT_CTRL_TEXT_BRIGHT_BLUE"light_id: "RTT_CTRL_RESET"%d  osc used paused  \n", i);
+                    NRF_LOG_DEBUG("light_id: %d  osc used paused  \r\n", i);
                     break;
 
                 case EXTENDER_OSC_UNUSED:
-                    DEBUG_PRINTF(0, RTT_CTRL_TEXT_BRIGHT_BLUE"light_id: "RTT_CTRL_RESET"%d  osc unused       \n", i);
+                    NRF_LOG_DEBUG("light_id: %d  osc unused \r\n", i);
                     break;
 
                 default:
-                    DEBUG_PRINTF(0, RTT_CTRL_TEXT_BRIGHT_RED "light_id: "RTT_CTRL_RESET"%d  invalid state    \n", i);
+                    NRF_LOG_ERROR("light_id: %d  invalid state \r\n", i);
             }
         }
     }
@@ -312,7 +313,7 @@ static ret_code_t m_ioext_osc_status_change(uint32_t id, drv_ext_light_ioext_osc
 
     drv_ext_light_ioext_osc_status_t old_ioext_osc_status = m_p_light_conf[id].p_data->p_status->ioext_osc_status;
 
-    DEBUG_PRINTF(0, RTT_CTRL_TEXT_BRIGHT_YELLOW"m_ioext_osc_status_change, LED ID: %d, old status: %d, new status %d \n"RTT_CTRL_RESET,
+    NRF_LOG_DEBUG("m_ioext_osc_status_change, LED ID: %d, old status: %d, new status %d \r\n",
                  id, m_p_light_conf[id].p_data->p_status->ioext_osc_status, new_ioext_osc_status);
 
     // Check if the new status of the light requires the use of the IO extender oscillator.
@@ -365,11 +366,10 @@ static void m_light_timer_handler(void * light_id_in)
             if (m_p_light_conf[id].p_data->p_status->inactive_time_ms != 0)
             {
                 err_code = app_timer_start(m_p_light_conf[id].p_data->timer,
-                                           APP_TIMER_TICKS(m_p_light_conf[id].p_data->p_status->inactive_time_ms,
-                                           m_app_timer_prescaler), (void*)id);
+                                           APP_TIMER_TICKS(m_p_light_conf[id].p_data->p_status->inactive_time_ms), (void*)id);
                 APP_ERROR_CHECK(err_code);
 
-                DEBUG_PRINTF(0, RTT_CTRL_TEXT_BRIGHT_YELLOW"Timer handler on->off led_id: "RTT_CTRL_RESET"%d  osc->off sleep for %d ms \r\n", id, m_p_light_conf[id].p_data->p_status->inactive_time_ms );
+                NRF_LOG_DEBUG("Timer handler on->off led_id: %d  osc->off sleep for %d ms \r\n", id, m_p_light_conf[id].p_data->p_status->inactive_time_ms );
                 err_code = m_ioext_osc_status_change(id, EXTENDER_OSC_USED_PAUSED);
                 APP_ERROR_CHECK(err_code);
             }
@@ -390,11 +390,10 @@ static void m_light_timer_handler(void * light_id_in)
                 uint16_t port_mask;
 
                 err_code = app_timer_start(m_p_light_conf[id].p_data->timer,
-                                           APP_TIMER_TICKS(m_osc_on_margin_calculate(m_p_light_conf[id].p_data->p_status->active_time_ms),
-                                           m_app_timer_prescaler), (void*)id);
+                                           APP_TIMER_TICKS(m_osc_on_margin_calculate(m_p_light_conf[id].p_data->p_status->active_time_ms)), (void*)id);
                 APP_ERROR_CHECK(err_code);
 
-                DEBUG_PRINTF(0, RTT_CTRL_TEXT_BRIGHT_YELLOW"Timer handler off->on led_id: "RTT_CTRL_RESET"%d  osc->on  awake for %d ms \r\n", id, m_osc_on_margin_calculate( m_p_light_conf[id].p_data->p_status->active_time_ms) );
+                NRF_LOG_DEBUG("Timer handler off->on led_id: %d  osc->on  awake for %d ms \r\n", id, m_osc_on_margin_calculate( m_p_light_conf[id].p_data->p_status->active_time_ms) );
 
                 err_code = m_ioext_osc_status_change(id, EXTENDER_OSC_USED_RUNNING);
                 APP_ERROR_CHECK(err_code);
@@ -517,10 +516,10 @@ static ret_code_t m_ioext_led_drv_ctrl(uint32_t id, uint8_t pin_number,
 
     else if (led_drv_status == LED_DRV_DISABLED_LIGHT_OFF)
     {
-        err_code = drv_sx1509_leddriverenable_modify(0, port_mask);
-        RETURN_IF_ERROR(err_code);
-
         err_code = drv_sx1509_data_modify(port_mask, 0);
+        RETURN_IF_ERROR(err_code);
+        
+        err_code = drv_sx1509_leddriverenable_modify(0, port_mask);
         RETURN_IF_ERROR(err_code);
     }
 
@@ -678,8 +677,8 @@ static ret_code_t m_ioext_cmd_process(uint32_t id, drv_ext_light_rgb_sequence_t 
 {
     ret_code_t  err_code;
     uint16_t    port_mask;
-    uint32_t    off_time_ms;
-
+    uint32_t    off_time_ms;    
+    
     m_p_light_conf[id].p_data->p_status->colors = p_sequence_real_vals->color;
 
     sx150x_led_drv_regs_vals_t sequence_reg_vals;
@@ -747,12 +746,11 @@ static ret_code_t m_ioext_cmd_process(uint32_t id, drv_ext_light_rgb_sequence_t 
                 m_p_light_conf[id].p_data->p_status->inactive_time_ms = 0;
 
                 m_p_light_conf[id].p_data->p_status->active_time_ms = p_sequence_real_vals->sequence_vals.fade_in_time_ms +
-                                                                   p_sequence_real_vals->sequence_vals.on_time_ms +
-                                                                   p_sequence_real_vals->sequence_vals.fade_out_time_ms;
+                                                                      p_sequence_real_vals->sequence_vals.on_time_ms +
+                                                                      p_sequence_real_vals->sequence_vals.fade_out_time_ms;
 
                 err_code = app_timer_start(m_p_light_conf[id].p_data->timer,
-                                    APP_TIMER_TICKS( m_osc_on_margin_calculate(m_p_light_conf[id].p_data->p_status->active_time_ms),
-                                    m_app_timer_prescaler), (void*)id);
+                                    APP_TIMER_TICKS( m_osc_on_margin_calculate(m_p_light_conf[id].p_data->p_status->active_time_ms)), (void*)id);
                 RETURN_IF_ERROR(err_code);
             }
 
@@ -779,12 +777,11 @@ static ret_code_t m_ioext_cmd_process(uint32_t id, drv_ext_light_rgb_sequence_t 
                 m_p_light_conf[id].p_data->p_status->inactive_time_ms = off_time_ms;
 
                 m_p_light_conf[id].p_data->p_status->active_time_ms = p_sequence_real_vals->sequence_vals.fade_in_time_ms +
-                                                                   p_sequence_real_vals->sequence_vals.on_time_ms +
-                                                                   p_sequence_real_vals->sequence_vals.fade_out_time_ms;
+                                                                      p_sequence_real_vals->sequence_vals.on_time_ms +
+                                                                      p_sequence_real_vals->sequence_vals.fade_out_time_ms;
 
                 err_code = app_timer_start(m_p_light_conf[id].p_data->timer,
-                                    APP_TIMER_TICKS( m_osc_on_margin_calculate(m_p_light_conf[id].p_data->p_status->active_time_ms),
-                                    m_app_timer_prescaler), (void*)id);
+                                    APP_TIMER_TICKS( m_osc_on_margin_calculate(m_p_light_conf[id].p_data->p_status->active_time_ms)), (void*)id);
                 RETURN_IF_ERROR(err_code);
             }
 
@@ -811,13 +808,26 @@ ret_code_t drv_ext_light_reset(void)
     return DRV_EXT_LIGHT_STATUS_CODE_SUCCESS;
 }
 
+
+/**@brief Toggles the NRESET pin of the IO extender low to reset (resync) all counters.
+ */
+void io_extender_counters_resync(void)
+{
+    nrf_gpio_pin_clear(m_resync_pin);
+    
+    nrf_delay_us(1); // SX150x datasheet states >= 200 ns period for t_PULSE.
+    
+    nrf_gpio_pin_set(m_resync_pin);
+}
+
+
 ret_code_t drv_ext_light_on(uint32_t id)
 {
     ret_code_t err_code;
 
     VALID_LIGHT_ID_CHECK(id);
 
-    DEBUG_PRINTF(0, "drv_ext_light: light on \n");
+    NRF_LOG_DEBUG("Light on \r\n");
 
     drv_ext_light_rgb_sequence_t sequence;
     sequence.sequence_vals = SEQUENCE_DEFAULT_VAL;
@@ -830,13 +840,14 @@ ret_code_t drv_ext_light_on(uint32_t id)
     return DRV_EXT_LIGHT_STATUS_CODE_SUCCESS;
 }
 
+
 ret_code_t drv_ext_light_off(uint32_t id)
 {
     ret_code_t err_code;
 
     VALID_LIGHT_ID_CHECK(id);
 
-    DEBUG_PRINTF(0, "drv_ext_light: light off \n");
+    NRF_LOG_DEBUG("Light off \r\n");
 
     drv_ext_light_rgb_sequence_t sequence;
     sequence.sequence_vals = SEQUENCE_DEFAULT_VAL;
@@ -849,13 +860,14 @@ ret_code_t drv_ext_light_off(uint32_t id)
     return DRV_EXT_LIGHT_STATUS_CODE_SUCCESS;
 }
 
+
 ret_code_t drv_ext_light_intensity_set(uint32_t id, uint8_t intensity)
 {
     ret_code_t err_code;
 
     VALID_LIGHT_ID_CHECK(id);
 
-    DEBUG_PRINTF(0, "drv_ext_light: light intensity \n");
+    NRF_LOG_DEBUG("Light intensity \r\n");
 
     drv_ext_light_rgb_sequence_t sequence;
     sequence.sequence_vals = SEQUENCE_DEFAULT_VAL;
@@ -867,6 +879,7 @@ ret_code_t drv_ext_light_intensity_set(uint32_t id, uint8_t intensity)
 
     return DRV_EXT_LIGHT_STATUS_CODE_SUCCESS;
 }
+
 
 ret_code_t drv_ext_light_rgb_intensity_set(uint32_t id, drv_ext_light_rgb_intensity_t const * const p_intensity)
 {
@@ -880,13 +893,14 @@ ret_code_t drv_ext_light_rgb_intensity_set(uint32_t id, drv_ext_light_rgb_intens
         return DRV_EXT_LIGHT_STATUS_CODE_INVALID_LIGHT_TYPE;
     }
 
-    DEBUG_PRINTF(0, "drv_ext_light: rgb intenstity set \n");
+    NRF_LOG_DEBUG("RGB intenstity set \r\n");
 
     err_code = m_rgb_intensity(id, p_intensity);
     RETURN_IF_ERROR(err_code);
 
     return DRV_EXT_LIGHT_STATUS_CODE_SUCCESS;
 }
+
 
 ret_code_t drv_ext_light_sequence(uint32_t id, drv_ext_light_sequence_t * p_sequence)
 {
@@ -895,7 +909,9 @@ ret_code_t drv_ext_light_sequence(uint32_t id, drv_ext_light_sequence_t * p_sequ
     VALID_LIGHT_ID_CHECK(id);
     NULL_PARAM_CHECK(p_sequence);
 
-    DEBUG_PRINTF(0, "drv_ext_light: light sequence \n");
+    NRF_LOG_DEBUG("Light sequence \r\n");
+    
+    io_extender_counters_resync();
 
     drv_ext_light_rgb_sequence_t sequence;
     sequence.color = DRV_EXT_LIGHT_COLOR_WHITE;
@@ -909,6 +925,7 @@ ret_code_t drv_ext_light_sequence(uint32_t id, drv_ext_light_sequence_t * p_sequ
     return DRV_EXT_LIGHT_STATUS_CODE_SUCCESS;
 }
 
+
 ret_code_t drv_ext_light_rgb_sequence(uint32_t id, drv_ext_light_rgb_sequence_t * const p_rgb)
 {
     ret_code_t err_code;
@@ -916,8 +933,10 @@ ret_code_t drv_ext_light_rgb_sequence(uint32_t id, drv_ext_light_rgb_sequence_t 
     VALID_LIGHT_ID_CHECK(id);
     NULL_PARAM_CHECK(p_rgb);
 
-    DEBUG_PRINTF(0, "drv_ext_light: rgb sequence \n");
-
+    NRF_LOG_DEBUG("RGB sequence \r\n");
+    
+    io_extender_counters_resync();
+    
     if (m_is_monochrome_light(id))
     {
         return DRV_EXT_LIGHT_STATUS_CODE_INVALID_LIGHT_TYPE;
@@ -928,6 +947,7 @@ ret_code_t drv_ext_light_rgb_sequence(uint32_t id, drv_ext_light_rgb_sequence_t 
 
     return DRV_EXT_LIGHT_STATUS_CODE_SUCCESS;
 }
+
 
 ret_code_t drv_ext_light_init(drv_ext_light_init_t const * const p_init, bool on_init_reset)
 {
@@ -960,12 +980,12 @@ ret_code_t drv_ext_light_init(drv_ext_light_init_t const * const p_init, bool on
     }
 
     m_p_light_conf          = p_init->p_light_conf;
-    m_p_drv_sx1509_cfg      = p_init->p_twi_conf;
-    m_clkx_div              = p_init->clkx_div;
     m_num_lights            = p_init->num_lights;
-    m_app_timer_prescaler   = p_init->app_timer_prescaler;
+    m_clkx_div              = p_init->clkx_div;
     m_clkx_tics_pr_sec      = (IOEXT_FOSC_STD >> (m_clkx_div - 1));   // Bit shift to divide base oscillator frequency. Similar to: IOEXT_FOSC_STD/(2^(m_clkx_div - 1)).;
-
+    m_p_drv_sx1509_cfg      = p_init->p_twi_conf;
+    m_resync_pin            = p_init->resync_pin;
+    
     #ifdef DRV_EXT_LIGHT_DEBUG_LED
         nrf_gpio_cfg_output(IOEXT_OSC_RUNNING_LIGHT);
         OSC_RUN_LIGHT_OFF
@@ -986,8 +1006,18 @@ ret_code_t drv_ext_light_init(drv_ext_light_init_t const * const p_init, bool on
     }
 
     err_code = drv_sx1509_misc_modify((m_clkx_div << DRV_SX1509_MISC_CLKX_Pos),
-                                      DRV_SX1509_MISC_CLKX_Msk);
+                                                     DRV_SX1509_MISC_CLKX_Msk);
     RETURN_IF_ERROR(err_code);
+    
+    if(m_resync_pin != DRV_EXT_LIGHT_INVALID_RESYNC_PIN) // If resync pin in set, reconfigure the IO extender to resync on the NRESET pin.
+    {
+        err_code = drv_sx1509_misc_modify((1 << DRV_SX1509_MISC_FUNC_Pos),
+                                                DRV_SX1509_MISC_FUNC_Msk);
+        RETURN_IF_ERROR(err_code);
+        nrf_gpio_cfg_output(m_resync_pin);
+        nrf_gpio_pin_set(m_resync_pin);
+    }
+    
 
     for (uint32_t id = 0; id < m_num_lights; id++)
     {
@@ -1046,7 +1076,7 @@ ret_code_t drv_ext_light_init(drv_ext_light_init_t const * const p_init, bool on
     err_code = drv_sx1509_close();
     RETURN_IF_ERROR(err_code);
 
-    DEBUG_PRINTF(0, "drv_ext_light: Initialized \n");
+    NRF_LOG_DEBUG("Initialized \r\n");
 
     return DRV_EXT_LIGHT_STATUS_CODE_SUCCESS;
 }

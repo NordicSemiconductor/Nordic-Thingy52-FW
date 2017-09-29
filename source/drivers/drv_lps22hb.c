@@ -38,12 +38,9 @@
 
 #include "drv_lps22hb.h"
 #include "twi_manager.h"
-
 #include "nrf_error.h"
-
-#ifdef LPS22HB_DEBUG
-    #define LOCAL_DEBUG
-#endif
+#define  NRF_LOG_MODULE_NAME "drv_lps22hb   "
+#include "nrf_log.h"
 #include "macros_common.h"
 
 /**@brief Check if the driver is open, if not return NRF_ERROR_INVALID_STATE.

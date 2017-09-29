@@ -62,7 +62,7 @@ typedef struct
 }drv_mpu9250_init_t;
 
 
-/**@brief Function for initializing the mpu9250 driver.
+/**@brief Function for initializing the MPU-9250 driver.
  *
  * @param[in] p_params      Pointer to the init paramter structure.
  *
@@ -70,7 +70,7 @@ typedef struct
  */
 uint32_t drv_mpu9250_init(drv_mpu9250_init_t * p_params);
 
-/**@brief Function to enable/disable the mpu9250 driver.
+/**@brief Function for enabling or disabling the MPU-9250 driver.
  *
  * @param[in] enable    Enables the device.
  *
@@ -78,23 +78,23 @@ uint32_t drv_mpu9250_init(drv_mpu9250_init_t * p_params);
  */
 uint32_t drv_mpu9250_enable(bool enable);
 
-/**@brief Function for writing to a mpu9250 register.
+/**@brief Function for writing to a MPU-9250 register.
  *
  * @param[in] slave_addr    Slave address on the TWI bus.
  * @param[in] reg_addr      Register address to write.
  * @param[in] length        Length of the data to write.
- * @param[in] data          Pointer to the data to write.
+ * @param[in] p_data        Pointer to the data to write.
  *
  * @retval 0 if success. Else -1.
  */
 int drv_mpu9250_write(unsigned char slave_addr, unsigned char reg_addr, unsigned char length, unsigned char const * p_data);
 
-/**@brief Function for reading a mpu9250 register.
+/**@brief Function for reading a MPU-9250 register.
  *
  * @param[in]  slave_addr   Slave address on the TWI bus.
  * @param[in]  reg_addr     Register address to read.
  * @param[in]  length       Length of the data to read.
- * @param[out] data         Pointer to where the data should be read.
+ * @param[out] p_data       Pointer to where the data should be stored.
  *
  * @retval 0 if success. Else -1.
  */
@@ -108,9 +108,9 @@ int drv_mpu9250_read(unsigned char slave_addr, unsigned char reg_addr, unsigned 
  */
 int drv_mpu9250_ms_get(unsigned long * p_count);
 
-/**@brief Function for enabling and registering the mpu9250 interrupt calback.
+/**@brief Function for enabling and registering the MPU-9250 interrupt callback.
  *
- * @param[in] int_param     Pointer to the interrup parameter structure.
+ * @param[in] p_int_param   Pointer to the interrupt parameter structure.
  *
  * @retval 0 if success. Else -1.
  */

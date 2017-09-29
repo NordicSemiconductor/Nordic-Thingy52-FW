@@ -40,19 +40,10 @@
 
 #include "nrf.h"
 #include "nrf_assert.h"
-//#include "app_debug.h"
-
 #include "drv_audio.h"
 #include "drv_audio_coder.h"
-
-#define DRV_ACA_DEBUG
-
-#ifdef DRV_ACA_DEBUG
-    #include "SEGGER_RTT.h"
-    #define DEBUG_PRINTF (void)SEGGER_RTT_printf
-#else
-    #define DEBUG_PRINTF(...)
-#endif
+#define  NRF_LOG_MODULE_NAME "drv_aud_adpcm "
+#include "nrf_log.h"
 
 #if (CONFIG_AUDIO_CODEC == CONFIG_AUDIO_CODEC_ADPCM)
 #include "dvi_adpcm.h"
@@ -63,13 +54,13 @@ void drv_audio_coder_init(void)
 {
     if (sizeof(dvi_adpcm_state_t) != 3)
     {
-        DEBUG_PRINTF(0, "drv_audio: dvi_adpcm_state_t not packed correctly! size is %d", sizeof(dvi_adpcm_state_t));
+        NRF_LOG_WARNING("dvi_adpcm_state_t not packed correctly! size is %d \r\n", sizeof(dvi_adpcm_state_t));
     }
 
     dvi_adpcm_init_state(&m_adpcm_state);
 
-    DEBUG_PRINTF(0, "drv_audio: ADPCM Codec selected (frame: %u ms)\r\n",
-              1000 * CONFIG_AUDIO_FRAME_SIZE_SAMPLES / 16000);
+    NRF_LOG_DEBUG("ADPCM Codec selected (frame: %u ms)\r\n",
+                  1000 * CONFIG_AUDIO_FRAME_SIZE_SAMPLES / 16000);
 }
 
 void drv_audio_coder_encode(int16_t *input_samples, m_audio_frame_t *p_frame)

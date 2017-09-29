@@ -68,7 +68,7 @@ typedef PACKED( struct
  * @retval NRF_ERROR_NULL   If a NULL pointer was supplied.
  * @retval Other codes from the underlying drivers.
  */
-uint32_t m_env_flash_config_store(ble_tes_config_t * p_config);
+uint32_t m_env_flash_config_store(const ble_tes_config_t * p_config);
 
 /**@brief Function for loading the configuration.
  *
@@ -87,7 +87,7 @@ uint32_t m_env_flash_config_load(ble_tes_config_t ** p_config);
  * @retval NRF_ERROR_NULL   If a NULL pointer was supplied.
  * @retval Other codes from the underlying drivers.
  */
-uint32_t m_env_flash_baseline_store(m_gas_baseline_t * p_baseline);
+uint32_t m_env_flash_baseline_store(const m_gas_baseline_t * p_baseline);
 
 /**@brief Function for loading the gas sensor baseline.
  *

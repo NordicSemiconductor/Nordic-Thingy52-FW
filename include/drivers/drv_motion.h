@@ -172,31 +172,31 @@ uint32_t drv_motion_init(drv_motion_evt_handler_t evt_handler, drv_motion_twi_in
 
 /**@brief Function for enabling features in the motion driver.
  *
- * @param[in] feature_mask      Feature mask telling what features to enable.
+ * @param[in] feature_mask      Feature mask indicating what features to enable.
  *
  * @retval NRF_SUCCESS.
  */
 uint32_t drv_motion_enable(drv_motion_feature_mask_t feature_mask);
 
-/**@brief Function to disable features in the motion driver.
+/**@brief Function for disabling features in the motion driver.
  *
- * @param[in] feature_mask      Feature mask telling what features to disable.
+ * @param[in] feature_mask      Feature mask indicating what features to disable.
  *
  * @retval NRF_SUCCESS.
  */
 uint32_t drv_motion_disable(drv_motion_feature_mask_t feature_mask);
 
-/**@brief Function to configure the motion driver.
+/**@brief Function for configuring the motion driver.
  *
- * @param[in] cfg      Configuration structure.
+ * @param[in] p_cfg     Configuration structure.
  *
  * @retval NRF_SUCCESS.
  */
 uint32_t drv_motion_config(drv_motion_cfg_t * p_cfg);
 
-/**@brief Function to prepare for sleep mode.
+/**@brief Function for preparing for sleep mode.
  *
- * @param[in] wakeup   Boolean indicating wakeup or sleep for ever.
+ * @param[in] wakeup   Boolean indicating either wakeup or sleep forever.
  *
  * @retval NRF_SUCCESS.
  */

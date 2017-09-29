@@ -124,7 +124,7 @@ typedef struct
     batt_meas_param_t               batt_meas_param;    ///< Input parameters.
 }batt_meas_init_t;
 
-/**@brief Initalizes the battery driver.
+/**@brief Function for initializing the battery driver.
  *
  * @param[out] p_handle             Pointer to the location to store the service handle.
  * @param[in]  p_batt_meas_init     Struct containing the configuration parameters.
@@ -136,7 +136,7 @@ typedef struct
  */
 uint32_t m_batt_meas_init(m_ble_service_handle_t * p_handle, batt_meas_init_t const * const p_batt_meas_init);
 
-/**@brief Enables battery measurement at the given interval.
+/**@brief Function for enabling battery measurement at the given interval.
  *
  * @param meas_interval_ms  Sampling interval given in milliseconds.
  *
@@ -144,14 +144,14 @@ uint32_t m_batt_meas_init(m_ble_service_handle_t * p_handle, batt_meas_init_t co
  * which is supplied with a m_batt_meas_event_t struct containing the information.
  *
  * @return M_BATT_STATUS_CODE_SUCCESS
- * @return Other codes from the underlying driver
+ * @return Other codes from the underlying driver.
  */
 uint32_t m_batt_meas_enable(uint32_t meas_interval_ms);
 
-/**@brief Stops the battery measurement.
+/**@brief Function for stopping the battery measurement.
  *
  * @return M_BATT_STATUS_CODE_SUCCESS
- * @return Other codes from the underlying driver
+ * @return Other codes from the underlying driver.
  */
 uint32_t m_batt_meas_disable(void);
 

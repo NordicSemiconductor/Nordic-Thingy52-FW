@@ -42,10 +42,8 @@
 #include "drv_hts221.h"
 #include "nrf_drv_gpiote.h"
 #include "app_scheduler.h"
-
-#ifdef DRV_HUMIDITY_DEBUG
-    #define LOCAL_DEBUG
-#endif
+#define  NRF_LOG_MODULE_NAME "drv_humidity  "
+#include "nrf_log.h"
 #include "macros_common.h"
 
 /**@brief Configuration struct.
@@ -100,7 +98,7 @@ static uint32_t gpiote_init(uint32_t pin)
     nrf_drv_gpiote_in_config_t gpiote_in_config;
     gpiote_in_config.is_watcher  = false;
     gpiote_in_config.hi_accuracy = false;//true;
-    gpiote_in_config.pull        = NRF_GPIO_PIN_PULLUP;
+    gpiote_in_config.pull        = NRF_GPIO_PIN_NOPULL;
     gpiote_in_config.sense       = NRF_GPIOTE_POLARITY_TOGGLE;//NRF_GPIOTE_POLARITY_HITOLO;
     err_code = nrf_drv_gpiote_in_init(pin, &gpiote_in_config, gpiote_evt_handler);
     RETURN_IF_ERROR(err_code);
@@ -196,7 +194,7 @@ uint32_t drv_humidity_enable(void)
     static const drv_hts221_cfg_t cfg = {
         .av_conf   = AV_CONF_REG_DEFAULT,
         .ctrl_reg1 = (CTRL_REG1_DEFAULT | (CTRL_REG1_PD_Active << CTRL_REG1_PD_Pos)),
-        .ctrl_reg2 = CTRL_REG2_DEFAULT,
+        .ctrl_reg2 =  CTRL_REG2_DEFAULT,
         .ctrl_reg3 = (CTRL_REG3_DEFAULT | (CTRL_REG3_DRDY_Enable << CTRL_REG3_DRDY_Pos) | (CTRL_REG3_DRDY_H_L_ActiveLow << CTRL_REG3_DRDY_H_L_Pos) )
     };
 
@@ -272,6 +270,8 @@ int16_t drv_humidity_get(void)
     int16_t  _humidity;
     float    hum    = 0.0f;
     float    h_temp = 0.0f;
+    static const int16_t HUMID_MAX = 100;
+    static const int16_t HUMID_MIN = 0;
 
     err_code = drv_hts221_open(&m_drv_humidity.cfg);
     RETURN_IF_ERROR(err_code);
@@ -289,7 +289,17 @@ int16_t drv_humidity_get(void)
     h_temp = (((int16_t)humidity - (int16_t)m_drv_humidity.calib.H0_T0_OUT) * hum) / ((int16_t)m_drv_humidity.calib.H1_T0_OUT - (int16_t)m_drv_humidity.calib.H0_T0_OUT);
     hum    = ((int16_t)m_drv_humidity.calib.H0_rH_x2) / 2.0; // Remove x2 multiple.
     _humidity = (int16_t)((hum + h_temp)); // Provide signed % measurement unit.
-
+  
+    // Limit output range according to HTS221 datasheet.
+    if(_humidity >= HUMID_MAX)
+    {
+        _humidity = HUMID_MAX;
+    }
+    else if (_humidity <= HUMID_MIN)
+    {
+        _humidity = HUMID_MIN;
+    }
+    
     return (_humidity);
 }
 

@@ -41,11 +41,11 @@
  * @defgroup ble_sdk_srv_tes Thingy Environment Service
  * @{
  * @ingroup  ble_sdk_srv
- * @brief    Thingy Envronment Service implementation.
+ * @brief    Thingy Environment Service implementation.
  *
- * @details The Thingy Envronment Service is a simple GATT-based service with multiple characteristics for reading sensor data and configuring the sensors.
+ * @details The Thingy Environment Service is a simple GATT-based service with multiple characteristics for reading sensor data and configuring the sensors.
  *
- * @note The application must propagate S110 SoftDevice events to the Thingy Envronment Service module
+ * @note The application must propagate S110 SoftDevice events to the Thingy Environment Service module
  *       by calling the ble_tes_on_ble_evt() function from the ble_stack_handler callback.
  */
 
@@ -58,8 +58,8 @@
 #include <stdint.h>
 #include <stdbool.h>
 
-#define BLE_UUID_TES_SERVICE 0x0200                      /**< The UUID of the Thingy Envronment Service. */
-#define BLE_TES_MAX_DATA_LEN (GATT_MTU_SIZE_DEFAULT - 3) /**< Maximum length of data (in bytes) that can be transmitted to the peer by the Thingy Envronment service module. */
+#define BLE_UUID_TES_SERVICE 0x0200                      /**< The UUID of the Thingy Environment Service. */
+#define BLE_TES_MAX_DATA_LEN (BLE_GATT_ATT_MTU_DEFAULT - 3) /**< Maximum length of data (in bytes) that can be transmitted to the peer by the Thingy Environment service module. */
 
 #ifdef __GNUC__
     #ifdef PACKED
@@ -123,13 +123,13 @@ typedef PACKED( struct
 }) ble_tes_config_t;
 
 #define BLE_TES_CONFIG_TEMPERATURE_INT_MIN      100
-#define BLE_TES_CONFIG_TEMPERATURE_INT_MAX     5000
+#define BLE_TES_CONFIG_TEMPERATURE_INT_MAX    60000
 #define BLE_TES_CONFIG_PRESSURE_INT_MIN          50
-#define BLE_TES_CONFIG_PRESSURE_INT_MAX        5000
+#define BLE_TES_CONFIG_PRESSURE_INT_MAX       60000
 #define BLE_TES_CONFIG_HUMIDITY_INT_MIN         100
-#define BLE_TES_CONFIG_HUMIDITY_INT_MAX        5000
+#define BLE_TES_CONFIG_HUMIDITY_INT_MAX       60000
 #define BLE_TES_CONFIG_COLOR_INT_MIN            200
-#define BLE_TES_CONFIG_COLOR_INT_MAX           5000
+#define BLE_TES_CONFIG_COLOR_INT_MAX          60000
 #define BLE_TES_CONFIG_GAS_MODE_MIN               1
 #define BLE_TES_CONFIG_GAS_MODE_MAX               3
 
@@ -146,13 +146,13 @@ typedef enum
 /* Forward declaration of the ble_tes_t type. */
 typedef struct ble_tes_s ble_tes_t;
 
-/**@brief Thingy Envronment Service event handler type. */
+/**@brief Thingy Environment Service event handler type. */
 typedef void (*ble_tes_evt_handler_t) (ble_tes_t        * p_tes,
                                        ble_tes_evt_type_t evt_type,
                                        uint8_t          * p_data,
                                        uint16_t           length);
 
-/**@brief Thingy Envronment Service initialization structure.
+/**@brief Thingy Environment Service initialization structure.
  *
  * @details This structure contains the initialization information for the service. The application
  * must fill this structure and pass it to the service using the @ref ble_tes_init function.
@@ -168,14 +168,14 @@ typedef struct
     ble_tes_evt_handler_t   evt_handler; /**< Event handler to be called for handling received data. */
 } ble_tes_init_t;
 
-/**@brief Thingy Envronment Service structure.
+/**@brief Thingy Environment Service structure.
  *
  * @details This structure contains status information related to the service.
  */
 struct ble_tes_s
 {
-    uint8_t                  uuid_type;                    /**< UUID type for Thingy Envronment Service Base UUID. */
-    uint16_t                 service_handle;               /**< Handle of Thingy Envronment Service (as provided by the S110 SoftDevice). */
+    uint8_t                  uuid_type;                    /**< UUID type for Thingy Environment Service Base UUID. */
+    uint16_t                 service_handle;               /**< Handle of Thingy Environment Service (as provided by the S110 SoftDevice). */
     ble_gatts_char_handles_t temperature_handles;          /**< Handles related to the temperature characteristic (as provided by the S132 SoftDevice). */
     ble_gatts_char_handles_t pressure_handles;             /**< Handles related to the pressure characteristic (as provided by the S132 SoftDevice). */
     ble_gatts_char_handles_t humidity_handles;             /**< Handles related to the humidity characteristic (as provided by the S132 SoftDevice). */
@@ -191,9 +191,9 @@ struct ble_tes_s
     ble_tes_evt_handler_t    evt_handler;                  /**< Event handler to be called for handling received data. */
 };
 
-/**@brief Function for initializing the Thingy Envronment Service.
+/**@brief Function for initializing the Thingy Environment Service.
  *
- * @param[out] p_tes      Thingy Envronment Service structure. This structure must be supplied
+ * @param[out] p_tes      Thingy Environment Service structure. This structure must be supplied
  *                        by the application. It is initialized by this function and will
  *                        later be used to identify this particular service instance.
  * @param[in] p_tes_init  Information needed to initialize the service.
@@ -203,14 +203,14 @@ struct ble_tes_s
  */
 uint32_t ble_tes_init(ble_tes_t * p_tes, const ble_tes_init_t * p_tes_init);
 
-/**@brief Function for handling the Thingy Envronment Service's BLE events.
+/**@brief Function for handling the Thingy Environment Service's BLE events.
  *
- * @details The Thingy Envronment Service expects the application to call this function each time an
+ * @details The Thingy Environment Service expects the application to call this function each time an
  * event is received from the S110 SoftDevice. This function processes the event if it
- * is relevant and calls the Thingy Envronment Service event handler of the
+ * is relevant and calls the Thingy Environment Service event handler of the
  * application if necessary.
  *
- * @param[in] p_tes       Thingy Envronment Service structure.
+ * @param[in] p_tes       Thingy Environment Service structure.
  * @param[in] p_ble_evt   Event received from the S110 SoftDevice.
  */
 void ble_tes_on_ble_evt(ble_tes_t * p_tes, ble_evt_t * p_ble_evt);
@@ -220,7 +220,7 @@ void ble_tes_on_ble_evt(ble_tes_t * p_tes, ble_evt_t * p_ble_evt);
  * @details This function sends the input temperature as an temperature characteristic notification to the
  *          peer.
  *
- * @param[in] p_tes       Pointer to the Thingy Envronment Service structure.
+ * @param[in] p_tes       Pointer to the Thingy Environment Service structure.
  * @param[in] p_data      Pointer to the temperature data.
  *
  * @retval NRF_SUCCESS If the string was sent successfully. Otherwise, an error code is returned.
@@ -231,7 +231,7 @@ uint32_t ble_tes_temperature_set(ble_tes_t * p_tes, ble_tes_temperature_t * p_da
  *
  * @details This function sends the input pressure as an pressure characteristic notification to the peer.
  *
- * @param[in] p_tes       Pointer to the Thingy Envronment Service structure.
+ * @param[in] p_tes       Pointer to the Thingy Environment Service structure.
  * @param[in] p_data      Pointer to the pressure data.
  *
  * @retval NRF_SUCCESS If the string was sent successfully. Otherwise, an error code is returned.
@@ -242,7 +242,7 @@ uint32_t ble_tes_pressure_set(ble_tes_t * p_tes, ble_tes_pressure_t * p_data);
  *
  * @details This function sends the input humidity as an humidity characteristic notification to the peer.
  *
- * @param[in] p_tes       Pointer to the Thingy Envronment Service structure.
+ * @param[in] p_tes       Pointer to the Thingy Environment Service structure.
  * @param[in] p_data      Pointer to the humidity data.
  *
  * @retval NRF_SUCCESS If the string was sent successfully. Otherwise, an error code is returned.
@@ -253,7 +253,7 @@ uint32_t ble_tes_humidity_set(ble_tes_t * p_tes, ble_tes_humidity_t * p_data);
  *
  * @details This function sends the input humidity as an humidity characteristic notification to the peer.
  *
- * @param[in] p_tes       Pointer to the Thingy Envronment Service structure.
+ * @param[in] p_tes       Pointer to the Thingy Environment Service structure.
  * @param[in] p_data      Pointer to the humidity data.
  *
  * @retval NRF_SUCCESS If the string was sent successfully. Otherwise, an error code is returned.
@@ -264,7 +264,7 @@ uint32_t ble_tes_gas_set(ble_tes_t * p_tes, ble_tes_gas_t * p_data);
  *
  * @details This function sends the input humidity as an humidity characteristic notification to the peer.
  *
- * @param[in] p_tes       Pointer to the Thingy Envronment Service structure.
+ * @param[in] p_tes       Pointer to the Thingy Environment Service structure.
  * @param[in] p_data      Pointer to the humidity data.
  *
  * @retval NRF_SUCCESS If the string was sent successfully. Otherwise, an error code is returned.

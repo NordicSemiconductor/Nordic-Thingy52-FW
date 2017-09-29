@@ -181,7 +181,7 @@
 #define CALIBRATION_REGS                     0x30
 #define CALIBRATION_REGS_NUM                 16
 
-/**@brief Configuration struct for hts221 humidity sensor.
+/**@brief Configuration struct for HTS221 humidity sensor.
  */
 typedef struct
 {
@@ -205,7 +205,7 @@ typedef struct
     int16_t  T1_OUT;
 }drv_hts221_calib_t;
 
-/**@brief Initialization struct for humid driver.
+/**@brief Initialization struct for the humidity driver.
  */
 typedef struct
 {
@@ -215,66 +215,77 @@ typedef struct
     nrf_drv_twi_config_t const * p_twi_config;      ///< TWI configuraion.
 }drv_hts221_twi_cfg_t;
 
-/**@brief Inits the hts221 driver. */
+/**@brief Function for initializing the HTS221 driver.
+ *
+ * @return NRF_SUCCESS    Success. Only possible return value.
+ */
 uint32_t drv_hts221_init(void);
 
-/**@brief Opens the hts221 driver according to the specified configuration.
+/**@brief Function for opening the HTS221 driver according to the specified configuration.
  *
  * @param[in]   p_cfg   Pointer to the driver configuration for the session to be opened.
  *
  * @return NRF_SUCCESS    If the call was successful. */
 uint32_t drv_hts221_open(drv_hts221_twi_cfg_t const * const p_cfg);
 
-/**@brief Close the hts221 driver.
+/**@brief Function for closing the HTS221 driver.
  *
  * @return NRF_SUCCESS    If the call was successful. */
 uint32_t drv_hts221_close(void);
 
-/**@brief Verify the hts221 who am I register.
+/**@brief Function for verifying the HTS221 WHO_AM_I register.
  *
  * @return NRF_SUCCESS    If the call was successful. */
 uint32_t drv_hts221_verify(void);
 
-/**@brief Configures the hts221 sensor according to the specified configuration.
+/**@brief Function for configuring the HTS221 sensor according to the specified configuration.
  *
  * @param[in]   p_cfg   Pointer to the sensor configuration.
  *
  * @return NRF_SUCCESS    If the call was successful. */
 uint32_t drv_hts221_cfg_set(drv_hts221_cfg_t const * const p_cfg);
 
-/**@brief Reads the configuration of the hts221 sensor.
+/**@brief Function for reading the configuration of the HTS221 sensor.
  *
  * @param[in]   p_cfg   Pointer to the driver configuration for the session to be opened.
  *
  * @return NRF_SUCCESS    If the call was successful. */
 uint32_t drv_hts221_cfg_get(drv_hts221_cfg_t *  p_cfg);
 
-/**@brief Function to get the status.
+/**@brief Function for getting the status.
+ *
+ * @param[out]   p_status   Contents of the status register.
  *
  * @return NRF_SUCCESS    If the call was successful. */
 uint32_t drv_hts221_status_get(uint8_t * p_status);
 
-/**@brief Function to get the sensor calibration data.
+/**@brief Function for getting the sensor calibration data.
+ *
+ * @param[out]   p_calib   Calibration values.
  *
  * @return NRF_SUCCESS    If the call was successful. */
 uint32_t drv_hts221_calib_get(drv_hts221_calib_t * p_calib);
 
-/**@brief Function to get the humidity data.
+/**@brief Function for getting the humidity data.
+ *
+ * @param[out] p_humidity   Fetched from humidity registers.  
  *
  * @return NRF_SUCCESS    If the call was successful. */
 uint32_t drv_hts221_humidity_get(int16_t * p_humidity);
 
-/**@brief Function to get the temperature data.
+/**@brief Function for getting the temperature data.
+ *
+ * @param[out] p_temperature   Fetched from temperature registers. 
  *
  * @return NRF_SUCCESS    If the call was successful. */
 uint32_t drv_hts221_temperature_get(int16_t * p_temperature);
 
-/**@brief Start one shot conversion.
+/**@brief Function for starting one shot conversion.
  *
  * @return NRF_SUCCESS    If the call was successful. */
 uint32_t drv_hts221_one_shot(void);
 
-/**@brief Reboot the hts221 memory content.
+/**@brief Function for rebooting the HTS221 memory content.
  *
  * @return NRF_SUCCESS    If the call was successful. */
 uint32_t drv_hts221_reboot(void);

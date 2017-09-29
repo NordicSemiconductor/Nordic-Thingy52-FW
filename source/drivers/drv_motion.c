@@ -57,14 +57,13 @@
 #include "mltypes.h"
 #include "mpu.h"
 
-#define PEDO_READ_MS    (1000UL)
-#define TEMP_READ_MS     (500UL)
-#define COMPASS_READ_MS  (500UL)
-#define DEFAULT_MPU_HZ    (10UL)
-
-#ifdef MOTION_DEBUG
-    #define LOCAL_DEBUG
-#endif
+#define PEDO_READ_MS    (1000UL) ///< Default pedometer period [ms].
+#define TEMP_READ_MS     (500UL) ///< Default temperature period [ms].
+#define COMPASS_READ_MS  (500UL) ///< Default compass (magnetometer) period [ms].
+#define DEFAULT_MPU_HZ    (10UL) ///< Default motion processing unit period [ms].
+#define NUM_AXES             (3) ///< Number of principal axes for each sensor type.
+#define  NRF_LOG_MODULE_NAME "drv_motion    "
+#include "nrf_log.h"
 #include "macros_common.h"
 
 #define RETURN_IF_INV_ERROR(PARAM)                                                                \
@@ -94,8 +93,10 @@ static platform_data_t s_accel_pdata =
 };
 
 /**@brief Gyroscope rotation matrix.
+ *
+ * @note No rotation needed as the gyro axes are alinged with Thingy axes.
  */
-static platform_data_t s_gyro_pdata =
+static platform_data_t s_gyro_pdata = 
 {
     .orientation = {  1,  0,  0,
                       0,  1,  0,
@@ -103,11 +104,14 @@ static platform_data_t s_gyro_pdata =
 };
 
 /**@brief Compass (magnetometer) rotation matrix.
+ *
+ * @note Changed to align the +Y vector of the compass to Thingy +X.
+ * This is performed due to the IMU using +Y as the heading reference.
  */
 static platform_data_t s_compass_pdata =
 {
-    .orientation = {  0,  1,  0,
-                      1,  0,  0,
+    .orientation = { -1,  0,  0,
+                      0,  1,  0,
                       0,  0, -1}
 };
 
@@ -130,9 +134,51 @@ static struct
     uint8_t                   wake_on_motion;
 } m_motion;
 
+/* Compass bias written to MPU-9250 at boot. Used to compensate for biases introduced by Thingy HW.
+ */
+static const long COMPASS_BIAS[NUM_AXES] = {1041138*(2^16), -3638024*(2^16), -23593626*(2^16)}; 
+
 APP_TIMER_DEF(m_temp_timer_id);
 APP_TIMER_DEF(m_compass_timer_id);
 APP_TIMER_DEF(m_pedo_timer_id);
+
+#if NRF_LOG_ENABLED
+    void print_sensor_status(void)
+    {
+        long acc_bias[NUM_AXES];
+        long gyr_bias[NUM_AXES];
+        long mag_bias[NUM_AXES];
+        int acc_accuracy;
+        int gyr_accuracy;
+        int mag_accuracy;
+        
+        inv_get_accel_bias(acc_bias, NULL);
+        inv_get_gyro_bias(gyr_bias, NULL);
+        inv_get_compass_bias(mag_bias);
+        
+        acc_accuracy = inv_get_accel_accuracy();
+        gyr_accuracy = inv_get_gyro_accuracy();
+        mag_accuracy = inv_get_mag_accuracy();
+        
+        NRF_LOG_DEBUG("Acc bias: ");
+        NRF_LOG_DEBUG("X: "NRF_LOG_FLOAT_MARKER" ",     NRF_LOG_FLOAT(acc_bias[0]));
+        NRF_LOG_DEBUG("Y: "NRF_LOG_FLOAT_MARKER" ",     NRF_LOG_FLOAT(acc_bias[1]));
+        NRF_LOG_DEBUG("Z: "NRF_LOG_FLOAT_MARKER" \r\n", NRF_LOG_FLOAT(acc_bias[2]));
+        
+        NRF_LOG_DEBUG("Gyr bias: "); 
+        NRF_LOG_DEBUG("X: "NRF_LOG_FLOAT_MARKER" ",     NRF_LOG_FLOAT(gyr_bias[0]));
+        NRF_LOG_DEBUG("Y: "NRF_LOG_FLOAT_MARKER" ",     NRF_LOG_FLOAT(gyr_bias[1]));
+        NRF_LOG_DEBUG("Z: "NRF_LOG_FLOAT_MARKER" \r\n", NRF_LOG_FLOAT(gyr_bias[2]));
+
+        NRF_LOG_DEBUG("Mag bias: ");
+        NRF_LOG_DEBUG("X: "NRF_LOG_FLOAT_MARKER" ",     NRF_LOG_FLOAT(mag_bias[0]/(2^16)));
+        NRF_LOG_DEBUG("Y: "NRF_LOG_FLOAT_MARKER" ",     NRF_LOG_FLOAT(mag_bias[1]/(2^16)));
+        NRF_LOG_DEBUG("Z: "NRF_LOG_FLOAT_MARKER" \r\n", NRF_LOG_FLOAT(mag_bias[2]/(2^16)));
+
+        NRF_LOG_DEBUG("Accur: Acc: %d, gyr: %d, mag: %d \r\n", acc_accuracy, gyr_accuracy, mag_accuracy);
+    }
+#endif
+
 
 static void mpulib_data_send(void)
 {
@@ -211,7 +257,7 @@ static void mpulib_data_send(void)
         if (inv_get_sensor_type_euler((long *)data, &accuracy, &timestamp))
         {
             evt = DRV_MOTION_EVT_EULER;
-            // Pitch, roll and yaw
+            // Roll, pitch and yaw
             m_motion.evt_handler(&evt, data, sizeof(long) * 3);
         }
     }
@@ -230,7 +276,12 @@ static void mpulib_data_send(void)
         if (inv_get_sensor_type_heading((long *)data, &accuracy, &timestamp))
         {
             evt = DRV_MOTION_EVT_HEADING;
-            m_motion.evt_handler(&evt, data, sizeof(long));
+            
+            // Reverse the heading
+            static const long north = 360 << 16;
+            long heading = north - *data;
+            
+            m_motion.evt_handler(&evt, &heading, sizeof(long));
         }
     }
 
@@ -241,15 +292,15 @@ static void mpulib_data_send(void)
         if (inv_get_sensor_type_gravity(gravity, &accuracy, &timestamp))
         {
             evt = DRV_MOTION_EVT_GRAVITY;
-            // x, y and z
+            // X, Y and Z
             m_motion.evt_handler(&evt, gravity, sizeof(float) * 3);
         }
     }
 
     if (m_motion.features & DRV_MOTION_FEATURE_MASK_PEDOMETER && m_motion.do_pedo)
     {
-        static unsigned long s_prev_pedo[2] = {0}; //step_count, walk_time;
-        unsigned long pedometer[2] = {0}; //step_count, walk_time;
+        static unsigned long s_prev_pedo[2] = {0};  // Step_count, walk_time;
+        unsigned long pedometer[2] = {0};           // Step_count, walk_time;
         m_motion.do_pedo = 0;
 
         (void)dmp_get_pedometer_step_count(&pedometer[0]);
@@ -258,7 +309,7 @@ static void mpulib_data_send(void)
         if ((pedometer[0] > 0) && ((pedometer[0] != s_prev_pedo[0]) || (pedometer[1] != s_prev_pedo[1])))
         {
             evt = DRV_MOTION_EVT_PEDOMETER;
-            // step_count and walk_time
+            // Step_count and walk_time
             m_motion.evt_handler(&evt, pedometer, sizeof(unsigned long) * 2);
 
             s_prev_pedo[0] = pedometer[0];
@@ -314,7 +365,7 @@ static void mpulib_data_handler(void * p_event_data, uint16_t event_size)
             if (more)
             {
                 more_todo = true;
-                DEBUG_PRINTF(0, "mpulib_data_handler: more_todo\r\n");
+                NRF_LOG_DEBUG("mpulib_data_handler: more_todo\r\n");
             }
 
             if (sensors & INV_XYZ_GYRO) {
@@ -328,6 +379,7 @@ static void mpulib_data_handler(void * p_event_data, uint16_t event_size)
                     (void)inv_build_temp(temperature, sensor_timestamp);
                 }
             }
+            
             if (sensors & INV_XYZ_ACCEL) {
                 accel[0] = (long)accel_short[0];
                 accel[1] = (long)accel_short[1];
@@ -335,6 +387,7 @@ static void mpulib_data_handler(void * p_event_data, uint16_t event_size)
                 (void)inv_build_accel(accel, 0, sensor_timestamp);
                 new_data = 1;
             }
+            
             if (sensors & INV_WXYZ_QUAT) {
                 (void)inv_build_quat(quat, 0, sensor_timestamp);
                 new_data = 1;
@@ -360,7 +413,7 @@ static void mpulib_data_handler(void * p_event_data, uint16_t event_size)
             if (more)
             {
                 more_todo = true;
-                DEBUG_PRINTF(0, "mpulib_data_handler: more_todo\r\n");
+                NRF_LOG_DEBUG("mpulib_data_handler: more_todo\r\n");
             }
 
             if (sensors & INV_XYZ_GYRO)
@@ -376,6 +429,7 @@ static void mpulib_data_handler(void * p_event_data, uint16_t event_size)
                     (void)inv_build_temp(temperature, sensor_timestamp);
                 }
             }
+            
             if (sensors & INV_XYZ_ACCEL)
             {
                 accel[0] = (long)accel_short[0];
@@ -433,33 +487,33 @@ static void mpulib_tap_cb(unsigned char direction, unsigned char count)
         m_motion.evt_handler(&evt, data, sizeof(data));
     }
 
-#ifdef MOTION_DEBUG
-    switch (direction)
-    {
-        case TAP_X_UP:
-            DEBUG_PRINTF(0, "drv_motion: tap x+ ");
-            break;
-        case TAP_X_DOWN:
-            DEBUG_PRINTF(0, "drv_motion: tap x- ");
-            break;
-        case TAP_Y_UP:
-            DEBUG_PRINTF(0, "drv_motion: tap y+ ");
-            break;
-        case TAP_Y_DOWN:
-            DEBUG_PRINTF(0, "drv_motion: tap y- ");
-            break;
-        case TAP_Z_UP:
-            DEBUG_PRINTF(0, "drv_motion: tap z+ ");
-            break;
-        case TAP_Z_DOWN:
-            DEBUG_PRINTF(0, "drv_motion: tap z- ");
-            break;
-        default:
-            return;
-    }
+    #ifdef MOTION_DEBUG
+        switch (direction)
+        {
+            case TAP_X_UP:
+                NRF_LOG_DEBUG("drv_motion: tap x+ ");
+                break;        
+            case TAP_X_DOWN:  
+                NRF_LOG_DEBUG("drv_motion: tap x- ");
+                break;        
+            case TAP_Y_UP:    
+                NRF_LOG_DEBUG("drv_motion: tap y+ ");
+                break;        
+            case TAP_Y_DOWN:  
+                NRF_LOG_DEBUG("drv_motion: tap y- ");
+                break;        
+            case TAP_Z_UP:    
+                NRF_LOG_DEBUG("drv_motion: tap z+ ");
+                break;        
+            case TAP_Z_DOWN:  
+                NRF_LOG_DEBUG("drv_motion: tap z- ");
+                break;
+            default:
+                return;
+        }
 
-    DEBUG_PRINTF(0, "x%d\r\n", count);
-#endif
+        NRF_LOG_DEBUG("x%d\r\n", count);
+    #endif
 }
 
 
@@ -472,60 +526,86 @@ static void mpulib_orient_cb(unsigned char orientation)
         m_motion.evt_handler(&evt, &orientation, 1);
     }
 
-#ifdef MOTION_DEBUG
-	switch (orientation)
-    {
-        case ANDROID_ORIENT_PORTRAIT:
-            DEBUG_PRINTF(0, "Portrait\n");
-            break;
-        case ANDROID_ORIENT_LANDSCAPE:
-            DEBUG_PRINTF(0, "Landscape\n");
-            break;
-        case ANDROID_ORIENT_REVERSE_PORTRAIT:
-            DEBUG_PRINTF(0, "Reverse Portrait\n");
-            break;
-        case ANDROID_ORIENT_REVERSE_LANDSCAPE:
-            DEBUG_PRINTF(0, "Reverse Landscape\n");
-            break;
-        default:
-            return;
-	}
-#endif
+    #ifdef MOTION_DEBUG
+        switch (orientation)
+        {
+            case ANDROID_ORIENT_PORTRAIT:
+                NRF_LOG_DEBUG("Portrait\r\n");
+                break;
+            case ANDROID_ORIENT_LANDSCAPE:
+                NRF_LOG_DEBUG("Landscape\r\n");
+                break;
+            case ANDROID_ORIENT_REVERSE_PORTRAIT:
+                NRF_LOG_DEBUG("Reverse Portrait\r\n");
+                break;
+            case ANDROID_ORIENT_REVERSE_LANDSCAPE:
+                NRF_LOG_DEBUG("Reverse Landscape\r\n");
+                break;
+            default:
+                return;
+        }
+    #endif
 }
 
 
 static uint32_t mpulib_init(void)
 {
-    inv_error_t result;
+    inv_error_t err_code;
     struct int_param_s int_param;
 
     int_param.cb = mpulib_data_handler_cb;
 
-    result = mpu_init(&int_param);
-    APP_ERROR_CHECK(result);
+    err_code = mpu_init(&int_param);
+    RETURN_IF_ERROR(err_code);
 
-    result = inv_init_mpl();
-    APP_ERROR_CHECK(result);
+    err_code = inv_init_mpl();
+    RETURN_IF_ERROR(err_code);
 
-    /* Compute 6-axis and 9-axis quaternions. */
-    (void)inv_enable_quaternion();
-    (void)inv_enable_9x_sensor_fusion();
-    /* Update gyro biases when not in motion. */
-    (void)inv_enable_fast_nomot();
-    /* Update gyro biases when temperature changes. */
-    (void)inv_enable_gyro_tc();
     /* This algorithm updates the accel biases when in motion. A more accurate
      * bias measurement can be made when running the self-test. */
-    (void)inv_enable_in_use_auto_calibration();
+    err_code = inv_enable_in_use_auto_calibration();
+    RETURN_IF_ERROR(err_code);
+    
+    /* Compute 6-axis and 9-axis quaternions. */
+    err_code = inv_enable_quaternion();
+    RETURN_IF_ERROR(err_code);
+    
+    err_code = inv_enable_9x_sensor_fusion();
+    RETURN_IF_ERROR(err_code);
+    
+    /* Update gyro biases when not in motion. */
+    err_code = inv_enable_fast_nomot();
+    RETURN_IF_ERROR(err_code);
+    
+    /* Update gyro biases when temperature changes. */
+    err_code = inv_enable_gyro_tc();
+    RETURN_IF_ERROR(err_code);
+    
+    /* Set the default compass bias to compensate for hard iron effects.
+    1 places a low level on trust on the compass.
+    The value will vary between Thingys, but this will provide some hard iron correction. */
+    inv_set_compass_bias(COMPASS_BIAS, 1);
+    
+    #if NRF_LOG_ENABLED
+        print_sensor_status();
+    #endif
+    
     /* Compass calibration algorithms. */
-    (void)inv_enable_vector_compass_cal();
-    (void)inv_enable_magnetic_disturbance();
-
+    err_code = inv_enable_vector_compass_cal();
+    RETURN_IF_ERROR(err_code);
+    
+    err_code = inv_enable_magnetic_disturbance();
+    RETURN_IF_ERROR(err_code);
+    
     /* Allows use of the MPL APIs in read_from_mpl. */
-    (void)inv_enable_eMPL_outputs();
-
-    result = inv_start_mpl();
-    APP_ERROR_CHECK(result);
+    err_code = inv_enable_eMPL_outputs();
+    RETURN_IF_ERROR(err_code);
+    
+    err_code = inv_enable_heading_from_gyro();
+    RETURN_IF_ERROR(err_code);
+    
+    err_code = inv_start_mpl();
+    RETURN_IF_ERROR(err_code);
 
     return NRF_SUCCESS;
 }
@@ -533,46 +613,59 @@ static uint32_t mpulib_init(void)
 
 static uint32_t mpulib_config(void)
 {
-    unsigned char accel_fsr;
-    unsigned short gyro_rate;
-    unsigned short gyro_fsr;
-    unsigned short compass_fsr;
+    int             err_code;
+    unsigned char   accel_fsr;
+    unsigned short  gyro_rate;
+    unsigned short  gyro_fsr;
+    unsigned short  compass_fsr;
 
-    (void)mpu_set_sensors(m_motion.sensors);
+    err_code = mpu_set_sensors(m_motion.sensors);
+    RETURN_IF_ERROR(err_code);
 
     /* Push both gyro, accel and compass data into the FIFO. */
-    (void)mpu_configure_fifo(m_motion.sensors);
-    (void)mpu_set_sample_rate(m_motion.motion_freq_hz);
+    err_code = mpu_configure_fifo(m_motion.sensors);
+    RETURN_IF_ERROR(err_code);
+    
+    err_code = mpu_set_sample_rate(m_motion.motion_freq_hz);
+    RETURN_IF_ERROR(err_code);
 
     /* The compass sampling rate can be less than the gyro/accel sampling rate.
      * Use this function for proper power management. */
-    (void)mpu_set_compass_sample_rate(1000UL / m_motion.compass_interval_ms);
+    err_code = mpu_set_compass_sample_rate(1000UL / m_motion.compass_interval_ms);
+    RETURN_IF_ERROR(err_code);
 
     /* Read back configuration in case it was set improperly. */
-    (void)mpu_get_sample_rate(&gyro_rate);
-    (void)mpu_get_gyro_fsr(&gyro_fsr);
-    (void)mpu_get_accel_fsr(&accel_fsr);
-    (void)mpu_get_compass_fsr(&compass_fsr);
+    err_code = mpu_get_sample_rate(&gyro_rate);
+    RETURN_IF_ERROR(err_code);
+    
+    err_code = mpu_get_gyro_fsr(&gyro_fsr);
+    RETURN_IF_ERROR(err_code);
+    
+    err_code = mpu_get_accel_fsr(&accel_fsr);
+    RETURN_IF_ERROR(err_code);
+    
+    err_code = mpu_get_compass_fsr(&compass_fsr);
+    RETURN_IF_ERROR(err_code);
 
     /* Sync driver configuration with MPL. */
     /* Sample rate expected in microseconds. */
-    (void)inv_set_gyro_sample_rate(1000000L / gyro_rate);
-    (void)inv_set_accel_sample_rate(1000000L / gyro_rate);
+    inv_set_gyro_sample_rate(1000000L / gyro_rate);
+    inv_set_accel_sample_rate(1000000L / gyro_rate);
 
     /* The compass rate is independent of the gyro and accel rates. As long as
      * inv_set_compass_sample_rate is called with the correct value, the 9-axis
      * fusion algorithm's compass correction gain will work properly. */
-    (void)inv_set_compass_sample_rate(m_motion.compass_interval_ms * 1000L);
+    inv_set_compass_sample_rate(m_motion.compass_interval_ms * 1000L);
 
     /* Set chip-to-body orientation matrix.
      * Set hardware units to dps/g's/degrees scaling factor. */
-    (void)inv_set_gyro_orientation_and_scale(
+    inv_set_gyro_orientation_and_scale(
             inv_orientation_matrix_to_scalar(s_gyro_pdata.orientation),
             (long)gyro_fsr<<15);
-    (void)inv_set_accel_orientation_and_scale(
+    inv_set_accel_orientation_and_scale(
             inv_orientation_matrix_to_scalar(s_accel_pdata.orientation),
             (long)accel_fsr<<15);
-    (void)inv_set_compass_orientation_and_scale(
+    inv_set_compass_orientation_and_scale(
             inv_orientation_matrix_to_scalar(s_compass_pdata.orientation),
             (long)compass_fsr<<15);
 
@@ -582,19 +675,32 @@ static uint32_t mpulib_config(void)
 
 static uint32_t dmp_init(void)
 {
+    int err_code;
     /* Initialize DMP. */
-    (void)dmp_load_motion_driver_firmware();
-    (void)dmp_set_orientation(
+    err_code = dmp_load_motion_driver_firmware();
+    RETURN_IF_ERROR(err_code);
+    
+    err_code = dmp_set_orientation(
         inv_orientation_matrix_to_scalar(s_gyro_pdata.orientation));
-    (void)dmp_register_tap_cb(mpulib_tap_cb);
-    (void)dmp_register_android_orient_cb(mpulib_orient_cb);
+    RETURN_IF_ERROR(err_code);
+    
+    err_code = dmp_register_tap_cb(mpulib_tap_cb);
+    RETURN_IF_ERROR(err_code);
+    
+    err_code = dmp_register_android_orient_cb(mpulib_orient_cb);
+    RETURN_IF_ERROR(err_code);
 
     m_motion.dmp_features = DMP_FEATURE_6X_LP_QUAT | DMP_FEATURE_TAP |
         DMP_FEATURE_ANDROID_ORIENT | DMP_FEATURE_SEND_RAW_ACCEL | DMP_FEATURE_SEND_CAL_GYRO |
         DMP_FEATURE_GYRO_CAL;
-    (void)dmp_enable_feature(m_motion.dmp_features);
-    (void)dmp_set_fifo_rate(m_motion.motion_freq_hz);
-    (void)mpu_set_dmp_state(1);
+    err_code = dmp_enable_feature(m_motion.dmp_features);
+    RETURN_IF_ERROR(err_code);
+    
+    err_code = dmp_set_fifo_rate(m_motion.motion_freq_hz);
+    RETURN_IF_ERROR(err_code);
+    
+    err_code = mpu_set_dmp_state(1);
+    RETURN_IF_ERROR(err_code);
 
     return NRF_SUCCESS;
 }
@@ -672,7 +778,7 @@ uint32_t drv_motion_enable(drv_motion_feature_mask_t feature_mask)
     /* Set features bits. */
     m_motion.features |= feature_mask;
     /* Set enabled sensors. */
-    m_motion.sensors |= (INV_XYZ_GYRO | INV_XYZ_ACCEL | INV_XYZ_COMPASS | INV_WXYZ_QUAT);
+    m_motion.sensors |= (INV_XYZ_GYRO | INV_XYZ_ACCEL | INV_XYZ_COMPASS );
 
     if (!m_motion.running)
     {
@@ -685,28 +791,28 @@ uint32_t drv_motion_enable(drv_motion_feature_mask_t feature_mask)
 
         m_motion.dmp_on = true;
         err_code = mpulib_init();
-        APP_ERROR_CHECK(err_code);
+        RETURN_IF_ERROR(err_code);
         err_code = mpulib_config();
-        APP_ERROR_CHECK(err_code);
+        RETURN_IF_ERROR(err_code);
         err_code = dmp_init();
-        APP_ERROR_CHECK(err_code);
+        RETURN_IF_ERROR(err_code);
 
         (void)drv_mpu9250_enable(true);
 
         err_code = app_timer_start(m_temp_timer_id,
-                                   APP_TIMER_TICKS(m_motion.temp_interval_ms, APP_TIMER_PRESCALER),
+                                   APP_TIMER_TICKS(m_motion.temp_interval_ms),
                                    NULL);
-        APP_ERROR_CHECK(err_code);
+        RETURN_IF_ERROR(err_code);
 
         err_code = app_timer_start(m_compass_timer_id,
-                                   APP_TIMER_TICKS(m_motion.compass_interval_ms, APP_TIMER_PRESCALER),
+                                   APP_TIMER_TICKS(m_motion.compass_interval_ms),
                                    NULL);
-        APP_ERROR_CHECK(err_code);
+        RETURN_IF_ERROR(err_code);
 
         err_code = app_timer_start(m_pedo_timer_id,
-                                   APP_TIMER_TICKS(m_motion.pedo_interval_ms, APP_TIMER_PRESCALER),
+                                   APP_TIMER_TICKS(m_motion.pedo_interval_ms),
                                    NULL);
-        APP_ERROR_CHECK(err_code);
+        RETURN_IF_ERROR(err_code);
     }
 
     return NRF_SUCCESS;

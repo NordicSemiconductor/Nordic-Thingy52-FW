@@ -65,7 +65,7 @@
 #include <stdbool.h>
 
 #define BLE_UUID_TMS_SERVICE 0x0400                      /**< The UUID of the Motion Service. */
-#define BLE_TMS_MAX_DATA_LEN (GATT_MTU_SIZE_DEFAULT - 3) /**< Maximum length of data (in bytes) that can be transmitted to the peer by the Motion service module. */
+#define BLE_TMS_MAX_DATA_LEN (BLE_GATT_ATT_MTU_DEFAULT - 3) /**< Maximum length of data (in bytes) that can be transmitted to the peer by the Motion service module. */
 
 #ifdef __GNUC__
     #ifdef PACKED
@@ -155,16 +155,16 @@ typedef PACKED( struct
     uint8_t                   wake_on_motion;
 }) ble_tms_config_t;
 
-#define BLE_TMS_CONFIG_PEDO_INT_MIN   100
-#define BLE_TMS_CONFIG_PEDO_INT_MAX  5000
-#define BLE_TMS_CONFIG_TEMP_INT_MIN   100
-#define BLE_TMS_CONFIG_TEMP_INT_MAX  5000
-#define BLE_TMS_CONFIG_COMP_INT_MIN   100
-#define BLE_TMS_CONFIG_COMP_INT_MAX  5000
-#define BLE_TMS_CONFIG_MPUF_MIN         1
-#define BLE_TMS_CONFIG_MPUF_MAX       200
-#define BLE_TMS_CONFIG_WOM_MIN          0
-#define BLE_TMS_CONFIG_WOM_MAX          1
+#define BLE_TMS_CONFIG_PEDO_INT_MIN   100   ///< Minimum pedometer interval [ms].
+#define BLE_TMS_CONFIG_PEDO_INT_MAX  5000   ///< Maximum pedometer interval [ms].
+#define BLE_TMS_CONFIG_TEMP_INT_MIN   100   ///< Minimum temperature compensation interval [ms].
+#define BLE_TMS_CONFIG_TEMP_INT_MAX  5000   ///< Maximum temperature compensation interval [ms].
+#define BLE_TMS_CONFIG_COMP_INT_MIN   100   ///< Minimum compass compensation interval [ms].
+#define BLE_TMS_CONFIG_COMP_INT_MAX  1000   ///< Maximum compass compensation interval [ms].
+#define BLE_TMS_CONFIG_MPUF_MIN         5   ///< Minimum motion processing frequency [Hz]. (4 Hz minimum to mpu_set_sample_rate())
+#define BLE_TMS_CONFIG_MPUF_MAX       200   ///< Maximum motion processing frequency [Hz].
+#define BLE_TMS_CONFIG_WOM_MIN          0   ///< Wake on motion on.
+#define BLE_TMS_CONFIG_WOM_MAX          1   ///< Wake on motion off.
 
 typedef enum
 {

@@ -56,7 +56,7 @@
  *          the state of the Button Characteristic to connected peers.
  *
  * @note The application must propagate BLE stack events to the LED Button Service
- *       module by calling ble_uis_on_ble_evt() from the @ref softdevice_handler callback.
+ *       module by calling ble_uis_on_ble_evt() from the softdevice_handler callback.
 */
 
 #ifndef BLE_UIS_H__
@@ -96,17 +96,17 @@ typedef enum
 #define BLE_UIS_LED_MODE_MIN BLE_UIS_LED_MODE_OFF               /**< Minimum value for mode. */
 #define BLE_UIS_LED_MODE_MAX BLE_UIS_LED_MODE_BREATHE_ONE_SHOT  /**< Maximum value for mode. */
 
-#define BLE_UIS_LED_MODE_OFF_LENGTH                     1       /**< Off mode command length in bytes. */
-#define BLE_UIS_LED_MODE_CONST_LENGTH                   4       /**< Const mode command length in bytes. */
-#define BLE_UIS_LED_MODE_BREATHE_LENGTH                 5       /**< Breahte mode command length in bytes. */
-#define BLE_UIS_LED_MODE_BREATHE_ONE_SHOT_LENGTH        3       /**< One shot mode command length in bytes. */
+#define BLE_UIS_LED_MODE_OFF_LENGTH                     1       /**< Off mode command length [bytes]. */
+#define BLE_UIS_LED_MODE_CONST_LENGTH                   4       /**< Const mode command length [bytes]. */
+#define BLE_UIS_LED_MODE_BREATHE_LENGTH                 5       /**< Breahte mode command length [bytes]. */
+#define BLE_UIS_LED_MODE_BREATHE_ONE_SHOT_LENGTH        3       /**< One shot mode command length [bytes]. */
 
 #define BLE_UIS_LED_COLOR_MIX_MIN                       1       /**< Minimum value for color mix. */
 #define BLE_UIS_LED_COLOR_MIX_MAX                       7       /**< Maximum value for color mix. */
 #define BLE_UIS_LED_INTENSITY_MIN                       1       /**< Minimum LED intensity. */
 #define BLE_UIS_LED_INTENSITY_MAX                       100     /**< Maximum LED intensity. */
-#define BLE_UIS_LED_DELAY_MIN                           1       /**< Minimum delay for breathe sequence.*/
-#define BLE_UIS_LED_DELAY_MAX                           10000   /**< Maximum delay for breathe sequence.*/
+#define BLE_UIS_LED_DELAY_MIN                           50      /**< Minimum delay for breathe sequence [ms].*/
+#define BLE_UIS_LED_DELAY_MAX                           10000   /**< Maximum delay for breathe sequence [ms].*/
 
 /**@brief union representing LED BLE characteristics.
  */
@@ -114,9 +114,9 @@ typedef PACKED( union
 {
     PACKED( struct
     {
-        uint8_t r;          /**< Red intensity .*/
-        uint8_t g;          /**< Green intensity .*/
-        uint8_t b;          /**< Blue intensity .*/
+        uint8_t r;          /**< Red intensity.   */
+        uint8_t g;          /**< Green intensity. */
+        uint8_t b;          /**< Blue intensity.  */
     })mode_const;
     PACKED( struct
     {
@@ -210,7 +210,7 @@ void ble_uis_on_ble_evt(ble_uis_t * p_uis, ble_evt_t * p_ble_evt);
 /**@brief Function for sending a button state notification.
  *
  * @param[in] p_uis         LED Button Service structure.
- * @param[in] button_state  New button state.
+ * @param[in] buttons_state New button state.
  *
  * @retval NRF_SUCCESS If the notification was sent successfully. Otherwise, an error code is returned.
  */

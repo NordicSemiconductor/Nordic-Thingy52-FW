@@ -42,10 +42,8 @@
 #include "drv_lps22hb.h"
 #include "nrf_drv_gpiote.h"
 #include "app_scheduler.h"
-
-#ifdef PRESSURE_DEBUG
-    #define LOCAL_DEBUG
-#endif
+#define  NRF_LOG_MODULE_NAME "drv_pressure  "
+#include "nrf_log.h"
 #include "macros_common.h"
 
 /**@brief Pressure configuration struct.
@@ -103,7 +101,7 @@ static uint32_t gpiote_init(uint32_t pin)
     nrf_drv_gpiote_in_config_t gpiote_in_config;
     gpiote_in_config.is_watcher  = false;
     gpiote_in_config.hi_accuracy = false;
-    gpiote_in_config.pull        = NRF_GPIO_PIN_PULLUP;
+    gpiote_in_config.pull        = NRF_GPIO_PIN_NOPULL;
     gpiote_in_config.sense       = NRF_GPIOTE_POLARITY_TOGGLE;
     err_code = nrf_drv_gpiote_in_init(pin, &gpiote_in_config, gpiote_evt_handler);
     RETURN_IF_ERROR(err_code);
@@ -124,7 +122,7 @@ static void gpiote_uninit(uint32_t pin)
 uint32_t drv_pressure_init(drv_pressure_init_t * p_params)
 {
     uint32_t err_code;
-    uint8_t who_am_i;
+    uint8_t  who_am_i;
 
     NULL_PARAM_CHECK(p_params);
     NULL_PARAM_CHECK(p_params->p_twi_instance);
@@ -152,6 +150,9 @@ uint32_t drv_pressure_init(drv_pressure_init_t * p_params)
 
     err_code = drv_lps22hb_close();
     RETURN_IF_ERROR(err_code);
+    
+    // Pressure sensor has power, hence it has control of the DRDY pin and no pull is needed.
+    nrf_gpio_cfg_input(m_drv_pressure.cfg.pin_int, NRF_GPIO_PIN_NOPULL);
 
     return NRF_SUCCESS;
 }

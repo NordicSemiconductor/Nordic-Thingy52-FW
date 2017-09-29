@@ -60,7 +60,7 @@
 #include <stdbool.h>
 
 #define BLE_UUID_TSS_SERVICE 0x0500                      /**< The UUID of the Thingy Sound Service. */
-#define BLE_TSS_MAX_DATA_LEN (GATT_MTU_SIZE_DEFAULT - 3) /**< Maximum length of data (in bytss) that can be transmitted to the peer by the Thingy Sound service module. */
+#define BLE_TSS_MAX_DATA_LEN (BLE_GATT_ATT_MTU_DEFAULT - 3) /**< Maximum length of data (in bytss) that can be transmitted to the peer by the Thingy Sound service module. */
 
 #ifdef __GNUC__
     #ifdef PACKED
@@ -217,7 +217,7 @@ uint32_t ble_tss_mic_set(ble_tss_t * p_tss, uint8_t * p_data, uint16_t size);
  * @details This function sends the speaker status as an speaker status characteristic notification to the peer.
  *
  * @param[in] p_tss       Pointer to the Thingy Sound Service structure.
- * @param[in] p_data      Pointer to the mic data.
+ * @param[in] status      The status.
  *
  * @retval NRF_SUCCESS If the string was sent successfully. Otherwise, an error code is returned.
  */
