@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>Nordic Thingy:52 : drv_ext_light.h Source File</title>
+<title>Nordic Thingy:52 v2.0.0 : drv_ext_light.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Nordic Semiconductor" src="nordic_small.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Nordic Thingy:52
+   <div id="projectname">Nordic Thingy:52 v2.0.0
    </div>
   </td>
  </tr>
@@ -179,10 +179,10 @@ $(document).ready(function(){initNavTree('drv__ext__light_8h_source.html','');})
 <div class="line"><a name="l00062"></a><span class="lineno"><a class="code" href="group__gpio__ext__driver__led.html#gac0940cc3ff13afcdf3853eb049cdc582">   62</a></span>&#160;<span class="preprocessor">#define DRV_EXT_LIGHT_NUM_LIGHTS_MAX            (((DRV_SX1509_HIGHINPMODE_PIN15_Pos + 1) &lt; (16)) ? \</span></div>
 <div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;<span class="preprocessor">                                                (DRV_SX1509_HIGHINPMODE_PIN15_Pos + 1) : (16))          </span></div>
 <div class="line"><a name="l00064"></a><span class="lineno"><a class="code" href="group__gpio__ext__driver__led.html#ga958a3db4ecc863d150e6498efabe108c">   64</a></span>&#160;<span class="preprocessor">#define DRV_EXT_LIGHT_IOEXT_CLKX_DIV_MAX        (DRV_SX1509_MISC_CLKX_Msk &gt;&gt; DRV_SX1509_MISC_CLKX_Pos)  </span></div>
-<div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00065"></a><span class="lineno"><a class="code" href="group__gpio__ext__driver__led.html#ga15c4951c0665577c37f2cba4ae2a633b">   65</a></span>&#160;<span class="preprocessor">#define DRV_EXT_LIGHT_INVALID_RESYNC_PIN        255     </span></div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="keyword">enum</span></div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;{</div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor">enum</span></div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;<span class="preprocessor"></span>{</div>
 <div class="line"><a name="l00070"></a><span class="lineno"><a class="code" href="group__gpio__ext__driver__led.html#ggabc6126af1d45847bc59afa0aa3216b04ae318b9fc662b0e9115317b616b789859">   70</a></span>&#160;    <a class="code" href="group__gpio__ext__driver__led.html#ggabc6126af1d45847bc59afa0aa3216b04ae318b9fc662b0e9115317b616b789859" title="Successful.">DRV_EXT_LIGHT_STATUS_CODE_SUCCESS</a>,            </div>
 <div class="line"><a name="l00071"></a><span class="lineno"><a class="code" href="group__gpio__ext__driver__led.html#ggabc6126af1d45847bc59afa0aa3216b04a57fc098d5513cb8375be61ee2d7445e0">   71</a></span>&#160;    <a class="code" href="group__gpio__ext__driver__led.html#ggabc6126af1d45847bc59afa0aa3216b04a57fc098d5513cb8375be61ee2d7445e0" title="Invalid parameters.">DRV_EXT_LIGHT_STATUS_CODE_INVALID_PARAM</a>,      </div>
 <div class="line"><a name="l00072"></a><span class="lineno"><a class="code" href="group__gpio__ext__driver__led.html#ggabc6126af1d45847bc59afa0aa3216b04af8036e995b06ac465aad4036deb12476">   72</a></span>&#160;    <a class="code" href="group__gpio__ext__driver__led.html#ggabc6126af1d45847bc59afa0aa3216b04af8036e995b06ac465aad4036deb12476" title="Not supported.">DRV_EXT_LIGHT_STATUS_CODE_NOT_SUPPORTED</a>,      </div>
@@ -277,8 +277,8 @@ $(document).ready(function(){initNavTree('drv__ext__light_8h_source.html','');})
 <div class="line"><a name="l00181"></a><span class="lineno"><a class="code" href="structdrv__ext__light__init__t.html#a508151b70f56c4287396f61aa8f6b1fc">  181</a></span>&#160;    <a class="code" href="structdrv__ext__light__conf__t.html" title="Struct that defines the type of light (monochrome or RGB) and the corresponding connected pins...">drv_ext_light_conf_t</a> <span class="keyword">const</span> * <a class="code" href="structdrv__ext__light__init__t.html#a508151b70f56c4287396f61aa8f6b1fc" title="Array of lights, each with their specific configuraion.">p_light_conf</a>;          </div>
 <div class="line"><a name="l00182"></a><span class="lineno"><a class="code" href="structdrv__ext__light__init__t.html#a7ad90981fe4efb810a08759bfe032dd9">  182</a></span>&#160;    uint8_t                      <a class="code" href="structdrv__ext__light__init__t.html#a7ad90981fe4efb810a08759bfe032dd9" title="Number of connected lights.">num_lights</a>;            </div>
 <div class="line"><a name="l00183"></a><span class="lineno"><a class="code" href="structdrv__ext__light__init__t.html#a2069c7bdf6ec3f36cade163500e61b46">  183</a></span>&#160;    <a class="code" href="group__gpio__ext__driver__led.html#ga7ef0e9b9c612cd4b33abc08f125ef661" title="Defines the frequency of the LED driver clock (ClkX) of the SX1509 according to ClkX = fOSC/2^(DRV_EX...">drv_ext_light_clkx_div_t</a>     <a class="code" href="structdrv__ext__light__init__t.html#a2069c7bdf6ec3f36cade163500e61b46" title="IO extender clock divider.">clkx_div</a>;              </div>
-<div class="line"><a name="l00184"></a><span class="lineno"><a class="code" href="structdrv__ext__light__init__t.html#a7942ffa784b49053577ed925bc0094d4">  184</a></span>&#160;    <a class="code" href="structdrv__sx1509__cfg__t.html" title="The ccs811 configuration.">drv_sx1509_cfg_t</a> <span class="keyword">const</span>     * <a class="code" href="structdrv__ext__light__init__t.html#a7942ffa784b49053577ed925bc0094d4" title="pointer to TWI (I2C) configuration for communication between master and IO extender.">p_twi_conf</a>;            </div>
-<div class="line"><a name="l00185"></a><span class="lineno"><a class="code" href="structdrv__ext__light__init__t.html#a85af17b4f9aed43c742f344d427a0332">  185</a></span>&#160;    uint8_t                      <a class="code" href="structdrv__ext__light__init__t.html#a85af17b4f9aed43c742f344d427a0332" title="Prescaler used for the app timer.">app_timer_prescaler</a>;   </div>
+<div class="line"><a name="l00184"></a><span class="lineno"><a class="code" href="structdrv__ext__light__init__t.html#a7942ffa784b49053577ed925bc0094d4">  184</a></span>&#160;    <a class="code" href="structdrv__sx1509__cfg__t.html" title="SX1509 configuration.">drv_sx1509_cfg_t</a> <span class="keyword">const</span>     * <a class="code" href="structdrv__ext__light__init__t.html#a7942ffa784b49053577ed925bc0094d4" title="pointer to TWI (I2C) configuration for communication between master and IO extender.">p_twi_conf</a>;            </div>
+<div class="line"><a name="l00185"></a><span class="lineno"><a class="code" href="structdrv__ext__light__init__t.html#af5ac896491ef67bec789e5b651ceb415">  185</a></span>&#160;    uint8_t                      <a class="code" href="structdrv__ext__light__init__t.html#af5ac896491ef67bec789e5b651ceb415" title="Pin used to resync IO extender counters. Use DRV_EXT_LIGHT_INVALID_RESYNC_PIN if unused.">resync_pin</a>;            </div>
 <div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;} <a class="code" href="structdrv__ext__light__init__t.html" title="Struct for initializing the light driver.">drv_ext_light_init_t</a>;</div>
 <div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;</div>
 <div class="line"><a name="l00190"></a><span class="lineno"><a class="code" href="structdrv__ext__light__rgb__intensity__t.html">  190</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct</span></div>
@@ -298,28 +298,28 @@ $(document).ready(function(){initNavTree('drv__ext__light_8h_source.html','');})
 <div class="line"><a name="l00208"></a><span class="lineno">  208</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00216"></a><span class="lineno">  216</span>&#160;ret_code_t <a class="code" href="group__gpio__ext__driver__led.html#ga8fe19008186699f778b44392ea4d3472" title="Function for resetting all the registers of the IO extender to their default values.">drv_ext_light_reset</a>(<span class="keywordtype">void</span>);</div>
 <div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;</div>
-<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;ret_code_t <a class="code" href="group__gpio__ext__driver__led.html#ga0d97adbf138f2bac221b0ddd0873f729" title="Turn a given light on.">drv_ext_light_on</a>(uint32_t <span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00228"></a><span class="lineno">  228</span>&#160;ret_code_t <a class="code" href="group__gpio__ext__driver__led.html#ga0d97adbf138f2bac221b0ddd0873f729" title="Function for turning a given light on.">drv_ext_light_on</a>(uint32_t <span class="keywordtype">id</span>);</div>
 <div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;</div>
-<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;ret_code_t <a class="code" href="group__gpio__ext__driver__led.html#gac9e6f07ddc6264f7a5c1fe8bc6f88c72" title="Turn a given light off.">drv_ext_light_off</a>(uint32_t <span class="keywordtype">id</span>);</div>
+<div class="line"><a name="l00240"></a><span class="lineno">  240</span>&#160;ret_code_t <a class="code" href="group__gpio__ext__driver__led.html#gac9e6f07ddc6264f7a5c1fe8bc6f88c72" title="Function for turning a given light off.">drv_ext_light_off</a>(uint32_t <span class="keywordtype">id</span>);</div>
 <div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;</div>
 <div class="line"><a name="l00251"></a><span class="lineno">  251</span>&#160;ret_code_t <a class="code" href="group__gpio__ext__driver__led.html#gaf4ebb69047b9423d8ee1b32012905ec8" title="Function for setting intensity of monochrome light.">drv_ext_light_intensity_set</a>(uint32_t <span class="keywordtype">id</span>, uint8_t intensity);</div>
 <div class="line"><a name="l00252"></a><span class="lineno">  252</span>&#160;</div>
 <div class="line"><a name="l00262"></a><span class="lineno">  262</span>&#160;ret_code_t <a class="code" href="group__gpio__ext__driver__led.html#ga9095af792e1f6dde9b4e17756d636015" title="Function for setting color for RGB LEDs.">drv_ext_light_rgb_intensity_set</a>(uint32_t <span class="keywordtype">id</span>, <a class="code" href="structdrv__ext__light__rgb__intensity__t.html" title="Simplified struct for setting RGB intensity directly.">drv_ext_light_rgb_intensity_t</a> <span class="keyword">const</span> * <span class="keyword">const</span> p_intensity);</div>
 <div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;ret_code_t <a class="code" href="group__gpio__ext__driver__led.html#ga1fccbca89dfd54f5fbdf2764ffca4e24" title="Set color for a given light through the GPIO extender.">drv_ext_light_sequence</a>(uint32_t <span class="keywordtype">id</span>, drv_ext_light_sequence_t * <span class="keyword">const</span> p_sequence);</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;</div>
-<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;ret_code_t <a class="code" href="group__gpio__ext__driver__led.html#ga0e5cc72e8fb9bb112d3a556f7a2b69fa" title="Set color for a given light through the GPIO extender.">drv_ext_light_rgb_sequence</a>(uint32_t <span class="keywordtype">id</span>, <a class="code" href="structdrv__ext__light__rgb__sequence__t.html" title="The color mix and sequence variables if a sequence (e.g. breathe) is used.">drv_ext_light_rgb_sequence_t</a> * <span class="keyword">const</span> p_sequence);</div>
-<div class="line"><a name="l00299"></a><span class="lineno">  299</span>&#160;</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;ret_code_t <a class="code" href="group__gpio__ext__driver__led.html#ga7a4426fa7e6fa57d7fa9d9a208ecbaf6" title="Function for initializing the drv_ext_light driver.">drv_ext_light_init</a>(<a class="code" href="structdrv__ext__light__init__t.html" title="Struct for initializing the light driver.">drv_ext_light_init_t</a> <span class="keyword">const</span> * p_init, <span class="keywordtype">bool</span> on_init_reset);</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;</div>
-<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;ret_code_t <a class="code" href="group__gpio__ext__driver__led.html#ga1fccbca89dfd54f5fbdf2764ffca4e24" title="Function for setting color for a given light through the GPIO extender.">drv_ext_light_sequence</a>(uint32_t <span class="keywordtype">id</span>, drv_ext_light_sequence_t * <span class="keyword">const</span> p_sequence);</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;</div>
+<div class="line"><a name="l00300"></a><span class="lineno">  300</span>&#160;ret_code_t <a class="code" href="group__gpio__ext__driver__led.html#ga0e5cc72e8fb9bb112d3a556f7a2b69fa" title="Function for setting color for a given light through the GPIO extender.">drv_ext_light_rgb_sequence</a>(uint32_t <span class="keywordtype">id</span>, <a class="code" href="structdrv__ext__light__rgb__sequence__t.html" title="The color mix and sequence variables if a sequence (e.g. breathe) is used.">drv_ext_light_rgb_sequence_t</a> * <span class="keyword">const</span> p_sequence);</div>
+<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;</div>
+<div class="line"><a name="l00316"></a><span class="lineno">  316</span>&#160;ret_code_t <a class="code" href="group__gpio__ext__driver__led.html#ga7a4426fa7e6fa57d7fa9d9a208ecbaf6" title="Function for initializing the drv_ext_light driver.">drv_ext_light_init</a>(<a class="code" href="structdrv__ext__light__init__t.html" title="Struct for initializing the light driver.">drv_ext_light_init_t</a> <span class="keyword">const</span> * p_init, <span class="keywordtype">bool</span> on_init_reset);</div>
+<div class="line"><a name="l00317"></a><span class="lineno">  317</span>&#160;</div>
+<div class="line"><a name="l00318"></a><span class="lineno">  318</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00319"></a><span class="lineno">  319</span>&#160;<span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div id="nav-path" class="topicfooter">
 <a href="mailto:docfeedback@nordicsemi.no?subject=Documentation%20feedback" id="maillink">Documentation feedback</a> | <a href="https://devzone.nordicsemi.com/questions/" target="_blank">Developer Zone</a> | <a href="http://response.nordicsemi.com/subscribe-to-our-newsletters" target="_blank">Subscribe</a> | Updated <span id="date"/>
 <script>
-var date = new Date("Tue May 30 2017" + " UTC");
+var date = new Date("Fri Sep 29 2017" + " UTC");
 document.getElementById("date").innerHTML = date.toJSON().slice(0, 10);
 var url=window.location.href.split("?")[0];
 var filename=url.substring(url.lastIndexOf('/')+1);

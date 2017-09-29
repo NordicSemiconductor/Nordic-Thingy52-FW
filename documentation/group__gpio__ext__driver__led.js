@@ -13,11 +13,11 @@ var group__gpio__ext__driver__led =
       [ "timer", "structdrv__ext__light__data__t.html#ab55f41c2b0a716fd0debe1d6393cbcd2", null ]
     ] ],
     [ "drv_ext_light_init_t", "structdrv__ext__light__init__t.html", [
-      [ "app_timer_prescaler", "structdrv__ext__light__init__t.html#a85af17b4f9aed43c742f344d427a0332", null ],
       [ "clkx_div", "structdrv__ext__light__init__t.html#a2069c7bdf6ec3f36cade163500e61b46", null ],
       [ "num_lights", "structdrv__ext__light__init__t.html#a7ad90981fe4efb810a08759bfe032dd9", null ],
       [ "p_light_conf", "structdrv__ext__light__init__t.html#a508151b70f56c4287396f61aa8f6b1fc", null ],
-      [ "p_twi_conf", "structdrv__ext__light__init__t.html#a7942ffa784b49053577ed925bc0094d4", null ]
+      [ "p_twi_conf", "structdrv__ext__light__init__t.html#a7942ffa784b49053577ed925bc0094d4", null ],
+      [ "resync_pin", "structdrv__ext__light__init__t.html#af5ac896491ef67bec789e5b651ceb415", null ]
     ] ],
     [ "drv_ext_light_rgb_intensity_t", "structdrv__ext__light__rgb__intensity__t.html", [
       [ "b", "structdrv__ext__light__rgb__intensity__t.html#a5f137d6708765a5bb84273e06645a992", null ],
@@ -37,6 +37,7 @@ var group__gpio__ext__driver__led =
     [ "DRV_EXT_LIGHT_DEF", "group__gpio__ext__driver__led.html#ga6e1e3913bb1c17a3b4868732f67f54fd", null ],
     [ "DRV_EXT_LIGHT_INTENSITY_MAX", "group__gpio__ext__driver__led.html#ga4d6a47aeec194a0f794e99430d600249", null ],
     [ "DRV_EXT_LIGHT_INTENSITY_OFF", "group__gpio__ext__driver__led.html#gaa73716fd9fe54af5f2fa069ca466da42", null ],
+    [ "DRV_EXT_LIGHT_INVALID_RESYNC_PIN", "group__gpio__ext__driver__led.html#ga15c4951c0665577c37f2cba4ae2a633b", null ],
     [ "DRV_EXT_LIGHT_IOEXT_CLKX_DIV_MAX", "group__gpio__ext__driver__led.html#ga958a3db4ecc863d150e6498efabe108c", null ],
     [ "DRV_EXT_LIGHT_MAX_PIN_ID_ALLOWED", "group__gpio__ext__driver__led.html#ga3cd23071441d22e48823f17ee3879d87", null ],
     [ "DRV_EXT_LIGHT_NUM_LIGHTS_MAX", "group__gpio__ext__driver__led.html#gac0940cc3ff13afcdf3853eb049cdc582", null ],

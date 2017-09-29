@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>Nordic Thingy:52 : Pressure sensor</title>
+<title>Nordic Thingy:52 v2.0.0 : Pressure sensor</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Nordic Semiconductor" src="nordic_small.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Nordic Thingy:52
+   <div id="projectname">Nordic Thingy:52 v2.0.0
    </div>
   </td>
  </tr>
@@ -175,10 +175,10 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga77c5167df49400f2089f0b59912c894a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for resetting the chip to all default register values.  <a href="#ga77c5167df49400f2089f0b59912c894a">More...</a><br/></td></tr>
 <tr class="separator:ga77c5167df49400f2089f0b59912c894a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2e326ac01bfd21bf6d2db3ab39d37604"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__press__driver.html#ga2e326ac01bfd21bf6d2db3ab39d37604">drv_pressure_sample</a> (void)</td></tr>
-<tr class="memdesc:ga2e326ac01bfd21bf6d2db3ab39d37604"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to start sampling.  <a href="#ga2e326ac01bfd21bf6d2db3ab39d37604">More...</a><br/></td></tr>
+<tr class="memdesc:ga2e326ac01bfd21bf6d2db3ab39d37604"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for starting the sampling.  <a href="#ga2e326ac01bfd21bf6d2db3ab39d37604">More...</a><br/></td></tr>
 <tr class="separator:ga2e326ac01bfd21bf6d2db3ab39d37604"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3055a28b7ec647e7679621700c501655"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__press__driver.html#ga3055a28b7ec647e7679621700c501655">drv_pressure_sleep</a> (void)</td></tr>
-<tr class="memdesc:ga3055a28b7ec647e7679621700c501655"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to put sensor in sleep.  <a href="#ga3055a28b7ec647e7679621700c501655">More...</a><br/></td></tr>
+<tr class="memdesc:ga3055a28b7ec647e7679621700c501655"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for putting the sensor to sleep.  <a href="#ga3055a28b7ec647e7679621700c501655">More...</a><br/></td></tr>
 <tr class="separator:ga3055a28b7ec647e7679621700c501655"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -197,10 +197,10 @@ Functions</h2></td></tr>
 <p>Pressure driver event types. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga20f4e594399baeb4832a7ba5a8f01ddeabb0e5b24cfb12ef8f4b80a16237e261c"></a>DRV_PRESSURE_EVT_DATA</em>&nbsp;</td><td class="fielddoc">
-<p>Converted value ready to be read </p>
+<p>Converted value ready to be read. </p>
 </td></tr>
 <tr><td class="fieldname"><em><a class="anchor" id="gga20f4e594399baeb4832a7ba5a8f01ddeaa9f68e70bf8361bd232bf256a0a2ddb1"></a>DRV_PRESSURE_EVT_ERROR</em>&nbsp;</td><td class="fielddoc">
-<p>HW error on the communication bus </p>
+<p>HW error on the communication bus. </p>
 </td></tr>
 </table>
 
@@ -380,7 +380,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function to start sampling. </p>
+<p>Function for starting the sampling. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">NRF_SUCCESS</td><td>If start sampling was successful. </td></tr>
@@ -404,7 +404,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function to put sensor in sleep. </p>
+<p>Function for putting the sensor to sleep. </p>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">NRF_SUCCESS</td><td>If sleep was successful. </td></tr>
@@ -419,7 +419,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="topicfooter">
 <a href="mailto:docfeedback@nordicsemi.no?subject=Documentation%20feedback" id="maillink">Documentation feedback</a> | <a href="https://devzone.nordicsemi.com/questions/" target="_blank">Developer Zone</a> | <a href="http://response.nordicsemi.com/subscribe-to-our-newsletters" target="_blank">Subscribe</a> | Updated <span id="date"/>
 <script>
-var date = new Date("Tue May 30 2017" + " UTC");
+var date = new Date("Fri Sep 29 2017" + " UTC");
 document.getElementById("date").innerHTML = date.toJSON().slice(0, 10);
 var url=window.location.href.split("?")[0];
 var filename=url.substring(url.lastIndexOf('/')+1);

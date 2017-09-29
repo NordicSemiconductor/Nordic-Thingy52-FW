@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>Nordic Thingy:52 : support_func.h Source File</title>
+<title>Nordic Thingy:52 v2.0.0 : support_func.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Nordic Semiconductor" src="nordic_small.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Nordic Thingy:52
+   <div id="projectname">Nordic Thingy:52 v2.0.0
    </div>
   </td>
  </tr>
@@ -166,21 +166,26 @@ $(document).ready(function(){initNavTree('support__func_8h_source.html','');});
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define __SUPPORT_FUNC_H__</span></div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#include &quot;sdk_errors.h&quot;</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;ret_code_t <a class="code" href="group__support__func.html#gabb174011cee76f57f7647b24343ce623" title="Prints the MAC addess of the device.">support_func_ble_mac_address_print_rtt</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="group__support__func.html#ga26f1b9bf321256a7266d192a154dfbf7" title="Checks if the device is in debug mode.">support_func_sys_halt_debug_enabled</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#include &quot;drv_ext_gpio.h&quot;</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
+<div class="line"><a name="l00055"></a><span class="lineno"><a class="code" href="group__support__func.html#ga3bb2b348db3927b7f4fd4c38cfe97cbb">   55</a></span>&#160;<span class="preprocessor">#define SUPPORT_FUNC_MAC_ADDR_STR_LEN ( (BLE_GAP_ADDR_LEN * 2) + 5 + 1) </span></div>
+<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;<span class="preprocessor">ret_code_t support_func_ble_mac_address_get(char * p_mac_addr);</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;<span class="keywordtype">bool</span> <a class="code" href="group__support__func.html#ga26f1b9bf321256a7266d192a154dfbf7" title="Function for checking if the device is in debug mode.">support_func_sys_halt_debug_enabled</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00077"></a><span class="lineno">   77</span>&#160;</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;ret_code_t <a class="code" href="group__support__func.html#ga6ce72986342a0464c927715609978272" title="Function for configuring nRF IO and the GPIO extender for startup.">support_func_configure_io_startup</a>(<a class="code" href="structdrv__ext__gpio__init__t.html" title="GPIO extender driver configuration.">drv_ext_gpio_init_t</a> <span class="keyword">const</span> * <span class="keyword">const</span> p_ext_gpio_init);</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;ret_code_t <a class="code" href="group__support__func.html#gafc55135665b037947ac570e0c02ed23e" title="Function for configuring nRF IO and the GPIO extender for shutdown.">support_func_configure_io_shutdown</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;<span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div id="nav-path" class="topicfooter">
 <a href="mailto:docfeedback@nordicsemi.no?subject=Documentation%20feedback" id="maillink">Documentation feedback</a> | <a href="https://devzone.nordicsemi.com/questions/" target="_blank">Developer Zone</a> | <a href="http://response.nordicsemi.com/subscribe-to-our-newsletters" target="_blank">Subscribe</a> | Updated <span id="date"/>
 <script>
-var date = new Date("Tue May 30 2017" + " UTC");
+var date = new Date("Fri Sep 29 2017" + " UTC");
 document.getElementById("date").innerHTML = date.toJSON().slice(0, 10);
 var url=window.location.href.split("?")[0];
 var filename=url.substring(url.lastIndexOf('/')+1);

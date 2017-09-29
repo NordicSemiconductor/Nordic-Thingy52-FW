@@ -13,6 +13,7 @@ var group__sx1509__driver =
     [ "drv_sx1509_close", "group__sx1509__driver.html#gaebc32247dc04693032b1593650ecfa03", null ],
     [ "drv_sx1509_data_get", "group__sx1509__driver.html#ga179c2c02edb813907baf6cf3a28a52e1", null ],
     [ "drv_sx1509_data_modify", "group__sx1509__driver.html#gab4a406a41323a70d466732d9784fa1af", null ],
+    [ "drv_sx1509_data_set", "group__sx1509__driver.html#ga59adca6e74c72015a0c78df20cc4972e", null ],
     [ "drv_sx1509_debounceconfig_get", "group__sx1509__driver.html#ga4254804afc5e87d78c49704223dbbc14", null ],
     [ "drv_sx1509_debounceconfig_modify", "group__sx1509__driver.html#gab4c87cb590f3889872074f17e416eab5", null ],
     [ "drv_sx1509_debounceenable_get", "group__sx1509__driver.html#gac31f09daccb5fe7c6074efcf980674ce", null ],

@@ -8,7 +8,7 @@ var searchData=
   ['app_5fbeacon_5fon_5fsys_5fevt',['app_beacon_on_sys_evt',['../group__ble__sdk__adv__beacon.html#ga5b124312305b07abeba16935fd12f220',1,'advertiser_beacon.h']]],
   ['app_5fbeacon_5fstart',['app_beacon_start',['../group__ble__sdk__adv__beacon.html#ga19c62b53343df829bf17cacc9a00e87f',1,'advertiser_beacon.h']]],
   ['app_5fbeacon_5fstop',['app_beacon_stop',['../group__ble__sdk__adv__beacon.html#ga750bb9f257312ff2f4187ec158178fe8',1,'advertiser_beacon.h']]],
-  ['app_5ftimer_5fprescaler',['app_timer_prescaler',['../structdrv__ext__light__init__t.html#a85af17b4f9aed43c742f344d427a0332',1,'drv_ext_light_init_t::app_timer_prescaler()'],['../structbatt__meas__param__t.html#a9ca8fd3a0a0041f1d51e0824463f6c43',1,'batt_meas_param_t::app_timer_prescaler()']]],
+  ['app_5ftimer_5fprescaler',['app_timer_prescaler',['../structbatt__meas__param__t.html#a9ca8fd3a0a0041f1d51e0824463f6c43',1,'batt_meas_param_t']]],
   ['av_5fconf_5freg',['AV_CONF_REG',['../group__hts221__humidity__driver.html#ga435c4cef8f7aedadecf8f8ed93cae28a',1,'drv_hts221.h']]],
   ['av_5fconf_5freg_5favgh_5fpos',['AV_CONF_REG_AVGH_Pos',['../group__hts221__humidity__driver.html#ga231dcf078125964af699b9570125fbab',1,'drv_hts221.h']]],
   ['av_5fconf_5freg_5favgt_5fpos',['AV_CONF_REG_AVGT_Pos',['../group__hts221__humidity__driver.html#ga31c98f3b85eb9f0f72de2b0c84033290',1,'drv_hts221.h']]],

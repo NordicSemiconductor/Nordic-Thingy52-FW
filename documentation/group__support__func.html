@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>Nordic Thingy:52 : Support functions</title>
+<title>Nordic Thingy:52 v2.0.0 : Support functions</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Nordic Semiconductor" src="nordic_small.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Nordic Thingy:52
+   <div id="projectname">Nordic Thingy:52 v2.0.0
    </div>
   </td>
  </tr>
@@ -108,6 +108,7 @@ $(document).ready(function(){initNavTree('group__support__func.html','');});
 
 <div class="header">
   <div class="summary">
+<a href="#define-members">Macros</a> &#124;
 <a href="#func-members">Functions</a>  </div>
   <div class="headertitle">
 <div class="title">Support functions<div class="ingroups"><a class="el" href="group__util.html">Utilities</a></div></div>  </div>
@@ -117,24 +118,79 @@ $(document).ready(function(){initNavTree('group__support__func.html','');});
 <p>Support functions.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
+<tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
+Macros</h2></td></tr>
+<tr class="memitem:ga3bb2b348db3927b7f4fd4c38cfe97cbb"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__support__func.html#ga3bb2b348db3927b7f4fd4c38cfe97cbb">SUPPORT_FUNC_MAC_ADDR_STR_LEN</a>&#160;&#160;&#160;( (BLE_GAP_ADDR_LEN * 2) + 5 + 1)</td></tr>
+<tr class="separator:ga3bb2b348db3927b7f4fd4c38cfe97cbb"><td class="memSeparator" colspan="2">&#160;</td></tr>
+</table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
-<tr class="memitem:gabb174011cee76f57f7647b24343ce623"><td class="memItemLeft" align="right" valign="top">ret_code_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__support__func.html#gabb174011cee76f57f7647b24343ce623">support_func_ble_mac_address_print_rtt</a> (void)</td></tr>
-<tr class="memdesc:gabb174011cee76f57f7647b24343ce623"><td class="mdescLeft">&#160;</td><td class="mdescRight">Prints the MAC addess of the device.  <a href="#gabb174011cee76f57f7647b24343ce623">More...</a><br/></td></tr>
-<tr class="separator:gabb174011cee76f57f7647b24343ce623"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga3eb663b8b1750f80b0534307f594a741"><td class="memItemLeft" align="right" valign="top">ret_code_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__support__func.html#ga3eb663b8b1750f80b0534307f594a741">support_func_ble_mac_address_get</a> (char *p_mac_addr)</td></tr>
+<tr class="memdesc:ga3eb663b8b1750f80b0534307f594a741"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for printing the MAC addess of the device.  <a href="#ga3eb663b8b1750f80b0534307f594a741">More...</a><br/></td></tr>
+<tr class="separator:ga3eb663b8b1750f80b0534307f594a741"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gafc55135665b037947ac570e0c02ed23e"><td class="memItemLeft" align="right" valign="top">ret_code_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__support__func.html#gafc55135665b037947ac570e0c02ed23e">support_func_configure_io_shutdown</a> (void)</td></tr>
+<tr class="memdesc:gafc55135665b037947ac570e0c02ed23e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for configuring nRF IO and the GPIO extender for shutdown.  <a href="#gafc55135665b037947ac570e0c02ed23e">More...</a><br/></td></tr>
+<tr class="separator:gafc55135665b037947ac570e0c02ed23e"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga6ce72986342a0464c927715609978272"><td class="memItemLeft" align="right" valign="top">ret_code_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__support__func.html#ga6ce72986342a0464c927715609978272">support_func_configure_io_startup</a> (<a class="el" href="structdrv__ext__gpio__init__t.html">drv_ext_gpio_init_t</a> const *const p_ext_gpio_init)</td></tr>
+<tr class="memdesc:ga6ce72986342a0464c927715609978272"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for configuring nRF IO and the GPIO extender for startup.  <a href="#ga6ce72986342a0464c927715609978272">More...</a><br/></td></tr>
+<tr class="separator:ga6ce72986342a0464c927715609978272"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga26f1b9bf321256a7266d192a154dfbf7"><td class="memItemLeft" align="right" valign="top">bool&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__support__func.html#ga26f1b9bf321256a7266d192a154dfbf7">support_func_sys_halt_debug_enabled</a> (void)</td></tr>
-<tr class="memdesc:ga26f1b9bf321256a7266d192a154dfbf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Checks if the device is in debug mode.  <a href="#ga26f1b9bf321256a7266d192a154dfbf7">More...</a><br/></td></tr>
+<tr class="memdesc:ga26f1b9bf321256a7266d192a154dfbf7"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for checking if the device is in debug mode.  <a href="#ga26f1b9bf321256a7266d192a154dfbf7">More...</a><br/></td></tr>
 <tr class="separator:ga26f1b9bf321256a7266d192a154dfbf7"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
 <p>Support functions. </p>
-<h2 class="groupheader">Function Documentation</h2>
-<a class="anchor" id="gabb174011cee76f57f7647b24343ce623"></a>
+<h2 class="groupheader">Macro Definition Documentation</h2>
+<a class="anchor" id="ga3bb2b348db3927b7f4fd4c38cfe97cbb"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">ret_code_t support_func_ble_mac_address_print_rtt </td>
+          <td class="memname">#define SUPPORT_FUNC_MAC_ADDR_STR_LEN&#160;&#160;&#160;( (BLE_GAP_ADDR_LEN * 2) + 5 + 1)</td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<p>6 bytes + 5 colon separators + NUL termination </p>
+
+</div>
+</div>
+<h2 class="groupheader">Function Documentation</h2>
+<a class="anchor" id="ga3eb663b8b1750f80b0534307f594a741"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ret_code_t support_func_ble_mac_address_get </td>
+          <td>(</td>
+          <td class="paramtype">char *&#160;</td>
+          <td class="paramname"><em>p_mac_addr</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for printing the MAC addess of the device. </p>
+<dl class="section note"><dt>Note</dt><dd>The SoftDevice must be enabled before this call is made.</dd></dl>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_mac_addr</td><td>Pointer to char array of length SUPPORT_FUNC_MAC_ADDR_STR_LEN.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS If the call was successful. </dd>
+<dd>
+NRF_ERROR_SOFTDEVICE_NOT_ENABLED The SoftDevice has not been enabled. </dd>
+<dd>
+Other codes from the underlying drivers. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gafc55135665b037947ac570e0c02ed23e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ret_code_t support_func_configure_io_shutdown </td>
           <td>(</td>
           <td class="paramtype">void&#160;</td>
           <td class="paramname"></td><td>)</td>
@@ -143,13 +199,38 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Prints the MAC addess of the device. </p>
-<dl class="section note"><dt>Note</dt><dd>The softdevice must be enabled before this call is made.</dd></dl>
+<p>Function for configuring nRF IO and the GPIO extender for shutdown. </p>
+<dl class="section note"><dt>Note</dt><dd>For Thingy HW v1.0.0, this function will only return NRF_SUCCESS as errors are ignored.</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS If the call was successful. </dd>
 <dd>
-NRF_ERROR_SOFTDEVICE_NOT_ENABLED The softdevice has not been enabled. </dd>
+Other codes from the underlying drivers. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga6ce72986342a0464c927715609978272"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">ret_code_t support_func_configure_io_startup </td>
+          <td>(</td>
+          <td class="paramtype"><a class="el" href="structdrv__ext__gpio__init__t.html">drv_ext_gpio_init_t</a> const *const&#160;</td>
+          <td class="paramname"><em>p_ext_gpio_init</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for configuring nRF IO and the GPIO extender for startup. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_ext_gpio_init</td><td>Pointer to IO extender configuration.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS If the call was successful. </dd>
 <dd>
-Other codes from the underlying driver(s). </dd></dl>
+Other codes from the underlying drivers. </dd></dl>
 
 </div>
 </div>
@@ -167,7 +248,7 @@ Other codes from the underlying driver(s). </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Checks if the device is in debug mode. </p>
+<p>Function for checking if the device is in debug mode. </p>
 <dl class="section note"><dt>Note</dt><dd>Checks if the C_DEBUGEN flag is set in the DHCSR register (Debug Halting Control and Status Register).</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>True System is in debug mode. </dd>
 <dd>
@@ -180,7 +261,7 @@ False System is not in debug mode. </dd></dl>
 <div id="nav-path" class="topicfooter">
 <a href="mailto:docfeedback@nordicsemi.no?subject=Documentation%20feedback" id="maillink">Documentation feedback</a> | <a href="https://devzone.nordicsemi.com/questions/" target="_blank">Developer Zone</a> | <a href="http://response.nordicsemi.com/subscribe-to-our-newsletters" target="_blank">Subscribe</a> | Updated <span id="date"/>
 <script>
-var date = new Date("Tue May 30 2017" + " UTC");
+var date = new Date("Fri Sep 29 2017" + " UTC");
 document.getElementById("date").innerHTML = date.toJSON().slice(0, 10);
 var url=window.location.href.split("?")[0];
 var filename=url.substring(url.lastIndexOf('/')+1);

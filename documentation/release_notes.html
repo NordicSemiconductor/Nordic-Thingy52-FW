@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>Nordic Thingy:52 : Release Notes</title>
+<title>Nordic Thingy:52 v2.0.0 : Release Notes</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Nordic Semiconductor" src="nordic_small.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Nordic Thingy:52
+   <div id="projectname">Nordic Thingy:52 v2.0.0
    </div>
   </td>
  </tr>
@@ -116,35 +116,48 @@ $(document).ready(function(){initNavTree('release_notes.html','');});
 <div class="title">Release Notes </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><h2>Nordic Thingy:52 firmware version 1.1.0</h2>
-<p><b>Built on nRF5 SDK v12.1.0</b></p>
-<p><b>Uses SoftDevice S132 v3.0.0</b></p>
+<div class="textblock"><h2>Nordic Thingy:52 firmware version 2.0.0</h2>
+<p><b>Built on nRF5 SDK v13.0.0</b></p>
+<p><b>Uses SoftDevice S132 v4.0.2</b></p>
 <p>Tested with the following versions of GCC and Keil:</p>
 <ul>
 <li>gcc_arm_none_eabi 4.9 2015q3</li>
 <li>Keil version 5.20</li>
 </ul>
+<h3>New features</h3>
+<ul>
+<li>NFC functionality has been added. The NFC tag contains records of the mobile app on Android for automatic app launch, a link to Thingy:52 webpages and a string containing the MAC address, as well as a random generated address. The latter 4-byte ID is randomly generated on each boot and displayed in the BLE advertise response packet as well.</li>
+</ul>
+<h3>Changes</h3>
+<ul>
+<li>The upper BLE notification limit has been increased to 60 seconds for temperature, pressure, humidity, and color to improve compatibility with IoT needs.</li>
+<li>The lower delay limit for LED breathe has been increased from 1 ms to 50 ms.</li>
+<li>The minimum motion processing frequency set to 5 Hz.</li>
+<li>Upon BLE connection, the lightwell used to change to a cyan color. This has been changed to green.</li>
+<li>The entire project has been converted to NRF_LOG for Real Time Terminal (RTT) output.</li>
+<li>When requesting a new LED breathe command, all counters of the IO extender will be restarted. This ensures better LED response, but will reset the light cycle of any connected LED.</li>
+</ul>
+<h3>Bugfixes</h3>
+<ul>
+<li>The compass has been integrated in the motion processing and Thingy will indicate magnetic North. Rotate Thingy around the Z axis back an forth to get compass lock.</li>
+</ul>
 <h3>Known issues</h3>
 <ul>
-<li>Compass heading values are reversed, when rotating the Thingy clockwise the heading data decreases.</li>
-<li>RGB LED configurations might get out of sync for one breathe cycle.</li>
-<li>The Thingy gas sensor reqires 48 hours of operation time (burn in) to self-calibrate.</li>
-<li>Error logs in the RTT console when a function returns an error code, even when the error is correctly handled by the firmware.</li>
-<li>The scenario of running OTA-DFU on an application that would extend into the FDS data area is not tested.</li>
+<li>Due to the strong magnetic interference by the speaker, compass accuracy is limited.</li>
+<li>Thingy gas sensor requires 48 hours of operation time (burn in) to self-calibrate.</li>
+<li>If you compile a debug version of the firmware, error logs in the RTT console when a function returns an error code, even when the error is correctly handled by the firmware.</li>
 <li>Speaker status notifications may arrive out of order under load.</li>
 <li>Writing the device name characteristic may sometimes fail to update the device name field in advertising packets.</li>
-<li>Performing extensive enabling/disabling of sensors might reboot the Thingy.</li>
-<li>Configuring very optimistic service intervals may cause the Thingy to reboot. Examples:<ul>
+<li>Performing extensive enabling/disabling of sensors might reboot Thingy.</li>
+<li>Configuring very optimistic service intervals may cause Thingy to reboot. Examples:<ul>
 <li>Sound streaming and motion sensor simultaneously.</li>
 <li>Motion sensor and several environment sensors configured for lowest notification interval.</li>
 </ul>
 </li>
 <li>Sound service streaming will not work on older devices due to low bandwidth.</li>
 <li>The first 10 seconds of motion sensor data may be inaccurate due to calibration.</li>
-<li>When motion data frequency is set below 5 Hz, the data becomes invalid.</li>
 <li>Preproduction versions of the Thingy hardware will not be able to perform OTA-DFU of the bootloader.</li>
 <li>Quaternion will always start at identity when turning the service on (Enabling quaternion notifications will always start at Identity (0,0,0,1), equivalent of Eulers (0,0,0)).</li>
-<li>When activated, the compass module uses its present heading as North. The heading is given relatively to this initial setting, and the value increases counterclockwise.</li>
 </ul>
 <dl class="section note"><dt>Note</dt><dd>The micro-ecc library is used in the Thingy bootloader. See <a href="./license.txt" target="_blank">license.txt</a> for the license of this library. </dd></dl>
 </div></div><!-- contents -->
@@ -152,7 +165,7 @@ $(document).ready(function(){initNavTree('release_notes.html','');});
 <div id="nav-path" class="topicfooter">
 <a href="mailto:docfeedback@nordicsemi.no?subject=Documentation%20feedback" id="maillink">Documentation feedback</a> | <a href="https://devzone.nordicsemi.com/questions/" target="_blank">Developer Zone</a> | <a href="http://response.nordicsemi.com/subscribe-to-our-newsletters" target="_blank">Subscribe</a> | Updated <span id="date"/>
 <script>
-var date = new Date("Tue May 30 2017" + " UTC");
+var date = new Date("Fri Sep 29 2017" + " UTC");
 document.getElementById("date").innerHTML = date.toJSON().slice(0, 10);
 var url=window.location.href.split("?")[0];
 var filename=url.substring(url.lastIndexOf('/')+1);

@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>Nordic Thingy:52 : drv_gas_sensor.h Source File</title>
+<title>Nordic Thingy:52 v2.0.0 : drv_gas_sensor.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Nordic Semiconductor" src="nordic_small.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Nordic Thingy:52
+   <div id="projectname">Nordic Thingy:52 v2.0.0
    </div>
   </td>
  </tr>
@@ -191,21 +191,21 @@ $(document).ready(function(){initNavTree('drv__gas__sensor_8h_source.html','');}
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;} <a class="code" href="structdrv__gas__init__t.html" title="Gas sensor init struct.">drv_gas_init_t</a>;</div>
 <div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;</div>
 <div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;ret_code_t <a class="code" href="group__gas__sensor.html#ga4b112ec7775f66c32906cd9451659e66" title="Calibrates the gas sensor based on the ambient humidity and temperature.">drv_gas_sensor_calibrate_humid_temp</a>(uint16_t rh_ppth, int32_t temp_mdeg);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;ret_code_t <a class="code" href="group__gas__sensor.html#ga4b112ec7775f66c32906cd9451659e66" title="Function for calibrating the gas sensor based on the ambient humidity and temperature.">drv_gas_sensor_calibrate_humid_temp</a>(uint16_t rh_ppth, int32_t temp_mdeg);</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
 <div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;ret_code_t <a class="code" href="group__gas__sensor.html#ga5b90ca927929b0fca57ae9300d0e1b03" title="Reads the baseline value from the gas sensor.">drv_gas_sensor_baseline_get</a>(uint16_t * p_baseline);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;ret_code_t <a class="code" href="group__gas__sensor.html#ga5b90ca927929b0fca57ae9300d0e1b03" title="Function for reading a baseline value from the gas sensor.">drv_gas_sensor_baseline_get</a>(uint16_t * p_baseline);</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
-<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;ret_code_t <a class="code" href="group__gas__sensor.html#ga65070966a909be52106f65f48c7f4df7" title="Writes baseline value to the gas sensor.">drv_gas_sensor_baseline_set</a>(uint16_t baseline);</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;ret_code_t <a class="code" href="group__gas__sensor.html#ga65070966a909be52106f65f48c7f4df7" title="Function for writing a baseline value to the gas sensor.">drv_gas_sensor_baseline_set</a>(uint16_t baseline);</div>
 <div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
-<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;ret_code_t <a class="code" href="group__gas__sensor.html#gab57ff609f20793728dc231649577bee3" title="Writes baseline value to the gas sensor.">drv_gas_sensor_raw_data_get</a>(uint8_t * p_current_selected, uint16_t * p_raw_adc_reading);</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;ret_code_t <a class="code" href="group__gas__sensor.html#gab57ff609f20793728dc231649577bee3" title="Function for getting a baseline value from the gas sensor.">drv_gas_sensor_raw_data_get</a>(uint8_t * p_current_selected, uint16_t * p_raw_adc_reading);</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;</div>
-<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;ret_code_t <a class="code" href="group__gas__sensor.html#gac4676d692b32a0d5e4323456bf6d49b9" title="Starts data acquisition from the the gas sensor.">drv_gas_sensor_start</a>(<a class="code" href="group__gas__sensor.html#gabeab2eb18ea994c5ab9ed26b1319a8b2" title="Gas sensor measurement intervals.">drv_gas_sensor_mode_t</a> mode);</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;ret_code_t <a class="code" href="group__gas__sensor.html#gac4676d692b32a0d5e4323456bf6d49b9" title="Function for starting data acquisition from the the gas sensor.">drv_gas_sensor_start</a>(<a class="code" href="group__gas__sensor.html#gabeab2eb18ea994c5ab9ed26b1319a8b2" title="Gas sensor measurement intervals.">drv_gas_sensor_mode_t</a> mode);</div>
 <div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;</div>
-<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;ret_code_t <a class="code" href="group__gas__sensor.html#gaf43b8084c8ad466c2cd9481dfc6dcc72" title="Stops data acquisition from the the gas sensor.">drv_gas_sensor_stop</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00142"></a><span class="lineno">  142</span>&#160;ret_code_t <a class="code" href="group__gas__sensor.html#gaf43b8084c8ad466c2cd9481dfc6dcc72" title="Function for stopping data acquisition from the the gas sensor.">drv_gas_sensor_stop</a>(<span class="keywordtype">void</span>);</div>
 <div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;</div>
-<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;ret_code_t <a class="code" href="group__gas__sensor.html#ga33e521bebcd48c607983184bfc779646" title="Initializes the the gas sensor.">drv_gas_sensor_init</a>(<a class="code" href="structdrv__gas__init__t.html" title="Gas sensor init struct.">drv_gas_init_t</a> * p_init);</div>
+<div class="line"><a name="l00151"></a><span class="lineno">  151</span>&#160;ret_code_t <a class="code" href="group__gas__sensor.html#ga33e521bebcd48c607983184bfc779646" title="Function for initializing the gas sensor.">drv_gas_sensor_init</a>(<a class="code" href="structdrv__gas__init__t.html" title="Gas sensor init struct.">drv_gas_init_t</a> * p_init);</div>
 <div class="line"><a name="l00152"></a><span class="lineno">  152</span>&#160;</div>
 <div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;<span class="preprocessor"></span></div>
@@ -214,7 +214,7 @@ $(document).ready(function(){initNavTree('drv__gas__sensor_8h_source.html','');}
 <div id="nav-path" class="topicfooter">
 <a href="mailto:docfeedback@nordicsemi.no?subject=Documentation%20feedback" id="maillink">Documentation feedback</a> | <a href="https://devzone.nordicsemi.com/questions/" target="_blank">Developer Zone</a> | <a href="http://response.nordicsemi.com/subscribe-to-our-newsletters" target="_blank">Subscribe</a> | Updated <span id="date"/>
 <script>
-var date = new Date("Tue May 30 2017" + " UTC");
+var date = new Date("Fri Sep 29 2017" + " UTC");
 document.getElementById("date").innerHTML = date.toJSON().slice(0, 10);
 var url=window.location.href.split("?")[0];
 var filename=url.substring(url.lastIndexOf('/')+1);

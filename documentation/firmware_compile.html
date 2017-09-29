@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>Nordic Thingy:52 : Compiling new firmware</title>
+<title>Nordic Thingy:52 v2.0.0 : Compiling new firmware</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Nordic Semiconductor" src="nordic_small.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Nordic Thingy:52
+   <div id="projectname">Nordic Thingy:52 v2.0.0
    </div>
   </td>
  </tr>
@@ -117,6 +117,7 @@ $(document).ready(function(){initNavTree('firmware_compile.html','');});
 </div><!--header-->
 <div class="contents">
 <div class="textblock"><p>You must compile the Thingy firmware using either GCC or Keil μVision.</p>
+<p>For prerequisites related to compiling, see <a href="https://nordicsemiconductor.github.io/Nordic-Thingy52-FW/" target="_blank">Nordic Thingy:52 GitHub page</a>.</p>
 <h1><a class="anchor" id="compile_keil"></a>
 Compiling with Keil</h1>
 <p>Before starting this procedure, make sure you have <a href="https://www.keil.com/demo/eval/arm.htm/" target="_blank">Keil</a> installed on your computer.</p>
@@ -127,10 +128,10 @@ Compiling with Keil</h1>
 <div class="caption">
 Keil μVision IDE</div></div>
 </li>
-<li>If you are compiling for the newest version of the Thingy hardware, select <b>release</b> from the target drop-down menu, as shown in the figure. <div class="image">
+<li>If you are compiling for the newest Thingy hardware version, select <b>release</b> from the target drop-down menu, as shown in the figure. <div class="image">
 <img src="keil2.png" alt="keil2.png"/>
 <div class="caption">
-Select &lt;b&gt;release&lt;/b&gt; from the menu</div></div>
+Select 'release' from the menu</div></div>
 </li>
 <li>Select the appropriate Thingy version from the list. To check the version of your Thingy, you must remove the top rubber cover. The version number can be found on a white label on the PCB. To compile a debug version, select <b>debug</b>.</li>
 <li>To build the project, press F7 or click <b>Build</b>. The output will be visible in the Build Output window at the bottom and should finish with "0 Errors, 0 Warnings". If you are compiling for an older Thingy version, you will receive a warning stating the version that you are compiling for. <div class="image">
@@ -165,7 +166,7 @@ Compiling with GCC</h1>
 <div id="nav-path" class="topicfooter">
 <a href="mailto:docfeedback@nordicsemi.no?subject=Documentation%20feedback" id="maillink">Documentation feedback</a> | <a href="https://devzone.nordicsemi.com/questions/" target="_blank">Developer Zone</a> | <a href="http://response.nordicsemi.com/subscribe-to-our-newsletters" target="_blank">Subscribe</a> | Updated <span id="date"/>
 <script>
-var date = new Date("Tue May 30 2017" + " UTC");
+var date = new Date("Fri Sep 29 2017" + " UTC");
 document.getElementById("date").innerHTML = date.toJSON().slice(0, 10);
 var url=window.location.href.split("?")[0];
 var filename=url.substring(url.lastIndexOf('/')+1);

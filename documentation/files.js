@@ -21,6 +21,7 @@ var files =
     [ "drv_mic.h", "drv__mic_8h_source.html", null ],
     [ "drv_motion.h", "drv__motion_8h_source.html", null ],
     [ "drv_mpu9250.h", "drv__mpu9250_8h_source.html", null ],
+    [ "drv_nfc.h", "drv__nfc_8h_source.html", null ],
     [ "drv_pressure.h", "drv__pressure_8h_source.html", null ],
     [ "drv_speaker.h", "drv__speaker_8h_source.html", null ],
     [ "drv_sx1509.h", "drv__sx1509_8h_source.html", null ],

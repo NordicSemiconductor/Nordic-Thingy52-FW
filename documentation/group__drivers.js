@@ -7,6 +7,7 @@ var group__drivers =
     [ "Humidity sensor", "group__humidity__driver.html", "group__humidity__driver" ],
     [ "Microphone driver", "group__mic__driver.html", "group__mic__driver" ],
     [ "Motion sensor", "group__motion__driver.html", "group__motion__driver" ],
+    [ "NFC driver", "group___n_f_c__driver.html", "group___n_f_c__driver" ],
     [ "Pressure sensor", "group__press__driver.html", "group__press__driver" ],
     [ "Speaker driver", "group__speaker__driver.html", "group__speaker__driver" ]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>Nordic Thingy:52 : ble_uis.h File Reference</title>
+<title>Nordic Thingy:52 v2.0.0 : ble_uis.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Nordic Semiconductor" src="nordic_small.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Nordic Thingy:52
+   <div id="projectname">Nordic Thingy:52 v2.0.0
    </div>
   </td>
  </tr>
@@ -150,7 +150,7 @@ Macros</h2></td></tr>
 <tr class="separator:ga58d0ab1b019c461ac789523b760fd727"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2b6ef857a383fa71069330034247dbd9"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ble__sdk__srv__uis.html#ga2b6ef857a383fa71069330034247dbd9">BLE_UIS_LED_DELAY_MAX</a>&#160;&#160;&#160;10000</td></tr>
 <tr class="separator:ga2b6ef857a383fa71069330034247dbd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa769943f7e55ba10f2fe53f12db68809"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ble__sdk__srv__uis.html#gaa769943f7e55ba10f2fe53f12db68809">BLE_UIS_LED_DELAY_MIN</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memitem:gaa769943f7e55ba10f2fe53f12db68809"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ble__sdk__srv__uis.html#gaa769943f7e55ba10f2fe53f12db68809">BLE_UIS_LED_DELAY_MIN</a>&#160;&#160;&#160;50</td></tr>
 <tr class="separator:gaa769943f7e55ba10f2fe53f12db68809"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga0ae97c6a1c482871d1533e7138524b5b"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ble__sdk__srv__uis.html#ga0ae97c6a1c482871d1533e7138524b5b">BLE_UIS_LED_INTENSITY_MAX</a>&#160;&#160;&#160;100</td></tr>
 <tr class="separator:ga0ae97c6a1c482871d1533e7138524b5b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -213,25 +213,13 @@ Functions</h2></td></tr>
 <tr class="memitem:ga3b4636fcf3ec049e322d1eb0f85dad82"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ble__sdk__srv__uis.html#ga3b4636fcf3ec049e322d1eb0f85dad82">ble_uis_on_button_change</a> (<a class="el" href="group__ble__sdk__srv__uis.html#ga01ebb47bd313939cc760c763c58ac262">ble_uis_t</a> *p_uis, uint8_t buttons_state)</td></tr>
 <tr class="memdesc:ga3b4636fcf3ec049e322d1eb0f85dad82"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for sending a button state notification.  <a href="group__ble__sdk__srv__uis.html#ga3b4636fcf3ec049e322d1eb0f85dad82">More...</a><br/></td></tr>
 <tr class="separator:ga3b4636fcf3ec049e322d1eb0f85dad82"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2761e036eab1d38d0187c208439cd0b0"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga2761e036eab1d38d0187c208439cd0b0"></a>
-typedef&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ble__sdk__srv__uis.html#ga2761e036eab1d38d0187c208439cd0b0">PACKED</a> (union{PACKED(struct{uint8_t r;uint8_t g;uint8_t b;}) mode_const;PACKED(struct{uint8_tcolor_mix;uint8_tintensity;uint16_t delay;}) mode_breathe;PACKED(struct{uint8_t color_mix;uint8_t intensity;}) mode_breathe_one_shot;}) ble_uis_led_data_t</td></tr>
-<tr class="memdesc:ga2761e036eab1d38d0187c208439cd0b0"><td class="mdescLeft">&#160;</td><td class="mdescRight">union representing LED BLE characteristics. <br/></td></tr>
-<tr class="separator:ga2761e036eab1d38d0187c208439cd0b0"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga5ee8a96afc68c7c4a81c00ab32246b92"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga5ee8a96afc68c7c4a81c00ab32246b92"></a>
-typedef&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ble__sdk__srv__uis.html#ga5ee8a96afc68c7c4a81c00ab32246b92">PACKED</a> (struct{<a class="el" href="group__ble__sdk__srv__uis.html#ga29a8fc60a3fb3bb9186a552a1f70e8d0">ble_uis_led_mode_t</a> mode;ble_uis_led_data_t data;}) ble_uis_led_t</td></tr>
-<tr class="memdesc:ga5ee8a96afc68c7c4a81c00ab32246b92"><td class="mdescLeft">&#160;</td><td class="mdescRight">The LED mode and data, editable over BLE. <br/></td></tr>
-<tr class="separator:ga5ee8a96afc68c7c4a81c00ab32246b92"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga832290dd70d03541b0211e7ff9cb3745"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga832290dd70d03541b0211e7ff9cb3745"></a>
-typedef&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ble__sdk__srv__uis.html#ga832290dd70d03541b0211e7ff9cb3745">PACKED</a> (struct{uint8_t mos_1;uint8_t mos_2;uint8_t mos_3;uint8_t mos_4;}) ble_uis_pin_t</td></tr>
-<tr class="memdesc:ga832290dd70d03541b0211e7ff9cb3745"><td class="mdescLeft">&#160;</td><td class="mdescRight">Data structure for the PIN characteristic. Controls the Metal Oxide Semiconductors (transistors). <br/></td></tr>
-<tr class="separator:ga832290dd70d03541b0211e7ff9cb3745"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 </div><!-- contents -->
 </div><!-- doc-content -->
 <div id="nav-path" class="topicfooter">
 <a href="mailto:docfeedback@nordicsemi.no?subject=Documentation%20feedback" id="maillink">Documentation feedback</a> | <a href="https://devzone.nordicsemi.com/questions/" target="_blank">Developer Zone</a> | <a href="http://response.nordicsemi.com/subscribe-to-our-newsletters" target="_blank">Subscribe</a> | Updated <span id="date"/>
 <script>
-var date = new Date("Tue May 30 2017" + " UTC");
+var date = new Date("Fri Sep 29 2017" + " UTC");
 document.getElementById("date").innerHTML = date.toJSON().slice(0, 10);
 var url=window.location.href.split("?")[0];
 var filename=url.substring(url.lastIndexOf('/')+1);

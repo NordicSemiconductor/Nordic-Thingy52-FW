@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>Nordic Thingy:52 : drv_ext_gpio.h Source File</title>
+<title>Nordic Thingy:52 v2.0.0 : drv_ext_gpio.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Nordic Semiconductor" src="nordic_small.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Nordic Thingy:52
+   <div id="projectname">Nordic Thingy:52 v2.0.0
    </div>
   </td>
  </tr>
@@ -221,51 +221,53 @@ $(document).ready(function(){initNavTree('drv__ext__gpio_8h_source.html','');});
 <div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;</div>
 <div class="line"><a name="l00135"></a><span class="lineno"><a class="code" href="structdrv__ext__gpio__init__t.html">  135</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct</span></div>
 <div class="line"><a name="l00136"></a><span class="lineno">  136</span>&#160;{</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    <a class="code" href="structdrv__sx1509__cfg__t.html" title="The ccs811 configuration.">drv_sx1509_cfg_t</a> <span class="keyword">const</span> * p_cfg;</div>
+<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;    <a class="code" href="structdrv__sx1509__cfg__t.html" title="SX1509 configuration.">drv_sx1509_cfg_t</a> <span class="keyword">const</span> * p_cfg;</div>
 <div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;} <a class="code" href="structdrv__ext__gpio__init__t.html" title="GPIO extender driver configuration.">drv_ext_gpio_init_t</a>;</div>
 <div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;</div>
 <div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#gaba8228cfe403cbc7e4bd2a3fe3fb7c1e" title="Function for resetting all the registers of the GPIO extender to their default values.">drv_ext_gpio_reset</a>(<span class="keywordtype">void</span>);</div>
 <div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;</div>
-<div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#ga2a386fd38af322e40b09714bd31a9cc3" title="Function for configuring the given GPIO pin_number as output with given initial value set...">drv_ext_gpio_cfg_output</a>(uint32_t pin_number);</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#ga52b0cec76bd39552f006f730d6e16e01" title="Function for configuring the given GPIO pin number as input with given initial value set...">drv_ext_gpio_cfg_input</a>(uint32_t pin_number, <a class="code" href="group__gpio__ext__driver.html#ga3a7c706b09e3548dc18e9ee2ddbb9f6e" title="Pin to be pulled down, up, or no-pull.">drv_ext_gpio_pin_pull_t</a> pull_config);</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#gad57e9d2117b6e2e6c3bd0db939258e7f" title="Function for setting the direction of a GPIO pin.">drv_ext_gpio_pin_dir_modify</a>(uint32_t pin_number, <a class="code" href="group__gpio__ext__driver.html#ga4e01a961018e2bbc8f4d194ddafefc32" title="Pin direction definitions.">drv_ext_gpio_pin_dir_t</a> direction);</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#ga54109e128b516751b40c06362bbf4df5" title="Function for enabling or disabling increased slew rate for a given GPIO pin.">drv_ext_gpio_pin_slew_rate_modify</a>(uint32_t pin_number, <a class="code" href="group__gpio__ext__driver.html#ga013d9b95bc909e15067abb9d7d5a1c2c" title="Regular or increased slew rate.">drv_ext_gpio_pin_slew_rate_t</a> slew_rate);</div>
-<div class="line"><a name="l00194"></a><span class="lineno">  194</span>&#160;</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#ga44386cb460d7c515406c719470ca0084" title="Function for setting the drive type a given GPIO pin.">drv_ext_gpio_pin_drive_type_modify</a>(uint32_t pin_number, <a class="code" href="group__gpio__ext__driver.html#ga298fc5e2bd579d41df46fbe95c7e3f70" title="Push-pull or open drain operation.">drv_ext_gpio_pin_drive_type_t</a> drive_type);</div>
-<div class="line"><a name="l00206"></a><span class="lineno">  206</span>&#160;</div>
-<div class="line"><a name="l00217"></a><span class="lineno">  217</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#ga611205353ef04cb150f45b29ee6bb3ff" title="Function for enabling and disabling the input buffer.">drv_ext_gpio_pin_input_buffer_modify</a>(uint32_t pin_number, <a class="code" href="group__gpio__ext__driver.html#gaab05fba3b092c125be6ebddbb311fac5" title="Connection of input buffer.">drv_ext_gpio_pin_input_buf_t</a> input_buf);</div>
-<div class="line"><a name="l00218"></a><span class="lineno">  218</span>&#160;</div>
-<div class="line"><a name="l00229"></a><span class="lineno">  229</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#ga8ca1b3898f246858846a5442a53cf795" title="Function for setting a GPIO pin.">drv_ext_gpio_pin_set</a>(uint32_t pin_number);</div>
-<div class="line"><a name="l00230"></a><span class="lineno">  230</span>&#160;</div>
-<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#gae77caa26e459b01f7c1d8772363e18c7" title="Function for setting GPIO pins.">drv_ext_gpio_pins_set</a>(uint32_t pin_mask);</div>
-<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;</div>
-<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#ga4ab9ec184388565f5ff61997ffbba75d" title="Function for clearing a GPIO pin.">drv_ext_gpio_pin_clear</a>(uint32_t pin_number);</div>
-<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;</div>
-<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#gae583a124772f8ec09e208159175f7b45" title="Function for clearing GPIO pins.">drv_ext_gpio_pins_clear</a>(uint32_t pin_mask);</div>
-<div class="line"><a name="l00266"></a><span class="lineno">  266</span>&#160;</div>
-<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#gac1face07ef83c4788bf996cdaba3682e" title="Function for toggling a GPIO pin.">drv_ext_gpio_pin_toggle</a>(uint32_t pin_number);</div>
-<div class="line"><a name="l00278"></a><span class="lineno">  278</span>&#160;</div>
-<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#ga47ef1db9236ed937309879823e7c074f" title="Function for toggling GPIO pins.">drv_ext_gpio_pins_toggle</a>(uint32_t pin_mask);</div>
-<div class="line"><a name="l00290"></a><span class="lineno">  290</span>&#160;</div>
-<div class="line"><a name="l00304"></a><span class="lineno">  304</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#gad0b7b0927890e4de4c9816705d653a92" title="Function for writing a value to a GPIO pin.">drv_ext_gpio_pin_write</a>(uint32_t pin_number, uint32_t value);</div>
-<div class="line"><a name="l00305"></a><span class="lineno">  305</span>&#160;</div>
-<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#ga6fa5f94c6367374e891905663f9bb0d6" title="Function for reading the input level of a GPIO pin.">drv_ext_gpio_pin_read</a>(uint32_t pin_number, uint32_t * <span class="keyword">const</span> p_pin);</div>
-<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;</div>
-<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#gaec15416078c5485936252cc49dd4607c" title="Function for reading the input level of all GPIO pins.">drv_ext_gpio_pins_read</a>(uint32_t * <span class="keyword">const</span> p_pins);</div>
-<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;</div>
-<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#ga4ca1453654770520248c139108c9ceeb" title="Function for initializing the GPIO extender.">drv_ext_gpio_init</a>(<a class="code" href="structdrv__ext__gpio__init__t.html" title="GPIO extender driver configuration.">drv_ext_gpio_init_t</a> <span class="keyword">const</span> * <span class="keyword">const</span> p_init, <span class="keywordtype">bool</span> on_init_reset);</div>
-<div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#gacdecb362e6e4b89cdf53b10451772e08" title="Function for setting all the RegData registers at the same time.">drv_ext_gpio_reg_data_init</a>(uint32_t data);</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;</div>
+<div class="line"><a name="l00174"></a><span class="lineno">  174</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#ga2a386fd38af322e40b09714bd31a9cc3" title="Function for configuring the given GPIO pin_number as output with given initial value set...">drv_ext_gpio_cfg_output</a>(uint32_t pin_number);</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;</div>
+<div class="line"><a name="l00186"></a><span class="lineno">  186</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#ga52b0cec76bd39552f006f730d6e16e01" title="Function for configuring the given GPIO pin number as input with given initial value set...">drv_ext_gpio_cfg_input</a>(uint32_t pin_number, <a class="code" href="group__gpio__ext__driver.html#ga3a7c706b09e3548dc18e9ee2ddbb9f6e" title="Pin to be pulled down, up, or no-pull.">drv_ext_gpio_pin_pull_t</a> pull_config);</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#gad57e9d2117b6e2e6c3bd0db939258e7f" title="Function for setting the direction of a GPIO pin.">drv_ext_gpio_pin_dir_modify</a>(uint32_t pin_number, <a class="code" href="group__gpio__ext__driver.html#ga4e01a961018e2bbc8f4d194ddafefc32" title="Pin direction definitions.">drv_ext_gpio_pin_dir_t</a> direction);</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#ga54109e128b516751b40c06362bbf4df5" title="Function for enabling or disabling increased slew rate for a given GPIO pin.">drv_ext_gpio_pin_slew_rate_modify</a>(uint32_t pin_number, <a class="code" href="group__gpio__ext__driver.html#ga013d9b95bc909e15067abb9d7d5a1c2c" title="Regular or increased slew rate.">drv_ext_gpio_pin_slew_rate_t</a> slew_rate);</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;</div>
+<div class="line"><a name="l00222"></a><span class="lineno">  222</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#ga44386cb460d7c515406c719470ca0084" title="Function for setting the drive type a given GPIO pin.">drv_ext_gpio_pin_drive_type_modify</a>(uint32_t pin_number, <a class="code" href="group__gpio__ext__driver.html#ga298fc5e2bd579d41df46fbe95c7e3f70" title="Push-pull or open drain operation.">drv_ext_gpio_pin_drive_type_t</a> drive_type);</div>
+<div class="line"><a name="l00223"></a><span class="lineno">  223</span>&#160;</div>
+<div class="line"><a name="l00234"></a><span class="lineno">  234</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#ga611205353ef04cb150f45b29ee6bb3ff" title="Function for enabling and disabling the input buffer.">drv_ext_gpio_pin_input_buffer_modify</a>(uint32_t pin_number, <a class="code" href="group__gpio__ext__driver.html#gaab05fba3b092c125be6ebddbb311fac5" title="Connection of input buffer.">drv_ext_gpio_pin_input_buf_t</a> input_buf);</div>
+<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;</div>
+<div class="line"><a name="l00246"></a><span class="lineno">  246</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#ga8ca1b3898f246858846a5442a53cf795" title="Function for setting a GPIO pin.">drv_ext_gpio_pin_set</a>(uint32_t pin_number);</div>
+<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;</div>
+<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#gae77caa26e459b01f7c1d8772363e18c7" title="Function for setting GPIO pins.">drv_ext_gpio_pins_set</a>(uint32_t pin_mask);</div>
+<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;</div>
+<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#ga4ab9ec184388565f5ff61997ffbba75d" title="Function for clearing a GPIO pin.">drv_ext_gpio_pin_clear</a>(uint32_t pin_number);</div>
+<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;</div>
+<div class="line"><a name="l00282"></a><span class="lineno">  282</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#gae583a124772f8ec09e208159175f7b45" title="Function for clearing GPIO pins.">drv_ext_gpio_pins_clear</a>(uint32_t pin_mask);</div>
+<div class="line"><a name="l00283"></a><span class="lineno">  283</span>&#160;</div>
+<div class="line"><a name="l00294"></a><span class="lineno">  294</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#gac1face07ef83c4788bf996cdaba3682e" title="Function for toggling a GPIO pin.">drv_ext_gpio_pin_toggle</a>(uint32_t pin_number);</div>
+<div class="line"><a name="l00295"></a><span class="lineno">  295</span>&#160;</div>
+<div class="line"><a name="l00306"></a><span class="lineno">  306</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#ga47ef1db9236ed937309879823e7c074f" title="Function for toggling GPIO pins.">drv_ext_gpio_pins_toggle</a>(uint32_t pin_mask);</div>
+<div class="line"><a name="l00307"></a><span class="lineno">  307</span>&#160;</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#gad0b7b0927890e4de4c9816705d653a92" title="Function for writing a value to a GPIO pin.">drv_ext_gpio_pin_write</a>(uint32_t pin_number, uint32_t value);</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;</div>
+<div class="line"><a name="l00337"></a><span class="lineno">  337</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#ga6fa5f94c6367374e891905663f9bb0d6" title="Function for reading the input level of a GPIO pin.">drv_ext_gpio_pin_read</a>(uint32_t pin_number, uint32_t * <span class="keyword">const</span> p_pin);</div>
+<div class="line"><a name="l00338"></a><span class="lineno">  338</span>&#160;</div>
+<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#gaec15416078c5485936252cc49dd4607c" title="Function for reading the input level of all GPIO pins.">drv_ext_gpio_pins_read</a>(uint32_t * <span class="keyword">const</span> p_pins);</div>
+<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;</div>
+<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;uint32_t <a class="code" href="group__gpio__ext__driver.html#ga4ca1453654770520248c139108c9ceeb" title="Function for initializing the GPIO extender.">drv_ext_gpio_init</a>(<a class="code" href="structdrv__ext__gpio__init__t.html" title="GPIO extender driver configuration.">drv_ext_gpio_init_t</a> <span class="keyword">const</span> * <span class="keyword">const</span> p_init, <span class="keywordtype">bool</span> on_init_reset);</div>
+<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;</div>
+<div class="line"><a name="l00363"></a><span class="lineno">  363</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00364"></a><span class="lineno">  364</span>&#160;<span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div id="nav-path" class="topicfooter">
 <a href="mailto:docfeedback@nordicsemi.no?subject=Documentation%20feedback" id="maillink">Documentation feedback</a> | <a href="https://devzone.nordicsemi.com/questions/" target="_blank">Developer Zone</a> | <a href="http://response.nordicsemi.com/subscribe-to-our-newsletters" target="_blank">Subscribe</a> | Updated <span id="date"/>
 <script>
-var date = new Date("Tue May 30 2017" + " UTC");
+var date = new Date("Fri Sep 29 2017" + " UTC");
 document.getElementById("date").innerHTML = date.toJSON().slice(0, 10);
 var url=window.location.href.split("?")[0];
 var filename=url.substring(url.lastIndexOf('/')+1);

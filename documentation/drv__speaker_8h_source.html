@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>Nordic Thingy:52 : drv_speaker.h Source File</title>
+<title>Nordic Thingy:52 v2.0.0 : drv_speaker.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Nordic Semiconductor" src="nordic_small.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Nordic Thingy:52
+   <div id="projectname">Nordic Thingy:52 v2.0.0
    </div>
   </td>
  </tr>
@@ -181,15 +181,15 @@ $(document).ready(function(){initNavTree('drv__speaker_8h_source.html','');});
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <a class="code" href="group__speaker__driver.html#ga6e3f9afcd39a7ca2b502b44d8ffb95b2" title="Speaker driver event handler callback type.">drv_speaker_evt_handler_t</a> evt_handler;</div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;}<a class="code" href="structdrv__speaker__init__t.html" title="Speaker driver initialization type.">drv_speaker_init_t</a>;</div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;uint32_t <a class="code" href="group__speaker__driver.html#gacc2e2f95dcfcf0669a8f00cd1ab96664" title="Initializes the speaker driver.">drv_speaker_init</a>(<a class="code" href="structdrv__speaker__init__t.html" title="Speaker driver initialization type.">drv_speaker_init_t</a> * p_params);</div>
+<div class="line"><a name="l00081"></a><span class="lineno">   81</span>&#160;uint32_t <a class="code" href="group__speaker__driver.html#gacc2e2f95dcfcf0669a8f00cd1ab96664" title="Function for initializing the speaker driver.">drv_speaker_init</a>(<a class="code" href="structdrv__speaker__init__t.html" title="Speaker driver initialization type.">drv_speaker_init_t</a> * p_params);</div>
 <div class="line"><a name="l00082"></a><span class="lineno">   82</span>&#160;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;uint32_t <a class="code" href="group__speaker__driver.html#gad269a1dc44882c7f752710b66e36ae9a" title="Plays a single tone through the speaker.">drv_speaker_tone_start</a>(uint16_t freq_hz, uint32_t duration_ms, uint8_t volume);</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;uint32_t <a class="code" href="group__speaker__driver.html#gad269a1dc44882c7f752710b66e36ae9a" title="Function for playing a single tone through the speaker.">drv_speaker_tone_start</a>(uint16_t freq_hz, uint32_t duration_ms, uint8_t volume);</div>
 <div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;uint32_t <a class="code" href="group__speaker__driver.html#ga77da11d3f4301a603105262caf1ac68e" title="Play an 8-bit 8kHz PCM encoded audio sample.">drv_speaker_flash_pcm_play</a>(uint8_t <span class="keyword">const</span> * <span class="keyword">const</span> p_sound, uint32_t size);</div>
+<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;uint32_t <a class="code" href="group__speaker__driver.html#ga77da11d3f4301a603105262caf1ac68e" title="Function for playing an 8-bit 8 kHz PCM encoded audio sample.">drv_speaker_flash_pcm_play</a>(uint8_t <span class="keyword">const</span> * <span class="keyword">const</span> p_sound, uint32_t size);</div>
 <div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
-<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;uint32_t <a class="code" href="group__speaker__driver.html#ga7928d5f7ce1a126948746e4828db8940" title="Play an 8-bit 8kHz PCM encoded audio split into packages.">drv_speaker_ble_pcm_play</a>(uint8_t * p_sound, uint32_t length);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;uint32_t <a class="code" href="group__speaker__driver.html#ga7928d5f7ce1a126948746e4828db8940" title="Function for playing an 8-bit 8 kHz PCM encoded audio split into packages.">drv_speaker_ble_pcm_play</a>(uint8_t * p_sound, uint32_t length);</div>
 <div class="line"><a name="l00114"></a><span class="lineno">  114</span>&#160;</div>
-<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;uint32_t <a class="code" href="group__speaker__driver.html#ga7bdd1af306fefe456f3e83ef0c845305" title="Play one of the prestored samples. sounds.h.">drv_speaker_sample_play</a>(uint8_t sample_id);</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;uint32_t <a class="code" href="group__speaker__driver.html#ga7bdd1af306fefe456f3e83ef0c845305" title="Function for playing one of the prestored samples. See sounds.h.">drv_speaker_sample_play</a>(uint8_t sample_id);</div>
 <div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
 <div class="line"><a name="l00124"></a><span class="lineno">  124</span>&#160;<span class="preprocessor">#endif</span></div>
 <div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;<span class="preprocessor"></span></div>
@@ -198,7 +198,7 @@ $(document).ready(function(){initNavTree('drv__speaker_8h_source.html','');});
 <div id="nav-path" class="topicfooter">
 <a href="mailto:docfeedback@nordicsemi.no?subject=Documentation%20feedback" id="maillink">Documentation feedback</a> | <a href="https://devzone.nordicsemi.com/questions/" target="_blank">Developer Zone</a> | <a href="http://response.nordicsemi.com/subscribe-to-our-newsletters" target="_blank">Subscribe</a> | Updated <span id="date"/>
 <script>
-var date = new Date("Tue May 30 2017" + " UTC");
+var date = new Date("Fri Sep 29 2017" + " UTC");
 document.getElementById("date").innerHTML = date.toJSON().slice(0, 10);
 var url=window.location.href.split("?")[0];
 var filename=url.substring(url.lastIndexOf('/')+1);

@@ -1,0 +1,17 @@
+/**
+
+@page nfc NFC support
+
+NFC support has been added in the Thingy:52 v2.0.0 firmware release.
+
+In order to read the Thingy NFC tag, make sure you have an NFC-enabled device, such as a smartphone with NFC activated. Put the NFC-enabled device on top of Thingy:52 and the tag will be read. The NFC antenna is located right under the "Nordic" text on the rubber cover of Thingy. Depending on your smartphone model and any installed NFC apps, the tag contents may be displayed or an action may be performed automatically.
+
+The NFC tag is a Type 2 Tag, and contains three NDEF records:
+
+- Record 0 - Holds a descriptor to the Thingy:52 mobile app. Depending on smartphone configuration, reading this tag on Android will launch the Thingy app or point to the app installer in Google Play store.
+- Record 1 - Contains the MAC address of Thingy:52 in hexadecimal format <xx:xx:xx:xx:xx:xx> followed by a whitespace and a randomly generated 4-byte hexadecimal string. The latter is randomly generated at boot and identical to the string in the "manufacturer specific data" field within the scan response packet.
+- Record 2 - Contains a link to the Thingy:52 product webpage.
+
+	
+*/
+ 

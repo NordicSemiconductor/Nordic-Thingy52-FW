@@ -1,6 +1,6 @@
 var NAVTREE =
 [
-  [ "Nordic Thingy:52", "index.html", [
+  [ "Nordic Thingy:52 v2.0.0", "index.html", [
     [ "Introduction", "index.html", null ],
     [ "Firmware architecture", "firmware_architecture.html", [
       [ "BLE services", "firmware_architecture.html#fw_arch_ble_services", [
@@ -9,6 +9,7 @@ var NAVTREE =
         [ "User interface service", "firmware_architecture.html#arch_user_interface", null ],
         [ "Motion service", "firmware_architecture.html#arch_motion", null ],
         [ "Sound service", "firmware_architecture.html#arch_sound", null ],
+        [ "Battery service", "firmware_architecture.html#arch_battery", null ],
         [ "DFU service", "firmware_architecture.html#arch_dfu", null ]
       ] ],
       [ "Firmware components", "firmware_architecture.html#firmware_components", [
@@ -22,6 +23,7 @@ var NAVTREE =
       [ "Compiling with Keil", "firmware_compile.html#compile_keil", null ],
       [ "Compiling with GCC", "firmware_compile.html#compile_gcc", null ]
     ] ],
+    [ "NFC support", "nfc.html", null ],
     [ "Over-the-air device firmware update (OTA-DFU)", "dfu.html", "dfu" ],
     [ "Release Notes", "release_notes.html", null ],
     [ "API Reference", "usergroup0.html", [
@@ -52,9 +54,10 @@ var NAVTREE =
 var NAVTREEINDEX =
 [
 "advertiser__beacon_8h_source.html",
-"group__ble__sdk__srv__uis.html#gga29a8fc60a3fb3bb9186a552a1f70e8d0af8f82b3383d69a6439a63ecf8cf3ef76",
-"group__lps22hb__press__driver.html#ga0e65e70bc2a6ef7d09fe7f5fd91a9f57",
-"group__sx150x__led__drv__calc.html#ga9907d106ed36ac6bb7a5e01abfd7b225"
+"group__ble__sdk__srv__uis.html#ga5a178df1e4c3aa2688c41ac34228b33d",
+"group__lis3dh__acc.html#gga27fa536bd7810818a8e1c3f40b20a559a7a261cd8c207e17b3776e8ad97c4e400",
+"group__sx1509__driver.html#ga7f480c60dde662e8cd70426164c8c543",
+"sx150x__led__drv__calc_8h_source.html"
 ];
 
 var SYNCONMSG = 'click to disable panel synchronisation';

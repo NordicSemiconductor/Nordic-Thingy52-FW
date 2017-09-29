@@ -27,8 +27,5 @@ var ble__uis_8h =
     ] ],
     [ "ble_uis_init", "ble__uis_8h.html#ga826b313e4e80c5eccb8c76c38fa56d3d", null ],
     [ "ble_uis_on_ble_evt", "ble__uis_8h.html#ga31637b55d11194bab31a00ebb253e733", null ],
-    [ "ble_uis_on_button_change", "ble__uis_8h.html#ga3b4636fcf3ec049e322d1eb0f85dad82", null ],
-    [ "PACKED", "ble__uis_8h.html#ga2761e036eab1d38d0187c208439cd0b0", null ],
-    [ "PACKED", "ble__uis_8h.html#ga5ee8a96afc68c7c4a81c00ab32246b92", null ],
-    [ "PACKED", "ble__uis_8h.html#ga832290dd70d03541b0211e7ff9cb3745", null ]
+    [ "ble_uis_on_button_change", "ble__uis_8h.html#ga3b4636fcf3ec049e322d1eb0f85dad82", null ]
 ];

@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>Nordic Thingy:52 : ble_tms.h File Reference</title>
+<title>Nordic Thingy:52 v2.0.0 : ble_tms.h File Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Nordic Semiconductor" src="nordic_small.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Nordic Thingy:52
+   <div id="projectname">Nordic Thingy:52 v2.0.0
    </div>
   </td>
  </tr>
@@ -143,7 +143,47 @@ Data Structures</h2></td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:ga0367b57be0b83671daf133bb08724b76"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ble__sdk__srv__wss.html#ga0367b57be0b83671daf133bb08724b76">BLE_TMS_MAX_DATA_LEN</a>&#160;&#160;&#160;(GATT_MTU_SIZE_DEFAULT - 3)</td></tr>
+<tr class="memitem:ga1681df902e484d625d537bdc72970db3"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga1681df902e484d625d537bdc72970db3"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ble__sdk__srv__wss.html#ga1681df902e484d625d537bdc72970db3">BLE_TMS_CONFIG_COMP_INT_MAX</a>&#160;&#160;&#160;1000</td></tr>
+<tr class="memdesc:ga1681df902e484d625d537bdc72970db3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum compass compensation interval [ms]. <br/></td></tr>
+<tr class="separator:ga1681df902e484d625d537bdc72970db3"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga4b22e0e456f0c6f7012eb013e086dc2c"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga4b22e0e456f0c6f7012eb013e086dc2c"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ble__sdk__srv__wss.html#ga4b22e0e456f0c6f7012eb013e086dc2c">BLE_TMS_CONFIG_COMP_INT_MIN</a>&#160;&#160;&#160;100</td></tr>
+<tr class="memdesc:ga4b22e0e456f0c6f7012eb013e086dc2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum compass compensation interval [ms]. <br/></td></tr>
+<tr class="separator:ga4b22e0e456f0c6f7012eb013e086dc2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad5622fe5f4747bdf573871454c6c513a"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad5622fe5f4747bdf573871454c6c513a"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ble__sdk__srv__wss.html#gad5622fe5f4747bdf573871454c6c513a">BLE_TMS_CONFIG_MPUF_MAX</a>&#160;&#160;&#160;200</td></tr>
+<tr class="memdesc:gad5622fe5f4747bdf573871454c6c513a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum motion processing frequency [Hz]. <br/></td></tr>
+<tr class="separator:gad5622fe5f4747bdf573871454c6c513a"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa8e60e993959e76994d9b39ba0eb4d7d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa8e60e993959e76994d9b39ba0eb4d7d"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ble__sdk__srv__wss.html#gaa8e60e993959e76994d9b39ba0eb4d7d">BLE_TMS_CONFIG_MPUF_MIN</a>&#160;&#160;&#160;5</td></tr>
+<tr class="memdesc:gaa8e60e993959e76994d9b39ba0eb4d7d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum motion processing frequency [Hz]. (4 Hz minimum to mpu_set_sample_rate()) <br/></td></tr>
+<tr class="separator:gaa8e60e993959e76994d9b39ba0eb4d7d"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaabc25bd657a10daafa3f409e4566e8da"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaabc25bd657a10daafa3f409e4566e8da"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ble__sdk__srv__wss.html#gaabc25bd657a10daafa3f409e4566e8da">BLE_TMS_CONFIG_PEDO_INT_MAX</a>&#160;&#160;&#160;5000</td></tr>
+<tr class="memdesc:gaabc25bd657a10daafa3f409e4566e8da"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum pedometer interval [ms]. <br/></td></tr>
+<tr class="separator:gaabc25bd657a10daafa3f409e4566e8da"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac645948ba448882be3cf95fd0c395633"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac645948ba448882be3cf95fd0c395633"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ble__sdk__srv__wss.html#gac645948ba448882be3cf95fd0c395633">BLE_TMS_CONFIG_PEDO_INT_MIN</a>&#160;&#160;&#160;100</td></tr>
+<tr class="memdesc:gac645948ba448882be3cf95fd0c395633"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum pedometer interval [ms]. <br/></td></tr>
+<tr class="separator:gac645948ba448882be3cf95fd0c395633"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga7abbc39281970f70f3339e8c077798bc"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="ga7abbc39281970f70f3339e8c077798bc"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ble__sdk__srv__wss.html#ga7abbc39281970f70f3339e8c077798bc">BLE_TMS_CONFIG_TEMP_INT_MAX</a>&#160;&#160;&#160;5000</td></tr>
+<tr class="memdesc:ga7abbc39281970f70f3339e8c077798bc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Maximum temperature compensation interval [ms]. <br/></td></tr>
+<tr class="separator:ga7abbc39281970f70f3339e8c077798bc"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gac5af59176dc4c23c22ef77201ed1b164"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gac5af59176dc4c23c22ef77201ed1b164"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ble__sdk__srv__wss.html#gac5af59176dc4c23c22ef77201ed1b164">BLE_TMS_CONFIG_TEMP_INT_MIN</a>&#160;&#160;&#160;100</td></tr>
+<tr class="memdesc:gac5af59176dc4c23c22ef77201ed1b164"><td class="mdescLeft">&#160;</td><td class="mdescRight">Minimum temperature compensation interval [ms]. <br/></td></tr>
+<tr class="separator:gac5af59176dc4c23c22ef77201ed1b164"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gabc7001a5150027f6af452f450b55a102"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gabc7001a5150027f6af452f450b55a102"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ble__sdk__srv__wss.html#gabc7001a5150027f6af452f450b55a102">BLE_TMS_CONFIG_WOM_MAX</a>&#160;&#160;&#160;1</td></tr>
+<tr class="memdesc:gabc7001a5150027f6af452f450b55a102"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wake on motion off. <br/></td></tr>
+<tr class="separator:gabc7001a5150027f6af452f450b55a102"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gaa03bf3f8d91248dbd8a5c55d601d33f4"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa03bf3f8d91248dbd8a5c55d601d33f4"></a>
+#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ble__sdk__srv__wss.html#gaa03bf3f8d91248dbd8a5c55d601d33f4">BLE_TMS_CONFIG_WOM_MIN</a>&#160;&#160;&#160;0</td></tr>
+<tr class="memdesc:gaa03bf3f8d91248dbd8a5c55d601d33f4"><td class="mdescLeft">&#160;</td><td class="mdescRight">Wake on motion on. <br/></td></tr>
+<tr class="separator:gaa03bf3f8d91248dbd8a5c55d601d33f4"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga0367b57be0b83671daf133bb08724b76"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ble__sdk__srv__wss.html#ga0367b57be0b83671daf133bb08724b76">BLE_TMS_MAX_DATA_LEN</a>&#160;&#160;&#160;(BLE_GATT_ATT_MTU_DEFAULT - 3)</td></tr>
 <tr class="separator:ga0367b57be0b83671daf133bb08724b76"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8f8738c7d72fd985de9af68f4356b273"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ble__sdk__srv__wss.html#ga8f8738c7d72fd985de9af68f4356b273">BLE_UUID_TMS_SERVICE</a>&#160;&#160;&#160;0x0400</td></tr>
 <tr class="separator:ga8f8738c7d72fd985de9af68f4356b273"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -196,7 +236,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="topicfooter">
 <a href="mailto:docfeedback@nordicsemi.no?subject=Documentation%20feedback" id="maillink">Documentation feedback</a> | <a href="https://devzone.nordicsemi.com/questions/" target="_blank">Developer Zone</a> | <a href="http://response.nordicsemi.com/subscribe-to-our-newsletters" target="_blank">Subscribe</a> | Updated <span id="date"/>
 <script>
-var date = new Date("Tue May 30 2017" + " UTC");
+var date = new Date("Fri Sep 29 2017" + " UTC");
 document.getElementById("date").innerHTML = date.toJSON().slice(0, 10);
 var url=window.location.href.split("?")[0];
 var filename=url.substring(url.lastIndexOf('/')+1);

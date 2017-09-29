@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>Nordic Thingy:52 : SX1509 GPIO extender driver</title>
+<title>Nordic Thingy:52 v2.0.0 : SX1509 GPIO extender driver</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Nordic Semiconductor" src="nordic_small.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Nordic Thingy:52
+   <div id="projectname">Nordic Thingy:52 v2.0.0
    </div>
   </td>
  </tr>
@@ -122,7 +122,7 @@ $(document).ready(function(){initNavTree('group__sx1509__driver.html','');});
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdrv__sx1509__cfg__t.html">drv_sx1509_cfg_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">The ccs811 configuration.  <a href="structdrv__sx1509__cfg__t.html#details">More...</a><br/></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">SX1509 configuration.  <a href="structdrv__sx1509__cfg__t.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="enum-members"></a>
@@ -132,168 +132,170 @@ Enumerations</h2></td></tr>
 <a class="el" href="group__sx1509__driver.html#gga726ca809ffd3d67ab4b8476646f26635a99744c6e5b3689291907713ae16a8e0c">DRV_SX1509_STATUS_CODE_INVALID_PARAM</a>, 
 <a class="el" href="group__sx1509__driver.html#gga726ca809ffd3d67ab4b8476646f26635a19c905e4a5ac08ee9c8dc6cf97cbfb47">DRV_SX1509_STATUS_CODE_NOT_SUPPORTED</a>
  }</td></tr>
-<tr class="memdesc:ga726ca809ffd3d67ab4b8476646f26635"><td class="mdescLeft">&#160;</td><td class="mdescRight">The sx1509 status codes.  <a href="group__sx1509__driver.html#ga726ca809ffd3d67ab4b8476646f26635">More...</a><br/></td></tr>
+<tr class="memdesc:ga726ca809ffd3d67ab4b8476646f26635"><td class="mdescLeft">&#160;</td><td class="mdescRight">SX1509 status codes.  <a href="group__sx1509__driver.html#ga726ca809ffd3d67ab4b8476646f26635">More...</a><br/></td></tr>
 <tr class="separator:ga726ca809ffd3d67ab4b8476646f26635"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:gade15d885b7b311060dd395b54422a81d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#gade15d885b7b311060dd395b54422a81d">drv_sx1509_clock_get</a> (uint8_t *p_clock)</td></tr>
-<tr class="memdesc:gade15d885b7b311060dd395b54422a81d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the clock configuration of the sx1509 device.  <a href="#gade15d885b7b311060dd395b54422a81d">More...</a><br/></td></tr>
+<tr class="memdesc:gade15d885b7b311060dd395b54422a81d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the clock configuration of the SX1509 device.  <a href="#gade15d885b7b311060dd395b54422a81d">More...</a><br/></td></tr>
 <tr class="separator:gade15d885b7b311060dd395b54422a81d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9d477d695d76459c1f80d2409b1ba07b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga9d477d695d76459c1f80d2409b1ba07b">drv_sx1509_clock_modify</a> (uint8_t set_mask, uint8_t clr_mask)</td></tr>
-<tr class="memdesc:ga9d477d695d76459c1f80d2409b1ba07b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the clock configuration of the sx1509 device.  <a href="#ga9d477d695d76459c1f80d2409b1ba07b">More...</a><br/></td></tr>
+<tr class="memdesc:ga9d477d695d76459c1f80d2409b1ba07b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for modifying the clock configuration of the SX1509 device.  <a href="#ga9d477d695d76459c1f80d2409b1ba07b">More...</a><br/></td></tr>
 <tr class="separator:ga9d477d695d76459c1f80d2409b1ba07b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaebc32247dc04693032b1593650ecfa03"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#gaebc32247dc04693032b1593650ecfa03">drv_sx1509_close</a> (void)</td></tr>
-<tr class="memdesc:gaebc32247dc04693032b1593650ecfa03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Closes the sx1509 driver.  <a href="#gaebc32247dc04693032b1593650ecfa03">More...</a><br/></td></tr>
+<tr class="memdesc:gaebc32247dc04693032b1593650ecfa03"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for closing the SX1509 driver.  <a href="#gaebc32247dc04693032b1593650ecfa03">More...</a><br/></td></tr>
 <tr class="separator:gaebc32247dc04693032b1593650ecfa03"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga179c2c02edb813907baf6cf3a28a52e1"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga179c2c02edb813907baf6cf3a28a52e1">drv_sx1509_data_get</a> (uint16_t *p_data)</td></tr>
-<tr class="memdesc:ga179c2c02edb813907baf6cf3a28a52e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the data to be output to the output-configured IOs of the sx1509 device.  <a href="#ga179c2c02edb813907baf6cf3a28a52e1">More...</a><br/></td></tr>
+<tr class="memdesc:ga179c2c02edb813907baf6cf3a28a52e1"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the data seen at the pins of the SX1509 device.  <a href="#ga179c2c02edb813907baf6cf3a28a52e1">More...</a><br/></td></tr>
 <tr class="separator:ga179c2c02edb813907baf6cf3a28a52e1"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab4a406a41323a70d466732d9784fa1af"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#gab4a406a41323a70d466732d9784fa1af">drv_sx1509_data_modify</a> (uint16_t set_mask, uint16_t clr_mask)</td></tr>
-<tr class="memdesc:gab4a406a41323a70d466732d9784fa1af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the data to be output to the output-configured IOs of the sx1509 device.  <a href="#gab4a406a41323a70d466732d9784fa1af">More...</a><br/></td></tr>
+<tr class="memdesc:gab4a406a41323a70d466732d9784fa1af"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for modifying the data to be output to the output-configured IOs of the SX1509 device.  <a href="#gab4a406a41323a70d466732d9784fa1af">More...</a><br/></td></tr>
 <tr class="separator:gab4a406a41323a70d466732d9784fa1af"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ga59adca6e74c72015a0c78df20cc4972e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga59adca6e74c72015a0c78df20cc4972e">drv_sx1509_data_set</a> (uint16_t data)</td></tr>
+<tr class="memdesc:ga59adca6e74c72015a0c78df20cc4972e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for setting the data to be output to the output-configured IOs of the SX1509 device.  <a href="#ga59adca6e74c72015a0c78df20cc4972e">More...</a><br/></td></tr>
+<tr class="separator:ga59adca6e74c72015a0c78df20cc4972e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4254804afc5e87d78c49704223dbbc14"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga4254804afc5e87d78c49704223dbbc14">drv_sx1509_debounceconfig_get</a> (uint8_t *p_debounceconfig)</td></tr>
-<tr class="memdesc:ga4254804afc5e87d78c49704223dbbc14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the debounce configruation of the sx1509 device.  <a href="#ga4254804afc5e87d78c49704223dbbc14">More...</a><br/></td></tr>
+<tr class="memdesc:ga4254804afc5e87d78c49704223dbbc14"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the debounce configuration of the SX1509 device.  <a href="#ga4254804afc5e87d78c49704223dbbc14">More...</a><br/></td></tr>
 <tr class="separator:ga4254804afc5e87d78c49704223dbbc14"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab4c87cb590f3889872074f17e416eab5"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#gab4c87cb590f3889872074f17e416eab5">drv_sx1509_debounceconfig_modify</a> (uint8_t set_mask, uint8_t clr_mask)</td></tr>
-<tr class="memdesc:gab4c87cb590f3889872074f17e416eab5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the debounce configruation of the sx1509 device.  <a href="#gab4c87cb590f3889872074f17e416eab5">More...</a><br/></td></tr>
+<tr class="memdesc:gab4c87cb590f3889872074f17e416eab5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for modifying the debounce configuration of the SX1509 device.  <a href="#gab4c87cb590f3889872074f17e416eab5">More...</a><br/></td></tr>
 <tr class="separator:gab4c87cb590f3889872074f17e416eab5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac31f09daccb5fe7c6074efcf980674ce"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#gac31f09daccb5fe7c6074efcf980674ce">drv_sx1509_debounceenable_get</a> (uint16_t *p_debounceenable)</td></tr>
-<tr class="memdesc:gac31f09daccb5fe7c6074efcf980674ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the debounce enable configuration of the sx1509 device.  <a href="#gac31f09daccb5fe7c6074efcf980674ce">More...</a><br/></td></tr>
+<tr class="memdesc:gac31f09daccb5fe7c6074efcf980674ce"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the debounce enable configuration of the SX1509 device.  <a href="#gac31f09daccb5fe7c6074efcf980674ce">More...</a><br/></td></tr>
 <tr class="separator:gac31f09daccb5fe7c6074efcf980674ce"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga421376a49986ea1181cdc11e53ebb248"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga421376a49986ea1181cdc11e53ebb248">drv_sx1509_debounceenable_modify</a> (uint16_t set_mask, uint16_t clr_mask)</td></tr>
-<tr class="memdesc:ga421376a49986ea1181cdc11e53ebb248"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the debounce enable configuration of the sx1509 device.  <a href="#ga421376a49986ea1181cdc11e53ebb248">More...</a><br/></td></tr>
+<tr class="memdesc:ga421376a49986ea1181cdc11e53ebb248"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for modifying the debounce enable configuration of the SX1509 device.  <a href="#ga421376a49986ea1181cdc11e53ebb248">More...</a><br/></td></tr>
 <tr class="separator:ga421376a49986ea1181cdc11e53ebb248"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga673635874e1205c74bede38eec2df84a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga673635874e1205c74bede38eec2df84a">drv_sx1509_dir_get</a> (uint16_t *p_dir)</td></tr>
-<tr class="memdesc:ga673635874e1205c74bede38eec2df84a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the pin direction configuration of the sx1509 device.  <a href="#ga673635874e1205c74bede38eec2df84a">More...</a><br/></td></tr>
+<tr class="memdesc:ga673635874e1205c74bede38eec2df84a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the pin direction configuration of the SX1509 device.  <a href="#ga673635874e1205c74bede38eec2df84a">More...</a><br/></td></tr>
 <tr class="separator:ga673635874e1205c74bede38eec2df84a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3c69c77ae13a7dec308043099ff4ee9e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga3c69c77ae13a7dec308043099ff4ee9e">drv_sx1509_dir_modify</a> (uint16_t set_mask, uint16_t clr_mask)</td></tr>
-<tr class="memdesc:ga3c69c77ae13a7dec308043099ff4ee9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the pin direction configuration of the sx1509 device.  <a href="#ga3c69c77ae13a7dec308043099ff4ee9e">More...</a><br/></td></tr>
+<tr class="memdesc:ga3c69c77ae13a7dec308043099ff4ee9e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for modifying the pin direction configuration of the SX1509 device.  <a href="#ga3c69c77ae13a7dec308043099ff4ee9e">More...</a><br/></td></tr>
 <tr class="separator:ga3c69c77ae13a7dec308043099ff4ee9e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8c8a78d780e0604c4527eb398cb81f65"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga8c8a78d780e0604c4527eb398cb81f65">drv_sx1509_eventstatus_clr</a> (uint16_t clr_mask)</td></tr>
-<tr class="memdesc:ga8c8a78d780e0604c4527eb398cb81f65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the event status of the sx1509 device.  <a href="#ga8c8a78d780e0604c4527eb398cb81f65">More...</a><br/></td></tr>
+<tr class="memdesc:ga8c8a78d780e0604c4527eb398cb81f65"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for modifying the event status of the SX1509 device.  <a href="#ga8c8a78d780e0604c4527eb398cb81f65">More...</a><br/></td></tr>
 <tr class="separator:ga8c8a78d780e0604c4527eb398cb81f65"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga131f0172945d434f6f6997929bebe7cc"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga131f0172945d434f6f6997929bebe7cc">drv_sx1509_eventstatus_get</a> (uint16_t *p_eventstatus)</td></tr>
-<tr class="memdesc:ga131f0172945d434f6f6997929bebe7cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the event status of the sx1509 device.  <a href="#ga131f0172945d434f6f6997929bebe7cc">More...</a><br/></td></tr>
+<tr class="memdesc:ga131f0172945d434f6f6997929bebe7cc"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the event status of the SX1509 device.  <a href="#ga131f0172945d434f6f6997929bebe7cc">More...</a><br/></td></tr>
 <tr class="separator:ga131f0172945d434f6f6997929bebe7cc"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1731616c3ebb0bcb46c0ad164f845712"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga1731616c3ebb0bcb46c0ad164f845712">drv_sx1509_highinpmode_get</a> (uint16_t *p_highinpmode)</td></tr>
-<tr class="memdesc:ga1731616c3ebb0bcb46c0ad164f845712"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the enable configuration for high-voltage input mode of the sx1509 device.  <a href="#ga1731616c3ebb0bcb46c0ad164f845712">More...</a><br/></td></tr>
+<tr class="memdesc:ga1731616c3ebb0bcb46c0ad164f845712"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the enable configuration for high-voltage input mode of the SX1509 device.  <a href="#ga1731616c3ebb0bcb46c0ad164f845712">More...</a><br/></td></tr>
 <tr class="separator:ga1731616c3ebb0bcb46c0ad164f845712"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga03e742d2431b6a1c7a7775d618a2538c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga03e742d2431b6a1c7a7775d618a2538c">drv_sx1509_highinpmode_modify</a> (uint16_t set_mask, uint16_t clr_mask)</td></tr>
-<tr class="memdesc:ga03e742d2431b6a1c7a7775d618a2538c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the enable configuration for high-voltage input mode of the sx1509 device.  <a href="#ga03e742d2431b6a1c7a7775d618a2538c">More...</a><br/></td></tr>
+<tr class="memdesc:ga03e742d2431b6a1c7a7775d618a2538c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for modifying the enable configuration for high-voltage input mode of the SX1509 device.  <a href="#ga03e742d2431b6a1c7a7775d618a2538c">More...</a><br/></td></tr>
 <tr class="separator:ga03e742d2431b6a1c7a7775d618a2538c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab319e764f47d2cc170a54da130b3c70d"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gab319e764f47d2cc170a54da130b3c70d"></a>
 void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#gab319e764f47d2cc170a54da130b3c70d">drv_sx1509_init</a> (void)</td></tr>
-<tr class="memdesc:gab319e764f47d2cc170a54da130b3c70d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initializes the driver. <br/></td></tr>
+<tr class="memdesc:gab319e764f47d2cc170a54da130b3c70d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the driver. <br/></td></tr>
 <tr class="separator:gab319e764f47d2cc170a54da130b3c70d"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga491f1678c3d6fe1a6a4ae41e79a7f40a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga491f1678c3d6fe1a6a4ae41e79a7f40a">drv_sx1509_inpbufdisable_get</a> (uint16_t *p_inputdisable)</td></tr>
-<tr class="memdesc:ga491f1678c3d6fe1a6a4ae41e79a7f40a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the input buffer disable register of the sx1509 device.  <a href="#ga491f1678c3d6fe1a6a4ae41e79a7f40a">More...</a><br/></td></tr>
+<tr class="memdesc:ga491f1678c3d6fe1a6a4ae41e79a7f40a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the input buffer disable register of the SX1509 device.  <a href="#ga491f1678c3d6fe1a6a4ae41e79a7f40a">More...</a><br/></td></tr>
 <tr class="separator:ga491f1678c3d6fe1a6a4ae41e79a7f40a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga42b70d88929908855959626d951ae87e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga42b70d88929908855959626d951ae87e">drv_sx1509_inpbufdisable_modify</a> (uint16_t set_mask, uint16_t clr_mask)</td></tr>
-<tr class="memdesc:ga42b70d88929908855959626d951ae87e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the input buffer disable register of the sx1509 device.  <a href="#ga42b70d88929908855959626d951ae87e">More...</a><br/></td></tr>
+<tr class="memdesc:ga42b70d88929908855959626d951ae87e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for modifying the input buffer disable register of the SX1509 device.  <a href="#ga42b70d88929908855959626d951ae87e">More...</a><br/></td></tr>
 <tr class="separator:ga42b70d88929908855959626d951ae87e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga451381524453350135b4eda362e444f3"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga451381524453350135b4eda362e444f3">drv_sx1509_interruptmask_get</a> (uint16_t *p_interruptmask)</td></tr>
-<tr class="memdesc:ga451381524453350135b4eda362e444f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the interrupt mask of the sx1509 device.  <a href="#ga451381524453350135b4eda362e444f3">More...</a><br/></td></tr>
+<tr class="memdesc:ga451381524453350135b4eda362e444f3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the interrupt mask of the SX1509 device.  <a href="#ga451381524453350135b4eda362e444f3">More...</a><br/></td></tr>
 <tr class="separator:ga451381524453350135b4eda362e444f3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga03ee37d7a0ec1b8d905c8f41e89efb6c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga03ee37d7a0ec1b8d905c8f41e89efb6c">drv_sx1509_interruptmask_modify</a> (uint16_t set_mask, uint16_t clr_mask)</td></tr>
-<tr class="memdesc:ga03ee37d7a0ec1b8d905c8f41e89efb6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the interrupt mask of the sx1509 device.  <a href="#ga03ee37d7a0ec1b8d905c8f41e89efb6c">More...</a><br/></td></tr>
+<tr class="memdesc:ga03ee37d7a0ec1b8d905c8f41e89efb6c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for modifying the interrupt mask of the SX1509 device.  <a href="#ga03ee37d7a0ec1b8d905c8f41e89efb6c">More...</a><br/></td></tr>
 <tr class="separator:ga03ee37d7a0ec1b8d905c8f41e89efb6c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa6f78b203386bce2725462de6298dee5"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#gaa6f78b203386bce2725462de6298dee5">drv_sx1509_interruptsource_clr</a> (uint16_t clr_mask)</td></tr>
-<tr class="memdesc:gaa6f78b203386bce2725462de6298dee5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Clears the interrupt source status of the sx1509 device.  <a href="#gaa6f78b203386bce2725462de6298dee5">More...</a><br/></td></tr>
+<tr class="memdesc:gaa6f78b203386bce2725462de6298dee5"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for clearing the interrupt source status of the SX1509 device.  <a href="#gaa6f78b203386bce2725462de6298dee5">More...</a><br/></td></tr>
 <tr class="separator:gaa6f78b203386bce2725462de6298dee5"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gabd704ebff8e4e4fae7958e4527ce1126"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#gabd704ebff8e4e4fae7958e4527ce1126">drv_sx1509_interruptsource_get</a> (uint16_t *p_interruptsource)</td></tr>
-<tr class="memdesc:gabd704ebff8e4e4fae7958e4527ce1126"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the interrupt source status of the sx1509 device.  <a href="#gabd704ebff8e4e4fae7958e4527ce1126">More...</a><br/></td></tr>
+<tr class="memdesc:gabd704ebff8e4e4fae7958e4527ce1126"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the interrupt source status of the SX1509 device.  <a href="#gabd704ebff8e4e4fae7958e4527ce1126">More...</a><br/></td></tr>
 <tr class="separator:gabd704ebff8e4e4fae7958e4527ce1126"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1c68532f06b4d80f7072aaad96db8058"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga1c68532f06b4d80f7072aaad96db8058">drv_sx1509_keyconfig_get</a> (uint16_t *p_keyconfig)</td></tr>
-<tr class="memdesc:ga1c68532f06b4d80f7072aaad96db8058"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the key configuration of the sx1509 device.  <a href="#ga1c68532f06b4d80f7072aaad96db8058">More...</a><br/></td></tr>
+<tr class="memdesc:ga1c68532f06b4d80f7072aaad96db8058"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the key configuration of the SX1509 device.  <a href="#ga1c68532f06b4d80f7072aaad96db8058">More...</a><br/></td></tr>
 <tr class="separator:ga1c68532f06b4d80f7072aaad96db8058"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga167232f6f66ea42ab1c4873f7ba0d946"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga167232f6f66ea42ab1c4873f7ba0d946">drv_sx1509_keyconfig_modify</a> (uint16_t set_mask, uint16_t clr_mask)</td></tr>
-<tr class="memdesc:ga167232f6f66ea42ab1c4873f7ba0d946"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the key configuration of the sx1509 device.  <a href="#ga167232f6f66ea42ab1c4873f7ba0d946">More...</a><br/></td></tr>
+<tr class="memdesc:ga167232f6f66ea42ab1c4873f7ba0d946"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for modifying the key configuration of the SX1509 device.  <a href="#ga167232f6f66ea42ab1c4873f7ba0d946">More...</a><br/></td></tr>
 <tr class="separator:ga167232f6f66ea42ab1c4873f7ba0d946"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga51dda9a84100f260862c7272abc9b62e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga51dda9a84100f260862c7272abc9b62e">drv_sx1509_keydata_get</a> (uint16_t *p_keydata)</td></tr>
-<tr class="memdesc:ga51dda9a84100f260862c7272abc9b62e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the key data status of the sx1509 device.  <a href="#ga51dda9a84100f260862c7272abc9b62e">More...</a><br/></td></tr>
+<tr class="memdesc:ga51dda9a84100f260862c7272abc9b62e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the key data status of the SX1509 device.  <a href="#ga51dda9a84100f260862c7272abc9b62e">More...</a><br/></td></tr>
 <tr class="separator:ga51dda9a84100f260862c7272abc9b62e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga894495927fc51c1deb8d12fb0e1d4053"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga894495927fc51c1deb8d12fb0e1d4053">drv_sx1509_leddriverenable_get</a> (uint16_t *p_leddriverenable)</td></tr>
-<tr class="memdesc:ga894495927fc51c1deb8d12fb0e1d4053"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the LED driver enable configuration of the sx1509 device.  <a href="#ga894495927fc51c1deb8d12fb0e1d4053">More...</a><br/></td></tr>
+<tr class="memdesc:ga894495927fc51c1deb8d12fb0e1d4053"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the LED driver enable configuration of the SX1509 device.  <a href="#ga894495927fc51c1deb8d12fb0e1d4053">More...</a><br/></td></tr>
 <tr class="separator:ga894495927fc51c1deb8d12fb0e1d4053"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaaa9d707ea6d240f1b947094d4a277cd9"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#gaaa9d707ea6d240f1b947094d4a277cd9">drv_sx1509_leddriverenable_modify</a> (uint16_t set_mask, uint16_t clr_mask)</td></tr>
-<tr class="memdesc:gaaa9d707ea6d240f1b947094d4a277cd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the LED driver enable configuration of the sx1509 device.  <a href="#gaaa9d707ea6d240f1b947094d4a277cd9">More...</a><br/></td></tr>
+<tr class="memdesc:gaaa9d707ea6d240f1b947094d4a277cd9"><td class="mdescLeft">&#160;</td><td class="mdescRight">Functiong for modifying the LED driver enable configuration of the SX1509 device.  <a href="#gaaa9d707ea6d240f1b947094d4a277cd9">More...</a><br/></td></tr>
 <tr class="separator:gaaa9d707ea6d240f1b947094d4a277cd9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga25350db31bb62ae0947d8f0d25e14b15"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga25350db31bb62ae0947d8f0d25e14b15">drv_sx1509_levelshifter_get</a> (uint16_t *p_levelshifter)</td></tr>
-<tr class="memdesc:ga25350db31bb62ae0947d8f0d25e14b15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the level shifter configuration of the sx1509 device.  <a href="#ga25350db31bb62ae0947d8f0d25e14b15">More...</a><br/></td></tr>
+<tr class="memdesc:ga25350db31bb62ae0947d8f0d25e14b15"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the level shifter configuration of the SX1509 device.  <a href="#ga25350db31bb62ae0947d8f0d25e14b15">More...</a><br/></td></tr>
 <tr class="separator:ga25350db31bb62ae0947d8f0d25e14b15"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4ba165437bf98e137cc0f2ddd25b314e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga4ba165437bf98e137cc0f2ddd25b314e">drv_sx1509_levelshifter_modify</a> (uint16_t set_mask, uint16_t clr_mask)</td></tr>
-<tr class="memdesc:ga4ba165437bf98e137cc0f2ddd25b314e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the level shifter configuration of the sx1509 device.  <a href="#ga4ba165437bf98e137cc0f2ddd25b314e">More...</a><br/></td></tr>
+<tr class="memdesc:ga4ba165437bf98e137cc0f2ddd25b314e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for modifying the level shifter configuration of the SX1509 device.  <a href="#ga4ba165437bf98e137cc0f2ddd25b314e">More...</a><br/></td></tr>
 <tr class="separator:ga4ba165437bf98e137cc0f2ddd25b314e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad2205b2590bff586d89d7f4b99297269"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#gad2205b2590bff586d89d7f4b99297269">drv_sx1509_longslewrate_get</a> (uint16_t *p_longslewrate)</td></tr>
-<tr class="memdesc:gad2205b2590bff586d89d7f4b99297269"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the long slew rate configuration of the sx1509 device.  <a href="#gad2205b2590bff586d89d7f4b99297269">More...</a><br/></td></tr>
+<tr class="memdesc:gad2205b2590bff586d89d7f4b99297269"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the long slew rate configuration of the SX1509 device.  <a href="#gad2205b2590bff586d89d7f4b99297269">More...</a><br/></td></tr>
 <tr class="separator:gad2205b2590bff586d89d7f4b99297269"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga1ee3bb48c19ba0e1637d674dae44abac"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga1ee3bb48c19ba0e1637d674dae44abac">drv_sx1509_longslewrate_modify</a> (uint16_t set_mask, uint16_t clr_mask)</td></tr>
-<tr class="memdesc:ga1ee3bb48c19ba0e1637d674dae44abac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the long slew rate configuration of the sx1509 device.  <a href="#ga1ee3bb48c19ba0e1637d674dae44abac">More...</a><br/></td></tr>
+<tr class="memdesc:ga1ee3bb48c19ba0e1637d674dae44abac"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for modifying the long slew rate configuration of the SX1509 device.  <a href="#ga1ee3bb48c19ba0e1637d674dae44abac">More...</a><br/></td></tr>
 <tr class="separator:ga1ee3bb48c19ba0e1637d674dae44abac"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7f480c60dde662e8cd70426164c8c543"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga7f480c60dde662e8cd70426164c8c543">drv_sx1509_lowdrive_get</a> (uint16_t *p_lowdrive)</td></tr>
-<tr class="memdesc:ga7f480c60dde662e8cd70426164c8c543"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the low drive configuration of the sx1509 device.  <a href="#ga7f480c60dde662e8cd70426164c8c543">More...</a><br/></td></tr>
+<tr class="memdesc:ga7f480c60dde662e8cd70426164c8c543"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the low drive configuration of the SX1509 device.  <a href="#ga7f480c60dde662e8cd70426164c8c543">More...</a><br/></td></tr>
 <tr class="separator:ga7f480c60dde662e8cd70426164c8c543"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6bfa175d6d70db23cb4a71a0c3fed596"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga6bfa175d6d70db23cb4a71a0c3fed596">drv_sx1509_lowdrive_modify</a> (uint16_t set_mask, uint16_t clr_mask)</td></tr>
-<tr class="memdesc:ga6bfa175d6d70db23cb4a71a0c3fed596"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the low drive configuration of the sx1509 device.  <a href="#ga6bfa175d6d70db23cb4a71a0c3fed596">More...</a><br/></td></tr>
+<tr class="memdesc:ga6bfa175d6d70db23cb4a71a0c3fed596"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for modifying the low drive configuration of the SX1509 device.  <a href="#ga6bfa175d6d70db23cb4a71a0c3fed596">More...</a><br/></td></tr>
 <tr class="separator:ga6bfa175d6d70db23cb4a71a0c3fed596"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gae25f3b3d3b67d4c6db331de8de421aad"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#gae25f3b3d3b67d4c6db331de8de421aad">drv_sx1509_misc_get</a> (uint8_t *p_misc)</td></tr>
-<tr class="memdesc:gae25f3b3d3b67d4c6db331de8de421aad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the miscellaneous configuration of the sx1509 device.  <a href="#gae25f3b3d3b67d4c6db331de8de421aad">More...</a><br/></td></tr>
+<tr class="memdesc:gae25f3b3d3b67d4c6db331de8de421aad"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting miscellaneous configuration of the SX1509 device.  <a href="#gae25f3b3d3b67d4c6db331de8de421aad">More...</a><br/></td></tr>
 <tr class="separator:gae25f3b3d3b67d4c6db331de8de421aad"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga8fa6fac9d9e35500cda3f718fff84b8e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga8fa6fac9d9e35500cda3f718fff84b8e">drv_sx1509_misc_modify</a> (uint8_t set_mask, uint8_t clr_mask)</td></tr>
-<tr class="memdesc:ga8fa6fac9d9e35500cda3f718fff84b8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the miscellaneous configuration of the sx1509 device.  <a href="#ga8fa6fac9d9e35500cda3f718fff84b8e">More...</a><br/></td></tr>
+<tr class="memdesc:ga8fa6fac9d9e35500cda3f718fff84b8e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Fucntion for modifying miscellaneous configuration of the SX1509 device.  <a href="#ga8fa6fac9d9e35500cda3f718fff84b8e">More...</a><br/></td></tr>
 <tr class="separator:ga8fa6fac9d9e35500cda3f718fff84b8e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga958889a79cb4499d6ec643089a58bb87"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga958889a79cb4499d6ec643089a58bb87">drv_sx1509_onoffcfgx_get</a> (uint8_t pin_no, uint32_t *p_onoffcfgx)</td></tr>
-<tr class="memdesc:ga958889a79cb4499d6ec643089a58bb87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the the on/off time and intensity configuration (RegTOn15, RegIOnX &amp; RegOffX registers) of the sx1509 device.  <a href="#ga958889a79cb4499d6ec643089a58bb87">More...</a><br/></td></tr>
+<tr class="memdesc:ga958889a79cb4499d6ec643089a58bb87"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the on/off time and intensity configuration (RegTOn15, RegIOnX &amp; RegOffX registers) of the SX1509 device.  <a href="#ga958889a79cb4499d6ec643089a58bb87">More...</a><br/></td></tr>
 <tr class="separator:ga958889a79cb4499d6ec643089a58bb87"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga32ff91d3e02b3a87423adbe78023a127"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga32ff91d3e02b3a87423adbe78023a127">drv_sx1509_onoffcfgx_modify</a> (uint8_t pin_no, uint32_t set_mask, uint32_t clr_mask)</td></tr>
-<tr class="memdesc:ga32ff91d3e02b3a87423adbe78023a127"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the on/off time and intensity configuration (RegTOn15, RegIOnX &amp; RegOffX registers) of the sx1509 device.  <a href="#ga32ff91d3e02b3a87423adbe78023a127">More...</a><br/></td></tr>
+<tr class="memdesc:ga32ff91d3e02b3a87423adbe78023a127"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for modifying the on/off time and intensity configuration (RegTOn15, RegIOnX &amp; RegOffX registers) of the SX1509 device.  <a href="#ga32ff91d3e02b3a87423adbe78023a127">More...</a><br/></td></tr>
 <tr class="separator:ga32ff91d3e02b3a87423adbe78023a127"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6a27dc7705578e101c0e283fe8ea9f5e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga6a27dc7705578e101c0e283fe8ea9f5e">drv_sx1509_open</a> (<a class="el" href="structdrv__sx1509__cfg__t.html">drv_sx1509_cfg_t</a> const *const p_drv_sx1509_cfg)</td></tr>
-<tr class="memdesc:ga6a27dc7705578e101c0e283fe8ea9f5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens the sx1509 driver according to the specified configuration.  <a href="#ga6a27dc7705578e101c0e283fe8ea9f5e">More...</a><br/></td></tr>
+<tr class="memdesc:ga6a27dc7705578e101c0e283fe8ea9f5e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for opening the SX1509 driver according to the specified configuration.  <a href="#ga6a27dc7705578e101c0e283fe8ea9f5e">More...</a><br/></td></tr>
 <tr class="separator:ga6a27dc7705578e101c0e283fe8ea9f5e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3b28a62a89efa07227849f9f94b4b73a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga3b28a62a89efa07227849f9f94b4b73a">drv_sx1509_opendrain_get</a> (uint16_t *p_opendrain)</td></tr>
-<tr class="memdesc:ga3b28a62a89efa07227849f9f94b4b73a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the open drain operation enable configuration of the sx1509 device.  <a href="#ga3b28a62a89efa07227849f9f94b4b73a">More...</a><br/></td></tr>
+<tr class="memdesc:ga3b28a62a89efa07227849f9f94b4b73a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the open drain operation enable configuration of the SX1509 device.  <a href="#ga3b28a62a89efa07227849f9f94b4b73a">More...</a><br/></td></tr>
 <tr class="separator:ga3b28a62a89efa07227849f9f94b4b73a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga668e71dd2d3a2b9e390a62fbfd5747d3"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga668e71dd2d3a2b9e390a62fbfd5747d3">drv_sx1509_opendrain_modify</a> (uint16_t set_mask, uint16_t clr_mask)</td></tr>
-<tr class="memdesc:ga668e71dd2d3a2b9e390a62fbfd5747d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the open drain operation enable configuration of the sx1509 device.  <a href="#ga668e71dd2d3a2b9e390a62fbfd5747d3">More...</a><br/></td></tr>
+<tr class="memdesc:ga668e71dd2d3a2b9e390a62fbfd5747d3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for modifying the open drain operation enable configuration of the SX1509 device.  <a href="#ga668e71dd2d3a2b9e390a62fbfd5747d3">More...</a><br/></td></tr>
 <tr class="separator:ga668e71dd2d3a2b9e390a62fbfd5747d3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga19ddee9f0a8d858a9e4494ca7b6d44b8"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga19ddee9f0a8d858a9e4494ca7b6d44b8">drv_sx1509_polarity_get</a> (uint16_t *p_polarity)</td></tr>
-<tr class="memdesc:ga19ddee9f0a8d858a9e4494ca7b6d44b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the polarity inversion enable status of the sx1509 device.  <a href="#ga19ddee9f0a8d858a9e4494ca7b6d44b8">More...</a><br/></td></tr>
+<tr class="memdesc:ga19ddee9f0a8d858a9e4494ca7b6d44b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the polarity inversion enable status of the SX1509 device.  <a href="#ga19ddee9f0a8d858a9e4494ca7b6d44b8">More...</a><br/></td></tr>
 <tr class="separator:ga19ddee9f0a8d858a9e4494ca7b6d44b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4ef7994711c16100729086bb5e208074"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga4ef7994711c16100729086bb5e208074">drv_sx1509_polarity_modify</a> (uint16_t set_mask, uint16_t clr_mask)</td></tr>
-<tr class="memdesc:ga4ef7994711c16100729086bb5e208074"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the polarity inversion enable status of the sx1509 device.  <a href="#ga4ef7994711c16100729086bb5e208074">More...</a><br/></td></tr>
+<tr class="memdesc:ga4ef7994711c16100729086bb5e208074"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for modifying the polarity inversion enable status of the SX1509 device.  <a href="#ga4ef7994711c16100729086bb5e208074">More...</a><br/></td></tr>
 <tr class="separator:ga4ef7994711c16100729086bb5e208074"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga791a3d5c234aff545c33237f70efa568"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga791a3d5c234aff545c33237f70efa568">drv_sx1509_pulldown_get</a> (uint16_t *p_pulldown)</td></tr>
-<tr class="memdesc:ga791a3d5c234aff545c33237f70efa568"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the pull-down enable configuration of the sx1509 device.  <a href="#ga791a3d5c234aff545c33237f70efa568">More...</a><br/></td></tr>
+<tr class="memdesc:ga791a3d5c234aff545c33237f70efa568"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the pull-down enable configuration of the SX1509 device.  <a href="#ga791a3d5c234aff545c33237f70efa568">More...</a><br/></td></tr>
 <tr class="separator:ga791a3d5c234aff545c33237f70efa568"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga709c7636a0a868eaa5fb0b8bdd359b33"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga709c7636a0a868eaa5fb0b8bdd359b33">drv_sx1509_pulldown_modify</a> (uint16_t set_mask, uint16_t clr_mask)</td></tr>
-<tr class="memdesc:ga709c7636a0a868eaa5fb0b8bdd359b33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the pull-down enable configuration of the sx1509 device.  <a href="#ga709c7636a0a868eaa5fb0b8bdd359b33">More...</a><br/></td></tr>
+<tr class="memdesc:ga709c7636a0a868eaa5fb0b8bdd359b33"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for modifying the pull-down enable configuration of the SX1509 device.  <a href="#ga709c7636a0a868eaa5fb0b8bdd359b33">More...</a><br/></td></tr>
 <tr class="separator:ga709c7636a0a868eaa5fb0b8bdd359b33"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6b46c324811844013a7291354a9e01e8"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga6b46c324811844013a7291354a9e01e8">drv_sx1509_pullup_get</a> (uint16_t *p_pullup)</td></tr>
-<tr class="memdesc:ga6b46c324811844013a7291354a9e01e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the pull-up enable configuration of the sx1509 device.  <a href="#ga6b46c324811844013a7291354a9e01e8">More...</a><br/></td></tr>
+<tr class="memdesc:ga6b46c324811844013a7291354a9e01e8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the pull-up enable configuration of the SX1509 device.  <a href="#ga6b46c324811844013a7291354a9e01e8">More...</a><br/></td></tr>
 <tr class="separator:ga6b46c324811844013a7291354a9e01e8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4d74a7bf25bfe4f7c570e1c42209025f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga4d74a7bf25bfe4f7c570e1c42209025f">drv_sx1509_pullup_modify</a> (uint16_t set_mask, uint16_t clr_mask)</td></tr>
-<tr class="memdesc:ga4d74a7bf25bfe4f7c570e1c42209025f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the pull-up enable configuration of the sx1509 device.  <a href="#ga4d74a7bf25bfe4f7c570e1c42209025f">More...</a><br/></td></tr>
+<tr class="memdesc:ga4d74a7bf25bfe4f7c570e1c42209025f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for modifying the pull-up enable configuration of the SX1509 device.  <a href="#ga4d74a7bf25bfe4f7c570e1c42209025f">More...</a><br/></td></tr>
 <tr class="separator:ga4d74a7bf25bfe4f7c570e1c42209025f"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa66b787abc10d8e06fea4845fa973b81"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa66b787abc10d8e06fea4845fa973b81"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#gaa66b787abc10d8e06fea4845fa973b81">drv_sx1509_reg_get</a> (uint8_t reg_addr, uint8_t *p_value)</td></tr>
-<tr class="memdesc:gaa66b787abc10d8e06fea4845fa973b81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get any register from the sx1509. <br/></td></tr>
+<tr class="memitem:gaa66b787abc10d8e06fea4845fa973b81"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#gaa66b787abc10d8e06fea4845fa973b81">drv_sx1509_reg_get</a> (uint8_t reg_addr, uint8_t *p_value)</td></tr>
+<tr class="memdesc:gaa66b787abc10d8e06fea4845fa973b81"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting any register from SX1509.  <a href="#gaa66b787abc10d8e06fea4845fa973b81">More...</a><br/></td></tr>
 <tr class="separator:gaa66b787abc10d8e06fea4845fa973b81"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga90e6a3d790a5c1d11229e9124dc9a6cf"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga90e6a3d790a5c1d11229e9124dc9a6cf">drv_sx1509_reset</a> (void)</td></tr>
-<tr class="memdesc:ga90e6a3d790a5c1d11229e9124dc9a6cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Resets the sx1509 device.  <a href="#ga90e6a3d790a5c1d11229e9124dc9a6cf">More...</a><br/></td></tr>
+<tr class="memdesc:ga90e6a3d790a5c1d11229e9124dc9a6cf"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for resetting the SX1509 device.  <a href="#ga90e6a3d790a5c1d11229e9124dc9a6cf">More...</a><br/></td></tr>
 <tr class="separator:ga90e6a3d790a5c1d11229e9124dc9a6cf"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa70c640b2458426e67f7df5c1eaddd44"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#gaa70c640b2458426e67f7df5c1eaddd44">drv_sx1509_risefallcfgx_get</a> (uint8_t pin_no, uint16_t *p_risefallcfgx)</td></tr>
-<tr class="memdesc:gaa70c640b2458426e67f7df5c1eaddd44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the fade in/out configuration (RegTRiseX &amp; RegTFallX registers) of the sx1509 device.  <a href="#gaa70c640b2458426e67f7df5c1eaddd44">More...</a><br/></td></tr>
+<tr class="memdesc:gaa70c640b2458426e67f7df5c1eaddd44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the fade in/out configuration (RegTRiseX &amp; RegTFallX registers) of the SX1509 device.  <a href="#gaa70c640b2458426e67f7df5c1eaddd44">More...</a><br/></td></tr>
 <tr class="separator:gaa70c640b2458426e67f7df5c1eaddd44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga2e8d7b83fa0ac35f3766bfd616bdd577"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga2e8d7b83fa0ac35f3766bfd616bdd577">drv_sx1509_risefallcfgx_modify</a> (uint8_t pin_no, uint16_t set_mask, uint16_t clr_mask)</td></tr>
-<tr class="memdesc:ga2e8d7b83fa0ac35f3766bfd616bdd577"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the fade in/out configuration (RegTRiseX &amp; RegTFallX registers) of the sx1509 device.  <a href="#ga2e8d7b83fa0ac35f3766bfd616bdd577">More...</a><br/></td></tr>
+<tr class="memdesc:ga2e8d7b83fa0ac35f3766bfd616bdd577"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for modifying the fade in/out configuration (RegTRiseX &amp; RegTFallX registers) of the SX1509 device.  <a href="#ga2e8d7b83fa0ac35f3766bfd616bdd577">More...</a><br/></td></tr>
 <tr class="separator:ga2e8d7b83fa0ac35f3766bfd616bdd577"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab86d941100ac29ceb47641a69db0ad9c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#gab86d941100ac29ceb47641a69db0ad9c">drv_sx1509_sense_get</a> (uint32_t *p_sense)</td></tr>
-<tr class="memdesc:gab86d941100ac29ceb47641a69db0ad9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Gets the edge sensitivity configuration of the sx1509 device.  <a href="#gab86d941100ac29ceb47641a69db0ad9c">More...</a><br/></td></tr>
+<tr class="memdesc:gab86d941100ac29ceb47641a69db0ad9c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the edge sensitivity configuration of the SX1509 device.  <a href="#gab86d941100ac29ceb47641a69db0ad9c">More...</a><br/></td></tr>
 <tr class="separator:gab86d941100ac29ceb47641a69db0ad9c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga4ea6fdf1508ca7ca61755f0f604dd30f"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__sx1509__driver.html#ga4ea6fdf1508ca7ca61755f0f604dd30f">drv_sx1509_sense_modify</a> (uint32_t set_mask, uint32_t clr_mask)</td></tr>
-<tr class="memdesc:ga4ea6fdf1508ca7ca61755f0f604dd30f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Modifies the edge sensitivity configuration of the sx1509 device.  <a href="#ga4ea6fdf1508ca7ca61755f0f604dd30f">More...</a><br/></td></tr>
+<tr class="memdesc:ga4ea6fdf1508ca7ca61755f0f604dd30f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for modifying the edge sensitivity configuration of the SX1509 device.  <a href="#ga4ea6fdf1508ca7ca61755f0f604dd30f">More...</a><br/></td></tr>
 <tr class="separator:ga4ea6fdf1508ca7ca61755f0f604dd30f"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -309,7 +311,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
       </table>
 </div><div class="memdoc">
 
-<p>The sx1509 status codes. </p>
+<p>SX1509 status codes. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="gga726ca809ffd3d67ab4b8476646f26635a91e99a87f27daf4dea2d488ac7ab134f"></a>DRV_SX1509_STATUS_CODE_SUCCESS</em>&nbsp;</td><td class="fielddoc">
 <p>Successfull. </p>
@@ -342,7 +344,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
       </table>
 </div><div class="memdoc">
 
-<p>Gets the clock configuration of the sx1509 device. </p>
+<p>Function for getting the clock configuration of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_clock</td><td>A pointer to where the value is to be stored.</td></tr>
@@ -379,20 +381,20 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
       </table>
 </div><div class="memdoc">
 
-<p>Modifies the clock configuration of the sx1509 device. </p>
+<p>Function for modifying the clock configuration of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying what bits to set. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying what bits to clear.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying which bits to set. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying which bits to clear.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>Clear mask may overlap with set mask to make it easier to set new values for multi-bit fields (i.e. the clear mask will be applied first so that the set mask gets priority to override the clear mask).</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Clear mask may overlap with set mask to make it easier to set new values for multi-bit fields. The clear mask will be applied first so that the set mask gets priority to override the clear mask.</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>DRV_SX1509_STATUS_CODE_SUCCESS If the call was successful. </dd>
 <dd>
 DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd>
 <dd>
-DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
+DRV_SX1509_STATUS_INVALID_PARAM If the specified masks overlaps. </dd></dl>
 
 </div>
 </div>
@@ -410,7 +412,7 @@ DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Closes the sx1509 driver. </p>
+<p>Function for closing the SX1509 driver. </p>
 <dl class="section return"><dt>Returns</dt><dd>DRV_SX1509_STATUS_CODE_SUCCESS If the call was successful. </dd>
 <dd>
 DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd></dl>
@@ -431,7 +433,8 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
       </table>
 </div><div class="memdoc">
 
-<p>Gets the data to be output to the output-configured IOs of the sx1509 device. </p>
+<p>Function for getting the data seen at the pins of the SX1509 device. </p>
+<dl class="section note"><dt>Note</dt><dd>The input buffer must be connected to read the values.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>A pointer to where the value is to be stored.</td></tr>
@@ -468,11 +471,12 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
       </table>
 </div><div class="memdoc">
 
-<p>Modifies the data to be output to the output-configured IOs of the sx1509 device. </p>
+<p>Function for modifying the data to be output to the output-configured IOs of the SX1509 device. </p>
+<dl class="section note"><dt>Note</dt><dd>For this function to work correctly, the input buffer must be enabled.</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying what bits to set. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying what bits to clear.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying which bits to set. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying which bits to clear.</td></tr>
   </table>
   </dd>
 </dl>
@@ -480,7 +484,34 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
 <dd>
 DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd>
 <dd>
-DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
+DRV_SX1509_STATUS_INVALID_PARAM If the specified masks overlaps. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="ga59adca6e74c72015a0c78df20cc4972e"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t drv_sx1509_data_set </td>
+          <td>(</td>
+          <td class="paramtype">uint16_t&#160;</td>
+          <td class="paramname"><em>data</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for setting the data to be output to the output-configured IOs of the SX1509 device. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">data</td><td>Pin data.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>DRV_SX1509_STATUS_CODE_SUCCESS If the call was successful. </dd>
+<dd>
+DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd></dl>
 
 </div>
 </div>
@@ -498,7 +529,7 @@ DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the debounce configruation of the sx1509 device. </p>
+<p>Function for getting the debounce configuration of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_debounceconfig</td><td>A pointer to where the value is to be stored.</td></tr>
@@ -535,11 +566,11 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
       </table>
 </div><div class="memdoc">
 
-<p>Modifies the debounce configruation of the sx1509 device. </p>
+<p>Function for modifying the debounce configuration of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying what bits to set. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying what bits to clear.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying which bits to set. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying which bits to clear.</td></tr>
   </table>
   </dd>
 </dl>
@@ -547,7 +578,7 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
 <dd>
 DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd>
 <dd>
-DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
+DRV_SX1509_STATUS_INVALID_PARAM If the specified masks overlaps. </dd></dl>
 
 </div>
 </div>
@@ -565,7 +596,7 @@ DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the debounce enable configuration of the sx1509 device. </p>
+<p>Function for getting the debounce enable configuration of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_debounceenable</td><td>A pointer to where the value is to be stored.</td></tr>
@@ -602,11 +633,11 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
       </table>
 </div><div class="memdoc">
 
-<p>Modifies the debounce enable configuration of the sx1509 device. </p>
+<p>Function for modifying the debounce enable configuration of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying what bits to set. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying what bits to clear.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying which bits to set. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying which bits to clear.</td></tr>
   </table>
   </dd>
 </dl>
@@ -614,7 +645,7 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
 <dd>
 DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd>
 <dd>
-DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
+DRV_SX1509_STATUS_INVALID_PARAM If the specified masks overlaps. </dd></dl>
 
 </div>
 </div>
@@ -632,7 +663,7 @@ DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the pin direction configuration of the sx1509 device. </p>
+<p>Function for getting the pin direction configuration of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_dir</td><td>A pointer to where the value is to be stored.</td></tr>
@@ -669,11 +700,11 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
       </table>
 </div><div class="memdoc">
 
-<p>Modifies the pin direction configuration of the sx1509 device. </p>
+<p>Function for modifying the pin direction configuration of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying what bits to set. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying what bits to clear.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying which bits to set. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying which bits to clear.</td></tr>
   </table>
   </dd>
 </dl>
@@ -681,7 +712,7 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
 <dd>
 DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd>
 <dd>
-DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
+DRV_SX1509_STATUS_INVALID_PARAM If the specified masks overlaps. </dd></dl>
 
 </div>
 </div>
@@ -699,10 +730,10 @@ DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Modifies the event status of the sx1509 device. </p>
+<p>Function for modifying the event status of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying what bits to clear.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying which bits to clear.</td></tr>
   </table>
   </dd>
 </dl>
@@ -728,7 +759,7 @@ DRV_SX1509_STATUS_INVALID_PARAM If specified mask is empty. </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the event status of the sx1509 device. </p>
+<p>Function for getting the event status of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_eventstatus</td><td>A pointer to where the value is to be stored.</td></tr>
@@ -755,7 +786,7 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
       </table>
 </div><div class="memdoc">
 
-<p>Gets the enable configuration for high-voltage input mode of the sx1509 device. </p>
+<p>Function for getting the enable configuration for high-voltage input mode of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_highinpmode</td><td>A pointer to where the value is to be stored.</td></tr>
@@ -792,11 +823,11 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
       </table>
 </div><div class="memdoc">
 
-<p>Modifies the enable configuration for high-voltage input mode of the sx1509 device. </p>
+<p>Function for modifying the enable configuration for high-voltage input mode of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying what bits to set. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying what bits to clear.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying which bits to set. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying which bits to clear.</td></tr>
   </table>
   </dd>
 </dl>
@@ -822,7 +853,7 @@ DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the input buffer disable register of the sx1509 device. </p>
+<p>Function for getting the input buffer disable register of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_inputdisable</td><td>A pointer to where the value is to be stored.</td></tr>
@@ -859,11 +890,11 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
       </table>
 </div><div class="memdoc">
 
-<p>Modifies the input buffer disable register of the sx1509 device. </p>
+<p>Function for modifying the input buffer disable register of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying what bits to set. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying what bits to clear.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying which bits to set. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying which bits to clear.</td></tr>
   </table>
   </dd>
 </dl>
@@ -871,7 +902,7 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
 <dd>
 DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd>
 <dd>
-DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
+DRV_SX1509_STATUS_INVALID_PARAM If the specified masks overlaps. </dd></dl>
 
 </div>
 </div>
@@ -889,7 +920,7 @@ DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the interrupt mask of the sx1509 device. </p>
+<p>Function for getting the interrupt mask of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_interruptmask</td><td>A pointer to where the value is to be stored.</td></tr>
@@ -926,11 +957,11 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
       </table>
 </div><div class="memdoc">
 
-<p>Modifies the interrupt mask of the sx1509 device. </p>
+<p>Function for modifying the interrupt mask of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying what bits to set. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying what bits to clear.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying which bits to set. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying which bits to clear.</td></tr>
   </table>
   </dd>
 </dl>
@@ -938,7 +969,7 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
 <dd>
 DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd>
 <dd>
-DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
+DRV_SX1509_STATUS_INVALID_PARAM If the specified masks overlaps. </dd></dl>
 
 </div>
 </div>
@@ -956,10 +987,10 @@ DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Clears the interrupt source status of the sx1509 device. </p>
+<p>Function for clearing the interrupt source status of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying what bits to clear.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying which bits to clear.</td></tr>
   </table>
   </dd>
 </dl>
@@ -967,7 +998,7 @@ DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
 <dd>
 DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd>
 <dd>
-DRV_SX1509_STATUS_INVALID_PARAM If specified mask is empty. </dd></dl>
+DRV_SX1509_STATUS_INVALID_PARAM If the specified mask is empty. </dd></dl>
 
 </div>
 </div>
@@ -985,7 +1016,7 @@ DRV_SX1509_STATUS_INVALID_PARAM If specified mask is empty. </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the interrupt source status of the sx1509 device. </p>
+<p>Function for getting the interrupt source status of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_interruptsource</td><td>A pointer to where the value is to be stored.</td></tr>
@@ -1012,7 +1043,7 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
       </table>
 </div><div class="memdoc">
 
-<p>Gets the key configuration of the sx1509 device. </p>
+<p>Function for getting the key configuration of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_keyconfig</td><td>A pointer to where the value is to be stored.</td></tr>
@@ -1049,11 +1080,11 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
       </table>
 </div><div class="memdoc">
 
-<p>Modifies the key configuration of the sx1509 device. </p>
+<p>Function for modifying the key configuration of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying what bits to set. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying what bits to clear.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying which bits to set. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying which bits to clear.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1061,7 +1092,7 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
 <dd>
 DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd>
 <dd>
-DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
+DRV_SX1509_STATUS_INVALID_PARAM If the specified masks overlaps. </dd></dl>
 
 </div>
 </div>
@@ -1079,8 +1110,8 @@ DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the key data status of the sx1509 device. </p>
-<dl class="section note"><dt>Note</dt><dd>The keydata value is intentionally of oposite polarity than HW to work in the same way as the InterruptSource and EventStatus registers (i.e. active high interrupts).</dd></dl>
+<p>Function for getting the key data status of the SX1509 device. </p>
+<dl class="section note"><dt>Note</dt><dd>The key data value is intentionally of opposite polarity than HW to work in the same way as the InterruptSource and EventStatus registers (i.e. active high interrupts).</dd></dl>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_keydata</td><td>A pointer to where the value is to be stored.</td></tr>
@@ -1107,7 +1138,7 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
       </table>
 </div><div class="memdoc">
 
-<p>Gets the LED driver enable configuration of the sx1509 device. </p>
+<p>Function for getting the LED driver enable configuration of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_leddriverenable</td><td>A pointer to where the value is to be stored.</td></tr>
@@ -1144,11 +1175,11 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
       </table>
 </div><div class="memdoc">
 
-<p>Modifies the LED driver enable configuration of the sx1509 device. </p>
+<p>Functiong for modifying the LED driver enable configuration of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying what bits to set. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying what bits to clear.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying which bits to set. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying which bits to clear.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1156,7 +1187,7 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
 <dd>
 DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd>
 <dd>
-DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
+DRV_SX1509_STATUS_INVALID_PARAM If the specified masks overlaps. </dd></dl>
 
 </div>
 </div>
@@ -1174,7 +1205,7 @@ DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the level shifter configuration of the sx1509 device. </p>
+<p>Function for getting the level shifter configuration of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_levelshifter</td><td>A pointer to where the value is to be stored.</td></tr>
@@ -1211,20 +1242,20 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
       </table>
 </div><div class="memdoc">
 
-<p>Modifies the level shifter configuration of the sx1509 device. </p>
+<p>Function for modifying the level shifter configuration of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying what bits to set. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying what bits to clear.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying which bits to set. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying which bits to clear.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>Clear mask may overlap with set mask to make it easier to set new values for multi-bit fields (i.e. the clear mask will be applied first so that the set mask gets priority to override the clear mask).</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Clear mask may overlap with set mask to make it easier to set new values for multi-bit fields. The clear mask will be applied first so that the set mask gets priority to override the clear mask.</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>DRV_SX1509_STATUS_CODE_SUCCESS If the call was successful. </dd>
 <dd>
 DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd>
 <dd>
-DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
+DRV_SX1509_STATUS_INVALID_PARAM If the specified masks overlaps. </dd></dl>
 
 </div>
 </div>
@@ -1242,10 +1273,10 @@ DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the long slew rate configuration of the sx1509 device. </p>
+<p>Function for getting the long slew rate configuration of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_longslewrate</td><td>A pointer to where the value is to be stored.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_longslewrate</td><td>Pointer to where the value is to be stored.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1279,11 +1310,11 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
       </table>
 </div><div class="memdoc">
 
-<p>Modifies the long slew rate configuration of the sx1509 device. </p>
+<p>Function for modifying the long slew rate configuration of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying what bits to set. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying what bits to clear.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying which bits to set. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying which bits to clear.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1291,7 +1322,7 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
 <dd>
 DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd>
 <dd>
-DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
+DRV_SX1509_STATUS_INVALID_PARAM If the specified masks overlaps. </dd></dl>
 
 </div>
 </div>
@@ -1309,7 +1340,7 @@ DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the low drive configuration of the sx1509 device. </p>
+<p>Function for getting the low drive configuration of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_lowdrive</td><td>A pointer to where the value is to be stored.</td></tr>
@@ -1346,11 +1377,11 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
       </table>
 </div><div class="memdoc">
 
-<p>Modifies the low drive configuration of the sx1509 device. </p>
+<p>Function for modifying the low drive configuration of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying what bits to set. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying what bits to clear.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying which bits to set. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying which bits to clear.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1358,7 +1389,7 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
 <dd>
 DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd>
 <dd>
-DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
+DRV_SX1509_STATUS_INVALID_PARAM If the specified masks overlaps. </dd></dl>
 
 </div>
 </div>
@@ -1376,7 +1407,7 @@ DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the miscellaneous configuration of the sx1509 device. </p>
+<p>Function for getting miscellaneous configuration of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_misc</td><td>A pointer to where the value is to be stored.</td></tr>
@@ -1413,11 +1444,11 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
       </table>
 </div><div class="memdoc">
 
-<p>Modifies the miscellaneous configuration of the sx1509 device. </p>
+<p>Fucntion for modifying miscellaneous configuration of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying what bits to set. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying what bits to clear.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying which bits to set. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying which bits to clear.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1425,7 +1456,7 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
 <dd>
 DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd>
 <dd>
-DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
+DRV_SX1509_STATUS_INVALID_PARAM If the specified masks overlaps. </dd></dl>
 
 </div>
 </div>
@@ -1453,7 +1484,7 @@ DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the the on/off time and intensity configuration (RegTOn15, RegIOnX &amp; RegOffX registers) of the sx1509 device. </p>
+<p>Function for getting the on/off time and intensity configuration (RegTOn15, RegIOnX &amp; RegOffX registers) of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">pin_no</td><td>The pin number to configure. </td></tr>
@@ -1497,16 +1528,16 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
       </table>
 </div><div class="memdoc">
 
-<p>Modifies the on/off time and intensity configuration (RegTOn15, RegIOnX &amp; RegOffX registers) of the sx1509 device. </p>
+<p>Function for modifying the on/off time and intensity configuration (RegTOn15, RegIOnX &amp; RegOffX registers) of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">pin_no</td><td>The pin number to configure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying what bits to set. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying what bits to clear.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying which bits to set. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying which bits to clear.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>Clear mask may overlap with set mask to make it easier to set new values for multi-bit fields (i.e. the clear mask will be applied first so that the set mask gets priority to override the clear mask).</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Clear mask may overlap with set mask to make it easier to set new values for multi-bit fields. The clear mask will be applied first so that the set mask gets priority to override the clear mask.</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>DRV_SX1509_STATUS_CODE_SUCCESS If the call was successful. </dd>
 <dd>
 DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd>
@@ -1529,7 +1560,7 @@ DRV_SX1509_STATUS_INVALID_PARAM Invalid pin number, or masks specify unused bits
       </table>
 </div><div class="memdoc">
 
-<p>Opens the sx1509 driver according to the specified configuration. </p>
+<p>Function for opening the SX1509 driver according to the specified configuration. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_drv_sx1509_cfg</td><td>Pointer to the driver configuration for the session to be opened.</td></tr>
@@ -1556,7 +1587,7 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
       </table>
 </div><div class="memdoc">
 
-<p>Gets the open drain operation enable configuration of the sx1509 device. </p>
+<p>Function for getting the open drain operation enable configuration of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_opendrain</td><td>A pointer to where the value is to be stored.</td></tr>
@@ -1593,11 +1624,11 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
       </table>
 </div><div class="memdoc">
 
-<p>Modifies the open drain operation enable configuration of the sx1509 device. </p>
+<p>Function for modifying the open drain operation enable configuration of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying what bits to set. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying what bits to clear.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying which bits to set. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying which bits to clear.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1605,7 +1636,7 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
 <dd>
 DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd>
 <dd>
-DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
+DRV_SX1509_STATUS_INVALID_PARAM If the specified masks overlaps. </dd></dl>
 
 </div>
 </div>
@@ -1623,7 +1654,7 @@ DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the polarity inversion enable status of the sx1509 device. </p>
+<p>Function for getting the polarity inversion enable status of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_polarity</td><td>A pointer to where the value is to be stored.</td></tr>
@@ -1660,11 +1691,11 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
       </table>
 </div><div class="memdoc">
 
-<p>Modifies the polarity inversion enable status of the sx1509 device. </p>
+<p>Function for modifying the polarity inversion enable status of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying what bits to set. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying what bits to clear.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying which bits to set. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying which bits to clear.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1672,7 +1703,7 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
 <dd>
 DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd>
 <dd>
-DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
+DRV_SX1509_STATUS_INVALID_PARAM If the specified masks overlaps. </dd></dl>
 
 </div>
 </div>
@@ -1690,7 +1721,7 @@ DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the pull-down enable configuration of the sx1509 device. </p>
+<p>Function for getting the pull-down enable configuration of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_pulldown</td><td>A pointer to where the value is to be stored.</td></tr>
@@ -1727,11 +1758,11 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
       </table>
 </div><div class="memdoc">
 
-<p>Modifies the pull-down enable configuration of the sx1509 device. </p>
+<p>Function for modifying the pull-down enable configuration of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying what bits to set. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying what bits to clear.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying which bits to set. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying which bits to clear.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1739,7 +1770,7 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
 <dd>
 DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd>
 <dd>
-DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
+DRV_SX1509_STATUS_INVALID_PARAM If the specified masks overlaps. </dd></dl>
 
 </div>
 </div>
@@ -1757,7 +1788,7 @@ DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Gets the pull-up enable configuration of the sx1509 device. </p>
+<p>Function for getting the pull-up enable configuration of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_pullup</td><td>A pointer to where the value is to be stored.</td></tr>
@@ -1794,11 +1825,11 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
       </table>
 </div><div class="memdoc">
 
-<p>Modifies the pull-up enable configuration of the sx1509 device. </p>
+<p>Function for modifying the pull-up enable configuration of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying what bits to set. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying what bits to clear.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying which bits to set. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying which bits to clear.</td></tr>
   </table>
   </dd>
 </dl>
@@ -1806,7 +1837,45 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
 <dd>
 DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd>
 <dd>
-DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
+DRV_SX1509_STATUS_INVALID_PARAM If the specified masks overlaps. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa66b787abc10d8e06fea4845fa973b81"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t drv_sx1509_reg_get </td>
+          <td>(</td>
+          <td class="paramtype">uint8_t&#160;</td>
+          <td class="paramname"><em>reg_addr</em>, </td>
+        </tr>
+        <tr>
+          <td class="paramkey"></td>
+          <td></td>
+          <td class="paramtype">uint8_t *&#160;</td>
+          <td class="paramname"><em>p_value</em>&#160;</td>
+        </tr>
+        <tr>
+          <td></td>
+          <td>)</td>
+          <td></td><td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for getting any register from SX1509. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">reg_addr</td><td>Register address to read. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_value</td><td>Pointer to store data.</td></tr>
+  </table>
+  </dd>
+</dl>
+<dl class="section return"><dt>Returns</dt><dd>DRV_SX1509_STATUS_CODE_SUCCESS If the call was successful. </dd>
+<dd>
+DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd></dl>
 
 </div>
 </div>
@@ -1824,7 +1893,7 @@ DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Resets the sx1509 device. </p>
+<p>Function for resetting the SX1509 device. </p>
 <dl class="section return"><dt>Returns</dt><dd>DRV_SX1509_STATUS_CODE_SUCCESS If the call was successful. </dd>
 <dd>
 DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd></dl>
@@ -1855,7 +1924,7 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
       </table>
 </div><div class="memdoc">
 
-<p>Gets the fade in/out configuration (RegTRiseX &amp; RegTFallX registers) of the sx1509 device. </p>
+<p>Function for getting the fade in/out configuration (RegTRiseX &amp; RegTFallX registers) of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">pin_no</td><td>The pin number to configure. </td></tr>
@@ -1899,16 +1968,16 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
       </table>
 </div><div class="memdoc">
 
-<p>Modifies the fade in/out configuration (RegTRiseX &amp; RegTFallX registers) of the sx1509 device. </p>
+<p>Function for modifying the fade in/out configuration (RegTRiseX &amp; RegTFallX registers) of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">pin_no</td><td>The pin number to configure. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying what bits to set. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying what bits to clear.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying which bits to set. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying which bits to clear.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>Clear mask may overlap with set mask to make it easier to set new values for multi-bit fields (i.e. the clear mask will be applied first so that the set mask gets priority to override the clear mask).</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Clear mask may overlap with set mask to make it easier to set new values for multi-bit fields. The clear mask will be applied first so that the set mask gets priority to override the clear mask.</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>DRV_SX1509_STATUS_CODE_SUCCESS If the call was successful. </dd>
 <dd>
 DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd>
@@ -1931,7 +2000,7 @@ DRV_SX1509_STATUS_INVALID_PARAM Invalid pin number, or masks specify unused bits
       </table>
 </div><div class="memdoc">
 
-<p>Gets the edge sensitivity configuration of the sx1509 device. </p>
+<p>Function for getting the edge sensitivity configuration of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_sense</td><td>A pointer to where the value is to be stored.</td></tr>
@@ -1968,20 +2037,20 @@ DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd
       </table>
 </div><div class="memdoc">
 
-<p>Modifies the edge sensitivity configuration of the sx1509 device. </p>
+<p>Function for modifying the edge sensitivity configuration of the SX1509 device. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying what bits to set. </td></tr>
-    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying what bits to clear.</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">set_mask</td><td>A mask specifying which bits to set. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">clr_mask</td><td>A mask specifying which bits to clear.</td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>Clear mask may overlap with set mask to make it easier to set new values for multi-bit fields (i.e. the clear mask will be applied first so that the set mask gets priority to override the clear mask).</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>Clear mask may overlap with set mask to make it easier to set new values for multi-bit fields. The clear mask will be applied first so that the set mask gets priority to override the clear mask.</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>DRV_SX1509_STATUS_CODE_SUCCESS If the call was successful. </dd>
 <dd>
 DRV_SX1509_STATUS_CODE_DISALLOWED If the call was not allowed at this time. </dd>
 <dd>
-DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
+DRV_SX1509_STATUS_INVALID_PARAM If the specified masks overlaps. </dd></dl>
 
 </div>
 </div>
@@ -1990,7 +2059,7 @@ DRV_SX1509_STATUS_INVALID_PARAM If specified masks overlaps. </dd></dl>
 <div id="nav-path" class="topicfooter">
 <a href="mailto:docfeedback@nordicsemi.no?subject=Documentation%20feedback" id="maillink">Documentation feedback</a> | <a href="https://devzone.nordicsemi.com/questions/" target="_blank">Developer Zone</a> | <a href="http://response.nordicsemi.com/subscribe-to-our-newsletters" target="_blank">Subscribe</a> | Updated <span id="date"/>
 <script>
-var date = new Date("Tue May 30 2017" + " UTC");
+var date = new Date("Fri Sep 29 2017" + " UTC");
 document.getElementById("date").innerHTML = date.toJSON().slice(0, 10);
 var url=window.location.href.split("?")[0];
 var filename=url.substring(url.lastIndexOf('/')+1);

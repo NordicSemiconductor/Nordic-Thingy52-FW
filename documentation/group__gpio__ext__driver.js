@@ -47,5 +47,6 @@ var group__gpio__ext__driver =
     [ "drv_ext_gpio_pins_read", "group__gpio__ext__driver.html#gaec15416078c5485936252cc49dd4607c", null ],
     [ "drv_ext_gpio_pins_set", "group__gpio__ext__driver.html#gae77caa26e459b01f7c1d8772363e18c7", null ],
     [ "drv_ext_gpio_pins_toggle", "group__gpio__ext__driver.html#ga47ef1db9236ed937309879823e7c074f", null ],
+    [ "drv_ext_gpio_reg_data_init", "group__gpio__ext__driver.html#gacdecb362e6e4b89cdf53b10451772e08", null ],
     [ "drv_ext_gpio_reset", "group__gpio__ext__driver.html#gaba8228cfe403cbc7e4bd2a3fe3fb7c1e", null ]
 ];

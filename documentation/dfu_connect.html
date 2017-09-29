@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>Nordic Thingy:52 : OTA-DFU with nRF Connect</title>
+<title>Nordic Thingy:52 v2.0.0 : OTA-DFU with nRF Connect</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Nordic Semiconductor" src="nordic_small.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Nordic Thingy:52
+   <div id="projectname">Nordic Thingy:52 v2.0.0
    </div>
   </td>
  </tr>
@@ -116,11 +116,11 @@ $(document).ready(function(){initNavTree('dfu_connect.html','');});
 <div class="title">OTA-DFU with nRF Connect </div>  </div>
 </div><!--header-->
 <div class="contents">
-<div class="textblock"><p>You can run a Device Firmware Update on the Thingy using Nordic Semiconductor's nRF Connect mobile and desktop applications.</p>
+<div class="textblock"><p>You can run a Device Firmware Update on Thingy using Nordic Semiconductor's nRF Connect mobile and desktop applications.</p>
 <h1><a class="anchor" id="dfu_performing_desktop"></a>
 Upgrading with nRF Connect for desktop</h1>
-<p>The following procedure involves using a desktop device and a connectivity board to run a DFU.</p>
-<p>Install the following software on your desktop computer before running this procedure:</p>
+<p>The following procedure involves using a desktop device and a connectivity board to run DFU.</p>
+<p>Install the following software on your computer before running this procedure:</p>
 <ul>
 <li><a href="https://www.nordicsemi.com/chi/node_176/2.4GHz-RF/nRFgo-Studio" target="blank">nRFgo Studio</a></li>
 <li><a href="https://www.nordicsemi.com/eng/Products/Bluetooth-low-energy/nRF-Connect-for-desktop" target="blank">nRF Connect for desktop</a></li>
@@ -143,46 +143,45 @@ Select the board in nRF Connect</div></div>
 <div class="caption">
 Firmware update prompt</div></div>
 </li>
-<li>Click <b>Start Scan</b>. From the available discovered devices, connect to <code>Thingy</code>. Make sure it is not bonded to another host. <dl class="section note"><dt>Note</dt><dd>The list of discovered devices is not automatically refreshed when they stop advertising. Whenever you have problems connecting to a device from the list, try clearing it and rerunning the scan. If the Thingy stops advertising, tap or move it.</dd></dl>
+<li>Click <b>Start Scan</b>. From the available discovered devices, connect to <code>Thingy</code>. Make sure it is not bonded to another host. <dl class="section note"><dt>Note</dt><dd>The list of discovered devices is not automatically refreshed when they stop advertising. Whenever you have problems connecting to a device from the list, try clearing it and rerunning the scan. If Thingy stops advertising, press its button or move it.</dd></dl>
 </li>
-<li>Connect to the Thingy. When connecting, you do not need to select any of the optional settings.</li>
+<li>Connect to Thingy. When connecting, you do not need to select any of the optional settings.</li>
 <li>Expand the FE59 service section and enable notifications by clicking <b>Toggle notifications</b>. Then, type <code>01</code> into the FE59 field. Press Enter or click <b>Write</b>. <div class="image">
 <img src="fe59.png" alt="fe59.png"/>
 <div class="caption">
 FE59 service section</div></div>
- The Thingy now enters DFU mode. You are disconnected from the device and, if you run a new scan, a <code>ThingyDfu</code> device appears in the list of discovered devices. The LED on the Thingy fades in and out rapidly in yellow color. <dl class="section note"><dt>Note</dt><dd>The <code>ThingyDfu</code> device is the Thingy in DFU mode. Notice that its address is always the address of the Thingy plus 1.</dd></dl>
+ Thingy now enters DFU mode. You are disconnected from the device and, if you run a new scan, a <code>ThingyDfu</code> device appears in the list of discovered devices. The LED on Thingy fades in and out rapidly in yellow. <dl class="section note"><dt>Note</dt><dd>The <code>ThingyDfu</code> device is Thingy in DFU mode. Notice that its address is always the address of Thingy plus 1.</dd></dl>
 </li>
 <li>Close nRF Connect. Make sure that nRF Connect and nrfutil applications do not run at the same time.</li>
 <li>With nrfutil installed, open the command prompt and run the following command: <div class="fragment"><div class="line">nrfutil dfu ble -ic &lt;ic_series&gt; -pkg &lt;package_name.zip&gt;</div>
-</div><!-- fragment --> , where &lt;ic_name&gt; is the Series of the connectivity board (<code>NRF51</code> or <code>NRF52</code>) and &lt;package_name.zip&gt; is the path to the ZIP file that is to be transferred to the Thingy. For example: <div class="fragment"><div class="line">nrfutil dfu ble -ic NRF51 -pkg <span class="stringliteral">&quot;thingy_firmware.zip&quot;</span></div>
+</div><!-- fragment --> where &lt;ic_name&gt; is the Series of the connectivity board (<code>NRF51</code> or <code>NRF52</code>) and &lt;package_name.zip&gt; is the path to the ZIP file that is to be transferred to Thingy. For example: <div class="fragment"><div class="line">nrfutil dfu ble -ic NRF51 -pkg <span class="stringliteral">&quot;thingy_firmware.zip&quot;</span></div>
 </div><!-- fragment --></li>
 <li>You might be prompted to select the connectivity serial port. Select the port that the connectivity board is connected to and press Enter. A progress bar will appear showing the progress of the package transfer.</li>
 </ol>
 <h1><a class="anchor" id="dfu_performing_mobile"></a>
 Upgrading with nRF Connect for mobile</h1>
-<p>The following procedure involves using a mobile device with nRF Connect installed to run a DFU.</p>
-<p>Before running this procedure, install <a href="https://www.nordicsemi.com/eng/Products/Nordic-mobile-Apps/nRF-Connect-for-mobile-previously-called-nRF-Master-Control-Panel" target="blank">nRF Connect for Mobile</a>.</p>
+<p>The following procedure involves using a mobile device with <a href="https://www.nordicsemi.com/eng/Products/Nordic-mobile-Apps/nRF-Connect-for-mobile-previously-called-nRF-Master-Control-Panel" target="blank">nRF Connect for Mobile</a> installed to run DFU.</p>
 <ol type="1">
 <li>Transfer the ZIP packages that will be used for DFU to your mobile device.</li>
-<li>Power on the Thingy.</li>
+<li>Power on Thingy.</li>
 <li>Open nRF Connect on your mobile device.</li>
-<li>Tap <b>Scan</b>. From the available discovered devices, connect to the Thingy. <dl class="section note"><dt>Note</dt><dd>The list of discovered devices is not automatically refreshed when they stop advertising. Whenever you have problems connecting to a device from the list, try refreshing the list. If the Thingy stops advertising, tap or move the device.</dd></dl>
+<li>Tap <b>Scan</b>. From the available discovered devices, connect to Thingy. <dl class="section note"><dt>Note</dt><dd>The list of discovered devices is not automatically refreshed when they stop advertising. Whenever you have problems connecting to a device from the list, try refreshing the list. If Thingy stops advertising, press its button or move the device.</dd></dl>
 </li>
 <li>Expand the Secure DFU Service section. There are two icons to the right of the DFU Control Point area.<ol type="a">
 <li>The icon to the right toggles notifications. Make sure they are enabled (the icon must be crossed).</li>
-<li>Tap the icon to the left to put the Thingy into bootloader (DFU) mode. Tap <b>Send</b> when prompted to reset the device to bootloader. <div class="image">
+<li>Tap the icon to the left to put Thingy into bootloader (DFU) mode. Tap <b>Send</b> when prompted to reset the device to bootloader. <div class="image">
 <img src="dfu_mode.png" alt="dfu_mode.png"/>
 <div class="caption">
-Putting the Thingy into DFU mode (1)</div></div>
+Activating DFU mode for Thingy (1)</div></div>
 <div class="image">
 <img src="bootloader_reset.png" alt="bootloader_reset.png"/>
 <div class="caption">
-Putting the Thingy into DFU mode (2)</div></div>
-<dl class="section note"><dt>Note</dt><dd>The Thingy now enters DFU mode. You are disconnected from the device. The LED on the Thingy fades in and out rapidly in yellow color.</dd></dl>
+Activating DFU mode for Thingy (2)</div></div>
+<dl class="section note"><dt>Note</dt><dd>Thingy now enters DFU mode and you are disconnected from the device. The LED on Thingy fades in and out rapidly in yellow.</dd></dl>
 </li>
 </ol>
 </li>
-<li>Go to the Scanner tab and run a new scan. A <code>ThingyDfu</code> device appears in the list of discovered devices. <dl class="section note"><dt>Note</dt><dd>The <code>ThingyDfu</code> device is the Thingy in DFU mode. Notice that its address is always the address of the Thingy device plus 1.</dd></dl>
+<li>Go to the Scanner tab and run a new scan. A <code>ThingyDfu</code> device appears in the list of discovered devices. <dl class="section note"><dt>Note</dt><dd>The <code>ThingyDfu</code> device is Thingy in DFU mode. Notice that its address is always the address of the Thingy device plus 1.</dd></dl>
 </li>
 <li>Connect to the <code>ThingyDfu</code> device. Tap the DFU icon. <div class="image">
 <img src="dfutarg_connect.png" alt="dfutarg_connect.png"/>
@@ -194,7 +193,7 @@ Running DFU on the ThingyDfu device</div></div>
 <div class="caption">
 Uploading the ZIP file</div></div>
 </li>
-<li>The package is now uploaded to the Thingy in the DFU process. <div class="image">
+<li>The package is now uploaded to Thingy in the DFU process. <div class="image">
 <img src="dfu_running.png" alt="dfu_running.png"/>
 <div class="caption">
 DFU in progress</div></div>
@@ -205,7 +204,7 @@ DFU in progress</div></div>
 <div id="nav-path" class="topicfooter">
 <a href="mailto:docfeedback@nordicsemi.no?subject=Documentation%20feedback" id="maillink">Documentation feedback</a> | <a href="https://devzone.nordicsemi.com/questions/" target="_blank">Developer Zone</a> | <a href="http://response.nordicsemi.com/subscribe-to-our-newsletters" target="_blank">Subscribe</a> | Updated <span id="date"/>
 <script>
-var date = new Date("Tue May 30 2017" + " UTC");
+var date = new Date("Fri Sep 29 2017" + " UTC");
 document.getElementById("date").innerHTML = date.toJSON().slice(0, 10);
 var url=window.location.href.split("?")[0];
 var filename=url.substring(url.lastIndexOf('/')+1);

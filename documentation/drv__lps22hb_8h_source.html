@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>Nordic Thingy:52 : drv_lps22hb.h Source File</title>
+<title>Nordic Thingy:52 v2.0.0 : drv_lps22hb.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Nordic Semiconductor" src="nordic_small.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Nordic Thingy:52
+   <div id="projectname">Nordic Thingy:52 v2.0.0
    </div>
   </td>
  </tr>
@@ -402,7 +402,7 @@ $(document).ready(function(){initNavTree('drv__lps22hb_8h_source.html','');});
 <div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;    uint8_t  ctrl_reg3;</div>
 <div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;    uint8_t  fifo_ctrl;</div>
 <div class="line"><a name="l00345"></a><span class="lineno">  345</span>&#160;    uint8_t  res_conf;</div>
-<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;}<a class="code" href="structdrv__lps22hb__cfg__t.html" title="Configuration struct for lps22hb pressure sensor.">drv_lps22hb_cfg_t</a>;</div>
+<div class="line"><a name="l00346"></a><span class="lineno">  346</span>&#160;}<a class="code" href="structdrv__lps22hb__cfg__t.html" title="Configuration struct for the LPS22HB pressure sensor.">drv_lps22hb_cfg_t</a>;</div>
 <div class="line"><a name="l00347"></a><span class="lineno">  347</span>&#160;</div>
 <div class="line"><a name="l00350"></a><span class="lineno"><a class="code" href="structdrv__lps22hb__twi__cfg__t.html">  350</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct</span></div>
 <div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;{</div>
@@ -410,7 +410,7 @@ $(document).ready(function(){initNavTree('drv__lps22hb_8h_source.html','');});
 <div class="line"><a name="l00353"></a><span class="lineno"><a class="code" href="structdrv__lps22hb__twi__cfg__t.html#abde5555a1f7b1f60d4f5eb830b30b2fc">  353</a></span>&#160;    uint32_t                     <a class="code" href="structdrv__lps22hb__twi__cfg__t.html#abde5555a1f7b1f60d4f5eb830b30b2fc" title="Interrupt pin number.">pin_int</a>;         </div>
 <div class="line"><a name="l00354"></a><span class="lineno"><a class="code" href="structdrv__lps22hb__twi__cfg__t.html#aefa961e5af260e3cd327ff7c3288a5fc">  354</a></span>&#160;    nrf_drv_twi_t        <span class="keyword">const</span> * <a class="code" href="structdrv__lps22hb__twi__cfg__t.html#aefa961e5af260e3cd327ff7c3288a5fc" title="The instance of TWI master to be used for transactions.">p_twi_instance</a>;  </div>
 <div class="line"><a name="l00355"></a><span class="lineno"><a class="code" href="structdrv__lps22hb__twi__cfg__t.html#a82e422f02d0201176e074be69b19bfb8">  355</a></span>&#160;    nrf_drv_twi_config_t <span class="keyword">const</span> * <a class="code" href="structdrv__lps22hb__twi__cfg__t.html#a82e422f02d0201176e074be69b19bfb8" title="The TWI configuration to use while the driver is enabled.">p_twi_cfg</a>;       </div>
-<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;} <a class="code" href="structdrv__lps22hb__twi__cfg__t.html" title="Initialization struct for lps22hb pressure sensor driver.">drv_lps22hb_twi_cfg_t</a>;</div>
+<div class="line"><a name="l00356"></a><span class="lineno">  356</span>&#160;} <a class="code" href="structdrv__lps22hb__twi__cfg__t.html" title="Initialization struct for the LPS22HB pressure sensor driver.">drv_lps22hb_twi_cfg_t</a>;</div>
 <div class="line"><a name="l00357"></a><span class="lineno">  357</span>&#160;</div>
 <div class="line"><a name="l00360"></a><span class="lineno"><a class="code" href="group__lps22hb__press__driver.html#ga9dd19f2647180b0ac89574a627fac573">  360</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">enum</span></div>
 <div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;{</div>
@@ -422,54 +422,54 @@ $(document).ready(function(){initNavTree('drv__lps22hb_8h_source.html','');});
 <div class="line"><a name="l00367"></a><span class="lineno">  367</span>&#160;    DRV_LPS22HB_ODR_75Hz</div>
 <div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;}<a class="code" href="group__lps22hb__press__driver.html#ga9dd19f2647180b0ac89574a627fac573" title="Available data rates.">drv_lps22hb_odr_t</a>;</div>
 <div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#ga23eeea26413a1b60fbb0acd4ce75a4de" title="Inits the lps22hb driver.">drv_lps22hb_init</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00373"></a><span class="lineno">  373</span>&#160;</div>
-<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#gabd90eeabea39ac6a6336f98e31c5aab0" title="Opens the lps22hb driver according to the specified configuration.">drv_lps22hb_open</a>(<a class="code" href="structdrv__lps22hb__twi__cfg__t.html" title="Initialization struct for lps22hb pressure sensor driver.">drv_lps22hb_twi_cfg_t</a> <span class="keyword">const</span> * <span class="keyword">const</span> p_twi_cfg);</div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;</div>
-<div class="line"><a name="l00386"></a><span class="lineno">  386</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#gae6d2392e0dcc39b4b0ac96ae98802e1f" title="Close the lps22hb driver.">drv_lps22hb_close</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00387"></a><span class="lineno">  387</span>&#160;</div>
-<div class="line"><a name="l00394"></a><span class="lineno">  394</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#ga6f677afbe07803afba5b1899a7c07bab" title="Read and check the WHO_AM_I register of the lps22hb sensor.">drv_lps22hb_verify</a>(uint8_t * who_am_i);</div>
-<div class="line"><a name="l00395"></a><span class="lineno">  395</span>&#160;</div>
-<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#gaf9fe777b22b66eba8dc4be65600c3d9e" title="Configures the lps22hb sensor according to the specified configuration.">drv_lps22hb_cfg_set</a>(<a class="code" href="structdrv__lps22hb__cfg__t.html" title="Configuration struct for lps22hb pressure sensor.">drv_lps22hb_cfg_t</a> <span class="keyword">const</span> * <span class="keyword">const</span> p_cfg);</div>
-<div class="line"><a name="l00403"></a><span class="lineno">  403</span>&#160;</div>
-<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#ga12e2ba0564aeb7c693ecb243087bebcc" title="Reads the configuration of the lps22hb sensor.">drv_lps22hb_cfg_get</a>(<a class="code" href="structdrv__lps22hb__cfg__t.html" title="Configuration struct for lps22hb pressure sensor.">drv_lps22hb_cfg_t</a> *  p_cfg);</div>
-<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;</div>
-<div class="line"><a name="l00416"></a><span class="lineno">  416</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#gac57593a159fd2d0b27bb8f60233b7bda" title="Function to set reference pressure.">drv_lps22hb_ref_pressure_set</a>(uint32_t ref_press);</div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;</div>
-<div class="line"><a name="l00422"></a><span class="lineno">  422</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#ga86163ddb9a562607b9c8bd8cba28cc45" title="Function to get reference pressure.">drv_lps22hb_ref_pressure_get</a>(uint32_t * p_ref_press);</div>
-<div class="line"><a name="l00423"></a><span class="lineno">  423</span>&#160;</div>
-<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#ga0e65e70bc2a6ef7d09fe7f5fd91a9f57" title="Function to set pressure offset.">drv_lps22hb_pressure_offset_set</a>(uint16_t offset);</div>
+<div class="line"><a name="l00374"></a><span class="lineno">  374</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#ga23eeea26413a1b60fbb0acd4ce75a4de" title="Function for initializing the LPS22HB driver.">drv_lps22hb_init</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00375"></a><span class="lineno">  375</span>&#160;</div>
+<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#gabd90eeabea39ac6a6336f98e31c5aab0" title="Function for opening the LPS22HB driver according to the specified configuration.">drv_lps22hb_open</a>(<a class="code" href="structdrv__lps22hb__twi__cfg__t.html" title="Initialization struct for the LPS22HB pressure sensor driver.">drv_lps22hb_twi_cfg_t</a> <span class="keyword">const</span> * <span class="keyword">const</span> p_twi_cfg);</div>
+<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;</div>
+<div class="line"><a name="l00388"></a><span class="lineno">  388</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#gae6d2392e0dcc39b4b0ac96ae98802e1f" title="Function for closing the LPS22HB driver.">drv_lps22hb_close</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;</div>
+<div class="line"><a name="l00396"></a><span class="lineno">  396</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#ga6f677afbe07803afba5b1899a7c07bab" title="Function for reading and checking the WHO_AM_I register of the LPS22HB sensor.">drv_lps22hb_verify</a>(uint8_t * who_am_i);</div>
+<div class="line"><a name="l00397"></a><span class="lineno">  397</span>&#160;</div>
+<div class="line"><a name="l00404"></a><span class="lineno">  404</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#gaf9fe777b22b66eba8dc4be65600c3d9e" title="Function for configuring the LPS22HB sensor according to the specified configuration.">drv_lps22hb_cfg_set</a>(<a class="code" href="structdrv__lps22hb__cfg__t.html" title="Configuration struct for the LPS22HB pressure sensor.">drv_lps22hb_cfg_t</a> <span class="keyword">const</span> * <span class="keyword">const</span> p_cfg);</div>
+<div class="line"><a name="l00405"></a><span class="lineno">  405</span>&#160;</div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#ga12e2ba0564aeb7c693ecb243087bebcc" title="Function for reading the configuration of the LPS22HB sensor.">drv_lps22hb_cfg_get</a>(<a class="code" href="structdrv__lps22hb__cfg__t.html" title="Configuration struct for the LPS22HB pressure sensor.">drv_lps22hb_cfg_t</a> *  p_cfg);</div>
+<div class="line"><a name="l00413"></a><span class="lineno">  413</span>&#160;</div>
+<div class="line"><a name="l00420"></a><span class="lineno">  420</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#gac57593a159fd2d0b27bb8f60233b7bda" title="Function for setting reference pressure.">drv_lps22hb_ref_pressure_set</a>(uint32_t ref_press);</div>
+<div class="line"><a name="l00421"></a><span class="lineno">  421</span>&#160;</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#ga86163ddb9a562607b9c8bd8cba28cc45" title="Function for getting reference pressure.">drv_lps22hb_ref_pressure_get</a>(uint32_t * p_ref_press);</div>
 <div class="line"><a name="l00429"></a><span class="lineno">  429</span>&#160;</div>
-<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#ga73f70674d3c863c57a0d0522989d7c7a" title="Function to get pressure offset.">drv_lps22hb_pressure_offset_get</a>(uint16_t * p_offset);</div>
-<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;</div>
-<div class="line"><a name="l00440"></a><span class="lineno">  440</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#gac2dd54809d7c7c4cc1fcd6535c14bc7a" title="Reboot the lps22hb memory content.">drv_lps22hb_reboot</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00441"></a><span class="lineno">  441</span>&#160;</div>
-<div class="line"><a name="l00446"></a><span class="lineno">  446</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#ga6b7e14384814df62270dfd35136bf6c0" title="Perform Software Reset of the lps22hb.">drv_lps22hb_sw_reset</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00447"></a><span class="lineno">  447</span>&#160;</div>
-<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#gae8f08d54628b3f6e250a02179936ea85" title="Start One-Shot conversion of the lps22hb sensor data.">drv_lps22hb_one_shot</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;</div>
-<div class="line"><a name="l00458"></a><span class="lineno">  458</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#ga2c21a6970003d1ccea290439335f05fa" title="Function to get the FIFO status.">drv_lps22hb_fifo_status_get</a>(uint8_t * p_status);</div>
-<div class="line"><a name="l00459"></a><span class="lineno">  459</span>&#160;</div>
-<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#ga36071d120a82af37429e4d54c2d87a05" title="Function to get the status.">drv_lps22hb_status_get</a>(uint8_t * p_status);</div>
-<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;</div>
-<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#gaa271ec60f422f7928acf7b4c396b9c3e" title="Function to get the interrupt source register.">drv_lps22hb_int_source_get</a>(uint8_t * p_source);</div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#ga0e65e70bc2a6ef7d09fe7f5fd91a9f57" title="Function for setting pressure offset.">drv_lps22hb_pressure_offset_set</a>(uint16_t offset);</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;</div>
+<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#ga73f70674d3c863c57a0d0522989d7c7a" title="Function for getting pressure offset.">drv_lps22hb_pressure_offset_get</a>(uint16_t * p_offset);</div>
+<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;</div>
+<div class="line"><a name="l00450"></a><span class="lineno">  450</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#gac2dd54809d7c7c4cc1fcd6535c14bc7a" title="Function for rebooting the LPS22HB memory content.">drv_lps22hb_reboot</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00451"></a><span class="lineno">  451</span>&#160;</div>
+<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#ga6b7e14384814df62270dfd35136bf6c0" title="Function for performing a software reset of the LPS22HB.">drv_lps22hb_sw_reset</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;</div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#gae8f08d54628b3f6e250a02179936ea85" title="Function for starting a one-shot conversion of the LPS22HB sensor data.">drv_lps22hb_one_shot</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;</div>
+<div class="line"><a name="l00470"></a><span class="lineno">  470</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#ga2c21a6970003d1ccea290439335f05fa" title="Function for getting the FIFO status.">drv_lps22hb_fifo_status_get</a>(uint8_t * p_status);</div>
 <div class="line"><a name="l00471"></a><span class="lineno">  471</span>&#160;</div>
-<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#ga92d097d412b6c6b5e94eb6d15cc0f596" title="Function to get the pressure data. To calculate p(hPa) = *p_pressure(LSB) / 4096(LSB/hPa).">drv_lps22hb_pressure_get</a>(uint32_t * p_pressure);</div>
-<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;</div>
-<div class="line"><a name="l00482"></a><span class="lineno">  482</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#ga383b18c0166c55db4eafee2b0b471146" title="Function to get the temperature data.">drv_lps22hb_temperature_get</a>(uint16_t * p_temperature);</div>
-<div class="line"><a name="l00483"></a><span class="lineno">  483</span>&#160;</div>
-<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#ga5acd827f77a54457aa7929b7c7a32ccd" title="Function to output data rate of the lps22hb.">drv_lps22hb_odr_set</a>(<a class="code" href="group__lps22hb__press__driver.html#ga9dd19f2647180b0ac89574a627fac573" title="Available data rates.">drv_lps22hb_odr_t</a> odr);</div>
-<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;</div>
-<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#ga1e225323690f72f6a1e3e06fa992c7ab" title="Function to reset low-pass filter of the lps22hb.">drv_lps22hb_low_pass_reset</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#ga36071d120a82af37429e4d54c2d87a05" title="Function for getting the status.">drv_lps22hb_status_get</a>(uint8_t * p_status);</div>
+<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;</div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#gaa271ec60f422f7928acf7b4c396b9c3e" title="Function for getting the interrupt source register.">drv_lps22hb_int_source_get</a>(uint8_t * p_source);</div>
+<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;</div>
+<div class="line"><a name="l00494"></a><span class="lineno">  494</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#ga92d097d412b6c6b5e94eb6d15cc0f596" title="Function for getting the pressure data. To calculate p(hPa) = *p_pressure(LSB) / 4096(LSB/hPa).">drv_lps22hb_pressure_get</a>(uint32_t * p_pressure);</div>
 <div class="line"><a name="l00495"></a><span class="lineno">  495</span>&#160;</div>
-<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00502"></a><span class="lineno">  502</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#ga383b18c0166c55db4eafee2b0b471146" title="Function for getting the temperature data.">drv_lps22hb_temperature_get</a>(uint16_t * p_temperature);</div>
+<div class="line"><a name="l00503"></a><span class="lineno">  503</span>&#160;</div>
+<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#ga5acd827f77a54457aa7929b7c7a32ccd" title="Function for outputting data rate of the LPS22HB.">drv_lps22hb_odr_set</a>(<a class="code" href="group__lps22hb__press__driver.html#ga9dd19f2647180b0ac89574a627fac573" title="Available data rates.">drv_lps22hb_odr_t</a> odr);</div>
+<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;</div>
+<div class="line"><a name="l00516"></a><span class="lineno">  516</span>&#160;uint32_t <a class="code" href="group__lps22hb__press__driver.html#ga1e225323690f72f6a1e3e06fa992c7ab" title="Function for resetting low-pass filter of the LPS22HB.">drv_lps22hb_low_pass_reset</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00517"></a><span class="lineno">  517</span>&#160;</div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;<span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div id="nav-path" class="topicfooter">
 <a href="mailto:docfeedback@nordicsemi.no?subject=Documentation%20feedback" id="maillink">Documentation feedback</a> | <a href="https://devzone.nordicsemi.com/questions/" target="_blank">Developer Zone</a> | <a href="http://response.nordicsemi.com/subscribe-to-our-newsletters" target="_blank">Subscribe</a> | Updated <span id="date"/>
 <script>
-var date = new Date("Tue May 30 2017" + " UTC");
+var date = new Date("Fri Sep 29 2017" + " UTC");
 document.getElementById("date").innerHTML = date.toJSON().slice(0, 10);
 var url=window.location.href.split("?")[0];
 var filename=url.substring(url.lastIndexOf('/')+1);

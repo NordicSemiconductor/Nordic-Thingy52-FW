@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>Nordic Thingy:52 : drv_sx1509.h Source File</title>
+<title>Nordic Thingy:52 v2.0.0 : drv_sx1509.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Nordic Semiconductor" src="nordic_small.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Nordic Thingy:52
+   <div id="projectname">Nordic Thingy:52 v2.0.0
    </div>
   </td>
  </tr>
@@ -185,170 +185,172 @@ $(document).ready(function(){initNavTree('drv__sx1509_8h_source.html','');});
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;    uint8_t                      twi_addr;</div>
 <div class="line"><a name="l00073"></a><span class="lineno"><a class="code" href="structdrv__sx1509__cfg__t.html#a195ef7c845b316b2c31187a2af629b25">   73</a></span>&#160;    nrf_drv_twi_t        <span class="keyword">const</span> * <a class="code" href="structdrv__sx1509__cfg__t.html#a195ef7c845b316b2c31187a2af629b25" title="The instance of TWI master to be used for transactions.">p_twi_instance</a>;  </div>
 <div class="line"><a name="l00074"></a><span class="lineno"><a class="code" href="structdrv__sx1509__cfg__t.html#a3011e398a00ead6a1a8fb94507ee91eb">   74</a></span>&#160;    nrf_drv_twi_config_t <span class="keyword">const</span> * <a class="code" href="structdrv__sx1509__cfg__t.html#a3011e398a00ead6a1a8fb94507ee91eb" title="The TWI configuration to use while the driver is enabled.">p_twi_cfg</a>;       </div>
-<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;} <a class="code" href="structdrv__sx1509__cfg__t.html" title="The ccs811 configuration.">drv_sx1509_cfg_t</a>;</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;} <a class="code" href="structdrv__sx1509__cfg__t.html" title="SX1509 configuration.">drv_sx1509_cfg_t</a>;</div>
 <div class="line"><a name="l00076"></a><span class="lineno">   76</span>&#160;</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="keywordtype">void</span> <a class="code" href="group__sx1509__driver.html#gab319e764f47d2cc170a54da130b3c70d" title="Initializes the driver.">drv_sx1509_init</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="keywordtype">void</span> <a class="code" href="group__sx1509__driver.html#gab319e764f47d2cc170a54da130b3c70d" title="Function for initializing the driver.">drv_sx1509_init</a>(<span class="keywordtype">void</span>);</div>
 <div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#gaa66b787abc10d8e06fea4845fa973b81" title="Get any register from the sx1509.">drv_sx1509_reg_get</a>(uint8_t reg_addr, uint8_t * p_value);</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga6a27dc7705578e101c0e283fe8ea9f5e" title="Opens the sx1509 driver according to the specified configuration.">drv_sx1509_open</a>(<a class="code" href="structdrv__sx1509__cfg__t.html" title="The ccs811 configuration.">drv_sx1509_cfg_t</a> <span class="keyword">const</span> * <span class="keyword">const</span> p_drv_sx1509_cfg);</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;</div>
-<div class="line"><a name="l00103"></a><span class="lineno">  103</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga491f1678c3d6fe1a6a4ae41e79a7f40a" title="Gets the input buffer disable register of the sx1509 device.">drv_sx1509_inpbufdisable_get</a>(uint16_t * p_inputdisable);</div>
-<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;</div>
-<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
-<div class="line"><a name="l00115"></a><span class="lineno">  115</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga42b70d88929908855959626d951ae87e" title="Modifies the input buffer disable register of the sx1509 device.">drv_sx1509_inpbufdisable_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
-<div class="line"><a name="l00116"></a><span class="lineno">  116</span>&#160;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;</div>
-<div class="line"><a name="l00125"></a><span class="lineno">  125</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#gad2205b2590bff586d89d7f4b99297269" title="Gets the long slew rate configuration of the sx1509 device.">drv_sx1509_longslewrate_get</a>(uint16_t * p_longslewrate);</div>
-<div class="line"><a name="l00126"></a><span class="lineno">  126</span>&#160;</div>
-<div class="line"><a name="l00127"></a><span class="lineno">  127</span>&#160;</div>
-<div class="line"><a name="l00137"></a><span class="lineno">  137</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga1ee3bb48c19ba0e1637d674dae44abac" title="Modifies the long slew rate configuration of the sx1509 device.">drv_sx1509_longslewrate_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
-<div class="line"><a name="l00138"></a><span class="lineno">  138</span>&#160;</div>
-<div class="line"><a name="l00139"></a><span class="lineno">  139</span>&#160;</div>
-<div class="line"><a name="l00147"></a><span class="lineno">  147</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga7f480c60dde662e8cd70426164c8c543" title="Gets the low drive configuration of the sx1509 device.">drv_sx1509_lowdrive_get</a>(uint16_t * p_lowdrive);</div>
-<div class="line"><a name="l00148"></a><span class="lineno">  148</span>&#160;</div>
-<div class="line"><a name="l00149"></a><span class="lineno">  149</span>&#160;</div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga6bfa175d6d70db23cb4a71a0c3fed596" title="Modifies the low drive configuration of the sx1509 device.">drv_sx1509_lowdrive_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;</div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;</div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga6b46c324811844013a7291354a9e01e8" title="Gets the pull-up enable configuration of the sx1509 device.">drv_sx1509_pullup_get</a>(uint16_t * p_pullup);</div>
-<div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;</div>
-<div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;</div>
-<div class="line"><a name="l00181"></a><span class="lineno">  181</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga4d74a7bf25bfe4f7c570e1c42209025f" title="Modifies the pull-up enable configuration of the sx1509 device.">drv_sx1509_pullup_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
-<div class="line"><a name="l00182"></a><span class="lineno">  182</span>&#160;</div>
-<div class="line"><a name="l00183"></a><span class="lineno">  183</span>&#160;</div>
-<div class="line"><a name="l00191"></a><span class="lineno">  191</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga791a3d5c234aff545c33237f70efa568" title="Gets the pull-down enable configuration of the sx1509 device.">drv_sx1509_pulldown_get</a>(uint16_t * p_pulldown);</div>
-<div class="line"><a name="l00192"></a><span class="lineno">  192</span>&#160;</div>
-<div class="line"><a name="l00193"></a><span class="lineno">  193</span>&#160;</div>
-<div class="line"><a name="l00203"></a><span class="lineno">  203</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga709c7636a0a868eaa5fb0b8bdd359b33" title="Modifies the pull-down enable configuration of the sx1509 device.">drv_sx1509_pulldown_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
-<div class="line"><a name="l00204"></a><span class="lineno">  204</span>&#160;</div>
-<div class="line"><a name="l00205"></a><span class="lineno">  205</span>&#160;</div>
-<div class="line"><a name="l00213"></a><span class="lineno">  213</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga3b28a62a89efa07227849f9f94b4b73a" title="Gets the open drain operation enable configuration of the sx1509 device.">drv_sx1509_opendrain_get</a>(uint16_t * p_opendrain);</div>
-<div class="line"><a name="l00214"></a><span class="lineno">  214</span>&#160;</div>
-<div class="line"><a name="l00215"></a><span class="lineno">  215</span>&#160;</div>
-<div class="line"><a name="l00225"></a><span class="lineno">  225</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga668e71dd2d3a2b9e390a62fbfd5747d3" title="Modifies the open drain operation enable configuration of the sx1509 device.">drv_sx1509_opendrain_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
-<div class="line"><a name="l00226"></a><span class="lineno">  226</span>&#160;</div>
-<div class="line"><a name="l00227"></a><span class="lineno">  227</span>&#160;</div>
-<div class="line"><a name="l00235"></a><span class="lineno">  235</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga19ddee9f0a8d858a9e4494ca7b6d44b8" title="Gets the polarity inversion enable status of the sx1509 device.">drv_sx1509_polarity_get</a>(uint16_t * p_polarity);</div>
-<div class="line"><a name="l00236"></a><span class="lineno">  236</span>&#160;</div>
-<div class="line"><a name="l00237"></a><span class="lineno">  237</span>&#160;</div>
-<div class="line"><a name="l00247"></a><span class="lineno">  247</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga4ef7994711c16100729086bb5e208074" title="Modifies the polarity inversion enable status of the sx1509 device.">drv_sx1509_polarity_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
-<div class="line"><a name="l00248"></a><span class="lineno">  248</span>&#160;</div>
-<div class="line"><a name="l00249"></a><span class="lineno">  249</span>&#160;</div>
-<div class="line"><a name="l00257"></a><span class="lineno">  257</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga673635874e1205c74bede38eec2df84a" title="Gets the pin direction configuration of the sx1509 device.">drv_sx1509_dir_get</a>(uint16_t * p_dir);</div>
-<div class="line"><a name="l00258"></a><span class="lineno">  258</span>&#160;</div>
-<div class="line"><a name="l00259"></a><span class="lineno">  259</span>&#160;</div>
-<div class="line"><a name="l00269"></a><span class="lineno">  269</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga3c69c77ae13a7dec308043099ff4ee9e" title="Modifies the pin direction configuration of the sx1509 device.">drv_sx1509_dir_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
-<div class="line"><a name="l00270"></a><span class="lineno">  270</span>&#160;</div>
-<div class="line"><a name="l00271"></a><span class="lineno">  271</span>&#160;</div>
-<div class="line"><a name="l00279"></a><span class="lineno">  279</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga179c2c02edb813907baf6cf3a28a52e1" title="Gets the data to be output to the output-configured IOs of the sx1509 device.">drv_sx1509_data_get</a>(uint16_t * p_data);</div>
-<div class="line"><a name="l00280"></a><span class="lineno">  280</span>&#160;</div>
-<div class="line"><a name="l00281"></a><span class="lineno">  281</span>&#160;</div>
-<div class="line"><a name="l00291"></a><span class="lineno">  291</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#gab4a406a41323a70d466732d9784fa1af" title="Modifies the data to be output to the output-configured IOs of the sx1509 device.">drv_sx1509_data_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
-<div class="line"><a name="l00292"></a><span class="lineno">  292</span>&#160;</div>
-<div class="line"><a name="l00293"></a><span class="lineno">  293</span>&#160;</div>
-<div class="line"><a name="l00301"></a><span class="lineno">  301</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga451381524453350135b4eda362e444f3" title="Gets the interrupt mask of the sx1509 device.">drv_sx1509_interruptmask_get</a>(uint16_t * p_interruptmask);</div>
-<div class="line"><a name="l00302"></a><span class="lineno">  302</span>&#160;</div>
-<div class="line"><a name="l00303"></a><span class="lineno">  303</span>&#160;</div>
-<div class="line"><a name="l00313"></a><span class="lineno">  313</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga03ee37d7a0ec1b8d905c8f41e89efb6c" title="Modifies the interrupt mask of the sx1509 device.">drv_sx1509_interruptmask_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
-<div class="line"><a name="l00314"></a><span class="lineno">  314</span>&#160;</div>
-<div class="line"><a name="l00315"></a><span class="lineno">  315</span>&#160;</div>
-<div class="line"><a name="l00323"></a><span class="lineno">  323</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#gab86d941100ac29ceb47641a69db0ad9c" title="Gets the edge sensitivity configuration of the sx1509 device.">drv_sx1509_sense_get</a>(uint32_t * p_sense);</div>
-<div class="line"><a name="l00324"></a><span class="lineno">  324</span>&#160;</div>
-<div class="line"><a name="l00325"></a><span class="lineno">  325</span>&#160;</div>
-<div class="line"><a name="l00339"></a><span class="lineno">  339</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga4ea6fdf1508ca7ca61755f0f604dd30f" title="Modifies the edge sensitivity configuration of the sx1509 device.">drv_sx1509_sense_modify</a>(uint32_t set_mask, uint32_t clr_mask);</div>
-<div class="line"><a name="l00340"></a><span class="lineno">  340</span>&#160;</div>
-<div class="line"><a name="l00341"></a><span class="lineno">  341</span>&#160;</div>
-<div class="line"><a name="l00349"></a><span class="lineno">  349</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#gabd704ebff8e4e4fae7958e4527ce1126" title="Gets the interrupt source status of the sx1509 device.">drv_sx1509_interruptsource_get</a>(uint16_t * p_interruptsource);</div>
-<div class="line"><a name="l00350"></a><span class="lineno">  350</span>&#160;</div>
-<div class="line"><a name="l00351"></a><span class="lineno">  351</span>&#160;</div>
-<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#gaa6f78b203386bce2725462de6298dee5" title="Clears the interrupt source status of the sx1509 device.">drv_sx1509_interruptsource_clr</a>(uint16_t clr_mask);</div>
-<div class="line"><a name="l00361"></a><span class="lineno">  361</span>&#160;</div>
-<div class="line"><a name="l00362"></a><span class="lineno">  362</span>&#160;</div>
-<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga131f0172945d434f6f6997929bebe7cc" title="Gets the event status of the sx1509 device.">drv_sx1509_eventstatus_get</a>(uint16_t * p_eventstatus);</div>
-<div class="line"><a name="l00371"></a><span class="lineno">  371</span>&#160;</div>
-<div class="line"><a name="l00372"></a><span class="lineno">  372</span>&#160;</div>
-<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga8c8a78d780e0604c4527eb398cb81f65" title="Modifies the event status of the sx1509 device.">drv_sx1509_eventstatus_clr</a>(uint16_t clr_mask);</div>
-<div class="line"><a name="l00382"></a><span class="lineno">  382</span>&#160;</div>
-<div class="line"><a name="l00383"></a><span class="lineno">  383</span>&#160;</div>
-<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga25350db31bb62ae0947d8f0d25e14b15" title="Gets the level shifter configuration of the sx1509 device.">drv_sx1509_levelshifter_get</a>(uint16_t * p_levelshifter);</div>
-<div class="line"><a name="l00392"></a><span class="lineno">  392</span>&#160;</div>
-<div class="line"><a name="l00393"></a><span class="lineno">  393</span>&#160;</div>
-<div class="line"><a name="l00407"></a><span class="lineno">  407</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga4ba165437bf98e137cc0f2ddd25b314e" title="Modifies the level shifter configuration of the sx1509 device.">drv_sx1509_levelshifter_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
-<div class="line"><a name="l00408"></a><span class="lineno">  408</span>&#160;</div>
-<div class="line"><a name="l00409"></a><span class="lineno">  409</span>&#160;</div>
-<div class="line"><a name="l00417"></a><span class="lineno">  417</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#gade15d885b7b311060dd395b54422a81d" title="Gets the clock configuration of the sx1509 device.">drv_sx1509_clock_get</a>(uint8_t * p_clock);</div>
-<div class="line"><a name="l00418"></a><span class="lineno">  418</span>&#160;</div>
-<div class="line"><a name="l00419"></a><span class="lineno">  419</span>&#160;</div>
-<div class="line"><a name="l00433"></a><span class="lineno">  433</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga9d477d695d76459c1f80d2409b1ba07b" title="Modifies the clock configuration of the sx1509 device.">drv_sx1509_clock_modify</a>(uint8_t set_mask, uint8_t clr_mask);</div>
-<div class="line"><a name="l00434"></a><span class="lineno">  434</span>&#160;</div>
-<div class="line"><a name="l00435"></a><span class="lineno">  435</span>&#160;</div>
-<div class="line"><a name="l00443"></a><span class="lineno">  443</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#gae25f3b3d3b67d4c6db331de8de421aad" title="Gets the miscellaneous configuration of the sx1509 device.">drv_sx1509_misc_get</a>(uint8_t * p_misc);</div>
-<div class="line"><a name="l00444"></a><span class="lineno">  444</span>&#160;</div>
-<div class="line"><a name="l00445"></a><span class="lineno">  445</span>&#160;</div>
-<div class="line"><a name="l00455"></a><span class="lineno">  455</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga8fa6fac9d9e35500cda3f718fff84b8e" title="Modifies the miscellaneous configuration of the sx1509 device.">drv_sx1509_misc_modify</a>(uint8_t set_mask, uint8_t clr_mask);</div>
-<div class="line"><a name="l00456"></a><span class="lineno">  456</span>&#160;</div>
-<div class="line"><a name="l00457"></a><span class="lineno">  457</span>&#160;</div>
-<div class="line"><a name="l00465"></a><span class="lineno">  465</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga894495927fc51c1deb8d12fb0e1d4053" title="Gets the LED driver enable configuration of the sx1509 device.">drv_sx1509_leddriverenable_get</a>(uint16_t * p_leddriverenable);</div>
-<div class="line"><a name="l00466"></a><span class="lineno">  466</span>&#160;</div>
-<div class="line"><a name="l00467"></a><span class="lineno">  467</span>&#160;</div>
-<div class="line"><a name="l00477"></a><span class="lineno">  477</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#gaaa9d707ea6d240f1b947094d4a277cd9" title="Modifies the LED driver enable configuration of the sx1509 device.">drv_sx1509_leddriverenable_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
-<div class="line"><a name="l00478"></a><span class="lineno">  478</span>&#160;</div>
-<div class="line"><a name="l00479"></a><span class="lineno">  479</span>&#160;</div>
-<div class="line"><a name="l00487"></a><span class="lineno">  487</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga4254804afc5e87d78c49704223dbbc14" title="Gets the debounce configruation of the sx1509 device.">drv_sx1509_debounceconfig_get</a>(uint8_t * p_debounceconfig);</div>
-<div class="line"><a name="l00488"></a><span class="lineno">  488</span>&#160;</div>
-<div class="line"><a name="l00489"></a><span class="lineno">  489</span>&#160;</div>
-<div class="line"><a name="l00499"></a><span class="lineno">  499</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#gab4c87cb590f3889872074f17e416eab5" title="Modifies the debounce configruation of the sx1509 device.">drv_sx1509_debounceconfig_modify</a>(uint8_t set_mask, uint8_t clr_mask);</div>
-<div class="line"><a name="l00500"></a><span class="lineno">  500</span>&#160;</div>
-<div class="line"><a name="l00501"></a><span class="lineno">  501</span>&#160;</div>
-<div class="line"><a name="l00509"></a><span class="lineno">  509</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#gac31f09daccb5fe7c6074efcf980674ce" title="Gets the debounce enable configuration of the sx1509 device.">drv_sx1509_debounceenable_get</a>(uint16_t * p_debounceenable);</div>
-<div class="line"><a name="l00510"></a><span class="lineno">  510</span>&#160;</div>
-<div class="line"><a name="l00511"></a><span class="lineno">  511</span>&#160;</div>
-<div class="line"><a name="l00521"></a><span class="lineno">  521</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga421376a49986ea1181cdc11e53ebb248" title="Modifies the debounce enable configuration of the sx1509 device.">drv_sx1509_debounceenable_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
-<div class="line"><a name="l00522"></a><span class="lineno">  522</span>&#160;</div>
-<div class="line"><a name="l00523"></a><span class="lineno">  523</span>&#160;</div>
-<div class="line"><a name="l00531"></a><span class="lineno">  531</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga1c68532f06b4d80f7072aaad96db8058" title="Gets the key configuration of the sx1509 device.">drv_sx1509_keyconfig_get</a>(uint16_t * p_keyconfig);</div>
-<div class="line"><a name="l00532"></a><span class="lineno">  532</span>&#160;</div>
-<div class="line"><a name="l00533"></a><span class="lineno">  533</span>&#160;</div>
-<div class="line"><a name="l00543"></a><span class="lineno">  543</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga167232f6f66ea42ab1c4873f7ba0d946" title="Modifies the key configuration of the sx1509 device.">drv_sx1509_keyconfig_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
-<div class="line"><a name="l00544"></a><span class="lineno">  544</span>&#160;</div>
-<div class="line"><a name="l00545"></a><span class="lineno">  545</span>&#160;</div>
-<div class="line"><a name="l00556"></a><span class="lineno">  556</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga51dda9a84100f260862c7272abc9b62e" title="Gets the key data status of the sx1509 device.">drv_sx1509_keydata_get</a>(uint16_t * p_keydata);</div>
-<div class="line"><a name="l00557"></a><span class="lineno">  557</span>&#160;</div>
-<div class="line"><a name="l00558"></a><span class="lineno">  558</span>&#160;</div>
-<div class="line"><a name="l00567"></a><span class="lineno">  567</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga958889a79cb4499d6ec643089a58bb87" title="Gets the the on/off time and intensity configuration (RegTOn15, RegIOnX &amp; RegOffX registers) of the s...">drv_sx1509_onoffcfgx_get</a>(uint8_t pin_no, uint32_t * p_onoffcfgx);</div>
-<div class="line"><a name="l00568"></a><span class="lineno">  568</span>&#160;</div>
-<div class="line"><a name="l00569"></a><span class="lineno">  569</span>&#160;</div>
-<div class="line"><a name="l00584"></a><span class="lineno">  584</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga32ff91d3e02b3a87423adbe78023a127" title="Modifies the on/off time and intensity configuration (RegTOn15, RegIOnX &amp; RegOffX registers) of the s...">drv_sx1509_onoffcfgx_modify</a>(uint8_t pin_no, uint32_t set_mask, uint32_t clr_mask);</div>
-<div class="line"><a name="l00585"></a><span class="lineno">  585</span>&#160;</div>
-<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;</div>
-<div class="line"><a name="l00595"></a><span class="lineno">  595</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#gaa70c640b2458426e67f7df5c1eaddd44" title="Gets the fade in/out configuration (RegTRiseX &amp; RegTFallX registers) of the sx1509 device...">drv_sx1509_risefallcfgx_get</a>(uint8_t pin_no,uint16_t * p_risefallcfgx);</div>
-<div class="line"><a name="l00596"></a><span class="lineno">  596</span>&#160;</div>
-<div class="line"><a name="l00597"></a><span class="lineno">  597</span>&#160;</div>
-<div class="line"><a name="l00612"></a><span class="lineno">  612</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga2e8d7b83fa0ac35f3766bfd616bdd577" title="Modifies the fade in/out configuration (RegTRiseX &amp; RegTFallX registers) of the sx1509 device...">drv_sx1509_risefallcfgx_modify</a>(uint8_t pin_no, uint16_t set_mask, uint16_t clr_mask);</div>
-<div class="line"><a name="l00613"></a><span class="lineno">  613</span>&#160;</div>
-<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;</div>
-<div class="line"><a name="l00622"></a><span class="lineno">  622</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga1731616c3ebb0bcb46c0ad164f845712" title="Gets the enable configuration for high-voltage input mode of the sx1509 device.">drv_sx1509_highinpmode_get</a>(uint16_t * p_highinpmode);</div>
-<div class="line"><a name="l00623"></a><span class="lineno">  623</span>&#160;</div>
-<div class="line"><a name="l00624"></a><span class="lineno">  624</span>&#160;</div>
-<div class="line"><a name="l00634"></a><span class="lineno">  634</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga03e742d2431b6a1c7a7775d618a2538c" title="Modifies the enable configuration for high-voltage input mode of the sx1509 device.">drv_sx1509_highinpmode_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
-<div class="line"><a name="l00635"></a><span class="lineno">  635</span>&#160;</div>
-<div class="line"><a name="l00636"></a><span class="lineno">  636</span>&#160;</div>
-<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga90e6a3d790a5c1d11229e9124dc9a6cf" title="Resets the sx1509 device.">drv_sx1509_reset</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00089"></a><span class="lineno">   89</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#gaa66b787abc10d8e06fea4845fa973b81" title="Function for getting any register from SX1509.">drv_sx1509_reg_get</a>(uint8_t reg_addr, uint8_t * p_value);</div>
+<div class="line"><a name="l00090"></a><span class="lineno">   90</span>&#160;</div>
+<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;</div>
+<div class="line"><a name="l00099"></a><span class="lineno">   99</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga6a27dc7705578e101c0e283fe8ea9f5e" title="Function for opening the SX1509 driver according to the specified configuration.">drv_sx1509_open</a>(<a class="code" href="structdrv__sx1509__cfg__t.html" title="SX1509 configuration.">drv_sx1509_cfg_t</a> <span class="keyword">const</span> * <span class="keyword">const</span> p_drv_sx1509_cfg);</div>
+<div class="line"><a name="l00100"></a><span class="lineno">  100</span>&#160;</div>
+<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;</div>
+<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga491f1678c3d6fe1a6a4ae41e79a7f40a" title="Function for getting the input buffer disable register of the SX1509 device.">drv_sx1509_inpbufdisable_get</a>(uint16_t * p_inputdisable);</div>
+<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;</div>
+<div class="line"><a name="l00111"></a><span class="lineno">  111</span>&#160;</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga42b70d88929908855959626d951ae87e" title="Function for modifying the input buffer disable register of the SX1509 device.">drv_sx1509_inpbufdisable_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;</div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;</div>
+<div class="line"><a name="l00131"></a><span class="lineno">  131</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#gad2205b2590bff586d89d7f4b99297269" title="Function for getting the long slew rate configuration of the SX1509 device.">drv_sx1509_longslewrate_get</a>(uint16_t * p_longslewrate);</div>
+<div class="line"><a name="l00132"></a><span class="lineno">  132</span>&#160;</div>
+<div class="line"><a name="l00133"></a><span class="lineno">  133</span>&#160;</div>
+<div class="line"><a name="l00143"></a><span class="lineno">  143</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga1ee3bb48c19ba0e1637d674dae44abac" title="Function for modifying the long slew rate configuration of the SX1509 device.">drv_sx1509_longslewrate_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
+<div class="line"><a name="l00144"></a><span class="lineno">  144</span>&#160;</div>
+<div class="line"><a name="l00145"></a><span class="lineno">  145</span>&#160;</div>
+<div class="line"><a name="l00153"></a><span class="lineno">  153</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga7f480c60dde662e8cd70426164c8c543" title="Function for getting the low drive configuration of the SX1509 device.">drv_sx1509_lowdrive_get</a>(uint16_t * p_lowdrive);</div>
+<div class="line"><a name="l00154"></a><span class="lineno">  154</span>&#160;</div>
+<div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;</div>
+<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga6bfa175d6d70db23cb4a71a0c3fed596" title="Function for modifying the low drive configuration of the SX1509 device.">drv_sx1509_lowdrive_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
+<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;</div>
+<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;</div>
+<div class="line"><a name="l00175"></a><span class="lineno">  175</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga6b46c324811844013a7291354a9e01e8" title="Function for getting the pull-up enable configuration of the SX1509 device.">drv_sx1509_pullup_get</a>(uint16_t * p_pullup);</div>
+<div class="line"><a name="l00176"></a><span class="lineno">  176</span>&#160;</div>
+<div class="line"><a name="l00177"></a><span class="lineno">  177</span>&#160;</div>
+<div class="line"><a name="l00187"></a><span class="lineno">  187</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga4d74a7bf25bfe4f7c570e1c42209025f" title="Function for modifying the pull-up enable configuration of the SX1509 device.">drv_sx1509_pullup_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
+<div class="line"><a name="l00188"></a><span class="lineno">  188</span>&#160;</div>
+<div class="line"><a name="l00189"></a><span class="lineno">  189</span>&#160;</div>
+<div class="line"><a name="l00197"></a><span class="lineno">  197</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga791a3d5c234aff545c33237f70efa568" title="Function for getting the pull-down enable configuration of the SX1509 device.">drv_sx1509_pulldown_get</a>(uint16_t * p_pulldown);</div>
+<div class="line"><a name="l00198"></a><span class="lineno">  198</span>&#160;</div>
+<div class="line"><a name="l00199"></a><span class="lineno">  199</span>&#160;</div>
+<div class="line"><a name="l00209"></a><span class="lineno">  209</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga709c7636a0a868eaa5fb0b8bdd359b33" title="Function for modifying the pull-down enable configuration of the SX1509 device.">drv_sx1509_pulldown_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
+<div class="line"><a name="l00210"></a><span class="lineno">  210</span>&#160;</div>
+<div class="line"><a name="l00211"></a><span class="lineno">  211</span>&#160;</div>
+<div class="line"><a name="l00219"></a><span class="lineno">  219</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga3b28a62a89efa07227849f9f94b4b73a" title="Function for getting the open drain operation enable configuration of the SX1509 device.">drv_sx1509_opendrain_get</a>(uint16_t * p_opendrain);</div>
+<div class="line"><a name="l00220"></a><span class="lineno">  220</span>&#160;</div>
+<div class="line"><a name="l00221"></a><span class="lineno">  221</span>&#160;</div>
+<div class="line"><a name="l00231"></a><span class="lineno">  231</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga668e71dd2d3a2b9e390a62fbfd5747d3" title="Function for modifying the open drain operation enable configuration of the SX1509 device...">drv_sx1509_opendrain_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
+<div class="line"><a name="l00232"></a><span class="lineno">  232</span>&#160;</div>
+<div class="line"><a name="l00233"></a><span class="lineno">  233</span>&#160;</div>
+<div class="line"><a name="l00241"></a><span class="lineno">  241</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga19ddee9f0a8d858a9e4494ca7b6d44b8" title="Function for getting the polarity inversion enable status of the SX1509 device.">drv_sx1509_polarity_get</a>(uint16_t * p_polarity);</div>
+<div class="line"><a name="l00242"></a><span class="lineno">  242</span>&#160;</div>
+<div class="line"><a name="l00243"></a><span class="lineno">  243</span>&#160;</div>
+<div class="line"><a name="l00253"></a><span class="lineno">  253</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga4ef7994711c16100729086bb5e208074" title="Function for modifying the polarity inversion enable status of the SX1509 device.">drv_sx1509_polarity_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
+<div class="line"><a name="l00254"></a><span class="lineno">  254</span>&#160;</div>
+<div class="line"><a name="l00255"></a><span class="lineno">  255</span>&#160;</div>
+<div class="line"><a name="l00263"></a><span class="lineno">  263</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga673635874e1205c74bede38eec2df84a" title="Function for getting the pin direction configuration of the SX1509 device.">drv_sx1509_dir_get</a>(uint16_t * p_dir);</div>
+<div class="line"><a name="l00264"></a><span class="lineno">  264</span>&#160;</div>
+<div class="line"><a name="l00265"></a><span class="lineno">  265</span>&#160;</div>
+<div class="line"><a name="l00275"></a><span class="lineno">  275</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga3c69c77ae13a7dec308043099ff4ee9e" title="Function for modifying the pin direction configuration of the SX1509 device.">drv_sx1509_dir_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
+<div class="line"><a name="l00276"></a><span class="lineno">  276</span>&#160;</div>
+<div class="line"><a name="l00277"></a><span class="lineno">  277</span>&#160;</div>
+<div class="line"><a name="l00287"></a><span class="lineno">  287</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga179c2c02edb813907baf6cf3a28a52e1" title="Function for getting the data seen at the pins of the SX1509 device.">drv_sx1509_data_get</a>(uint16_t * p_data);</div>
+<div class="line"><a name="l00288"></a><span class="lineno">  288</span>&#160;</div>
+<div class="line"><a name="l00289"></a><span class="lineno">  289</span>&#160;</div>
+<div class="line"><a name="l00297"></a><span class="lineno">  297</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga59adca6e74c72015a0c78df20cc4972e" title="Function for setting the data to be output to the output-configured IOs of the SX1509 device...">drv_sx1509_data_set</a>(uint16_t data);</div>
+<div class="line"><a name="l00298"></a><span class="lineno">  298</span>&#160;</div>
+<div class="line"><a name="l00310"></a><span class="lineno">  310</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#gab4a406a41323a70d466732d9784fa1af" title="Function for modifying the data to be output to the output-configured IOs of the SX1509 device...">drv_sx1509_data_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
+<div class="line"><a name="l00311"></a><span class="lineno">  311</span>&#160;</div>
+<div class="line"><a name="l00312"></a><span class="lineno">  312</span>&#160;</div>
+<div class="line"><a name="l00320"></a><span class="lineno">  320</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga451381524453350135b4eda362e444f3" title="Function for getting the interrupt mask of the SX1509 device.">drv_sx1509_interruptmask_get</a>(uint16_t * p_interruptmask);</div>
+<div class="line"><a name="l00321"></a><span class="lineno">  321</span>&#160;</div>
+<div class="line"><a name="l00322"></a><span class="lineno">  322</span>&#160;</div>
+<div class="line"><a name="l00332"></a><span class="lineno">  332</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga03ee37d7a0ec1b8d905c8f41e89efb6c" title="Function for modifying the interrupt mask of the SX1509 device.">drv_sx1509_interruptmask_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
+<div class="line"><a name="l00333"></a><span class="lineno">  333</span>&#160;</div>
+<div class="line"><a name="l00334"></a><span class="lineno">  334</span>&#160;</div>
+<div class="line"><a name="l00342"></a><span class="lineno">  342</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#gab86d941100ac29ceb47641a69db0ad9c" title="Function for getting the edge sensitivity configuration of the SX1509 device.">drv_sx1509_sense_get</a>(uint32_t * p_sense);</div>
+<div class="line"><a name="l00343"></a><span class="lineno">  343</span>&#160;</div>
+<div class="line"><a name="l00344"></a><span class="lineno">  344</span>&#160;</div>
+<div class="line"><a name="l00358"></a><span class="lineno">  358</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga4ea6fdf1508ca7ca61755f0f604dd30f" title="Function for modifying the edge sensitivity configuration of the SX1509 device.">drv_sx1509_sense_modify</a>(uint32_t set_mask, uint32_t clr_mask);</div>
+<div class="line"><a name="l00359"></a><span class="lineno">  359</span>&#160;</div>
+<div class="line"><a name="l00360"></a><span class="lineno">  360</span>&#160;</div>
+<div class="line"><a name="l00368"></a><span class="lineno">  368</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#gabd704ebff8e4e4fae7958e4527ce1126" title="Function for getting the interrupt source status of the SX1509 device.">drv_sx1509_interruptsource_get</a>(uint16_t * p_interruptsource);</div>
+<div class="line"><a name="l00369"></a><span class="lineno">  369</span>&#160;</div>
+<div class="line"><a name="l00370"></a><span class="lineno">  370</span>&#160;</div>
+<div class="line"><a name="l00379"></a><span class="lineno">  379</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#gaa6f78b203386bce2725462de6298dee5" title="Function for clearing the interrupt source status of the SX1509 device.">drv_sx1509_interruptsource_clr</a>(uint16_t clr_mask);</div>
+<div class="line"><a name="l00380"></a><span class="lineno">  380</span>&#160;</div>
+<div class="line"><a name="l00381"></a><span class="lineno">  381</span>&#160;</div>
+<div class="line"><a name="l00389"></a><span class="lineno">  389</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga131f0172945d434f6f6997929bebe7cc" title="Function for getting the event status of the SX1509 device.">drv_sx1509_eventstatus_get</a>(uint16_t * p_eventstatus);</div>
+<div class="line"><a name="l00390"></a><span class="lineno">  390</span>&#160;</div>
+<div class="line"><a name="l00391"></a><span class="lineno">  391</span>&#160;</div>
+<div class="line"><a name="l00400"></a><span class="lineno">  400</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga8c8a78d780e0604c4527eb398cb81f65" title="Function for modifying the event status of the SX1509 device.">drv_sx1509_eventstatus_clr</a>(uint16_t clr_mask);</div>
+<div class="line"><a name="l00401"></a><span class="lineno">  401</span>&#160;</div>
+<div class="line"><a name="l00402"></a><span class="lineno">  402</span>&#160;</div>
+<div class="line"><a name="l00410"></a><span class="lineno">  410</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga25350db31bb62ae0947d8f0d25e14b15" title="Function for getting the level shifter configuration of the SX1509 device.">drv_sx1509_levelshifter_get</a>(uint16_t * p_levelshifter);</div>
+<div class="line"><a name="l00411"></a><span class="lineno">  411</span>&#160;</div>
+<div class="line"><a name="l00412"></a><span class="lineno">  412</span>&#160;</div>
+<div class="line"><a name="l00426"></a><span class="lineno">  426</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga4ba165437bf98e137cc0f2ddd25b314e" title="Function for modifying the level shifter configuration of the SX1509 device.">drv_sx1509_levelshifter_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
+<div class="line"><a name="l00427"></a><span class="lineno">  427</span>&#160;</div>
+<div class="line"><a name="l00428"></a><span class="lineno">  428</span>&#160;</div>
+<div class="line"><a name="l00436"></a><span class="lineno">  436</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#gade15d885b7b311060dd395b54422a81d" title="Function for getting the clock configuration of the SX1509 device.">drv_sx1509_clock_get</a>(uint8_t * p_clock);</div>
+<div class="line"><a name="l00437"></a><span class="lineno">  437</span>&#160;</div>
+<div class="line"><a name="l00438"></a><span class="lineno">  438</span>&#160;</div>
+<div class="line"><a name="l00452"></a><span class="lineno">  452</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga9d477d695d76459c1f80d2409b1ba07b" title="Function for modifying the clock configuration of the SX1509 device.">drv_sx1509_clock_modify</a>(uint8_t set_mask, uint8_t clr_mask);</div>
+<div class="line"><a name="l00453"></a><span class="lineno">  453</span>&#160;</div>
+<div class="line"><a name="l00454"></a><span class="lineno">  454</span>&#160;</div>
+<div class="line"><a name="l00462"></a><span class="lineno">  462</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#gae25f3b3d3b67d4c6db331de8de421aad" title="Function for getting miscellaneous configuration of the SX1509 device.">drv_sx1509_misc_get</a>(uint8_t * p_misc);</div>
+<div class="line"><a name="l00463"></a><span class="lineno">  463</span>&#160;</div>
+<div class="line"><a name="l00464"></a><span class="lineno">  464</span>&#160;</div>
+<div class="line"><a name="l00474"></a><span class="lineno">  474</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga8fa6fac9d9e35500cda3f718fff84b8e" title="Fucntion for modifying miscellaneous configuration of the SX1509 device.">drv_sx1509_misc_modify</a>(uint8_t set_mask, uint8_t clr_mask);</div>
+<div class="line"><a name="l00475"></a><span class="lineno">  475</span>&#160;</div>
+<div class="line"><a name="l00476"></a><span class="lineno">  476</span>&#160;</div>
+<div class="line"><a name="l00484"></a><span class="lineno">  484</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga894495927fc51c1deb8d12fb0e1d4053" title="Function for getting the LED driver enable configuration of the SX1509 device.">drv_sx1509_leddriverenable_get</a>(uint16_t * p_leddriverenable);</div>
+<div class="line"><a name="l00485"></a><span class="lineno">  485</span>&#160;</div>
+<div class="line"><a name="l00486"></a><span class="lineno">  486</span>&#160;</div>
+<div class="line"><a name="l00496"></a><span class="lineno">  496</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#gaaa9d707ea6d240f1b947094d4a277cd9" title="Functiong for modifying the LED driver enable configuration of the SX1509 device.">drv_sx1509_leddriverenable_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
+<div class="line"><a name="l00497"></a><span class="lineno">  497</span>&#160;</div>
+<div class="line"><a name="l00498"></a><span class="lineno">  498</span>&#160;</div>
+<div class="line"><a name="l00506"></a><span class="lineno">  506</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga4254804afc5e87d78c49704223dbbc14" title="Function for getting the debounce configuration of the SX1509 device.">drv_sx1509_debounceconfig_get</a>(uint8_t * p_debounceconfig);</div>
+<div class="line"><a name="l00507"></a><span class="lineno">  507</span>&#160;</div>
+<div class="line"><a name="l00508"></a><span class="lineno">  508</span>&#160;</div>
+<div class="line"><a name="l00518"></a><span class="lineno">  518</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#gab4c87cb590f3889872074f17e416eab5" title="Function for modifying the debounce configuration of the SX1509 device.">drv_sx1509_debounceconfig_modify</a>(uint8_t set_mask, uint8_t clr_mask);</div>
+<div class="line"><a name="l00519"></a><span class="lineno">  519</span>&#160;</div>
+<div class="line"><a name="l00520"></a><span class="lineno">  520</span>&#160;</div>
+<div class="line"><a name="l00528"></a><span class="lineno">  528</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#gac31f09daccb5fe7c6074efcf980674ce" title="Function for getting the debounce enable configuration of the SX1509 device.">drv_sx1509_debounceenable_get</a>(uint16_t * p_debounceenable);</div>
+<div class="line"><a name="l00529"></a><span class="lineno">  529</span>&#160;</div>
+<div class="line"><a name="l00530"></a><span class="lineno">  530</span>&#160;</div>
+<div class="line"><a name="l00540"></a><span class="lineno">  540</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga421376a49986ea1181cdc11e53ebb248" title="Function for modifying the debounce enable configuration of the SX1509 device.">drv_sx1509_debounceenable_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
+<div class="line"><a name="l00541"></a><span class="lineno">  541</span>&#160;</div>
+<div class="line"><a name="l00542"></a><span class="lineno">  542</span>&#160;</div>
+<div class="line"><a name="l00550"></a><span class="lineno">  550</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga1c68532f06b4d80f7072aaad96db8058" title="Function for getting the key configuration of the SX1509 device.">drv_sx1509_keyconfig_get</a>(uint16_t * p_keyconfig);</div>
+<div class="line"><a name="l00551"></a><span class="lineno">  551</span>&#160;</div>
+<div class="line"><a name="l00552"></a><span class="lineno">  552</span>&#160;</div>
+<div class="line"><a name="l00562"></a><span class="lineno">  562</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga167232f6f66ea42ab1c4873f7ba0d946" title="Function for modifying the key configuration of the SX1509 device.">drv_sx1509_keyconfig_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
+<div class="line"><a name="l00563"></a><span class="lineno">  563</span>&#160;</div>
+<div class="line"><a name="l00564"></a><span class="lineno">  564</span>&#160;</div>
+<div class="line"><a name="l00575"></a><span class="lineno">  575</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga51dda9a84100f260862c7272abc9b62e" title="Function for getting the key data status of the SX1509 device.">drv_sx1509_keydata_get</a>(uint16_t * p_keydata);</div>
+<div class="line"><a name="l00576"></a><span class="lineno">  576</span>&#160;</div>
+<div class="line"><a name="l00577"></a><span class="lineno">  577</span>&#160;</div>
+<div class="line"><a name="l00586"></a><span class="lineno">  586</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga958889a79cb4499d6ec643089a58bb87" title="Function for getting the on/off time and intensity configuration (RegTOn15, RegIOnX &amp; RegOffX registe...">drv_sx1509_onoffcfgx_get</a>(uint8_t pin_no, uint32_t * p_onoffcfgx);</div>
+<div class="line"><a name="l00587"></a><span class="lineno">  587</span>&#160;</div>
+<div class="line"><a name="l00588"></a><span class="lineno">  588</span>&#160;</div>
+<div class="line"><a name="l00603"></a><span class="lineno">  603</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga32ff91d3e02b3a87423adbe78023a127" title="Function for modifying the on/off time and intensity configuration (RegTOn15, RegIOnX &amp; RegOffX regis...">drv_sx1509_onoffcfgx_modify</a>(uint8_t pin_no, uint32_t set_mask, uint32_t clr_mask);</div>
+<div class="line"><a name="l00604"></a><span class="lineno">  604</span>&#160;</div>
+<div class="line"><a name="l00605"></a><span class="lineno">  605</span>&#160;</div>
+<div class="line"><a name="l00614"></a><span class="lineno">  614</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#gaa70c640b2458426e67f7df5c1eaddd44" title="Function for getting the fade in/out configuration (RegTRiseX &amp; RegTFallX registers) of the SX1509 de...">drv_sx1509_risefallcfgx_get</a>(uint8_t pin_no,uint16_t * p_risefallcfgx);</div>
+<div class="line"><a name="l00615"></a><span class="lineno">  615</span>&#160;</div>
+<div class="line"><a name="l00616"></a><span class="lineno">  616</span>&#160;</div>
+<div class="line"><a name="l00631"></a><span class="lineno">  631</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga2e8d7b83fa0ac35f3766bfd616bdd577" title="Function for modifying the fade in/out configuration (RegTRiseX &amp; RegTFallX registers) of the SX1509 ...">drv_sx1509_risefallcfgx_modify</a>(uint8_t pin_no, uint16_t set_mask, uint16_t clr_mask);</div>
+<div class="line"><a name="l00632"></a><span class="lineno">  632</span>&#160;</div>
+<div class="line"><a name="l00633"></a><span class="lineno">  633</span>&#160;</div>
+<div class="line"><a name="l00641"></a><span class="lineno">  641</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga1731616c3ebb0bcb46c0ad164f845712" title="Function for getting the enable configuration for high-voltage input mode of the SX1509 device...">drv_sx1509_highinpmode_get</a>(uint16_t * p_highinpmode);</div>
+<div class="line"><a name="l00642"></a><span class="lineno">  642</span>&#160;</div>
 <div class="line"><a name="l00643"></a><span class="lineno">  643</span>&#160;</div>
-<div class="line"><a name="l00644"></a><span class="lineno">  644</span>&#160;</div>
-<div class="line"><a name="l00650"></a><span class="lineno">  650</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#gaebc32247dc04693032b1593650ecfa03" title="Closes the sx1509 driver.">drv_sx1509_close</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00651"></a><span class="lineno">  651</span>&#160;</div>
-<div class="line"><a name="l00652"></a><span class="lineno">  652</span>&#160;<span class="preprocessor">#endif // DRV_SX1509_H__</span></div>
-<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00653"></a><span class="lineno">  653</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga03e742d2431b6a1c7a7775d618a2538c" title="Function for modifying the enable configuration for high-voltage input mode of the SX1509 device...">drv_sx1509_highinpmode_modify</a>(uint16_t set_mask, uint16_t clr_mask);</div>
+<div class="line"><a name="l00654"></a><span class="lineno">  654</span>&#160;</div>
+<div class="line"><a name="l00655"></a><span class="lineno">  655</span>&#160;</div>
+<div class="line"><a name="l00661"></a><span class="lineno">  661</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#ga90e6a3d790a5c1d11229e9124dc9a6cf" title="Function for resetting the SX1509 device.">drv_sx1509_reset</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00662"></a><span class="lineno">  662</span>&#160;</div>
+<div class="line"><a name="l00663"></a><span class="lineno">  663</span>&#160;</div>
+<div class="line"><a name="l00669"></a><span class="lineno">  669</span>&#160;uint32_t <a class="code" href="group__sx1509__driver.html#gaebc32247dc04693032b1593650ecfa03" title="Function for closing the SX1509 driver.">drv_sx1509_close</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00670"></a><span class="lineno">  670</span>&#160;</div>
+<div class="line"><a name="l00671"></a><span class="lineno">  671</span>&#160;<span class="preprocessor">#endif // DRV_SX1509_H__</span></div>
+<div class="line"><a name="l00672"></a><span class="lineno">  672</span>&#160;<span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div id="nav-path" class="topicfooter">
 <a href="mailto:docfeedback@nordicsemi.no?subject=Documentation%20feedback" id="maillink">Documentation feedback</a> | <a href="https://devzone.nordicsemi.com/questions/" target="_blank">Developer Zone</a> | <a href="http://response.nordicsemi.com/subscribe-to-our-newsletters" target="_blank">Subscribe</a> | Updated <span id="date"/>
 <script>
-var date = new Date("Tue May 30 2017" + " UTC");
+var date = new Date("Fri Sep 29 2017" + " UTC");
 document.getElementById("date").innerHTML = date.toJSON().slice(0, 10);
 var url=window.location.href.split("?")[0];
 var filename=url.substring(url.lastIndexOf('/')+1);

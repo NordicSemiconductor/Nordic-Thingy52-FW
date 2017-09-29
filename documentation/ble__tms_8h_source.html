@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>Nordic Thingy:52 : ble_tms.h Source File</title>
+<title>Nordic Thingy:52 v2.0.0 : ble_tms.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Nordic Semiconductor" src="nordic_small.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Nordic Thingy:52
+   <div id="projectname">Nordic Thingy:52 v2.0.0
    </div>
   </td>
  </tr>
@@ -172,7 +172,7 @@ $(document).ready(function(){initNavTree('ble__tms_8h_source.html','');});
 <div class="line"><a name="l00065"></a><span class="lineno">   65</span>&#160;<span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
 <div class="line"><a name="l00066"></a><span class="lineno">   66</span>&#160;</div>
 <div class="line"><a name="l00067"></a><span class="lineno"><a class="code" href="group__ble__sdk__srv__wss.html#ga8f8738c7d72fd985de9af68f4356b273">   67</a></span>&#160;<span class="preprocessor">#define BLE_UUID_TMS_SERVICE 0x0400                      </span></div>
-<div class="line"><a name="l00068"></a><span class="lineno"><a class="code" href="group__ble__sdk__srv__wss.html#ga0367b57be0b83671daf133bb08724b76">   68</a></span>&#160;<span class="preprocessor">#define BLE_TMS_MAX_DATA_LEN (GATT_MTU_SIZE_DEFAULT - 3) </span></div>
+<div class="line"><a name="l00068"></a><span class="lineno"><a class="code" href="group__ble__sdk__srv__wss.html#ga0367b57be0b83671daf133bb08724b76">   68</a></span>&#160;<span class="preprocessor">#define BLE_TMS_MAX_DATA_LEN (BLE_GATT_ATT_MTU_DEFAULT - 3) </span></div>
 <div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;<span class="preprocessor">#ifdef __GNUC__</span></div>
 <div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;<span class="preprocessor"></span><span class="preprocessor">    #ifdef PACKED</span></div>
 <div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;<span class="preprocessor"></span><span class="preprocessor">        #undef PACKED</span></div>
@@ -261,18 +261,18 @@ $(document).ready(function(){initNavTree('ble__tms_8h_source.html','');});
 <div class="line"><a name="l00155"></a><span class="lineno">  155</span>&#160;    uint8_t                   wake_on_motion;</div>
 <div class="line"><a name="l00156"></a><span class="lineno">  156</span>&#160;}) ble_tms_config_t;</div>
 <div class="line"><a name="l00157"></a><span class="lineno">  157</span>&#160;</div>
-<div class="line"><a name="l00158"></a><span class="lineno">  158</span>&#160;<span class="preprocessor">#define BLE_TMS_CONFIG_PEDO_INT_MIN   100</span></div>
-<div class="line"><a name="l00159"></a><span class="lineno">  159</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BLE_TMS_CONFIG_PEDO_INT_MAX  5000</span></div>
-<div class="line"><a name="l00160"></a><span class="lineno">  160</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BLE_TMS_CONFIG_TEMP_INT_MIN   100</span></div>
-<div class="line"><a name="l00161"></a><span class="lineno">  161</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BLE_TMS_CONFIG_TEMP_INT_MAX  5000</span></div>
-<div class="line"><a name="l00162"></a><span class="lineno">  162</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BLE_TMS_CONFIG_COMP_INT_MIN   100</span></div>
-<div class="line"><a name="l00163"></a><span class="lineno">  163</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BLE_TMS_CONFIG_COMP_INT_MAX  5000</span></div>
-<div class="line"><a name="l00164"></a><span class="lineno">  164</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BLE_TMS_CONFIG_MPUF_MIN         1</span></div>
-<div class="line"><a name="l00165"></a><span class="lineno">  165</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BLE_TMS_CONFIG_MPUF_MAX       200</span></div>
-<div class="line"><a name="l00166"></a><span class="lineno">  166</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BLE_TMS_CONFIG_WOM_MIN          0</span></div>
-<div class="line"><a name="l00167"></a><span class="lineno">  167</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define BLE_TMS_CONFIG_WOM_MAX          1</span></div>
+<div class="line"><a name="l00158"></a><span class="lineno"><a class="code" href="group__ble__sdk__srv__wss.html#gac645948ba448882be3cf95fd0c395633">  158</a></span>&#160;<span class="preprocessor">#define BLE_TMS_CONFIG_PEDO_INT_MIN   100   </span></div>
+<div class="line"><a name="l00159"></a><span class="lineno"><a class="code" href="group__ble__sdk__srv__wss.html#gaabc25bd657a10daafa3f409e4566e8da">  159</a></span>&#160;<span class="preprocessor">#define BLE_TMS_CONFIG_PEDO_INT_MAX  5000   </span></div>
+<div class="line"><a name="l00160"></a><span class="lineno"><a class="code" href="group__ble__sdk__srv__wss.html#gac5af59176dc4c23c22ef77201ed1b164">  160</a></span>&#160;<span class="preprocessor">#define BLE_TMS_CONFIG_TEMP_INT_MIN   100   </span></div>
+<div class="line"><a name="l00161"></a><span class="lineno"><a class="code" href="group__ble__sdk__srv__wss.html#ga7abbc39281970f70f3339e8c077798bc">  161</a></span>&#160;<span class="preprocessor">#define BLE_TMS_CONFIG_TEMP_INT_MAX  5000   </span></div>
+<div class="line"><a name="l00162"></a><span class="lineno"><a class="code" href="group__ble__sdk__srv__wss.html#ga4b22e0e456f0c6f7012eb013e086dc2c">  162</a></span>&#160;<span class="preprocessor">#define BLE_TMS_CONFIG_COMP_INT_MIN   100   </span></div>
+<div class="line"><a name="l00163"></a><span class="lineno"><a class="code" href="group__ble__sdk__srv__wss.html#ga1681df902e484d625d537bdc72970db3">  163</a></span>&#160;<span class="preprocessor">#define BLE_TMS_CONFIG_COMP_INT_MAX  1000   </span></div>
+<div class="line"><a name="l00164"></a><span class="lineno"><a class="code" href="group__ble__sdk__srv__wss.html#gaa8e60e993959e76994d9b39ba0eb4d7d">  164</a></span>&#160;<span class="preprocessor">#define BLE_TMS_CONFIG_MPUF_MIN         5   </span></div>
+<div class="line"><a name="l00165"></a><span class="lineno"><a class="code" href="group__ble__sdk__srv__wss.html#gad5622fe5f4747bdf573871454c6c513a">  165</a></span>&#160;<span class="preprocessor">#define BLE_TMS_CONFIG_MPUF_MAX       200   </span></div>
+<div class="line"><a name="l00166"></a><span class="lineno"><a class="code" href="group__ble__sdk__srv__wss.html#gaa03bf3f8d91248dbd8a5c55d601d33f4">  166</a></span>&#160;<span class="preprocessor">#define BLE_TMS_CONFIG_WOM_MIN          0   </span></div>
+<div class="line"><a name="l00167"></a><span class="lineno"><a class="code" href="group__ble__sdk__srv__wss.html#gabc7001a5150027f6af452f450b55a102">  167</a></span>&#160;<span class="preprocessor">#define BLE_TMS_CONFIG_WOM_MAX          1   </span></div>
 <div class="line"><a name="l00168"></a><span class="lineno">  168</span>&#160;<span class="preprocessor"></span></div>
-<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="keyword">typedef</span> <span class="keyword">enum</span></div>
+<div class="line"><a name="l00169"></a><span class="lineno">  169</span>&#160;<span class="preprocessor"></span><span class="keyword">typedef</span> <span class="keyword">enum</span></div>
 <div class="line"><a name="l00170"></a><span class="lineno">  170</span>&#160;{</div>
 <div class="line"><a name="l00171"></a><span class="lineno">  171</span>&#160;    BLE_TMS_EVT_CONFIG_RECEIVED,</div>
 <div class="line"><a name="l00172"></a><span class="lineno">  172</span>&#160;    BLE_TMS_EVT_NOTIF_TAP,</div>
@@ -356,7 +356,7 @@ $(document).ready(function(){initNavTree('ble__tms_8h_source.html','');});
 <div id="nav-path" class="topicfooter">
 <a href="mailto:docfeedback@nordicsemi.no?subject=Documentation%20feedback" id="maillink">Documentation feedback</a> | <a href="https://devzone.nordicsemi.com/questions/" target="_blank">Developer Zone</a> | <a href="http://response.nordicsemi.com/subscribe-to-our-newsletters" target="_blank">Subscribe</a> | Updated <span id="date"/>
 <script>
-var date = new Date("Tue May 30 2017" + " UTC");
+var date = new Date("Fri Sep 29 2017" + " UTC");
 document.getElementById("date").innerHTML = date.toJSON().slice(0, 10);
 var url=window.location.href.split("?")[0];
 var filename=url.substring(url.lastIndexOf('/')+1);

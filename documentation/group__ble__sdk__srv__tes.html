@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>Nordic Thingy:52 : Thingy Environment Service</title>
+<title>Nordic Thingy:52 v2.0.0 : Thingy Environment Service</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Nordic Semiconductor" src="nordic_small.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Nordic Thingy:52
+   <div id="projectname">Nordic Thingy:52 v2.0.0
    </div>
   </td>
  </tr>
@@ -117,21 +117,21 @@ $(document).ready(function(){initNavTree('group__ble__sdk__srv__tes.html','');})
 </div><!--header-->
 <div class="contents">
 
-<p>Thingy Envronment Service implementation.  
+<p>Thingy Environment Service implementation.  
 <a href="#details">More...</a></p>
 <table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="nested-classes"></a>
 Data Structures</h2></td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structble__tes__init__t.html">ble_tes_init_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thingy Envronment Service initialization structure.  <a href="structble__tes__init__t.html#details">More...</a><br/></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thingy Environment Service initialization structure.  <a href="structble__tes__init__t.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structble__tes__s.html">ble_tes_s</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thingy Envronment Service structure.  <a href="structble__tes__s.html#details">More...</a><br/></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thingy Environment Service structure.  <a href="structble__tes__s.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
 Macros</h2></td></tr>
-<tr class="memitem:gaf1cb0478a9d60bf219de42112859ec38"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ble__sdk__srv__tes.html#gaf1cb0478a9d60bf219de42112859ec38">BLE_TES_MAX_DATA_LEN</a>&#160;&#160;&#160;(GATT_MTU_SIZE_DEFAULT - 3)</td></tr>
+<tr class="memitem:gaf1cb0478a9d60bf219de42112859ec38"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ble__sdk__srv__tes.html#gaf1cb0478a9d60bf219de42112859ec38">BLE_TES_MAX_DATA_LEN</a>&#160;&#160;&#160;(BLE_GATT_ATT_MTU_DEFAULT - 3)</td></tr>
 <tr class="separator:gaf1cb0478a9d60bf219de42112859ec38"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga74382e889100cb1e74c3681bd010724c"><td class="memItemLeft" align="right" valign="top">#define&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ble__sdk__srv__tes.html#ga74382e889100cb1e74c3681bd010724c">BLE_UUID_TES_SERVICE</a>&#160;&#160;&#160;0x0200</td></tr>
 <tr class="separator:ga74382e889100cb1e74c3681bd010724c"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -140,7 +140,7 @@ Macros</h2></td></tr>
 Typedefs</h2></td></tr>
 <tr class="memitem:gad775311a6a41d35aa72037510221dc44"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gad775311a6a41d35aa72037510221dc44"></a>
 typedef void(*&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ble__sdk__srv__tes.html#gad775311a6a41d35aa72037510221dc44">ble_tes_evt_handler_t</a> )(<a class="el" href="structble__tes__s.html">ble_tes_t</a> *p_tes, ble_tes_evt_type_t evt_type, uint8_t *p_data, uint16_t length)</td></tr>
-<tr class="memdesc:gad775311a6a41d35aa72037510221dc44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thingy Envronment Service event handler type. <br/></td></tr>
+<tr class="memdesc:gad775311a6a41d35aa72037510221dc44"><td class="mdescLeft">&#160;</td><td class="mdescRight">Thingy Environment Service event handler type. <br/></td></tr>
 <tr class="separator:gad775311a6a41d35aa72037510221dc44"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
@@ -155,10 +155,10 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga214c30d7b0f07f264ef3e2ceb0b10f47"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for setting the humidity.  <a href="#ga214c30d7b0f07f264ef3e2ceb0b10f47">More...</a><br/></td></tr>
 <tr class="separator:ga214c30d7b0f07f264ef3e2ceb0b10f47"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga6091b836154596e1478a21404f13ff2c"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ble__sdk__srv__tes.html#ga6091b836154596e1478a21404f13ff2c">ble_tes_init</a> (<a class="el" href="structble__tes__s.html">ble_tes_t</a> *p_tes, const <a class="el" href="structble__tes__init__t.html">ble_tes_init_t</a> *p_tes_init)</td></tr>
-<tr class="memdesc:ga6091b836154596e1478a21404f13ff2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the Thingy Envronment Service.  <a href="#ga6091b836154596e1478a21404f13ff2c">More...</a><br/></td></tr>
+<tr class="memdesc:ga6091b836154596e1478a21404f13ff2c"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the Thingy Environment Service.  <a href="#ga6091b836154596e1478a21404f13ff2c">More...</a><br/></td></tr>
 <tr class="separator:ga6091b836154596e1478a21404f13ff2c"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga144e7065b310a35fcab8c3f2d94375d2"><td class="memItemLeft" align="right" valign="top">void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ble__sdk__srv__tes.html#ga144e7065b310a35fcab8c3f2d94375d2">ble_tes_on_ble_evt</a> (<a class="el" href="structble__tes__s.html">ble_tes_t</a> *p_tes, ble_evt_t *p_ble_evt)</td></tr>
-<tr class="memdesc:ga144e7065b310a35fcab8c3f2d94375d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for handling the Thingy Envronment Service's BLE events.  <a href="#ga144e7065b310a35fcab8c3f2d94375d2">More...</a><br/></td></tr>
+<tr class="memdesc:ga144e7065b310a35fcab8c3f2d94375d2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for handling the Thingy Environment Service's BLE events.  <a href="#ga144e7065b310a35fcab8c3f2d94375d2">More...</a><br/></td></tr>
 <tr class="separator:ga144e7065b310a35fcab8c3f2d94375d2"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga38d41753614fed2e730169d00d6edbb3"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__ble__sdk__srv__tes.html#ga38d41753614fed2e730169d00d6edbb3">ble_tes_pressure_set</a> (<a class="el" href="structble__tes__s.html">ble_tes_t</a> *p_tes, ble_tes_pressure_t *p_data)</td></tr>
 <tr class="memdesc:ga38d41753614fed2e730169d00d6edbb3"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for setting the pressure.  <a href="#ga38d41753614fed2e730169d00d6edbb3">More...</a><br/></td></tr>
@@ -168,20 +168,20 @@ Functions</h2></td></tr>
 <tr class="separator:ga80bf34aaf088ad2437ba5b1fbea368b9"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
-<p>Thingy Envronment Service implementation. </p>
-<p>The Thingy Envronment Service is a simple GATT-based service with multiple characteristics for reading sensor data and configuring the sensors.</p>
-<dl class="section note"><dt>Note</dt><dd>The application must propagate S110 SoftDevice events to the Thingy Envronment Service module by calling the <a class="el" href="group__ble__sdk__srv__tes.html#ga144e7065b310a35fcab8c3f2d94375d2" title="Function for handling the Thingy Envronment Service&#39;s BLE events.">ble_tes_on_ble_evt()</a> function from the ble_stack_handler callback. </dd></dl>
+<p>Thingy Environment Service implementation. </p>
+<p>The Thingy Environment Service is a simple GATT-based service with multiple characteristics for reading sensor data and configuring the sensors.</p>
+<dl class="section note"><dt>Note</dt><dd>The application must propagate S110 SoftDevice events to the Thingy Environment Service module by calling the <a class="el" href="group__ble__sdk__srv__tes.html#ga144e7065b310a35fcab8c3f2d94375d2" title="Function for handling the Thingy Environment Service&#39;s BLE events.">ble_tes_on_ble_evt()</a> function from the ble_stack_handler callback. </dd></dl>
 <h2 class="groupheader">Macro Definition Documentation</h2>
 <a class="anchor" id="gaf1cb0478a9d60bf219de42112859ec38"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
-          <td class="memname">#define BLE_TES_MAX_DATA_LEN&#160;&#160;&#160;(GATT_MTU_SIZE_DEFAULT - 3)</td>
+          <td class="memname">#define BLE_TES_MAX_DATA_LEN&#160;&#160;&#160;(BLE_GATT_ATT_MTU_DEFAULT - 3)</td>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>Maximum length of data (in bytes) that can be transmitted to the peer by the Thingy Envronment service module. </p>
+<p>Maximum length of data (in bytes) that can be transmitted to the peer by the Thingy Environment service module. </p>
 
 </div>
 </div>
@@ -194,7 +194,7 @@ Functions</h2></td></tr>
         </tr>
       </table>
 </div><div class="memdoc">
-<p>The UUID of the Thingy Envronment Service. </p>
+<p>The UUID of the Thingy Environment Service. </p>
 
 </div>
 </div>
@@ -227,7 +227,7 @@ Functions</h2></td></tr>
 <p>This function sends the input humidity as an humidity characteristic notification to the peer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_tes</td><td>Pointer to the Thingy Envronment Service structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_tes</td><td>Pointer to the Thingy Environment Service structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>Pointer to the humidity data.</td></tr>
   </table>
   </dd>
@@ -269,7 +269,7 @@ Functions</h2></td></tr>
 <p>This function sends the input humidity as an humidity characteristic notification to the peer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_tes</td><td>Pointer to the Thingy Envronment Service structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_tes</td><td>Pointer to the Thingy Environment Service structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>Pointer to the humidity data.</td></tr>
   </table>
   </dd>
@@ -311,7 +311,7 @@ Functions</h2></td></tr>
 <p>This function sends the input humidity as an humidity characteristic notification to the peer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_tes</td><td>Pointer to the Thingy Envronment Service structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_tes</td><td>Pointer to the Thingy Environment Service structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>Pointer to the humidity data.</td></tr>
   </table>
   </dd>
@@ -349,10 +349,10 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for initializing the Thingy Envronment Service. </p>
+<p>Function for initializing the Thingy Environment Service. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[out]</td><td class="paramname">p_tes</td><td>Thingy Envronment Service structure. This structure must be supplied by the application. It is initialized by this function and will later be used to identify this particular service instance. </td></tr>
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_tes</td><td>Thingy Environment Service structure. This structure must be supplied by the application. It is initialized by this function and will later be used to identify this particular service instance. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_tes_init</td><td>Information needed to initialize the service.</td></tr>
   </table>
   </dd>
@@ -391,11 +391,11 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for handling the Thingy Envronment Service's BLE events. </p>
-<p>The Thingy Envronment Service expects the application to call this function each time an event is received from the S110 SoftDevice. This function processes the event if it is relevant and calls the Thingy Envronment Service event handler of the application if necessary.</p>
+<p>Function for handling the Thingy Environment Service's BLE events. </p>
+<p>The Thingy Environment Service expects the application to call this function each time an event is received from the S110 SoftDevice. This function processes the event if it is relevant and calls the Thingy Environment Service event handler of the application if necessary.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_tes</td><td>Thingy Envronment Service structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_tes</td><td>Thingy Environment Service structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_ble_evt</td><td>Event received from the S110 SoftDevice. </td></tr>
   </table>
   </dd>
@@ -431,7 +431,7 @@ Functions</h2></td></tr>
 <p>This function sends the input pressure as an pressure characteristic notification to the peer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_tes</td><td>Pointer to the Thingy Envronment Service structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_tes</td><td>Pointer to the Thingy Environment Service structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>Pointer to the pressure data.</td></tr>
   </table>
   </dd>
@@ -473,7 +473,7 @@ Functions</h2></td></tr>
 <p>This function sends the input temperature as an temperature characteristic notification to the peer.</p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">p_tes</td><td>Pointer to the Thingy Envronment Service structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_tes</td><td>Pointer to the Thingy Environment Service structure. </td></tr>
     <tr><td class="paramdir">[in]</td><td class="paramname">p_data</td><td>Pointer to the temperature data.</td></tr>
   </table>
   </dd>
@@ -492,7 +492,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="topicfooter">
 <a href="mailto:docfeedback@nordicsemi.no?subject=Documentation%20feedback" id="maillink">Documentation feedback</a> | <a href="https://devzone.nordicsemi.com/questions/" target="_blank">Developer Zone</a> | <a href="http://response.nordicsemi.com/subscribe-to-our-newsletters" target="_blank">Subscribe</a> | Updated <span id="date"/>
 <script>
-var date = new Date("Tue May 30 2017" + " UTC");
+var date = new Date("Fri Sep 29 2017" + " UTC");
 document.getElementById("date").innerHTML = date.toJSON().slice(0, 10);
 var url=window.location.href.split("?")[0];
 var filename=url.substring(url.lastIndexOf('/')+1);

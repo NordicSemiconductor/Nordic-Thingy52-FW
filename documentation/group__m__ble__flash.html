@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>Nordic Thingy:52 : BLE flash configuration</title>
+<title>Nordic Thingy:52 v2.0.0 : BLE flash configuration</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Nordic Semiconductor" src="nordic_small.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Nordic Thingy:52
+   <div id="projectname">Nordic Thingy:52 v2.0.0
    </div>
   </td>
  </tr>
@@ -122,9 +122,9 @@ Functions</h2></td></tr>
 <tr class="memitem:ga5957976fae568f399a545d51b97eb7ca"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__m__ble__flash.html#ga5957976fae568f399a545d51b97eb7ca">m_ble_flash_config_load</a> (ble_tcs_params_t **p_config)</td></tr>
 <tr class="memdesc:ga5957976fae568f399a545d51b97eb7ca"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for loading the configuration.  <a href="#ga5957976fae568f399a545d51b97eb7ca">More...</a><br/></td></tr>
 <tr class="separator:ga5957976fae568f399a545d51b97eb7ca"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:ga2e4e1d4a7888c92179edb798b913f8c2"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__m__ble__flash.html#ga2e4e1d4a7888c92179edb798b913f8c2">m_ble_flash_config_store</a> (ble_tcs_params_t *p_config)</td></tr>
-<tr class="memdesc:ga2e4e1d4a7888c92179edb798b913f8c2"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for storing the configuration.  <a href="#ga2e4e1d4a7888c92179edb798b913f8c2">More...</a><br/></td></tr>
-<tr class="separator:ga2e4e1d4a7888c92179edb798b913f8c2"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:gad210e6fe4b2d73719e7eb949279beece"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__m__ble__flash.html#gad210e6fe4b2d73719e7eb949279beece">m_ble_flash_config_store</a> (const ble_tcs_params_t *p_config)</td></tr>
+<tr class="memdesc:gad210e6fe4b2d73719e7eb949279beece"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for storing the configuration.  <a href="#gad210e6fe4b2d73719e7eb949279beece">More...</a><br/></td></tr>
+<tr class="separator:gad210e6fe4b2d73719e7eb949279beece"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga7b5df77e673abde480cc910a1fa5ba0b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__m__ble__flash.html#ga7b5df77e673abde480cc910a1fa5ba0b">m_ble_flash_init</a> (const ble_tcs_params_t *p_default_config, ble_tcs_params_t **p_config)</td></tr>
 <tr class="memdesc:ga7b5df77e673abde480cc910a1fa5ba0b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing Thingy configuration flash handling.  <a href="#ga7b5df77e673abde480cc910a1fa5ba0b">More...</a><br/></td></tr>
 <tr class="separator:ga7b5df77e673abde480cc910a1fa5ba0b"><td class="memSeparator" colspan="2">&#160;</td></tr>
@@ -163,14 +163,14 @@ Functions</h2></td></tr>
 
 </div>
 </div>
-<a class="anchor" id="ga2e4e1d4a7888c92179edb798b913f8c2"></a>
+<a class="anchor" id="gad210e6fe4b2d73719e7eb949279beece"></a>
 <div class="memitem">
 <div class="memproto">
       <table class="memname">
         <tr>
           <td class="memname">uint32_t m_ble_flash_config_store </td>
           <td>(</td>
-          <td class="paramtype">ble_tcs_params_t *&#160;</td>
+          <td class="paramtype">const ble_tcs_params_t *&#160;</td>
           <td class="paramname"><em>p_config</em></td><td>)</td>
           <td></td>
         </tr>
@@ -243,7 +243,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="topicfooter">
 <a href="mailto:docfeedback@nordicsemi.no?subject=Documentation%20feedback" id="maillink">Documentation feedback</a> | <a href="https://devzone.nordicsemi.com/questions/" target="_blank">Developer Zone</a> | <a href="http://response.nordicsemi.com/subscribe-to-our-newsletters" target="_blank">Subscribe</a> | Updated <span id="date"/>
 <script>
-var date = new Date("Tue May 30 2017" + " UTC");
+var date = new Date("Fri Sep 29 2017" + " UTC");
 document.getElementById("date").innerHTML = date.toJSON().slice(0, 10);
 var url=window.location.href.split("?")[0];
 var filename=url.substring(url.lastIndexOf('/')+1);

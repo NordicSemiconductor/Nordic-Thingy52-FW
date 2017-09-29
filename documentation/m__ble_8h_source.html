@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>Nordic Thingy:52 : m_ble.h Source File</title>
+<title>Nordic Thingy:52 v2.0.0 : m_ble.h Source File</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Nordic Semiconductor" src="nordic_small.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Nordic Thingy:52
+   <div id="projectname">Nordic Thingy:52 v2.0.0
    </div>
   </td>
  </tr>
@@ -166,55 +166,56 @@ $(document).ready(function(){initNavTree('m__ble_8h_source.html','');});
 <div class="line"><a name="l00049"></a><span class="lineno">   49</span>&#160;<span class="preprocessor"></span><span class="preprocessor">#define __THINGY_BLE_H__</span></div>
 <div class="line"><a name="l00050"></a><span class="lineno">   50</span>&#160;<span class="preprocessor"></span></div>
 <div class="line"><a name="l00051"></a><span class="lineno">   51</span>&#160;<span class="preprocessor">#include &lt;stdint.h&gt;</span></div>
-<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#include &quot;thingy_config.h&quot;</span></div>
-<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#include &quot;ble.h&quot;</span></div>
-<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;</div>
-<div class="line"><a name="l00057"></a><span class="lineno"><a class="code" href="group__m__ble.html#ga38cef9bcea26e35beb37bc791bc53955">   57</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">enum</span></div>
-<div class="line"><a name="l00058"></a><span class="lineno">   58</span>&#160;{</div>
-<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;    thingy_ble_evt_connected,</div>
-<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    thingy_ble_evt_disconnected,</div>
-<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    thingy_ble_evt_timeout</div>
-<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;}<a class="code" href="group__m__ble.html#ga38cef9bcea26e35beb37bc791bc53955" title="BLE event types.">m_ble_evt_type_t</a>;</div>
-<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;</div>
-<div class="line"><a name="l00066"></a><span class="lineno"><a class="code" href="structm__ble__evt__t.html">   66</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct</span></div>
-<div class="line"><a name="l00067"></a><span class="lineno">   67</span>&#160;{</div>
-<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;    <a class="code" href="group__m__ble.html#ga38cef9bcea26e35beb37bc791bc53955" title="BLE event types.">m_ble_evt_type_t</a> evt_type;</div>
-<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <span class="keywordtype">void</span>             * p_data;</div>
-<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    uint32_t           size;</div>
-<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;}<a class="code" href="structm__ble__evt__t.html" title="BLE event structure.">m_ble_evt_t</a>;</div>
-<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;</div>
-<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;<span class="keyword">typedef</span> void (*m_ble_evt_handler_t)(<a class="code" href="structm__ble__evt__t.html" title="BLE event structure.">m_ble_evt_t</a> * p_evt);</div>
-<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;</div>
-<div class="line"><a name="l00077"></a><span class="lineno"><a class="code" href="group__m__ble.html#gaf77acbb20a31852f22f886934fa78c06">   77</a></span>&#160;<span class="keyword">typedef</span> void (*<a class="code" href="group__m__ble.html#gaf77acbb20a31852f22f886934fa78c06" title="BLE service callback definitions.">m_ble_service_evt_cb_t</a>)(ble_evt_t * p_ble_evt);</div>
-<div class="line"><a name="l00078"></a><span class="lineno">   78</span>&#160;<span class="keyword">typedef</span> uint32_t (*m_ble_service_init_cb_t)(void);</div>
-<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;</div>
-<div class="line"><a name="l00082"></a><span class="lineno"><a class="code" href="structm__ble__service__handle__t.html">   82</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct</span></div>
-<div class="line"><a name="l00083"></a><span class="lineno">   83</span>&#160;{</div>
-<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;    m_ble_service_init_cb_t    init_cb;</div>
-<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    <a class="code" href="group__m__ble.html#gaf77acbb20a31852f22f886934fa78c06" title="BLE service callback definitions.">m_ble_service_evt_cb_t</a>  ble_evt_cb;</div>
-<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;}<a class="code" href="structm__ble__service__handle__t.html" title="BLE service handle structure.">m_ble_service_handle_t</a>;</div>
-<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;</div>
-<div class="line"><a name="l00090"></a><span class="lineno"><a class="code" href="structm__ble__init__t.html">   90</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct</span></div>
-<div class="line"><a name="l00091"></a><span class="lineno">   91</span>&#160;{</div>
-<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;    m_ble_evt_handler_t      evt_handler;</div>
-<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    <a class="code" href="structm__ble__service__handle__t.html" title="BLE service handle structure.">m_ble_service_handle_t</a> * p_service_handles;</div>
-<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    uint32_t                 service_num;</div>
-<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;}<a class="code" href="structm__ble__init__t.html" title="Initialization parameters.">m_ble_init_t</a>;</div>
-<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;</div>
-<div class="line"><a name="l00101"></a><span class="lineno">  101</span>&#160;uint32_t <a class="code" href="group__m__ble.html#ga0f4cc6ddb2afa86f25cbce12a7b6a0cf" title="Function for initializing the BLE handling module..">m_ble_init</a>(<a class="code" href="structm__ble__init__t.html" title="Initialization parameters.">m_ble_init_t</a> * p_params);</div>
-<div class="line"><a name="l00102"></a><span class="lineno">  102</span>&#160;</div>
-<div class="line"><a name="l00109"></a><span class="lineno">  109</span>&#160;uint32_t <a class="code" href="group__m__ble.html#ga6a970aea3fdc66ccc6aee5d58973304f" title="Function for starting the BLE handling module.">m_ble_start</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00110"></a><span class="lineno">  110</span>&#160;</div>
-<div class="line"><a name="l00117"></a><span class="lineno">  117</span>&#160;uint32_t <a class="code" href="group__m__ble.html#ga6b0abe41ff9c1eafe92b268b2ce66043" title="Function for stopping the BLE handling module.">m_ble_stop</a>(<span class="keywordtype">void</span>);</div>
-<div class="line"><a name="l00118"></a><span class="lineno">  118</span>&#160;</div>
-<div class="line"><a name="l00119"></a><span class="lineno">  119</span>&#160;<span class="preprocessor">#endif</span></div>
-<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;<span class="preprocessor"></span></div>
+<div class="line"><a name="l00052"></a><span class="lineno">   52</span>&#160;<span class="preprocessor">#include &lt;stdbool.h&gt;</span></div>
+<div class="line"><a name="l00053"></a><span class="lineno">   53</span>&#160;<span class="preprocessor">#include &quot;thingy_config.h&quot;</span></div>
+<div class="line"><a name="l00054"></a><span class="lineno">   54</span>&#160;<span class="preprocessor">#include &quot;ble.h&quot;</span></div>
+<div class="line"><a name="l00055"></a><span class="lineno">   55</span>&#160;</div>
+<div class="line"><a name="l00058"></a><span class="lineno"><a class="code" href="group__m__ble.html#ga38cef9bcea26e35beb37bc791bc53955">   58</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">enum</span></div>
+<div class="line"><a name="l00059"></a><span class="lineno">   59</span>&#160;{</div>
+<div class="line"><a name="l00060"></a><span class="lineno">   60</span>&#160;    thingy_ble_evt_connected,</div>
+<div class="line"><a name="l00061"></a><span class="lineno">   61</span>&#160;    thingy_ble_evt_disconnected,</div>
+<div class="line"><a name="l00062"></a><span class="lineno">   62</span>&#160;    thingy_ble_evt_timeout</div>
+<div class="line"><a name="l00063"></a><span class="lineno">   63</span>&#160;}<a class="code" href="group__m__ble.html#ga38cef9bcea26e35beb37bc791bc53955" title="BLE event types.">m_ble_evt_type_t</a>;</div>
+<div class="line"><a name="l00064"></a><span class="lineno">   64</span>&#160;</div>
+<div class="line"><a name="l00067"></a><span class="lineno"><a class="code" href="structm__ble__evt__t.html">   67</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct</span></div>
+<div class="line"><a name="l00068"></a><span class="lineno">   68</span>&#160;{</div>
+<div class="line"><a name="l00069"></a><span class="lineno">   69</span>&#160;    <a class="code" href="group__m__ble.html#ga38cef9bcea26e35beb37bc791bc53955" title="BLE event types.">m_ble_evt_type_t</a> evt_type;</div>
+<div class="line"><a name="l00070"></a><span class="lineno">   70</span>&#160;    <span class="keywordtype">void</span>             * p_data;</div>
+<div class="line"><a name="l00071"></a><span class="lineno">   71</span>&#160;    uint32_t           size;</div>
+<div class="line"><a name="l00072"></a><span class="lineno">   72</span>&#160;}<a class="code" href="structm__ble__evt__t.html" title="BLE event structure.">m_ble_evt_t</a>;</div>
+<div class="line"><a name="l00073"></a><span class="lineno">   73</span>&#160;</div>
+<div class="line"><a name="l00074"></a><span class="lineno">   74</span>&#160;<span class="keyword">typedef</span> void (*m_ble_evt_handler_t)(<a class="code" href="structm__ble__evt__t.html" title="BLE event structure.">m_ble_evt_t</a> * p_evt);</div>
+<div class="line"><a name="l00075"></a><span class="lineno">   75</span>&#160;</div>
+<div class="line"><a name="l00078"></a><span class="lineno"><a class="code" href="group__m__ble.html#gaf77acbb20a31852f22f886934fa78c06">   78</a></span>&#160;<span class="keyword">typedef</span> void (*<a class="code" href="group__m__ble.html#gaf77acbb20a31852f22f886934fa78c06" title="BLE service callback definitions.">m_ble_service_evt_cb_t</a>)(ble_evt_t * p_ble_evt);</div>
+<div class="line"><a name="l00079"></a><span class="lineno">   79</span>&#160;<span class="keyword">typedef</span> uint32_t (*m_ble_service_init_cb_t)(<span class="keywordtype">bool</span> flash_reinit);</div>
+<div class="line"><a name="l00080"></a><span class="lineno">   80</span>&#160;</div>
+<div class="line"><a name="l00083"></a><span class="lineno"><a class="code" href="structm__ble__service__handle__t.html">   83</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct</span></div>
+<div class="line"><a name="l00084"></a><span class="lineno">   84</span>&#160;{</div>
+<div class="line"><a name="l00085"></a><span class="lineno">   85</span>&#160;    m_ble_service_init_cb_t    init_cb;</div>
+<div class="line"><a name="l00086"></a><span class="lineno">   86</span>&#160;    <a class="code" href="group__m__ble.html#gaf77acbb20a31852f22f886934fa78c06" title="BLE service callback definitions.">m_ble_service_evt_cb_t</a>  ble_evt_cb;</div>
+<div class="line"><a name="l00087"></a><span class="lineno">   87</span>&#160;}<a class="code" href="structm__ble__service__handle__t.html" title="BLE service handle structure.">m_ble_service_handle_t</a>;</div>
+<div class="line"><a name="l00088"></a><span class="lineno">   88</span>&#160;</div>
+<div class="line"><a name="l00091"></a><span class="lineno"><a class="code" href="structm__ble__init__t.html">   91</a></span>&#160;<span class="keyword">typedef</span> <span class="keyword">struct</span></div>
+<div class="line"><a name="l00092"></a><span class="lineno">   92</span>&#160;{</div>
+<div class="line"><a name="l00093"></a><span class="lineno">   93</span>&#160;    m_ble_evt_handler_t      evt_handler;</div>
+<div class="line"><a name="l00094"></a><span class="lineno">   94</span>&#160;    <a class="code" href="structm__ble__service__handle__t.html" title="BLE service handle structure.">m_ble_service_handle_t</a> * p_service_handles;</div>
+<div class="line"><a name="l00095"></a><span class="lineno">   95</span>&#160;    uint32_t                 service_num;</div>
+<div class="line"><a name="l00096"></a><span class="lineno">   96</span>&#160;}<a class="code" href="structm__ble__init__t.html" title="Initialization parameters.">m_ble_init_t</a>;</div>
+<div class="line"><a name="l00097"></a><span class="lineno">   97</span>&#160;</div>
+<div class="line"><a name="l00104"></a><span class="lineno">  104</span>&#160;uint32_t <a class="code" href="group__m__ble.html#ga0f4cc6ddb2afa86f25cbce12a7b6a0cf" title="Function for initializing the BLE handling module..">m_ble_init</a>(<a class="code" href="structm__ble__init__t.html" title="Initialization parameters.">m_ble_init_t</a> * p_params);</div>
+<div class="line"><a name="l00105"></a><span class="lineno">  105</span>&#160;</div>
+<div class="line"><a name="l00112"></a><span class="lineno">  112</span>&#160;uint32_t <a class="code" href="group__m__ble.html#ga6a970aea3fdc66ccc6aee5d58973304f" title="Function for starting the BLE handling module.">m_ble_start</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00113"></a><span class="lineno">  113</span>&#160;</div>
+<div class="line"><a name="l00120"></a><span class="lineno">  120</span>&#160;uint32_t <a class="code" href="group__m__ble.html#ga6b0abe41ff9c1eafe92b268b2ce66043" title="Function for stopping the BLE handling module.">m_ble_stop</a>(<span class="keywordtype">void</span>);</div>
+<div class="line"><a name="l00121"></a><span class="lineno">  121</span>&#160;</div>
+<div class="line"><a name="l00122"></a><span class="lineno">  122</span>&#160;<span class="preprocessor">#endif</span></div>
+<div class="line"><a name="l00123"></a><span class="lineno">  123</span>&#160;<span class="preprocessor"></span></div>
 </div><!-- fragment --></div><!-- contents -->
 </div><!-- doc-content -->
 <div id="nav-path" class="topicfooter">
 <a href="mailto:docfeedback@nordicsemi.no?subject=Documentation%20feedback" id="maillink">Documentation feedback</a> | <a href="https://devzone.nordicsemi.com/questions/" target="_blank">Developer Zone</a> | <a href="http://response.nordicsemi.com/subscribe-to-our-newsletters" target="_blank">Subscribe</a> | Updated <span id="date"/>
 <script>
-var date = new Date("Tue May 30 2017" + " UTC");
+var date = new Date("Fri Sep 29 2017" + " UTC");
 document.getElementById("date").innerHTML = date.toJSON().slice(0, 10);
 var url=window.location.href.split("?")[0];
 var filename=url.substring(url.lastIndexOf('/')+1);

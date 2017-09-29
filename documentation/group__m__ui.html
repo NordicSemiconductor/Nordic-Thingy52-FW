@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>Nordic Thingy:52 : User interface</title>
+<title>Nordic Thingy:52 v2.0.0 : User interface</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Nordic Semiconductor" src="nordic_small.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Nordic Thingy:52
+   <div id="projectname">Nordic Thingy:52 v2.0.0
    </div>
   </td>
  </tr>
@@ -177,7 +177,7 @@ Enumerations</h2></td></tr>
 <tr class="memitem:gabed82baf7f470b522273a3e37c24c600"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom">{ <a class="el" href="group__m__ui.html#ggabed82baf7f470b522273a3e37c24c600af452e6600dab5b069fa0d3a31fc533d5">M_IU_STATUS_CODE_SUCCESS</a> = NRF_SUCCESS, 
 <a class="el" href="group__m__ui.html#ggabed82baf7f470b522273a3e37c24c600ab58543e1646ac0c80f48d66e849195b4">M_IU_STATUS_CODE_INVALID_PARAM</a>
  }</td></tr>
-<tr class="memdesc:gabed82baf7f470b522273a3e37c24c600"><td class="mdescLeft">&#160;</td><td class="mdescRight">m_ui status return codes.  <a href="group__m__ui.html#gabed82baf7f470b522273a3e37c24c600">More...</a><br/></td></tr>
+<tr class="memdesc:gabed82baf7f470b522273a3e37c24c600"><td class="mdescLeft">&#160;</td><td class="mdescRight">User interface module status return codes.  <a href="group__m__ui.html#gabed82baf7f470b522273a3e37c24c600">More...</a><br/></td></tr>
 <tr class="separator:gabed82baf7f470b522273a3e37c24c600"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga214d79377010d0171dd6569eac528c00"><td class="memItemLeft" align="right" valign="top">enum &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__m__ui.html#ga214d79377010d0171dd6569eac528c00">ui_led_events</a> </td></tr>
 <tr class="memdesc:ga214d79377010d0171dd6569eac528c00"><td class="mdescLeft">&#160;</td><td class="mdescRight">Predefined events linked to corresponding LED configurations. <br/></td></tr>
@@ -189,7 +189,7 @@ Functions</h2></td></tr>
 <tr class="memdesc:ga582699f117e3e1043cf352189e229339"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing all UI components (Buttons and LEDs).  <a href="#ga582699f117e3e1043cf352189e229339">More...</a><br/></td></tr>
 <tr class="separator:ga582699f117e3e1043cf352189e229339"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaa84d039c0f77f3e46ff41eab8eaedfef"><td class="memItemLeft" align="right" valign="top">ret_code_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__m__ui.html#gaa84d039c0f77f3e46ff41eab8eaedfef">m_ui_led_set</a> (uint8_t r, uint8_t g, uint8_t b)</td></tr>
-<tr class="memdesc:gaa84d039c0f77f3e46ff41eab8eaedfef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for setting the RGB value of a led.  <a href="#gaa84d039c0f77f3e46ff41eab8eaedfef">More...</a><br/></td></tr>
+<tr class="memdesc:gaa84d039c0f77f3e46ff41eab8eaedfef"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for setting the RGB value of an LED.  <a href="#gaa84d039c0f77f3e46ff41eab8eaedfef">More...</a><br/></td></tr>
 <tr class="separator:gaa84d039c0f77f3e46ff41eab8eaedfef"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga647089420149e92f0be9f905a256850f"><td class="memItemLeft" align="right" valign="top">ret_code_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__m__ui.html#ga647089420149e92f0be9f905a256850f">m_ui_led_set_event</a> (<a class="el" href="group__m__ui.html#ga214d79377010d0171dd6569eac528c00">ui_led_events</a> event_code)</td></tr>
 <tr class="memdesc:ga647089420149e92f0be9f905a256850f"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for setting LED color according to predefined events.  <a href="#ga647089420149e92f0be9f905a256850f">More...</a><br/></td></tr>
@@ -208,7 +208,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>m_ui status return codes. </p>
+<p>User interface module status return codes. </p>
 <table class="fieldtable">
 <tr><th colspan="2">Enumerator</th></tr><tr><td class="fieldname"><em><a class="anchor" id="ggabed82baf7f470b522273a3e37c24c600af452e6600dab5b069fa0d3a31fc533d5"></a>M_IU_STATUS_CODE_SUCCESS</em>&nbsp;</td><td class="fielddoc">
 <p>Successful. </p>
@@ -246,6 +246,13 @@ Functions</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Function for initializing all UI components (Buttons and LEDs). </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_handle</td><td>Pointer to BLE service handle structure. </td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">p_params</td><td>Initialization parameters.</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">NRF_SUCCESS</td><td>Operation was successful. </td></tr>
@@ -287,7 +294,7 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Function for setting the RGB value of a led. </p>
+<p>Function for setting the RGB value of an LED. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">r</td><td>Red intensity (0 to 255). </td></tr>
@@ -296,7 +303,7 @@ Functions</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section note"><dt>Note</dt><dd>in Breathe or One-shot mode the intensity will be set via a separate intensity variable. The values entered in these two modes will be treated as binary (boolean) for each color.</dd></dl>
+<dl class="section note"><dt>Note</dt><dd>In Breathe or One-shot mode, the intensity will be set via a separate intensity variable. The values entered in these two modes will be treated as binary (Boolean) for each color.</dd></dl>
 <dl class="retval"><dt>Return values</dt><dd>
   <table class="retval">
     <tr><td class="paramname">NRF_SUCCESS</td><td>Operation was successful. </td></tr>
@@ -324,7 +331,7 @@ Functions</h2></td></tr>
 <p>Function for setting LED color according to predefined events. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
-    <tr><td class="paramdir">[in]</td><td class="paramname">event_code</td><td>Predefined event code</td></tr>
+    <tr><td class="paramdir">[in]</td><td class="paramname">event_code</td><td>Predefined event code.</td></tr>
   </table>
   </dd>
 </dl>
@@ -343,7 +350,7 @@ Functions</h2></td></tr>
 <div id="nav-path" class="topicfooter">
 <a href="mailto:docfeedback@nordicsemi.no?subject=Documentation%20feedback" id="maillink">Documentation feedback</a> | <a href="https://devzone.nordicsemi.com/questions/" target="_blank">Developer Zone</a> | <a href="http://response.nordicsemi.com/subscribe-to-our-newsletters" target="_blank">Subscribe</a> | Updated <span id="date"/>
 <script>
-var date = new Date("Tue May 30 2017" + " UTC");
+var date = new Date("Fri Sep 29 2017" + " UTC");
 document.getElementById("date").innerHTML = date.toJSON().slice(0, 10);
 var url=window.location.href.split("?")[0];
 var filename=url.substring(url.lastIndexOf('/')+1);

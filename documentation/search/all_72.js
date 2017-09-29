@@ -9,6 +9,7 @@ var searchData=
   ['release_20notes',['Release Notes',['../release_notes.html',1,'']]],
   ['res_5fconf_5freg',['RES_CONF_REG',['../group__lps22hb__press__driver.html#gabccd4c753c04c375e57ba2ec4b5a5437',1,'drv_lps22hb.h']]],
   ['res_5fconf_5freg_5flc_5fen_5fpos',['RES_CONF_REG_LC_EN_Pos',['../group__lps22hb__press__driver.html#ga74225339c4fd0afa1dae3bbcbb2ef16b',1,'drv_lps22hb.h']]],
+  ['resync_5fpin',['resync_pin',['../structdrv__ext__light__init__t.html#af5ac896491ef67bec789e5b651ceb415',1,'drv_ext_light_init_t']]],
   ['return_5fif_5ferror',['RETURN_IF_ERROR',['../group__macros__common.html#ga9569c9f687ab7b38b551ba2ff803f096',1,'macros_common.h']]],
   ['rot_5fmat_5fhandles',['rot_mat_handles',['../structble__tms__s.html#a37b905ebebc898d0fe57df56b7cb1ca7',1,'ble_tms_s']]],
   ['rpds_5fh_5freg',['RPDS_H_REG',['../group__lps22hb__press__driver.html#ga10c14786c00197b9eecee85a79188351',1,'drv_lps22hb.h']]],

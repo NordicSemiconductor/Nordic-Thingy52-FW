@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>Nordic Thingy:52 : HTS221 humidity sensor</title>
+<title>Nordic Thingy:52 v2.0.0 : HTS221 humidity sensor</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Nordic Semiconductor" src="nordic_small.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Nordic Thingy:52
+   <div id="projectname">Nordic Thingy:52 v2.0.0
    </div>
   </td>
  </tr>
@@ -125,10 +125,10 @@ Data Structures</h2></td></tr>
 <tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Calibration struct.  <a href="structdrv__hts221__calib__t.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdrv__hts221__cfg__t.html">drv_hts221_cfg_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration struct for hts221 humidity sensor.  <a href="structdrv__hts221__cfg__t.html#details">More...</a><br/></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configuration struct for HTS221 humidity sensor.  <a href="structdrv__hts221__cfg__t.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:"><td class="memItemLeft" align="right" valign="top">struct &#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="structdrv__hts221__twi__cfg__t.html">drv_hts221_twi_cfg_t</a></td></tr>
-<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization struct for humid driver.  <a href="structdrv__hts221__twi__cfg__t.html#details">More...</a><br/></td></tr>
+<tr class="memdesc:"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initialization struct for the humidity driver.  <a href="structdrv__hts221__twi__cfg__t.html#details">More...</a><br/></td></tr>
 <tr class="separator:"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="define-members"></a>
@@ -229,41 +229,40 @@ Macros</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga8f62f93e4ed7e7ede87f8ef902f2e125"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hts221__humidity__driver.html#ga8f62f93e4ed7e7ede87f8ef902f2e125">drv_hts221_calib_get</a> (<a class="el" href="structdrv__hts221__calib__t.html">drv_hts221_calib_t</a> *p_calib)</td></tr>
-<tr class="memdesc:ga8f62f93e4ed7e7ede87f8ef902f2e125"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to get the sensor calibration data.  <a href="#ga8f62f93e4ed7e7ede87f8ef902f2e125">More...</a><br/></td></tr>
+<tr class="memdesc:ga8f62f93e4ed7e7ede87f8ef902f2e125"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the sensor calibration data.  <a href="#ga8f62f93e4ed7e7ede87f8ef902f2e125">More...</a><br/></td></tr>
 <tr class="separator:ga8f62f93e4ed7e7ede87f8ef902f2e125"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga463f0037f63d665eecdebb775d6b7512"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hts221__humidity__driver.html#ga463f0037f63d665eecdebb775d6b7512">drv_hts221_cfg_get</a> (<a class="el" href="structdrv__hts221__cfg__t.html">drv_hts221_cfg_t</a> *p_cfg)</td></tr>
-<tr class="memdesc:ga463f0037f63d665eecdebb775d6b7512"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reads the configuration of the hts221 sensor.  <a href="#ga463f0037f63d665eecdebb775d6b7512">More...</a><br/></td></tr>
+<tr class="memdesc:ga463f0037f63d665eecdebb775d6b7512"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for reading the configuration of the HTS221 sensor.  <a href="#ga463f0037f63d665eecdebb775d6b7512">More...</a><br/></td></tr>
 <tr class="separator:ga463f0037f63d665eecdebb775d6b7512"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga14cbe56c4a793aab40d002f3b43c0f91"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hts221__humidity__driver.html#ga14cbe56c4a793aab40d002f3b43c0f91">drv_hts221_cfg_set</a> (<a class="el" href="structdrv__hts221__cfg__t.html">drv_hts221_cfg_t</a> const *const p_cfg)</td></tr>
-<tr class="memdesc:ga14cbe56c4a793aab40d002f3b43c0f91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Configures the hts221 sensor according to the specified configuration.  <a href="#ga14cbe56c4a793aab40d002f3b43c0f91">More...</a><br/></td></tr>
+<tr class="memdesc:ga14cbe56c4a793aab40d002f3b43c0f91"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for configuring the HTS221 sensor according to the specified configuration.  <a href="#ga14cbe56c4a793aab40d002f3b43c0f91">More...</a><br/></td></tr>
 <tr class="separator:ga14cbe56c4a793aab40d002f3b43c0f91"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf262aca57c55b678c961d61f548f1e80"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hts221__humidity__driver.html#gaf262aca57c55b678c961d61f548f1e80">drv_hts221_close</a> (void)</td></tr>
-<tr class="memdesc:gaf262aca57c55b678c961d61f548f1e80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Close the hts221 driver.  <a href="#gaf262aca57c55b678c961d61f548f1e80">More...</a><br/></td></tr>
+<tr class="memdesc:gaf262aca57c55b678c961d61f548f1e80"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for closing the HTS221 driver.  <a href="#gaf262aca57c55b678c961d61f548f1e80">More...</a><br/></td></tr>
 <tr class="separator:gaf262aca57c55b678c961d61f548f1e80"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gad12bb488d720d11e8a7b77d67428911d"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hts221__humidity__driver.html#gad12bb488d720d11e8a7b77d67428911d">drv_hts221_humidity_get</a> (int16_t *p_humidity)</td></tr>
-<tr class="memdesc:gad12bb488d720d11e8a7b77d67428911d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to get the humidity data.  <a href="#gad12bb488d720d11e8a7b77d67428911d">More...</a><br/></td></tr>
+<tr class="memdesc:gad12bb488d720d11e8a7b77d67428911d"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the humidity data.  <a href="#gad12bb488d720d11e8a7b77d67428911d">More...</a><br/></td></tr>
 <tr class="separator:gad12bb488d720d11e8a7b77d67428911d"><td class="memSeparator" colspan="2">&#160;</td></tr>
-<tr class="memitem:gaa2b19972c9fcb84123011a191849af58"><td class="memItemLeft" align="right" valign="top"><a class="anchor" id="gaa2b19972c9fcb84123011a191849af58"></a>
-uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hts221__humidity__driver.html#gaa2b19972c9fcb84123011a191849af58">drv_hts221_init</a> (void)</td></tr>
-<tr class="memdesc:gaa2b19972c9fcb84123011a191849af58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Inits the hts221 driver. <br/></td></tr>
+<tr class="memitem:gaa2b19972c9fcb84123011a191849af58"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hts221__humidity__driver.html#gaa2b19972c9fcb84123011a191849af58">drv_hts221_init</a> (void)</td></tr>
+<tr class="memdesc:gaa2b19972c9fcb84123011a191849af58"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the HTS221 driver.  <a href="#gaa2b19972c9fcb84123011a191849af58">More...</a><br/></td></tr>
 <tr class="separator:gaa2b19972c9fcb84123011a191849af58"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gaf996ef2e602624d1f203c8ab0bd549b8"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hts221__humidity__driver.html#gaf996ef2e602624d1f203c8ab0bd549b8">drv_hts221_one_shot</a> (void)</td></tr>
-<tr class="memdesc:gaf996ef2e602624d1f203c8ab0bd549b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Start one shot conversion.  <a href="#gaf996ef2e602624d1f203c8ab0bd549b8">More...</a><br/></td></tr>
+<tr class="memdesc:gaf996ef2e602624d1f203c8ab0bd549b8"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for starting one shot conversion.  <a href="#gaf996ef2e602624d1f203c8ab0bd549b8">More...</a><br/></td></tr>
 <tr class="separator:gaf996ef2e602624d1f203c8ab0bd549b8"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga24f3e384cf5127e163212310c2b0661a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hts221__humidity__driver.html#ga24f3e384cf5127e163212310c2b0661a">drv_hts221_open</a> (<a class="el" href="structdrv__hts221__twi__cfg__t.html">drv_hts221_twi_cfg_t</a> const *const p_cfg)</td></tr>
-<tr class="memdesc:ga24f3e384cf5127e163212310c2b0661a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Opens the hts221 driver according to the specified configuration.  <a href="#ga24f3e384cf5127e163212310c2b0661a">More...</a><br/></td></tr>
+<tr class="memdesc:ga24f3e384cf5127e163212310c2b0661a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for opening the HTS221 driver according to the specified configuration.  <a href="#ga24f3e384cf5127e163212310c2b0661a">More...</a><br/></td></tr>
 <tr class="separator:ga24f3e384cf5127e163212310c2b0661a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gacd7cb33e6115282cecdb0294c22de66b"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hts221__humidity__driver.html#gacd7cb33e6115282cecdb0294c22de66b">drv_hts221_reboot</a> (void)</td></tr>
-<tr class="memdesc:gacd7cb33e6115282cecdb0294c22de66b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Reboot the hts221 memory content.  <a href="#gacd7cb33e6115282cecdb0294c22de66b">More...</a><br/></td></tr>
+<tr class="memdesc:gacd7cb33e6115282cecdb0294c22de66b"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for rebooting the HTS221 memory content.  <a href="#gacd7cb33e6115282cecdb0294c22de66b">More...</a><br/></td></tr>
 <tr class="separator:gacd7cb33e6115282cecdb0294c22de66b"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gab3a1f7d2ec8dbfa30e72b0ab4477521a"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hts221__humidity__driver.html#gab3a1f7d2ec8dbfa30e72b0ab4477521a">drv_hts221_status_get</a> (uint8_t *p_status)</td></tr>
-<tr class="memdesc:gab3a1f7d2ec8dbfa30e72b0ab4477521a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to get the status.  <a href="#gab3a1f7d2ec8dbfa30e72b0ab4477521a">More...</a><br/></td></tr>
+<tr class="memdesc:gab3a1f7d2ec8dbfa30e72b0ab4477521a"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the status.  <a href="#gab3a1f7d2ec8dbfa30e72b0ab4477521a">More...</a><br/></td></tr>
 <tr class="separator:gab3a1f7d2ec8dbfa30e72b0ab4477521a"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:gac83d1b720213d6cdd3313d78a96f4b85"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hts221__humidity__driver.html#gac83d1b720213d6cdd3313d78a96f4b85">drv_hts221_temperature_get</a> (int16_t *p_temperature)</td></tr>
-<tr class="memdesc:gac83d1b720213d6cdd3313d78a96f4b85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function to get the temperature data.  <a href="#gac83d1b720213d6cdd3313d78a96f4b85">More...</a><br/></td></tr>
+<tr class="memdesc:gac83d1b720213d6cdd3313d78a96f4b85"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for getting the temperature data.  <a href="#gac83d1b720213d6cdd3313d78a96f4b85">More...</a><br/></td></tr>
 <tr class="separator:gac83d1b720213d6cdd3313d78a96f4b85"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga9e887a67ff3bdc5b98cbe63c7ed06272"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__hts221__humidity__driver.html#ga9e887a67ff3bdc5b98cbe63c7ed06272">drv_hts221_verify</a> (void)</td></tr>
-<tr class="memdesc:ga9e887a67ff3bdc5b98cbe63c7ed06272"><td class="mdescLeft">&#160;</td><td class="mdescRight">Verify the hts221 who am I register.  <a href="#ga9e887a67ff3bdc5b98cbe63c7ed06272">More...</a><br/></td></tr>
+<tr class="memdesc:ga9e887a67ff3bdc5b98cbe63c7ed06272"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for verifying the HTS221 WHO_AM_I register.  <a href="#ga9e887a67ff3bdc5b98cbe63c7ed06272">More...</a><br/></td></tr>
 <tr class="separator:ga9e887a67ff3bdc5b98cbe63c7ed06272"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -283,7 +282,13 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
       </table>
 </div><div class="memdoc">
 
-<p>Function to get the sensor calibration data. </p>
+<p>Function for getting the sensor calibration data. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_calib</td><td>Calibration values.</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS If the call was successful. </dd></dl>
 
 </div>
@@ -302,7 +307,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
       </table>
 </div><div class="memdoc">
 
-<p>Reads the configuration of the hts221 sensor. </p>
+<p>Function for reading the configuration of the HTS221 sensor. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to the driver configuration for the session to be opened.</td></tr>
@@ -327,7 +332,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
       </table>
 </div><div class="memdoc">
 
-<p>Configures the hts221 sensor according to the specified configuration. </p>
+<p>Function for configuring the HTS221 sensor according to the specified configuration. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to the sensor configuration.</td></tr>
@@ -352,7 +357,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
       </table>
 </div><div class="memdoc">
 
-<p>Close the hts221 driver. </p>
+<p>Function for closing the HTS221 driver. </p>
 <dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS If the call was successful. </dd></dl>
 
 </div>
@@ -371,8 +376,33 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
       </table>
 </div><div class="memdoc">
 
-<p>Function to get the humidity data. </p>
+<p>Function for getting the humidity data. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_humidity</td><td>Fetched from humidity registers.</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS If the call was successful. </dd></dl>
+
+</div>
+</div>
+<a class="anchor" id="gaa2b19972c9fcb84123011a191849af58"></a>
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">uint32_t drv_hts221_init </td>
+          <td>(</td>
+          <td class="paramtype">void&#160;</td>
+          <td class="paramname"></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+
+<p>Function for initializing the HTS221 driver. </p>
+<dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS Success. Only possible return value. </dd></dl>
 
 </div>
 </div>
@@ -390,7 +420,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
       </table>
 </div><div class="memdoc">
 
-<p>Start one shot conversion. </p>
+<p>Function for starting one shot conversion. </p>
 <dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS If the call was successful. </dd></dl>
 
 </div>
@@ -409,7 +439,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
       </table>
 </div><div class="memdoc">
 
-<p>Opens the hts221 driver according to the specified configuration. </p>
+<p>Function for opening the HTS221 driver according to the specified configuration. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[in]</td><td class="paramname">p_cfg</td><td>Pointer to the driver configuration for the session to be opened.</td></tr>
@@ -434,7 +464,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
       </table>
 </div><div class="memdoc">
 
-<p>Reboot the hts221 memory content. </p>
+<p>Function for rebooting the HTS221 memory content. </p>
 <dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS If the call was successful. </dd></dl>
 
 </div>
@@ -453,7 +483,13 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
       </table>
 </div><div class="memdoc">
 
-<p>Function to get the status. </p>
+<p>Function for getting the status. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_status</td><td>Contents of the status register.</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS If the call was successful. </dd></dl>
 
 </div>
@@ -472,7 +508,13 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
       </table>
 </div><div class="memdoc">
 
-<p>Function to get the temperature data. </p>
+<p>Function for getting the temperature data. </p>
+<dl class="params"><dt>Parameters</dt><dd>
+  <table class="params">
+    <tr><td class="paramdir">[out]</td><td class="paramname">p_temperature</td><td>Fetched from temperature registers.</td></tr>
+  </table>
+  </dd>
+</dl>
 <dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS If the call was successful. </dd></dl>
 
 </div>
@@ -491,7 +533,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
       </table>
 </div><div class="memdoc">
 
-<p>Verify the hts221 who am I register. </p>
+<p>Function for verifying the HTS221 WHO_AM_I register. </p>
 <dl class="section return"><dt>Returns</dt><dd>NRF_SUCCESS If the call was successful. </dd></dl>
 
 </div>
@@ -501,7 +543,7 @@ uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="
 <div id="nav-path" class="topicfooter">
 <a href="mailto:docfeedback@nordicsemi.no?subject=Documentation%20feedback" id="maillink">Documentation feedback</a> | <a href="https://devzone.nordicsemi.com/questions/" target="_blank">Developer Zone</a> | <a href="http://response.nordicsemi.com/subscribe-to-our-newsletters" target="_blank">Subscribe</a> | Updated <span id="date"/>
 <script>
-var date = new Date("Tue May 30 2017" + " UTC");
+var date = new Date("Fri Sep 29 2017" + " UTC");
 document.getElementById("date").innerHTML = date.toJSON().slice(0, 10);
 var url=window.location.href.split("?")[0];
 var filename=url.substring(url.lastIndexOf('/')+1);

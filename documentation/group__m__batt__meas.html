@@ -5,7 +5,7 @@
 <meta http-equiv="Content-Type" content="text/xhtml;charset=UTF-8"/>
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.3.1"/>
-<title>Nordic Thingy:52 : Battery measurement</title>
+<title>Nordic Thingy:52 v2.0.0 : Battery measurement</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -33,7 +33,7 @@
  <tr style="height: 56px;">
   <td id="projectlogo"><img alt="Nordic Semiconductor" src="nordic_small.png"/></td>
   <td style="padding-left: 0.5em;">
-   <div id="projectname">Nordic Thingy:52
+   <div id="projectname">Nordic Thingy:52 v2.0.0
    </div>
   </td>
  </tr>
@@ -166,13 +166,13 @@ Enumerations</h2></td></tr>
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="func-members"></a>
 Functions</h2></td></tr>
 <tr class="memitem:ga36dc9d46d92c054588f99cf2044b1087"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__m__batt__meas.html#ga36dc9d46d92c054588f99cf2044b1087">m_batt_meas_disable</a> (void)</td></tr>
-<tr class="memdesc:ga36dc9d46d92c054588f99cf2044b1087"><td class="mdescLeft">&#160;</td><td class="mdescRight">Stops the battery measurement.  <a href="#ga36dc9d46d92c054588f99cf2044b1087">More...</a><br/></td></tr>
+<tr class="memdesc:ga36dc9d46d92c054588f99cf2044b1087"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for stopping the battery measurement.  <a href="#ga36dc9d46d92c054588f99cf2044b1087">More...</a><br/></td></tr>
 <tr class="separator:ga36dc9d46d92c054588f99cf2044b1087"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga3e17a5ec6e6a7683eb0fdb578ae5388e"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__m__batt__meas.html#ga3e17a5ec6e6a7683eb0fdb578ae5388e">m_batt_meas_enable</a> (uint32_t meas_interval_ms)</td></tr>
-<tr class="memdesc:ga3e17a5ec6e6a7683eb0fdb578ae5388e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Enables battery measurement at the given interval.  <a href="#ga3e17a5ec6e6a7683eb0fdb578ae5388e">More...</a><br/></td></tr>
+<tr class="memdesc:ga3e17a5ec6e6a7683eb0fdb578ae5388e"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for enabling battery measurement at the given interval.  <a href="#ga3e17a5ec6e6a7683eb0fdb578ae5388e">More...</a><br/></td></tr>
 <tr class="separator:ga3e17a5ec6e6a7683eb0fdb578ae5388e"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:ga822adb8e2120c95c740d244b2bbf4709"><td class="memItemLeft" align="right" valign="top">uint32_t&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="group__m__batt__meas.html#ga822adb8e2120c95c740d244b2bbf4709">m_batt_meas_init</a> (<a class="el" href="structm__ble__service__handle__t.html">m_ble_service_handle_t</a> *p_handle, <a class="el" href="structbatt__meas__init__t.html">batt_meas_init_t</a> const *const p_batt_meas_init)</td></tr>
-<tr class="memdesc:ga822adb8e2120c95c740d244b2bbf4709"><td class="mdescLeft">&#160;</td><td class="mdescRight">Initalizes the battery driver.  <a href="#ga822adb8e2120c95c740d244b2bbf4709">More...</a><br/></td></tr>
+<tr class="memdesc:ga822adb8e2120c95c740d244b2bbf4709"><td class="mdescLeft">&#160;</td><td class="mdescRight">Function for initializing the battery driver.  <a href="#ga822adb8e2120c95c740d244b2bbf4709">More...</a><br/></td></tr>
 <tr class="separator:ga822adb8e2120c95c740d244b2bbf4709"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table>
 <a name="details" id="details"></a><h2 class="groupheader">Detailed Description</h2>
@@ -252,10 +252,10 @@ Functions</h2></td></tr>
       </table>
 </div><div class="memdoc">
 
-<p>Stops the battery measurement. </p>
+<p>Function for stopping the battery measurement. </p>
 <dl class="section return"><dt>Returns</dt><dd>M_BATT_STATUS_CODE_SUCCESS </dd>
 <dd>
-Other codes from the underlying driver </dd></dl>
+Other codes from the underlying driver. </dd></dl>
 
 </div>
 </div>
@@ -273,7 +273,7 @@ Other codes from the underlying driver </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Enables battery measurement at the given interval. </p>
+<p>Function for enabling battery measurement at the given interval. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramname">meas_interval_ms</td><td>Sampling interval given in milliseconds.</td></tr>
@@ -283,7 +283,7 @@ Other codes from the underlying driver </dd></dl>
 <dl class="section note"><dt>Note</dt><dd>This will call the handler supplied in p_batt_meas_init at the given interval which is supplied with a <a class="el" href="structm__batt__meas__event__t.html" title="The struct passed to the handler with relevant battery information.">m_batt_meas_event_t</a> struct containing the information.</dd></dl>
 <dl class="section return"><dt>Returns</dt><dd>M_BATT_STATUS_CODE_SUCCESS </dd>
 <dd>
-Other codes from the underlying driver </dd></dl>
+Other codes from the underlying driver. </dd></dl>
 
 </div>
 </div>
@@ -311,7 +311,7 @@ Other codes from the underlying driver </dd></dl>
       </table>
 </div><div class="memdoc">
 
-<p>Initalizes the battery driver. </p>
+<p>Function for initializing the battery driver. </p>
 <dl class="params"><dt>Parameters</dt><dd>
   <table class="params">
     <tr><td class="paramdir">[out]</td><td class="paramname">p_handle</td><td>Pointer to the location to store the service handle. </td></tr>
@@ -334,7 +334,7 @@ Other codes from the underlying driver. </dd></dl>
 <div id="nav-path" class="topicfooter">
 <a href="mailto:docfeedback@nordicsemi.no?subject=Documentation%20feedback" id="maillink">Documentation feedback</a> | <a href="https://devzone.nordicsemi.com/questions/" target="_blank">Developer Zone</a> | <a href="http://response.nordicsemi.com/subscribe-to-our-newsletters" target="_blank">Subscribe</a> | Updated <span id="date"/>
 <script>
-var date = new Date("Tue May 30 2017" + " UTC");
+var date = new Date("Fri Sep 29 2017" + " UTC");
 document.getElementById("date").innerHTML = date.toJSON().slice(0, 10);
 var url=window.location.href.split("?")[0];
 var filename=url.substring(url.lastIndexOf('/')+1);
