@@ -91,9 +91,7 @@ static bool                       m_major_minor_fw_ver_changed = false;
 static char                       m_mac_addr[SUPPORT_FUNC_MAC_ADDR_STR_LEN];            /**< The device MAC address. */
 static uint8_t                    m_random_vector_device_id[RANDOM_VECTOR_DEVICE_ID_SIZE];        /**< Device random ID. Used for NFC BLE pairng on iOS. */
 
-#if (NRF_SD_BLE_API_VERSION == 3)
-    #define NRF_BLE_MAX_MTU_SIZE            BLE_GATT_ATT_MTU_DEFAULT*12         /**< MTU size used in the softdevice enabling and to reply to a BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST event. */
-#endif
+#define NRF_BLE_MAX_MTU_SIZE            BLE_GATT_ATT_MTU_DEFAULT*12         /**< MTU size used in the softdevice enabling and to reply to a BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST event. */
 
 #ifdef BLE_DFU_APP_SUPPORT
     static ble_dfu_t                  m_dfus;                                   /**< Structure used to identify the DFU service. */
@@ -400,7 +398,6 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             APP_ERROR_CHECK(err_code);
             break; // BLE_EVT_USER_MEM_REQUEST
 
-#if (NRF_SD_BLE_API_VERSION == 3)
         case BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST:
         {
             NRF_LOG_INFO("on_ble_evt: BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST - %d\r\n", p_ble_evt->evt.gatts_evt.params.exchange_mtu_request.client_rx_mtu);
@@ -413,7 +410,6 @@ static void on_ble_evt(ble_evt_t * p_ble_evt)
             APP_ERROR_CHECK(err_code);
         }
         break; // BLE_GATTS_EVT_EXCHANGE_MTU_REQUEST
-#endif
 
         case BLE_GATTC_EVT_EXCHANGE_MTU_RSP:
             NRF_LOG_INFO("on_ble_evt: BLE_GATTC_EVT_EXCHANGE_MTU_RSP - %d\r\n", p_ble_evt->evt.gattc_evt.params.exchange_mtu_rsp.server_rx_mtu);
@@ -678,11 +674,8 @@ static uint32_t timeslot_init(void)
     beacon_init.data_size      = m_ble_config->eddystone_url.len;
     beacon_init.error_handler = beacon_advertiser_error_handler;
 
-    #if (NRF_SD_BLE_API_VERSION == 3)
-        err_code = sd_ble_gap_addr_get(&beacon_init.beacon_addr);
-    #else
-        err_code = sd_ble_gap_address_get(&beacon_init.beacon_addr);
-    #endif
+    err_code = sd_ble_gap_addr_get(&beacon_init.beacon_addr);
+
     if (err_code != NRF_SUCCESS)
     {
         return err_code;

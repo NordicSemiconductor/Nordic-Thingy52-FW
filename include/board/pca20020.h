@@ -44,6 +44,7 @@
 #include "drv_ext_light.h"
 #include "drv_ext_gpio.h"
 #include "nrf_gpio.h"
+#include "nrf_saadc.h"
 
 #define MPU9250_ADDR    0x68
 #define LPS22HB_ADDR    0x5C
@@ -403,7 +404,8 @@ typedef enum
 #define SPEAKER                             27
 #define PIN27_SYSTEM_DEFAULT_CFG            NRF_PIN_OUTPUT_CLEAR
 
-#define BATTERY                             28
+#define BATTERY                             28                      /** If altered, BATTERY_AIN must be changed as well. */
+#define BATTERY_AIN                         NRF_SAADC_INPUT_AIN4    /** Pin->AIN mapping func removed in SDK. Hard-coded AIN definition. */
 #define PIN28_SYSTEM_DEFAULT_CFG            NRF_PIN_DISCON_NOPULL
 
 #if defined(THINGY_HW_v0_7_0)
@@ -516,35 +518,58 @@ DRV_EXT_LIGHT_DEF(my_led_1);
     },                                   \
 };
 
-#define BATT_MEAS_INTERVAL_MS           5000
-#define BATT_MEAS_LOW_BATT_LIMIT_MV     3100
-#define BATT_MEAS_FULL_BATT_LIMIT_MV    4150
-#define BATT_MEAS_INVALID_PIN            255
+#define BATT_MEAS_INTERVAL_MS            5000 // Measurement interval [ms].
+#define BATT_MEAS_LOW_BATT_LIMIT_MV      3100 // Cutoff voltage [mV].
+#define BATT_MEAS_FULL_BATT_LIMIT_MV     4190 // Full charge definition [mV].
+#define BATT_MEAS_INVALID_PIN             255 // Invalid pin definition.
+#define BATT_MEAS_VOLTAGE_TO_SOC_ELEMENTS 111 // Number of elements in the state of charge vector.
+#define BATT_MEAS_VOLTAGE_TO_SOC_DELTA_MV  10 // mV between each element in the SoC vector.
+
+/** Converts voltage to state of charge (SoC) [%]. The first element corresponds to the voltage 
+BATT_MEAS_LOW_BATT_LIMIT_MV and each element is BATT_MEAS_VOLTAGE_TO_SOC_DELTA_MV higher than the previous.
+Numbers are obtained via model fed with experimental data. */
+static const uint8_t BATT_MEAS_VOLTAGE_TO_SOC[] = { 
+ 0,  0,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  1,  2,
+ 2,  2,  2,  2,  2,  2,  2,  2,  3,  3,  3,  3,  3,  3,  3,  4,  4,  4,  4,  4,
+ 4,  5,  5,  5,  6,  6,  7,  7,  8,  8,  9,  9, 10, 11, 12, 13, 13, 14, 15, 16,
+18, 19, 22, 25, 28, 32, 36, 40, 44, 47, 51, 53, 56, 58, 60, 62, 64, 66, 67, 69,
+71, 72, 74, 76, 77, 79, 81, 82, 84, 85, 85, 86, 86, 86, 87, 88, 88, 89, 90, 91,
+91, 92, 93, 94, 95, 96, 97, 98, 99, 100, 100};
 
 #if defined(THINGY_HW_v0_8_0)
     #define BAT_MON_EN_PIN_USED   false
     #define BAT_MON_EN_PIN_NO     BATT_MEAS_INVALID_PIN
 #else
-    #define BAT_MON_EN_PIN_USED    true
+    #define BAT_MON_EN_PIN_USED   true
     #define BAT_MON_EN_PIN_NO     SX_BAT_MON_EN
 #endif
 
 // Battery monitoring setup.
-#define BATT_MEAS_PARAM_CFG                                         \
-{                                                                   \
-    .batt_meas_param = {                                            \
-        .app_timer_prescaler        = APP_TIMER_PRESCALER,          \
-        .adc_pin_no                 = BATTERY,                      \
-        .usb_detect_pin_no          = USB_DETECT,                   \
-        .batt_chg_stat_pin_no       = BAT_CHG_STAT,                 \
-        .batt_mon_en_pin_used       = BAT_MON_EN_PIN_USED,          \
-        .batt_mon_en_pin_no         = BAT_MON_EN_PIN_NO,            \
-        .batt_voltage_limit_low     = BATT_MEAS_LOW_BATT_LIMIT_MV,  \
-        .batt_voltage_limit_full    = BATT_MEAS_FULL_BATT_LIMIT_MV, \
-        .voltage_divider = {                                        \
-            .r_1_ohm    = BATT_VOLTAGE_DIVIDER_R1,                  \
-            .r_2_ohm    = BATT_VOLTAGE_DIVIDER_R2   },              \
-        },                                                          \
+#define BATT_MEAS_PARAM_CFG                                             \
+{                                                                       \
+    .batt_meas_param = {                                                \
+        .app_timer_prescaler        = APP_TIMER_PRESCALER,              \
+        .adc_pin_no                 = BATTERY,                          \
+        .adc_pin_no_ain             = BATTERY_AIN,                      \
+        .usb_detect_pin_no          = USB_DETECT,                       \
+        .batt_chg_stat_pin_no       = BAT_CHG_STAT,                     \
+        .batt_mon_en_pin_used       = BAT_MON_EN_PIN_USED,              \
+        .batt_mon_en_pin_no         = BAT_MON_EN_PIN_NO,                \
+        .batt_voltage_limit_low     = BATT_MEAS_LOW_BATT_LIMIT_MV,      \
+        .batt_voltage_limit_full    = BATT_MEAS_FULL_BATT_LIMIT_MV,     \
+        .state_of_charge =                                              \
+        {                                                               \
+            .num_elements           = BATT_MEAS_VOLTAGE_TO_SOC_ELEMENTS,\
+            .first_element_mv       = BATT_MEAS_LOW_BATT_LIMIT_MV,      \
+            .delta_mv               = BATT_MEAS_VOLTAGE_TO_SOC_DELTA_MV,\
+            .voltage_to_soc         = BATT_MEAS_VOLTAGE_TO_SOC,         \
+        },                                                              \
+        .voltage_divider =                                              \
+        {                                                               \
+            .r_1_ohm                = BATT_VOLTAGE_DIVIDER_R1,          \
+            .r_2_ohm                = BATT_VOLTAGE_DIVIDER_R2,          \
+        },                                                              \
+     },                                                                 \
 };
 
 // Low frequency clock source to be used by the SoftDevice

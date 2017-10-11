@@ -107,19 +107,22 @@ static uint32_t adc_gain_enum_to_real_gain(nrf_saadc_gain_t gain_reg, float * re
  */
 static void batt_voltage_to_percent(uint16_t voltage_mv, uint8_t * const battery_level_percent)
 {
-    if (voltage_mv >= m_batt_meas_param.batt_voltage_limit_full)
+    int16_t soc_vector_element = (voltage_mv - m_batt_meas_param.state_of_charge.first_element_mv)/
+                                               m_batt_meas_param.state_of_charge.delta_mv;
+    
+    // Ensure that only valid vector entries are used.
+    if (soc_vector_element < 0)
     {
-        *battery_level_percent = 100;
+        soc_vector_element = 0;
     }
-    else if (voltage_mv <= m_batt_meas_param.batt_voltage_limit_low)
+    else if (soc_vector_element > (m_batt_meas_param.state_of_charge.num_elements - 1) )
     {
-        *battery_level_percent = 0;
+        soc_vector_element = (m_batt_meas_param.state_of_charge.num_elements - 1);
     }
-    else
-    {
-        *battery_level_percent = (100 * (voltage_mv - m_batt_meas_param.batt_voltage_limit_low) /
-                                 (m_batt_meas_param.batt_voltage_limit_full - m_batt_meas_param.batt_voltage_limit_low));
-    }
+    
+    *battery_level_percent = m_batt_meas_param.state_of_charge.voltage_to_soc[soc_vector_element];
+    
+    NRF_LOG_DEBUG("soc_vector_element %d, voltage %d, SoC %d \r\n", soc_vector_element, voltage_mv, *battery_level_percent);
 }
 
 
@@ -297,7 +300,7 @@ static uint32_t saadc_init(void)
     RETURN_IF_ERROR(err_code);
 
     nrf_saadc_channel_config_t channel_config =
-    NRF_DRV_SAADC_DEFAULT_CHANNEL_CONFIG_SE(m_batt_meas_param.adc_pin_no);
+    NRF_DRV_SAADC_DEFAULT_CHANNEL_CONFIG_SE(m_batt_meas_param.adc_pin_no_ain);
 
     /* Burst enabled to oversample the SAADC. */
     channel_config.burst    = NRF_SAADC_BURST_ENABLED;
