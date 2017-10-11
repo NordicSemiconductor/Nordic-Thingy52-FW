@@ -1,4 +1,4 @@
-/**
+﻿/**
 
 @page firmware_architecture Firmware architecture
 
@@ -593,9 +593,10 @@ This module is responsible for handling battery level information.
                     <td>Notify/Read</td>
                     <td>1 byte</td>
                     <td><ul>
-                            <li>uint8_t battery level [%] (0-100)</li>
+                            <li>uint8_t State of charge [%] (0-100)</li>
                         </ul>
-						Uses a basic linear model to convert from voltage to percent.
+						Uses a lookup table to convert from battery voltage to state of charge (SoC).
+						Due to the ADC configuration and battery model, certain percentage values are skipped.
 						Will only update/notify if there is a change in remaining battery level.
 					</td>
                 </tr>

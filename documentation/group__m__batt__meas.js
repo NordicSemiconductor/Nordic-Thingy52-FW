@@ -6,12 +6,14 @@ var group__m__batt__meas =
     ] ],
     [ "batt_meas_param_t", "structbatt__meas__param__t.html", [
       [ "adc_pin_no", "structbatt__meas__param__t.html#a0fa6444796cc22152ae2357a9de7ae63", null ],
+      [ "adc_pin_no_ain", "structbatt__meas__param__t.html#a235e3292de0a02e964849b06b8a7d704", null ],
       [ "app_timer_prescaler", "structbatt__meas__param__t.html#a9ca8fd3a0a0041f1d51e0824463f6c43", null ],
       [ "batt_chg_stat_pin_no", "structbatt__meas__param__t.html#aeb8fcc57a40fd7458aa6d31549577d82", null ],
       [ "batt_mon_en_pin_no", "structbatt__meas__param__t.html#a310d12d80f4448fca30df7e26e1224a5", null ],
       [ "batt_mon_en_pin_used", "structbatt__meas__param__t.html#a8fd3192d7233181b20d89f9e277a7967", null ],
       [ "batt_voltage_limit_full", "structbatt__meas__param__t.html#a87835cef0315ba5c39c0e63ad552c5f7", null ],
       [ "batt_voltage_limit_low", "structbatt__meas__param__t.html#af15ce3f05c8b27c32ac601445a33e110", null ],
+      [ "state_of_charge", "structbatt__meas__param__t.html#a14f6f056ef9542eb14fe43800f0cd78a", null ],
       [ "usb_detect_pin_no", "structbatt__meas__param__t.html#af749236629b2501099b6261ebe398583", null ],
       [ "voltage_divider", "structbatt__meas__param__t.html#a0a683f9a8f5bd335a207c556002b8e29", null ]
     ] ],
@@ -21,8 +23,14 @@ var group__m__batt__meas =
       [ "valid_voltage", "structm__batt__meas__event__t.html#af3bba3b6ab6d11e014929bd6726e21ad", null ],
       [ "voltage_mv", "structm__batt__meas__event__t.html#a68a8c5c913af88ed9100abd8e391ae25", null ]
     ] ],
+    [ "state_of_charge_t", "structstate__of__charge__t.html", [
+      [ "delta_mv", "structstate__of__charge__t.html#a3c599a3aa0d44107e3ca04d19773d32c", null ],
+      [ "first_element_mv", "structstate__of__charge__t.html#aea6f5da870665e5460e72ba375fe1fd1", null ],
+      [ "num_elements", "structstate__of__charge__t.html#a77cfde237d402d3004891f26e7023cea", null ],
+      [ "voltage_to_soc", "structstate__of__charge__t.html#abfc39dcdd555c9753128ba539437797c", null ]
+    ] ],
     [ "voltage_divider_t", "structvoltage__divider__t.html", null ],
-    [ "m_batt_meas_event_handler_t", "group__m__batt__meas.html#ga8cd4183d1affeb183a5956a452127c40", [
+    [ "m_batt_meas_event_handler_t", "group__m__batt__meas.html#ga3a8f1eaf8376db27cdc7a87946c84c37", [
       [ "M_BATT_STATUS_CODE_SUCCESS", "group__m__batt__meas.html#gga0411cd49bb5b71852cecd93bcbf0ca2dac55c4d013f9842ae8b8a145adcbe4d7e", null ],
       [ "M_BATT_STATUS_CODE_INVALID_PARAM", "group__m__batt__meas.html#gga0411cd49bb5b71852cecd93bcbf0ca2da1136981cfa14273fe5bd47a316b31ebe", null ]
     ] ],

@@ -14,7 +14,7 @@ var group__ble__sdk__srv__tcs =
     ] ],
     [ "BLE_TCS_MAX_DATA_LEN", "group__ble__sdk__srv__tcs.html#ga8146f33ea6bcd138284006cf86405694", null ],
     [ "BLE_UUID_TCS_SERVICE", "group__ble__sdk__srv__tcs.html#gabbeb84002465867f52a05442e9c312fd", null ],
-    [ "ble_tcs_evt_handler_t", "group__ble__sdk__srv__tcs.html#ga88d48f25ef3e28da5e424d69c5cef71e", null ],
+    [ "ble_tcs_evt_handler_t", "group__ble__sdk__srv__tcs.html#gabc4d02269d1c784f342edc872bdd29f9", null ],
     [ "ble_tcs_init", "group__ble__sdk__srv__tcs.html#gad33571ba0d7ba51659c3aa09618b3cc9", null ],
     [ "ble_tcs_mtu_set", "group__ble__sdk__srv__tcs.html#ga8a6b5889d593500659b05c563740c51a", null ],
     [ "ble_tcs_on_ble_evt", "group__ble__sdk__srv__tcs.html#ga10835bbd06a099abc38cdbee47c382f6", null ]

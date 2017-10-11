@@ -1,6 +1,45 @@
 /**
 @page release_notes Release Notes
 
+<h2>Nordic Thingy:52 firmware version 2.1.0</h2>
+
+<b>Built on nRF5 SDK v13.0.0</b>
+
+<b>Uses SoftDevice S132 v4.0.2</b>
+
+Tested with the following versions of GCC and Keil:
+- gcc_arm_none_eabi 4.9 2015q3
+- Keil version 5.20
+
+<h3>New features</h3>
+- Thingy now reports remaining battery charge (state of charge - "SoC") based on experiments and models.
+
+
+<h3>Changes</h3>
+- The full charge definition has been altered from 4.150 V to 4.190 V to better correspond with the new battery model. Note that Thingy may not always reach 100 % charge.
+
+
+<h3>Bugfixes</h3>
+- The battery charge monitor did not report actual values in 2.0.0. This has been corrected. 
+
+<h3>Known issues</h3>
+- Due to the strong magnetic interference by the speaker, compass accuracy is limited.
+- Thingy gas sensor requires 48 hours of operation time (burn in) to self-calibrate.
+- If you compile a debug version of the firmware, error logs in the RTT console when a function returns an error code, even when the error is correctly handled by the firmware.
+- Speaker status notifications may arrive out of order under load.
+- Writing the device name characteristic may sometimes fail to update the device name field in advertising packets.
+- Performing extensive enabling/disabling of sensors might reboot Thingy.
+- Configuring very optimistic service intervals may cause Thingy to reboot. Examples:
+	- Sound streaming and motion sensor simultaneously.
+	- Motion sensor and several environment sensors configured for lowest notification interval.
+- Sound service streaming will not work on older mobile devices due to low bandwidth.
+- The first 10 seconds of motion sensor data may be inaccurate due to calibration.
+- Preproduction versions of the Thingy hardware will not be able to perform OTA-DFU of the bootloader.
+- Quaternion will always start at identity when turning the service on (Enabling quaternion notifications will always start at Identity (0,0,0,1), equivalent of Eulers (0,0,0)).
+
+@note The micro-ecc library is used in the Thingy bootloader. See <a href="./license.txt" target="_blank">license.txt</a> for the license of this library.
+
+
 <h2>Nordic Thingy:52 firmware version 2.0.0</h2>
 
 <b>Built on nRF5 SDK v13.0.0</b>
@@ -43,5 +82,40 @@ Tested with the following versions of GCC and Keil:
 - Quaternion will always start at identity when turning the service on (Enabling quaternion notifications will always start at Identity (0,0,0,1), equivalent of Eulers (0,0,0)).
 
 @note The micro-ecc library is used in the Thingy bootloader. See <a href="./license.txt" target="_blank">license.txt</a> for the license of this library.
+
+
+<h2>Nordic Thingy:52 firmware version 1.1.0</h2>
+
+<b>Built on nRF5 SDK v12.1.0</b>
+
+<b>Uses SoftDevice S132 v3.0.0</b>
+
+Tested with the following versions of GCC and Keil:
+- gcc_arm_none_eabi 4.9 2015q3
+- Keil version 5.20
+
+<h3>Known issues</h3>
+- Compass heading values are reversed, when rotating the Thingy clockwise the heading data decreases.
+- RGB LED configurations might get out of sync for one breathe cycle.
+- The Thingy gas sensor reqires 48 hours of operation time (burn in) to self-calibrate.
+- Error logs in the RTT console when a function returns an error code, even when the error is correctly handled by the firmware.
+- The scenario of running OTA-DFU on an application that would extend into the FDS data area is not tested.
+- Speaker status notifications may arrive out of order under load.
+- Speaker status notifications may be lost when switching between speaker modes.
+- Writing the device name characteristic may sometimes fail to update the device name field in advertising packets.
+- Performing extensive enabling/disabling of sensors might reboot the Thingy.
+- Configuring very optimistic service intervals may cause the Thingy to reboot. Examples:
+	- Sound streaming and motion sensor simultaneously.
+	- Motion sensor and several environment sensors configured for lowest notification interval.
+- Color sensor is not calibrated for the blue color in the base plastic casing. This issue will be fixed in a firmware update.
+- Sound service streaming will not work on older devices due to low bandwidth.
+- The first 10 seconds of motion sensor data may be inaccurate due to calibration.
+- When motion data frequency is set below 5 Hz, the data becomes invalid.
+- Preproduction versions of the Thingy hardware will not be able to perform OTA-DFU of the bootloader.
+- Quaternion will always start at identity when turning the service on (Enabling quaternion notifications will always start at Identity (0,0,0,1), equivalent of Eulers (0,0,0)).
+- When activated, the compass module uses its present heading as North. The heading is given relatively to this initial setting, and the value increases counterclockwise.
+
+@note The micro-ecc library is used in the Thingy bootloader. See <a href="./license.txt" target="_blank">license.txt</a> for the license of this library.
+
 
 */
