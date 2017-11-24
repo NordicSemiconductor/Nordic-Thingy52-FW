@@ -313,7 +313,7 @@ ASMFLAGS += -DUSE_DMP
 ASMFLAGS += -DEMPL_TARGET_NRF52
 
 #default target - first one defined
-default: clean nrf52832_xxaa_s132
+default: nrf52832_xxaa_s132
 
 #building all targets
 all: clean
