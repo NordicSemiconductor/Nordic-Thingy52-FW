@@ -49,6 +49,7 @@ var annotated =
     [ "m_environment_init_t", "structm__environment__init__t.html", null ],
     [ "m_motion_init_t", "structm__motion__init__t.html", null ],
     [ "m_ui_init_t", "structm__ui__init__t.html", null ],
+    [ "state_of_charge_t", "structstate__of__charge__t.html", "structstate__of__charge__t" ],
     [ "sx150x_led_drv_regs_vals_t", "structsx150x__led__drv__regs__vals__t.html", null ],
     [ "voltage_divider_t", "structvoltage__divider__t.html", null ]
 ];

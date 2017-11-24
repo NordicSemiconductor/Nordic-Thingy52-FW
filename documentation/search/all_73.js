@@ -8,6 +8,8 @@ var searchData=
   ['speaker_20driver',['Speaker driver',['../group__speaker__driver.html',1,'']]],
   ['spkr_5fhandles',['spkr_handles',['../structble__tss__s.html#ad9f8508241e4c33f825e086f23eea208',1,'ble_tss_s']]],
   ['spkr_5fstat_5fhandles',['spkr_stat_handles',['../structble__tss__s.html#af93f2d8a136fd443abb6aae36ea8b89e',1,'ble_tss_s']]],
+  ['state_5fof_5fcharge',['state_of_charge',['../structbatt__meas__param__t.html#a14f6f056ef9542eb14fe43800f0cd78a',1,'batt_meas_param_t']]],
+  ['state_5fof_5fcharge_5ft',['state_of_charge_t',['../structstate__of__charge__t.html',1,'']]],
   ['status',['status',['../structdrv__ccs811__alg__result__t.html#aba48208a73dd4ca0e8273e01875c45bf',1,'drv_ccs811_alg_result_t']]],
   ['status_5freg',['STATUS_REG',['../group__hts221__humidity__driver.html#ga1f7e79cfe81dc06414550fa52418941e',1,'STATUS_REG():&#160;drv_hts221.h'],['../group__lps22hb__press__driver.html#ga1f7e79cfe81dc06414550fa52418941e',1,'STATUS_REG():&#160;drv_lps22hb.h']]],
   ['status_5freg_5fh_5fda_5fpos',['STATUS_REG_H_DA_Pos',['../group__hts221__humidity__driver.html#gad0dc98788ad234c5b6f927423cf8b826',1,'drv_hts221.h']]],

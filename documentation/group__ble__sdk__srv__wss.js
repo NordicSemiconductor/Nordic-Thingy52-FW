@@ -40,7 +40,7 @@ var group__ble__sdk__srv__wss =
     [ "BLE_TMS_CONFIG_WOM_MIN", "group__ble__sdk__srv__wss.html#gaa03bf3f8d91248dbd8a5c55d601d33f4", null ],
     [ "BLE_TMS_MAX_DATA_LEN", "group__ble__sdk__srv__wss.html#ga0367b57be0b83671daf133bb08724b76", null ],
     [ "BLE_UUID_TMS_SERVICE", "group__ble__sdk__srv__wss.html#ga8f8738c7d72fd985de9af68f4356b273", null ],
-    [ "ble_tms_evt_handler_t", "group__ble__sdk__srv__wss.html#ga4f1f7a4fdc4aac9416405bf433d043e0", null ],
+    [ "ble_tms_evt_handler_t", "group__ble__sdk__srv__wss.html#ga12bda36a19eb939e7371c7d8286326eb", null ],
     [ "ble_tms_euler_set", "group__ble__sdk__srv__wss.html#gae144dcf1529ef6afe7a25bccf62506bf", null ],
     [ "ble_tms_gravity_set", "group__ble__sdk__srv__wss.html#gaee53ea24ac784f958db56d334763a306", null ],
     [ "ble_tms_heading_set", "group__ble__sdk__srv__wss.html#gad8a6720b9f28cb13237ac0d5379a7ef0", null ],

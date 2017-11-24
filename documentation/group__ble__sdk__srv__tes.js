@@ -22,7 +22,7 @@ var group__ble__sdk__srv__tes =
     ] ],
     [ "BLE_TES_MAX_DATA_LEN", "group__ble__sdk__srv__tes.html#gaf1cb0478a9d60bf219de42112859ec38", null ],
     [ "BLE_UUID_TES_SERVICE", "group__ble__sdk__srv__tes.html#ga74382e889100cb1e74c3681bd010724c", null ],
-    [ "ble_tes_evt_handler_t", "group__ble__sdk__srv__tes.html#ga42620ff30ed437965e30197414292f23", null ],
+    [ "ble_tes_evt_handler_t", "group__ble__sdk__srv__tes.html#gad775311a6a41d35aa72037510221dc44", null ],
     [ "ble_tes_color_set", "group__ble__sdk__srv__tes.html#ga96aa8f21018b192f8bb854859530bafe", null ],
     [ "ble_tes_gas_set", "group__ble__sdk__srv__tes.html#ga3d1629990a842eca0c6c96872eca7231", null ],
     [ "ble_tes_humidity_set", "group__ble__sdk__srv__tes.html#ga214c30d7b0f07f264ef3e2ceb0b10f47", null ],

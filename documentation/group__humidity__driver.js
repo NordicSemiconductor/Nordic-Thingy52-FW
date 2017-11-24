@@ -5,7 +5,7 @@ var group__humidity__driver =
       [ "p_twi_cfg", "structdrv__humidity__init__t.html#a685867e49b8615af10c50b56b9a6c11b", null ],
       [ "p_twi_instance", "structdrv__humidity__init__t.html#ae7505c24fb6c32e0a8a5fba968c3e831", null ]
     ] ],
-    [ "drv_humidity_evt_handler_t", "group__humidity__driver.html#ga1f478b204378a55619c0f74048124bbd", null ],
+    [ "drv_humidity_evt_handler_t", "group__humidity__driver.html#ga41aa1861bcee38c38153843d1b1fa6bf", null ],
     [ "drv_humidity_evt_t", "group__humidity__driver.html#ga96382a771db820584da3f1471b496a9f", [
       [ "DRV_HUMIDITY_EVT_DATA", "group__humidity__driver.html#gga96382a771db820584da3f1471b496a9fae482a2f19272256c94324c610bd82193", null ],
       [ "DRV_HUMIDITY_EVT_ERROR", "group__humidity__driver.html#gga96382a771db820584da3f1471b496a9fad6c1b671177f419c2b00b5cdb8e88b15", null ]

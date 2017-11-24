@@ -30,7 +30,7 @@ var group__m__batt__meas =
       [ "voltage_to_soc", "structstate__of__charge__t.html#abfc39dcdd555c9753128ba539437797c", null ]
     ] ],
     [ "voltage_divider_t", "structvoltage__divider__t.html", null ],
-    [ "m_batt_meas_event_handler_t", "group__m__batt__meas.html#ga3a8f1eaf8376db27cdc7a87946c84c37", [
+    [ "m_batt_meas_event_handler_t", "group__m__batt__meas.html#ga8cd4183d1affeb183a5956a452127c40", [
       [ "M_BATT_STATUS_CODE_SUCCESS", "group__m__batt__meas.html#gga0411cd49bb5b71852cecd93bcbf0ca2dac55c4d013f9842ae8b8a145adcbe4d7e", null ],
       [ "M_BATT_STATUS_CODE_INVALID_PARAM", "group__m__batt__meas.html#gga0411cd49bb5b71852cecd93bcbf0ca2da1136981cfa14273fe5bd47a316b31ebe", null ]
     ] ],

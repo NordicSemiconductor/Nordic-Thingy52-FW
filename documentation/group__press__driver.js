@@ -10,7 +10,7 @@ var group__press__driver =
       [ "pin_int", "structdrv__pressure__init__t.html#a2dc057303d939b535cadbcdb6f6826d4", null ],
       [ "twi_addr", "structdrv__pressure__init__t.html#a24077526a99aacf024a0cc2d2d55e45c", null ]
     ] ],
-    [ "drv_pressure_evt_handler_t", "group__press__driver.html#gaba29d76f7ce8174e8063ed8d2d2dcfee", null ],
+    [ "drv_pressure_evt_handler_t", "group__press__driver.html#ga2e085649a9d3c838543445b86c909313", null ],
     [ "drv_pressure_evt_type_t", "group__press__driver.html#ga20f4e594399baeb4832a7ba5a8f01dde", [
       [ "DRV_PRESSURE_EVT_DATA", "group__press__driver.html#gga20f4e594399baeb4832a7ba5a8f01ddeabb0e5b24cfb12ef8f4b80a16237e261c", null ],
       [ "DRV_PRESSURE_EVT_ERROR", "group__press__driver.html#gga20f4e594399baeb4832a7ba5a8f01ddeaa9f68e70bf8361bd232bf256a0a2ddb1", null ]

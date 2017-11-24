@@ -6,6 +6,7 @@ var searchData=
   ['default_5fled_5fintensity_5fpercent',['DEFAULT_LED_INTENSITY_PERCENT',['../group__m__ui.html#ga84b7c3c6fcd570e0626c039d35578753',1,'m_ui.h']]],
   ['default_5fled_5foff_5ftime_5fms',['DEFAULT_LED_OFF_TIME_MS',['../group__m__ui.html#ga3f4ed70891085c7a548acdc753ebe751',1,'m_ui.h']]],
   ['default_5fled_5fon_5ftime_5fms',['DEFAULT_LED_ON_TIME_MS',['../group__m__ui.html#ga606e1f1cdd56d621320e37c41869c6b3',1,'m_ui.h']]],
+  ['delta_5fmv',['delta_mv',['../structstate__of__charge__t.html#a3c599a3aa0d44107e3ca04d19773d32c',1,'state_of_charge_t']]],
   ['dev_5fname_5fhandles',['dev_name_handles',['../structble__tcs__s.html#a3a063a210dd344b831584717989c8549',1,'ble_tcs_s']]],
   ['drivers',['Drivers',['../group__drivers.html',1,'']]],
   ['drv_5facc_5fcfg_5ft',['drv_acc_cfg_t',['../structdrv__acc__cfg__t.html',1,'']]],

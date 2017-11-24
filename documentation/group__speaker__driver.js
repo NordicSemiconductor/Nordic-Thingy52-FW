@@ -1,7 +1,7 @@
 var group__speaker__driver =
 [
     [ "drv_speaker_init_t", "structdrv__speaker__init__t.html", null ],
-    [ "drv_speaker_evt_handler_t", "group__speaker__driver.html#ga034559423c9f99d5f49aa56ae46f1468", null ],
+    [ "drv_speaker_evt_handler_t", "group__speaker__driver.html#ga6e3f9afcd39a7ca2b502b44d8ffb95b2", null ],
     [ "drv_speaker_evt_t", "group__speaker__driver.html#ga1e6b16dcff8e1b47e6fb9eea605700fd", null ],
     [ "drv_speaker_ble_pcm_play", "group__speaker__driver.html#ga7928d5f7ce1a126948746e4828db8940", null ],
     [ "drv_speaker_flash_pcm_play", "group__speaker__driver.html#ga77da11d3f4301a603105262caf1ac68e", null ],
