@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 rm -rf sdk_components
 ln -s external/sdk13/components sdk_components
 rm -rf external/nano-pb
@@ -16,5 +16,6 @@ if [ ! -f external/sdk13/external/micro-ecc/micro-ecc/uECC.c ]; then
 	git clone https://github.com/kmackay/micro-ecc.git	external/sdk13/external/micro-ecc/micro-ecc
 fi
 
-pushd external/sdk13/external/micro-ecc/nrf52_armgcc/armgcc && make && popd &&
-pushd external/sdk13/external/micro-ecc/nrf52_keil/armgcc && make && popd
+# Try builds with supported toolchains
+( cd external/sdk13/external/micro-ecc/nrf52_armgcc/armgcc && make )
+( cd external/sdk13/external/micro-ecc/nrf52_keil/armgcc && make )
