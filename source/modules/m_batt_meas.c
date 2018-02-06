@@ -245,11 +245,11 @@ static void gpiote_evt_handler(nrf_drv_gpiote_pin_t pin, nrf_gpiote_polarity_t u
     {
         if (nrf_gpio_pin_read(m_batt_meas_param.batt_chg_stat_pin_no))
         {
-            event_source = M_BATT_MEAS_EVENT_USB_CONN_CHARGING_FINISHED;
+            event_source = M_BATT_MEAS_EVENT_USB_CONN_CHARGING;
         }
         else
         {
-            event_source = M_BATT_MEAS_EVENT_USB_CONN_CHARGING;
+            event_source = M_BATT_MEAS_EVENT_USB_CONN_CHARGING_FINISHED;
         }
     }
     else
