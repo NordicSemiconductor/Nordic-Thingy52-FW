@@ -553,7 +553,7 @@ static uint32_t ble_stack_init(void)
     APP_ERROR_CHECK(err_code);
     
     memset(&ble_cfg, 0, sizeof(ble_cfg));
-    ble_cfg.gatts_cfg.attr_tab_size.attr_tab_size = 3000;
+    ble_cfg.gatts_cfg.attr_tab_size.attr_tab_size = 3300; // GATT attribute table size. Default value 3300. 
     err_code = sd_ble_cfg_set(BLE_GATTS_CFG_ATTR_TAB_SIZE, &ble_cfg, app_ram_start);
     APP_ERROR_CHECK(err_code);
     
@@ -788,6 +788,18 @@ static void tcs_evt_handler (ble_tcs_t        * p_tcs,
                 }
             }
             break;
+
+        case BLE_TCS_EVT_NFC:
+            if(length <= BLE_TCS_NFC_LEN_MAX)
+            {
+                memcpy(m_ble_config->nfc.data, p_data, length);
+                m_ble_config->nfc.len = length;
+
+                APP_ERROR_CHECK(drv_nfc_raw_data_set(m_ble_config->nfc.data, length));
+
+                update_flash = true;
+            }
+            break;
     }
 
     if (update_flash)
@@ -859,6 +871,14 @@ static uint32_t thingy_config_verify(void)
         update_flash = true;
     }
 
+    // Check NFC tag length.
+    if (m_ble_config->nfc.len > BLE_TCS_NFC_LEN_MAX || m_ble_config->nfc.len == 0)
+    {
+        memcpy(m_ble_config->nfc.data, m_ble_default_config.nfc.data, m_ble_default_config.nfc.len);
+        m_ble_config->nfc.len = m_ble_default_config.nfc.len;
+        update_flash = true;
+    }
+
     if (update_flash)
     {
         err_code = m_ble_flash_config_store(m_ble_config);
@@ -877,6 +897,7 @@ static uint32_t thingy_config_init(void)
     params.p_init_vals = m_ble_config;
 
     params.evt_handler = tcs_evt_handler;
+
     err_code = ble_tcs_init(&m_tcs, &params);
 
     if (err_code != NRF_SUCCESS)
@@ -931,37 +952,54 @@ static uint32_t services_init(m_ble_service_handle_t * p_service_handles, uint32
 uint32_t nfc_init(void)
 {
     uint32_t err_code;
-    
+
     err_code = drv_nfc_init();
     RETURN_IF_ERROR(err_code);
-    
-    err_code = drv_nfc_app_launch_android_record_add(THINGY_NFC_APP_ANDROID_NAME_DEFAULT, THINGY_NFC_APP_ANDROID_NAME_LEN);
-    RETURN_IF_ERROR(err_code);
-    
-    uint8_t NFC_STR_LEN = SUPPORT_FUNC_MAC_ADDR_STR_LEN + (RANDOM_VECTOR_DEVICE_ID_SIZE * 2) + 1; // MAC (with '\0') + space + random vector.
-    char nfc_string[NFC_STR_LEN];
-    nfc_string[0] = '\0';
-    
-    strcat(nfc_string, m_mac_addr);
-    strcat(nfc_string, " ");
-    
-    for (uint8_t i = 0; i < RANDOM_VECTOR_DEVICE_ID_SIZE; i++)
+
+    if(memcmp(m_ble_config->nfc.data, m_ble_default_config.nfc.data, m_ble_default_config.nfc.len) == 0)
     {
-        char tmp[3] = {0};
-        sprintf(tmp, "%02x", m_random_vector_device_id[i]);
-        strcat(nfc_string, tmp);
+        err_code = drv_nfc_app_launch_android_record_add(THINGY_NFC_APP_ANDROID_NAME_DEFAULT, THINGY_NFC_APP_ANDROID_NAME_LEN);
+        RETURN_IF_ERROR(err_code);
+
+        ble_tcs_nfc_t s_nfc_buf;
+        uint8_t NFC_STR_LEN = SUPPORT_FUNC_MAC_ADDR_STR_LEN + (RANDOM_VECTOR_DEVICE_ID_SIZE * 2) + 1; // MAC (with '\0') + space + random vector.
+        char nfc_string[NFC_STR_LEN];
+        nfc_string[0] = '\0';
+
+        strcat(nfc_string, m_mac_addr);
+        strcat(nfc_string, " ");
+
+        for (uint8_t i = 0; i < RANDOM_VECTOR_DEVICE_ID_SIZE; i++)
+        {
+            char tmp[3] = {0};
+            sprintf(tmp, "%02x", m_random_vector_device_id[i]);
+            strcat(nfc_string, tmp);
+        }
+
+        NRF_LOG_INFO("nfc string: %s \r\n", nrf_log_push(nfc_string));
+
+        err_code = drv_nfc_string_record_add(nfc_string, NFC_STR_LEN);
+        RETURN_IF_ERROR(err_code);
+
+        err_code = drv_nfc_uri_record_add(NFC_URI_HTTP_WWW, THINGY_NFC_URI_DEFAULT, THINGY_NFC_URI_LEN);
+        RETURN_IF_ERROR(err_code);
+
+        err_code = drv_nfc_enable();
+        RETURN_IF_ERROR(err_code);
+
+        uint8_t len = BLE_TCS_NFC_LEN_MAX;
+        err_code = drv_nfc_raw_data_get(s_nfc_buf.data, &len);
+        RETURN_IF_ERROR(err_code);
+
+        s_nfc_buf.len = len;
+        err_code = ble_tcs_nfc_set(&m_tcs, &s_nfc_buf);
+        RETURN_IF_ERROR(err_code);
     }
-    
-    NRF_LOG_INFO("nfc string: %s \r\n", nrf_log_push(nfc_string));
-    
-    err_code = drv_nfc_string_record_add(nfc_string, NFC_STR_LEN);
-    RETURN_IF_ERROR(err_code);
-                                                   
-    err_code = drv_nfc_uri_record_add(NFC_URI_HTTP_WWW, THINGY_NFC_URI_DEFAULT, THINGY_NFC_URI_LEN);
-    RETURN_IF_ERROR(err_code);
-                                                   
-    err_code = drv_nfc_enable();
-    RETURN_IF_ERROR(err_code);
+    else
+    {
+        err_code = drv_nfc_raw_data_set(m_ble_config->nfc.data, m_ble_config->nfc.len);
+        RETURN_IF_ERROR(err_code);
+    }
 
     return NRF_SUCCESS;
 }

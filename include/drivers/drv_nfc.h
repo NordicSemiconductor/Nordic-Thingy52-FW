@@ -53,6 +53,29 @@
 #include <stdint.h>
 
 
+/**@brief Function for writing raw data to the NFC tag.
+ *
+ * @param[in] p_data                   Pointer to the raw data.
+ * @param[in] data_len                 Length of the raw data.
+ *
+ * @retval NRF_SUCCESS                 If the raw data was added successfully.
+ * @retval NRF_ERROR_INVALID_LENGTH    If the length of the input data is too large for the NFC data buffer.
+ * @retval NRF_ERROR_NULL              If a null pointer is given as an input parameter.
+ * @retval Other errors from the underlying drivers.
+ */
+ret_code_t drv_nfc_raw_data_set(uint8_t const * const p_data, uint8_t data_len);
+
+/**@brief Function for reading the data stored on the NFC tag.
+ *
+ * @param[in]     p_data         Pointer to the data buffer which will store the NFC tag data.
+ * @param[out]    p_data_len     Pointer to a length variable which will store the data buffer length.
+ *
+ * @retval NRF_SUCCESS           If the raw data was added successfully.
+ * @retval NRF_ERROR_NO_MEM      If the input buffer is not large enough for the NFC tag data.
+ * @retval NRF_ERROR_NULL        If a null pointer is given as an input parameter.
+ */
+ret_code_t drv_nfc_raw_data_get(uint8_t * p_data, uint8_t * p_data_len);
+
 /**@brief Function for adding a string record to an NDEF NFC message.
  *
  * @param[in] p_string      Pointer to the string.
