@@ -96,9 +96,6 @@ ret_code_t drv_nfc_raw_data_set(uint8_t const * const p_data, uint8_t data_len)
         return NRF_ERROR_INVALID_LENGTH;
     }
 
-    err_code = nfc_t2t_emulation_stop();
-    RETURN_IF_ERROR(err_code);
-
     m_ndef_msg_buf_len = data_len;
     memcpy(m_ndef_msg_buf, p_data, m_ndef_msg_buf_len);
 

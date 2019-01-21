@@ -795,6 +795,7 @@ static void tcs_evt_handler (ble_tcs_t        * p_tcs,
                 memcpy(m_ble_config->nfc.data, p_data, length);
                 m_ble_config->nfc.len = length;
 
+                APP_ERROR_CHECK(drv_nfc_disable());
                 APP_ERROR_CHECK(drv_nfc_raw_data_set(m_ble_config->nfc.data, length));
 
                 update_flash = true;
