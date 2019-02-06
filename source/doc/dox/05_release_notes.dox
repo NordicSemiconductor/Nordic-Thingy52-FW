@@ -1,6 +1,41 @@
 /**
 @page release_notes Release Notes
 
+<h2>Nordic Thingy:52 firmware version 2.2.0</h2>
+
+<b>Built on nRF5 SDK v13.0.0</b>
+
+<b>Uses SoftDevice S132 v4.0.2</b>
+
+Tested with the following versions of GCC and Keil:
+- gcc_arm_none_eabi 4.9 2015q3
+- Keil version 5.26
+
+<h3>New features</h3>
+- The content of the NFC tag is now configurable over BLE.
+
+
+<h3>Changes</h3>
+- The Thingy Configuration Service has been expanded with an additional characteristic for adding data to the NFC tag.
+	Note that the data is not parsed, and the maximum length of the data is set by the MTU size, to a maximum of 247.
+
+<h3>Known issues</h3>
+- Due to the strong magnetic interference by the speaker, compass accuracy is limited.
+- Thingy gas sensor requires 48 hours of operation time (burn in) to self-calibrate.
+- If you compile a debug version of the firmware, error logs in the RTT console when a function returns an error code, even when the error is correctly handled by the firmware.
+- Speaker status notifications may arrive out of order under load.
+- Writing the device name characteristic may sometimes fail to update the device name field in advertising packets.
+- Performing extensive enabling/disabling of sensors might reboot Thingy.
+- Configuring very optimistic service intervals may cause Thingy to reboot. Examples:
+	- Sound streaming and motion sensor simultaneously.
+	- Motion sensor and several environment sensors configured for lowest notification interval.
+- Sound service streaming will not work on older mobile devices due to low bandwidth.
+- The first 10 seconds of motion sensor data may be inaccurate due to calibration.
+- Preproduction versions of the Thingy hardware will not be able to perform OTA-DFU of the bootloader.
+- Quaternion will always start at identity when turning the service on (Enabling quaternion notifications will always start at Identity (0,0,0,1), equivalent of Eulers (0,0,0)).
+
+@note The micro-ecc library is used in the Thingy bootloader. See <a href="./license.txt" target="_blank">license.txt</a> for the license of this library.
+
 <h2>Nordic Thingy:52 firmware version 2.1.0</h2>
 
 <b>Built on nRF5 SDK v13.0.0</b>

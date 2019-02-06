@@ -12,6 +12,8 @@ The NFC tag is a Type 2 Tag, and contains three NDEF records:
 - Record 1 - Contains the MAC address of Thingy:52 in hexadecimal format <xx:xx:xx:xx:xx:xx> followed by a whitespace and a randomly generated 4-byte hexadecimal string. The latter is randomly generated at boot and identical to the string in the "manufacturer specific data" field within the scan response packet.
 - Record 2 - Contains a link to the Thingy:52 product webpage.
 
-	
+NFC tag content configuration over BLE has been added in the Thingy:52 v2.2.0 firmware release.
+
+The content of the NFC tag can be changed by writing to the Thingy Configuration Service. Note that the data received over BLE is not parsed, and the maximum length of the data is set by the MTU size, to a maximum of 247. The new data will be stored in flash and used instead of the default NFC tag content upon reboot.
+
 */
- 
