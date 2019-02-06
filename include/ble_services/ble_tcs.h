@@ -72,6 +72,7 @@
 #define BLE_TCS_BEACON_LEN_MIN       3
 #define BLE_TCS_CLOUD_LEN_MAX      250
 #define BLE_TCS_CLOUD_LEN_MIN        0
+#define BLE_TCS_NFC_LEN_MAX        247
 
 #ifdef __GNUC__
     #ifdef PACKED
@@ -133,6 +134,12 @@ typedef PACKED( struct
     uint16_t size;
 }) ble_tcs_mtu_t;
 
+typedef PACKED( struct
+{
+    uint8_t data[BLE_TCS_NFC_LEN_MAX];
+    uint8_t len;
+}) ble_tcs_nfc_t;
+
 #define TCS_MTU_REQ_EXCHANGE    0x01
 #define TCS_MTU_REQ_MIN         0UL
 #define TCS_MTU_REQ_MAX         1UL
@@ -148,6 +155,7 @@ typedef struct
     ble_tcs_cloud_token_t   cloud_token;
     ble_tcs_fw_version_t    fw_version;
     ble_tcs_mtu_t           mtu;
+    ble_tcs_nfc_t           nfc;
 }ble_tcs_params_t;
 
 typedef enum
@@ -157,7 +165,8 @@ typedef enum
     BLE_TCS_EVT_CONN_PARAM,
     BLE_TCS_EVT_BEACON,
     BLE_TCS_EVT_CLOUD_TOKEN,
-    BLE_TCS_EVT_MTU
+    BLE_TCS_EVT_MTU,
+    BLE_TCS_EVT_NFC
 }ble_tcs_evt_type_t;
 
 /* Forward declaration of the ble_tcs_t type. */
@@ -195,6 +204,7 @@ struct ble_tcs_s
     ble_gatts_char_handles_t cloud_handles;
     ble_gatts_char_handles_t fwv_handles;
     ble_gatts_char_handles_t mtu_handles;
+    ble_gatts_char_handles_t nfc_handles;
     uint16_t                 conn_handle;                  /**< Handle of the current connection (as provided by the S110 SoftDevice). BLE_CONN_HANDLE_INVALID if not in a connection. */
     ble_tcs_evt_handler_t    evt_handler;                  /**< Event handler to be called for handling received data. */
 };
@@ -233,6 +243,17 @@ void ble_tcs_on_ble_evt(ble_tcs_t * p_tcs, ble_evt_t * p_ble_evt);
  * @retval NRF_SUCCESS If the string was sent successfully. Otherwise, an error code is returned.
  */
 uint32_t ble_tcs_mtu_set(ble_tcs_t * p_tcs, ble_tcs_mtu_t * p_data);
+
+/**@brief Function for setting the NFC char data.
+ *
+ * @details This function updates the NFC characteristic.
+ *
+ * @param[in] p_tcs       Pointer to the Thingy Configuration Service structure.
+ * @param[in] p_data      Pointer to the NFC data.
+ *
+ * @retval NRF_SUCCESS If the string was sent successfully. Otherwise, an error code is returned.
+ */
+uint32_t ble_tcs_nfc_set(ble_tcs_t * p_tcs, ble_tcs_nfc_t * p_data);
 
 #endif // BLE_TCS_H__
 

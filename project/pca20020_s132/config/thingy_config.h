@@ -131,7 +131,12 @@ Version numbers are changed for releases. */
     {                                                 \
         .req = 0x00,                                  \
         .size = 23                                    \
+    },                                                \
+    .nfc =                                            \
+    {                                                 \
+       .data = THINGY_NFC_URI_DEFAULT,                \
+       .len  = THINGY_NFC_URI_LEN,                    \
     }                                                 \
 }
 
-#endif
+#endif /* THINGY_CONFIG */

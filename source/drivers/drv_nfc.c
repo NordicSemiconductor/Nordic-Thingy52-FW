@@ -52,11 +52,13 @@
 
 #define MAX_REC_COUNT         3                     /**< Maximum number of records. */
 #define MAX_NDEF_BUF_LEN    256                     /**< Maximum string length. */
+#define MAX_NFC_BLE_BUF_LEN 247                     /**< Maximum data size of the BLE data buffer. */
 static uint8_t  m_ndef_msg_buf[MAX_NDEF_BUF_LEN];   /**< String to show on NFC. */
 static bool     m_initialized   = false;            /**< Is the module initialized */
 static bool     m_record_added  = false;            /**< Has a record been added. */
 
 NFC_NDEF_MSG_DEF(m_ndef_msg, MAX_REC_COUNT);
+static uint32_t m_ndef_msg_buf_len = MAX_NDEF_BUF_LEN;
 
 /** @brief Callback function for handling NFC events.
  */
@@ -77,6 +79,58 @@ static void nfc_callback(void * p_context, nfc_t2t_event_t event,
         default:
             break;
     }
+}
+
+
+ret_code_t drv_nfc_raw_data_set(uint8_t const * const p_data, uint8_t data_len)
+{
+    ret_code_t err_code;
+
+    if(p_data == NULL)
+    {
+        return NRF_ERROR_NULL;
+    }
+
+    if(data_len > MAX_NFC_BLE_BUF_LEN)
+    {
+        return NRF_ERROR_INVALID_LENGTH;
+    }
+
+    m_ndef_msg_buf_len = data_len;
+    memcpy(m_ndef_msg_buf, p_data, m_ndef_msg_buf_len);
+
+    /* Set raw data as the NFC payload. */
+    err_code = nfc_t2t_payload_set(m_ndef_msg_buf, m_ndef_msg_buf_len);
+    RETURN_IF_ERROR(err_code);
+
+    /* Start sensing NFC field. */
+
+    if(data_len > 0)
+    {
+        err_code = nfc_t2t_emulation_start();
+        RETURN_IF_ERROR(err_code);
+    }
+
+    return NRF_SUCCESS;
+}
+
+
+ret_code_t drv_nfc_raw_data_get(uint8_t * p_data, uint8_t * p_len)
+{
+    if(p_data == NULL || p_len == NULL)
+    {
+        return NRF_ERROR_NULL;
+    }
+
+    if(*p_len < m_ndef_msg_buf_len)
+    {
+        return NRF_ERROR_NO_MEM;
+    }
+
+    memcpy(p_data, m_ndef_msg_buf, m_ndef_msg_buf_len);
+    *p_len = m_ndef_msg_buf_len;
+
+    return NRF_SUCCESS;
 }
 
 
@@ -191,19 +245,17 @@ ret_code_t drv_nfc_enable(void)
         return NRF_ERROR_INVALID_STATE;
     }
     
-    uint32_t ndef_msg_buf_len = MAX_NDEF_BUF_LEN;
-    
-    NRF_LOG_INFO("NFC total message size %d bytes \r\n", ndef_msg_buf_len);
+    NRF_LOG_INFO("NFC total message size %d bytes \r\n", m_ndef_msg_buf_len);
     
     err_code = nfc_ndef_msg_encode(&NFC_NDEF_MSG(m_ndef_msg),
                                    m_ndef_msg_buf,
-                                   &ndef_msg_buf_len);
+                                   &m_ndef_msg_buf_len);
     RETURN_IF_ERROR(err_code);
     
-    NRF_LOG_INFO("NFC used message size %d bytes \r\n", ndef_msg_buf_len);
+    NRF_LOG_INFO("NFC used message size %d bytes \r\n", m_ndef_msg_buf_len);
     
     /* Set created message as the NFC payload. */
-    err_code = nfc_t2t_payload_set(m_ndef_msg_buf, ndef_msg_buf_len);
+    err_code = nfc_t2t_payload_set(m_ndef_msg_buf, m_ndef_msg_buf_len);
     RETURN_IF_ERROR(err_code);
     
     /* Start sensing NFC field. */
