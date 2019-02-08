@@ -30,8 +30,8 @@ var group__ble__sdk__srv__uis =
     [ "BLE_UIS_UUID_LED_CHAR", "group__ble__sdk__srv__uis.html#gad12ff1a265ee8c5a3e9e1f109e20d4df", null ],
     [ "BLE_UIS_UUID_PIN_CHAR", "group__ble__sdk__srv__uis.html#gae6550fa1429ac000fdec8a97ab7d4e31", null ],
     [ "BLE_UIS_UUID_SERVICE", "group__ble__sdk__srv__uis.html#ga0f3360110282eef28c8a6620e82ca4c6", null ],
-    [ "ble_uis_led_write_handler_t", "group__ble__sdk__srv__uis.html#gad04803105211858e47860ea5c61c5284", null ],
-    [ "ble_uis_pin_write_handler_t", "group__ble__sdk__srv__uis.html#ga22c90ef49a21047b699d609b19488b59", null ],
+    [ "ble_uis_led_write_handler_t", "group__ble__sdk__srv__uis.html#gaf68faf8d09d8e22d7e805bf3f637a1eb", null ],
+    [ "ble_uis_pin_write_handler_t", "group__ble__sdk__srv__uis.html#gaa148dce84a9bbe704f4dc98fae6dffc3", null ],
     [ "ble_uis_t", "group__ble__sdk__srv__uis.html#ga01ebb47bd313939cc760c763c58ac262", null ],
     [ "ble_uis_led_mode_t", "group__ble__sdk__srv__uis.html#ga29a8fc60a3fb3bb9186a552a1f70e8d0", [
       [ "BLE_UIS_LED_MODE_OFF", "group__ble__sdk__srv__uis.html#gga29a8fc60a3fb3bb9186a552a1f70e8d0af8f82b3383d69a6439a63ecf8cf3ef76", null ],

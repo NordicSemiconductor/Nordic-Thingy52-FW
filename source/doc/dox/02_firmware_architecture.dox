@@ -10,7 +10,7 @@ Thingy adds the following modules on top of the nRF5 SDK:
 
 - Sensor drivers - Thingy uses the SDK peripheral drivers and Hardware Access Layers (HALs) and implements its own sensor drivers on top of them. These drivers are used to perform any operations on the sensors, such as enabling or disabling them, changing their configuration, or fetching sensor data.
 - BLE handler - Handles all Bluetooth communication and dispatches events to the processes.
-- Flash storage - Flash storage of configuration parameters. 
+- Flash storage - Flash storage of configuration parameters.
 - BLE services -  Layer containing all the custom BLE services used by the Thingy modules. These services are discussed in detail in the @ref fw_arch_ble_services section.
 
 - Thingy modules - Layer containing high level functionality and features. Controlls both the sensor drivers and the corresponding BLE services. Responsible for handling persistent storage of configuration and the default configuration.
@@ -26,11 +26,11 @@ This section focuses on the custom services used in the Thingy firmware together
 The Thingy configuration service is responsible for handling all general configuration parameters that are not related to a particular module.
 
 <table>
-<tr><th>Name                     <th>UUID        <th>Type		<th>Data		<th>Description	
+<tr><th>Name                     <th>UUID        <th>Type		<th>Data		<th>Description
 <tr><td>Base UUID <td>EF68xxxx-9B35-4933-9B10-52FFA9740042 <td> <td> <td>
 <tr><td>Thingy configuration service <td>0100 <td> <td> <td>
 <tr><td>Device name characteristic <td>0101 <td>Write/Read <td>max 10 bytes <td>Device name as ASCII string.
-<tr><td>Advertising param characteristic <td>0102 <td>Write/Read <td>3 bytes 
+<tr><td>Advertising param characteristic <td>0102 <td>Write/Read <td>3 bytes
 	<td>Advertising parameters (in units):
 	<ul>
 		<li>uint16_t - Adv interval in ms (unit 0.625 ms).
@@ -77,7 +77,7 @@ The Thingy configuration service is responsible for handling all general configu
 			The Supervision_Timeout in milliseconds must be larger than
 			(1 + Conn_Latency) * Conn_Interval_Max * 2, where Conn_Interval_Max is given in milliseconds.</p>
 	</ul>
-<tr><td>Eddystone URL   <td>0105 <td>Write/Read <td>3-17 bytes 
+<tr><td>Eddystone URL   <td>0105 <td>Write/Read <td>3-17 bytes
 	<td>Eddystone URL. Data format:
 	<ul>
 	<li>Byte 0: <a href="https://github.com/google/eddystone/tree/master/eddystone-url#url-scheme-prefix" target="blank">URL Scheme Prefix</a></li>
@@ -88,14 +88,14 @@ The Thingy configuration service is responsible for handling all general configu
 	See <a href="https://github.com/google/eddystone/tree/master/eddystone-url" target="blank">Eddystone-URL</a> for more information.
 	</ul>
 <tr><td>Cloud token <td>0106 <td>Write/Read <td>max 250 bytes <td>Cloud token to be used for identification against cloud services.
-<tr><td>FW version <td>0107 <td>Read <td>3 bytes 
+<tr><td>FW version <td>0107 <td>Read <td>3 bytes
 	<td>
 	<ul>
 		<li>uint8_t - major</li>
 		<li>uint8_t - minor</li>
 		<li>uint8_t - patch</li>
 	</ul>
-<tr><td>MTU request <td>0108 <td>Write/Read&nbsp;req <td>3 bytes 
+<tr><td>MTU request <td>0108 <td>Write/Read&nbsp;req <td>3 bytes
 	<td>MTU request. Not retained.
 	<ul>
 		<li>uint8_t - Peripheral exchange request
@@ -106,6 +106,7 @@ The Thingy configuration service is responsible for handling all general configu
 		</li>
 		<li>uint16_t - MTU size requested (23 - 276 bytes).</li>
 	</ul>
+<tr><td>NFC Tag content characteristic<td>0109 <td>Write/Read <td>max 247 bytes <td> Content of NFC tag.
 </table>
 
 @subsection arch_env Environment service

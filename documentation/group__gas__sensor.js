@@ -7,7 +7,7 @@ var group__gas__sensor =
       [ "p_twi_instance", "structdrv__gas__init__t.html#ad56c3dcc9f5d68867bd6870d0341cbac", null ],
       [ "twi_addr", "structdrv__gas__init__t.html#a2f805e44817e12e87c8f3386e9acf50c", null ]
     ] ],
-    [ "drv_gas_sensor_data_handler_t", "group__gas__sensor.html#ga26bf5c7224df67246b0888e3aa819f16", null ],
+    [ "drv_gas_sensor_data_handler_t", "group__gas__sensor.html#ga66e1b34441865f7d31a5ccdca0aaf80f", null ],
     [ "drv_gas_sensor_data_t", "group__gas__sensor.html#ga29584ab3f24fb09ff675bdb39b267349", null ],
     [ "drv_gas_sensor_mode_t", "group__gas__sensor.html#gabeab2eb18ea994c5ab9ed26b1319a8b2", null ],
     [ "drv_gas_sensor_baseline_get", "group__gas__sensor.html#ga5b90ca927929b0fca57ae9300d0e1b03", null ],
