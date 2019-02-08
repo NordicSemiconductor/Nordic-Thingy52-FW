@@ -1,0 +1,207 @@
+<!DOCTYPE CrossStudio_Project_File>
+<solution Name="ble_app_thingy_s132_pca20020" target="8" version="2">
+  <project Name="ble_app_thingy_s132_pca20020">
+    <configuration
+      Name="Common"
+      arm_architecture="v7EM"
+      arm_core_type="Cortex-M4"
+      arm_endian="Little"
+      arm_fp_abi="Hard"
+      arm_fpu_type="FPv4-SP-D16"
+      arm_simulator_memory_simulation_parameter="RX 00000000,00080000,FFFFFFFF;RWX 20000000,00010000,CDCDCDCD"
+      arm_target_device_name="nRF52832_xxAA"
+      arm_target_interface_type="SWD"
+      debug_start_from_entry_point_symbol="No"
+      debug_target_connection="J-Link"
+      linker_section_placement_file="$(ProjectDir)/flash_placement.xml.txt"
+      linker_section_placement_macros="FLASH_PH_START=0x0;FLASH_PH_SIZE=0x80000;RAM_PH_START=0x20000000;RAM_PH_SIZE=0x10000;FLASH_START=0x1F000;FLASH_SIZE=0x56000;RAM_START=0x20004170;RAM_SIZE=0xBE90"
+      linker_section_placements_segments="FLASH RX 0x00000000 0x00080000;SRAM RWX 0x20000000 0x00010000"
+      project_directory=""
+      project_type="Executable" />
+    <folder Name="Internal Files">
+      <file file_name="../../../sdk_components/toolchain/system_nrf52.c" />
+      <file file_name="ses_nrf52_startup.s" />
+      <file file_name="thumb_crt0.s" />
+    </folder>
+    <configuration
+      Name="release_v1_0_0"
+      c_preprocessor_definitions="NRF52;NRF52832;NRF52832_XXAA;BLE_STACK_SUPPORT_REQD;__HEAP_SIZE=0;S132;NRF_SD_BLE_API_VERSION=4;NRF52_PAN_12;NRF52_PAN_15;NRF52_PAN_20;NRF52_PAN_30;NRF52_PAN_31;NRF52_PAN_36;NRF52_PAN_51;NRF52_PAN_53;NRF52_PAN_54;NRF52_PAN_55;NRF52_PAN_58;NRF52_PAN_62;NRF52_PAN_63;NRF52_PAN_64;SOFTDEVICE_PRESENT;SWI_DISABLE0;BSP_DEFINES_ONLY;ARM_MATH_CM4;MPU9250;EMPL;USE_DMP;EMPL_TARGET_NRF52;NRF_LOG_USES_RTT=1;BLE_DFU_APP_SUPPORT;NRF_DFU_SETTINGS_VERSION=1;AUDIO_EQ_DEF=3;HAL_NFC_ENGINEERING_BC_FTPAN_WORKAROUND"
+      c_user_include_directories="$(PackagesDir)/CMSIS_4/CMSIS/Include;../config;../../../external/sdk13_override;../../../external/segger_rtt;../../../include/ble_services;../../../include/board;../../../include/drivers;../../../include/macros;../../../include/modules;../../../include/util;../../../libs/bv32fp-1.2;../../../libs/dvi_adpcm;../../../libs/eMD6/core/driver/eMPL;../../../libs/eMD6/core/driver/include;../../../libs/eMD6/core/driver/nRF52;../../../libs/eMD6/core/eMPL-hal;../../../libs/eMD6/core/mllite;../../../libs/eMD6/core/mpl;../../../libs/sr3_audio;../../../sdk_components/ble/ble_advertising;../../../sdk_components/ble/ble_services/ble_bas;../../../sdk_components/ble/ble_services/ble_dfu;../../../sdk_components/ble/common;../../../sdk_components/drivers_nrf/clock;../../../sdk_components/drivers_nrf/common;../../../sdk_components/drivers_nrf/config;../../../sdk_components/drivers_nrf/delay;../../../sdk_components/drivers_nrf/gpiote;../../../sdk_components/drivers_nrf/hal;../../../sdk_components/drivers_nrf/pdm;../../../sdk_components/drivers_nrf/pwm;../../../sdk_components/drivers_nrf/rng;../../../sdk_components/drivers_nrf/saadc;../../../sdk_components/drivers_nrf/twi_master;../../../sdk_components/drivers_nrf/uart;../../../sdk_components/libraries/bootloader/dfu;../../../sdk_components/libraries/button;../../../sdk_components/libraries/crc32;../../../sdk_components/libraries/experimental_section_vars;../../../sdk_components/libraries/fds;../../../sdk_components/libraries/fifo;../../../sdk_components/libraries/fstorage;../../../sdk_components/libraries/led_softblink;../../../sdk_components/libraries/log;../../../sdk_components/libraries/log/src;../../../sdk_components/libraries/low_power_pwm;../../../sdk_components/libraries/queue;../../../sdk_components/libraries/scheduler;../../../sdk_components/libraries/strerror/;../../../sdk_components/libraries/timer;../../../sdk_components/libraries/trace;../../../sdk_components/libraries/uart;../../../sdk_components/libraries/util;../../../sdk_components/nfc/ndef/generic/message;../../../sdk_components/nfc/ndef/generic/record;../../../sdk_components/nfc/ndef/launchapp;../../../sdk_components/nfc/ndef/text;../../../sdk_components/nfc/ndef/uri;../../../sdk_components/nfc/t2t_lib;../../../sdk_components/nfc/t2t_lib/hal_t2t;../../../sdk_components/softdevice/common/softdevice_handler;../../../sdk_components/softdevice/s132/headers;../../../sdk_components/softdevice/s132/headers/nrf52;../../../sdk_components/toolchain;../../../sdk_components/device;../../../tools/sound"
+      debug_additional_load_file="$(ProjectDir)/../../../sdk_components/softdevice/s132/hex/s132_nrf52_4.0.2_softdevice.hex" />
+    <folder Name="Thingy">
+      <file file_name="../main.c" />
+      <file file_name="../../../source/modules/m_ble.c" />
+      <file file_name="../../../source/modules/m_ble_flash.c" />
+      <file file_name="../../../source/modules/m_environment.c" />
+      <file file_name="../../../source/modules/m_environment_flash.c" />
+      <file file_name="../../../source/modules/m_motion.c" />
+      <file file_name="../../../source/modules/m_motion_flash.c" />
+      <file file_name="../../../source/modules/m_ui.c" />
+      <file file_name="../../../source/modules/m_ui_flash.c" />
+      <file file_name="../../../source/modules/m_sound.c" />
+      <file file_name="../../../source/util/advertiser_beacon_timeslot.c" />
+      <file file_name="../../../source/util/twi_manager.c" />
+      <file file_name="../../../source/modules/m_batt_meas.c" />
+      <file file_name="../config/sdk_config.h" />
+      <file file_name="../../../include/board/pca20020.h" />
+      <file file_name="../../../source/util/support_func.c" />
+      <file file_name="../config/thingy_config.h" />
+    </folder>
+    <folder Name="Thingy drivers">
+      <file file_name="../../../source/drivers/drv_ext_light.c" />
+      <file file_name="../../../source/drivers/drv_ccs811.c" />
+      <file file_name="../../../source/drivers/drv_gas_sensor.c" />
+      <file file_name="../../../source/drivers/drv_bh1745.c" />
+      <file file_name="../../../source/drivers/drv_color.c" />
+      <file file_name="../../../source/drivers/drv_speaker.c" />
+      <file file_name="../../../source/drivers/drv_mpu9250.c" />
+      <file file_name="../../../source/drivers/drv_motion.c" />
+      <file file_name="../../../source/drivers/drv_acc_lis3dh.c" />
+      <file file_name="../../../source/drivers/drv_pressure.c" />
+      <file file_name="../../../source/drivers/drv_lps22hb.c" />
+      <file file_name="../../../source/drivers/drv_sx1509.c" />
+      <file file_name="../../../source/drivers/drv_hts221.c" />
+      <file file_name="../../../source/drivers/drv_humidity.c" />
+      <file file_name="../../../source/drivers/drv_ext_gpio.c" />
+      <file file_name="../../../source/drivers/drv_mic.c" />
+      <file file_name="../../../source/drivers/drv_nfc.c" />
+      <file file_name="sdk_mod/sx150x_led_drv_calc.c" />
+    </folder>
+    <folder Name="Thingy_libraries">
+      <file file_name="../../../libs/eMD6/core/driver/eMPL/inv_mpu.c" />
+      <file file_name="../../../libs/eMD6/core/driver/eMPL/inv_mpu_dmp_motion_driver.c" />
+      <file file_name="../../../libs/eMD6/core/mllite/data_builder.c" />
+      <file file_name="../../../libs/eMD6/core/mllite/hal_outputs.c" />
+      <file file_name="../../../libs/eMD6/core/mllite/message_layer.c" />
+      <file file_name="../../../libs/eMD6/core/mllite/ml_math_func.c" />
+      <file file_name="../../../libs/eMD6/core/mllite/mlmath.c" />
+      <file file_name="../../../libs/eMD6/core/mllite/mpl.c" />
+      <file file_name="../../../libs/eMD6/core/mllite/results_holder.c" />
+      <file file_name="../../../libs/eMD6/core/mllite/start_manager.c" />
+      <file file_name="../../../libs/eMD6/core/mllite/storage_manager.c" />
+      <file file_name="../../../libs/eMD6/core/eMPL-hal/eMPL_outputs.c" />
+      <file file_name="../../../libs/eMD6/core/driver/nRF52/log_nrf52.c" />
+      <file file_name="../../../libs/liblibmplmpu_m4_hardfp/liblibmplmpu.a" />
+      <file file_name="../../../sdk_components/toolchain/cmsis/dsp/GCC/libarm_cortexM4lf_math.a" />
+    </folder>
+    <folder Name="nRF_BLE">
+      <file file_name="../../../sdk_components/ble/common/ble_advdata.c" />
+      <file file_name="../../../sdk_components/ble/ble_advertising/ble_advertising.c" />
+      <file file_name="../../../sdk_components/ble/common/ble_conn_params.c" />
+      <file file_name="../../../sdk_components/ble/common/ble_conn_state.c" />
+      <file file_name="../../../sdk_components/ble/common/ble_srv_common.c" />
+      <file file_name="../../../source/ble_services/ble_tes.c" />
+      <file file_name="../../../source/ble_services/ble_tcs.c" />
+      <file file_name="../../../source/ble_services/ble_uis.c" />
+      <file file_name="../../../source/ble_services/ble_tms.c" />
+      <file file_name="../../../source/ble_services/ble_tss.c" />
+      <file file_name="../../../sdk_components/ble/ble_services/ble_bas/ble_bas.c" />
+    </folder>
+    <folder Name="nRF_Drivers">
+      <file file_name="../../../sdk_components/drivers_nrf/common/nrf_drv_common.c" />
+      <file file_name="../../../sdk_components/drivers_nrf/gpiote/nrf_drv_gpiote.c" />
+      <file file_name="../../../sdk_components/drivers_nrf/twi_master/nrf_drv_twi.c" />
+      <file file_name="../../../sdk_components/drivers_nrf/pwm/nrf_drv_pwm.c" />
+      <file file_name="../../../sdk_components/drivers_nrf/clock/nrf_drv_clock.c" />
+      <file file_name="../../../sdk_components/drivers_nrf/saadc/nrf_drv_saadc.c" />
+      <file file_name="../../../sdk_components/drivers_nrf/hal/nrf_saadc.c" />
+      <file file_name="../../../sdk_components/drivers_nrf/pdm/nrf_drv_pdm.c" />
+      <file file_name="../../../sdk_components/drivers_nrf/rng/nrf_drv_rng.c" />
+    </folder>
+    <folder Name="nRF_Libraries">
+      <file file_name="../../../sdk_components/libraries/queue/nrf_queue.c" />
+      <file file_name="../../../sdk_components/libraries/button/app_button.c" />
+      <file file_name="../../../sdk_components/libraries/util/app_error.c" />
+      <file file_name="../../../sdk_components/libraries/scheduler/app_scheduler.c" />
+      <file file_name="../../../sdk_components/libraries/timer/app_timer.c" />
+      <file file_name="../../../sdk_components/libraries/util/nrf_assert.c" />
+      <file file_name="../../../sdk_components/libraries/uart/retarget.c" />
+      <file file_name="../../../sdk_components/libraries/led_softblink/led_softblink.c" />
+      <file file_name="../../../sdk_components/libraries/low_power_pwm/low_power_pwm.c" />
+      <file file_name="../../../sdk_components/libraries/fstorage/fstorage.c" />
+      <file file_name="../../../sdk_components/libraries/util/app_util_platform.c" />
+      <file file_name="../../../sdk_components/libraries/fds/fds.c" />
+      <file file_name="../../../sdk_components/libraries/util/sdk_mapped_flags.c" />
+      <file file_name="../../../sdk_components/libraries/crc32/crc32.c" />
+      <file file_name="../../../sdk_components/ble/ble_services/ble_dfu/ble_dfu.c" />
+    </folder>
+    <folder Name="nRF_SoftDevice">
+      <file file_name="../../../external/sdk13/components/softdevice/s132/doc/s132_nrf52_4.0.2_licence-agreement.txt" />
+      <file file_name="../../../sdk_components/softdevice/common/softdevice_handler/softdevice_handler.c" />
+      <file file_name="../../../external/sdk13_override/softdevice_handler_appsh.c" />
+    </folder>
+    <folder Name="nRF_Log">
+      <file file_name="../../../sdk_components/libraries/log/src/nrf_log_frontend.c" />
+      <file file_name="../../../sdk_components/libraries/log/src/nrf_log_backend_serial.c" />
+      <file file_name="../../../sdk_components/libraries/strerror/nrf_strerror.c" />
+    </folder>
+    <folder Name="nRF_Segger_RTT">
+      <file file_name="../../../external/segger_rtt/SEGGER_RTT.c" />
+      <file file_name="../../../external/segger_rtt/SEGGER_RTT_printf.c" />
+      <file file_name="sdk_mod/SEGGER_RTT_Syscalls_SES.c" />
+    </folder>
+    <folder Name="Codec: BV32FP">
+      <file file_name="../../../libs/bv32fp-1.2/a2lsp.c" />
+      <file file_name="../../../libs/bv32fp-1.2/allpole.c" />
+      <file file_name="../../../libs/bv32fp-1.2/allzero.c" />
+      <file file_name="../../../libs/bv32fp-1.2/autocor.c" />
+      <file file_name="../../../libs/bv32fp-1.2/bitpack.c" />
+      <file file_name="../../../libs/bv32fp-1.2/bvplc.c" />
+      <file file_name="../../../libs/bv32fp-1.2/cmtables.c" />
+      <file file_name="../../../libs/bv32fp-1.2/coarptch.c" />
+      <file file_name="../../../libs/bv32fp-1.2/decoder.c" />
+      <file file_name="../../../libs/bv32fp-1.2/encoder.c" />
+      <file file_name="../../../libs/bv32fp-1.2/excdec.c" />
+      <file file_name="../../../libs/bv32fp-1.2/excquan.c" />
+      <file file_name="../../../libs/bv32fp-1.2/fineptch.c" />
+      <file file_name="../../../libs/bv32fp-1.2/gaindec.c" />
+      <file file_name="../../../libs/bv32fp-1.2/gainquan.c" />
+      <file file_name="../../../libs/bv32fp-1.2/levdur.c" />
+      <file file_name="../../../libs/bv32fp-1.2/levelest.c" />
+      <file file_name="../../../libs/bv32fp-1.2/lsp2a.c" />
+      <file file_name="../../../libs/bv32fp-1.2/lspdec.c" />
+      <file file_name="../../../libs/bv32fp-1.2/lspquan.c" />
+      <file file_name="../../../libs/bv32fp-1.2/ptdec.c" />
+      <file file_name="../../../libs/bv32fp-1.2/ptquan.c" />
+      <file file_name="../../../libs/bv32fp-1.2/stblchck.c" />
+      <file file_name="../../../libs/bv32fp-1.2/stblzlsp.c" />
+      <file file_name="../../../libs/bv32fp-1.2/tables.c" />
+      <file file_name="../../../libs/bv32fp-1.2/utility.c" />
+    </folder>
+    <folder Name="Codec: ADPCM">
+      <file file_name="../../../libs/dvi_adpcm/dvi_adpcm.c" />
+    </folder>
+    <folder Name="SR3_Audio">
+      <file file_name="../../../libs/sr3_audio/drv_audio_coder_adpcm.c" />
+      <file file_name="../../../libs/sr3_audio/drv_audio_coder_bv32fp.c" />
+      <file file_name="../../../libs/sr3_audio/drv_audio_dsp.c" />
+      <file file_name="../../../libs/sr3_audio/drv_audio_pdm.c" />
+      <file file_name="../config/drv_audio_config.h" />
+    </folder>
+    <folder Name="nRF_NFC">
+      <file file_name="../../../sdk_components/nfc/t2t_lib/hal_t2t/hal_nfc_t2t.c" />
+      <file file_name="../../../sdk_components/nfc/ndef/text/nfc_text_rec.c" />
+      <file file_name="../../../sdk_components/nfc/ndef/generic/message/nfc_ndef_msg.c" />
+      <file file_name="../../../sdk_components/nfc/ndef/generic/record/nfc_ndef_record.c" />
+      <file file_name="../../../sdk_components/nfc/ndef/uri/nfc_uri_msg.c" />
+      <file file_name="../../../sdk_components/nfc/ndef/uri/nfc_uri_rec.c" />
+      <file file_name="../../../sdk_components/nfc/ndef/launchapp/nfc_launchapp_msg.c" />
+      <file file_name="../../../sdk_components/nfc/ndef/launchapp/nfc_launchapp_rec.c" />
+      <file file_name="../../../sdk_components/nfc/t2t_lib/nfc_t2t_lib_gcc.a" />
+    </folder>
+    <folder Name="::CMSIS" />
+    <folder Name="::Device" />
+    <configuration
+      Name="debug_v1_0_0"
+      c_preprocessor_definitions="NRF52;NRF52832;NRF52832_XXAA;BLE_STACK_SUPPORT_REQD;__HEAP_SIZE=0;S132;NRF_SD_BLE_API_VERSION=4;NRF52_PAN_12;NRF52_PAN_15;NRF52_PAN_20;NRF52_PAN_30;NRF52_PAN_31;NRF52_PAN_36;NRF52_PAN_51;NRF52_PAN_53;NRF52_PAN_54;NRF52_PAN_55;NRF52_PAN_58;NRF52_PAN_62;NRF52_PAN_63;NRF52_PAN_64;SOFTDEVICE_PRESENT;SWI_DISABLE0;BSP_DEFINES_ONLY;ARM_MATH_CM4;MPU9250;EMPL;USE_DMP;EMPL_TARGET_NRF52;NRF_LOG_USES_RTT=1;BLE_DFU_APP_SUPPORT;NRF_DFU_SETTINGS_VERSION=1;AUDIO_EQ_DEF=3;HAL_NFC_ENGINEERING_BC_FTPAN_WORKAROUND;DEBUG;NRF_LOG_ENABLED=1"
+      c_user_include_directories="$(PackagesDir)/CMSIS_4/CMSIS/Include;../config;../../../external/sdk13_override;../../../external/segger_rtt;../../../include/ble_services;../../../include/board;../../../include/drivers;../../../include/macros;../../../include/modules;../../../include/util;../../../libs/bv32fp-1.2;../../../libs/dvi_adpcm;../../../libs/eMD6/core/driver/eMPL;../../../libs/eMD6/core/driver/include;../../../libs/eMD6/core/driver/nRF52;../../../libs/eMD6/core/eMPL-hal;../../../libs/eMD6/core/mllite;../../../libs/eMD6/core/mpl;../../../libs/sr3_audio;../../../sdk_components/ble/ble_advertising;../../../sdk_components/ble/ble_services/ble_bas;../../../sdk_components/ble/ble_services/ble_dfu;../../../sdk_components/ble/common;../../../sdk_components/drivers_nrf/clock;../../../sdk_components/drivers_nrf/common;../../../sdk_components/drivers_nrf/config;../../../sdk_components/drivers_nrf/delay;../../../sdk_components/drivers_nrf/gpiote;../../../sdk_components/drivers_nrf/hal;../../../sdk_components/drivers_nrf/pdm;../../../sdk_components/drivers_nrf/pwm;../../../sdk_components/drivers_nrf/rng;../../../sdk_components/drivers_nrf/saadc;../../../sdk_components/drivers_nrf/twi_master;../../../sdk_components/drivers_nrf/uart;../../../sdk_components/libraries/bootloader/dfu;../../../sdk_components/libraries/button;../../../sdk_components/libraries/crc32;../../../sdk_components/libraries/experimental_section_vars;../../../sdk_components/libraries/fds;../../../sdk_components/libraries/fifo;../../../sdk_components/libraries/fstorage;../../../sdk_components/libraries/led_softblink;../../../sdk_components/libraries/log;../../../sdk_components/libraries/log/src;../../../sdk_components/libraries/low_power_pwm;../../../sdk_components/libraries/queue;../../../sdk_components/libraries/scheduler;../../../sdk_components/libraries/strerror/;../../../sdk_components/libraries/timer;../../../sdk_components/libraries/trace;../../../sdk_components/libraries/uart;../../../sdk_components/libraries/util;../../../sdk_components/nfc/ndef/generic/message;../../../sdk_components/nfc/ndef/generic/record;../../../sdk_components/nfc/ndef/launchapp;../../../sdk_components/nfc/ndef/text;../../../sdk_components/nfc/ndef/uri;../../../sdk_components/nfc/t2t_lib;../../../sdk_components/nfc/t2t_lib/hal_t2t;../../../sdk_components/softdevice/common/softdevice_handler;../../../sdk_components/softdevice/s132/headers;../../../sdk_components/softdevice/s132/headers/nrf52;../../../sdk_components/toolchain;../../../sdk_components/device;../../../tools/sound"
+      debug_additional_load_file="$(ProjectDir)/../../../sdk_components/softdevice/s132/hex/s132_nrf52_4.0.2_softdevice.hex"
+      linker_printf_fmt_level="long"
+      linker_printf_width_precision_supported="Yes"
+      linker_section_placement_file="$(ProjectDir)/flash_placement.xml.txt" />
+    <configuration Name="External Keil" c_additional_options="--c99" />
+  </project>
+  <configuration Name="Internal" hidden="Yes" />
+  <configuration Name="release_v1_0_0" inherited_configurations="Internal" />
+  <configuration Name="debug_v1_0_0" inherited_configurations="Internal" />
+</solution>
