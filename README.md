@@ -1,3 +1,8 @@
+# DEPRECATED
+This repository is deprecated and will be archived. No further development activities are planned.
+
+For enquiries regarding Thingy:52 please create a ticket at [devzone.nordicsemi.com](https://devzone.nordicsemi.com)
+
 # Nordic Thingy:52 SDK
 
 Welcome to the Nordic Thingy:52 software development kit.
