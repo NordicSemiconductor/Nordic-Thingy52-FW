@@ -16,7 +16,7 @@ Before running the scripts below, make sure you have the following software inst
 Unzip the folder `libmpllib_Keil_M4FP.zip`. Copy the extracted library `libmpllib.lib` into `<your Thingy folder>/libs/libmpllib_Keil_M4FP/`. Finally, unzip `/motion_driver_6.12/mpl libraries/arm/gcc4.9.3/liblibmplmpu_m4_hardfp.zip` and copy the extracted library `liblibmplmpu.a` into the folder `<your Thingy folder>/libs/liblibmplmpu_m4_hardfp/`.
 
 ### Bluetooth SoftDevice
-Thingy FW version 2.0.0 is compatible with softdevice [s132 v4.0.2](https://www.nordicsemi.com/eng/nordic/Products/nRF52832/S132-SD-v4/58803)
+Thingy FW version 2.0.0 is compatible with softdevice [s132 v4.0.5](https://www.nordicsemi.com/Software-and-tools/Software/S132/Download)
 
 ## Setting up the SDK
 Run `setup_sdk.bat` on Windows or `setup_sdk.sh` on Linux/Mac.
